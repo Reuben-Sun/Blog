@@ -1,12 +1,25 @@
 ---
+layout: post
+# 标题
 title: Effective C++  
-date: 2023/1/31 10:01:25  # 文章发表时间
+# 发布时间
+date: 2023/1/31 10:01:25  
+# 分类
+categories: [Algorithm] 
+# 标签
 tags:
-
-- C++
-categories: Algorithm # 分类
-thumbnail: /images/effectivecxx.png # 略缩图
-
+  - C++
+# 作者
+author: Reuben Sun
+# 缩略图
+thumbnail: /images/effectivecxx.png 
+# 显示封面
+cover: true
+# 显示目录
+toc: true
+# 启用插件
+plugins:
+  - mathjax
 ---
 # Effective C++
 
