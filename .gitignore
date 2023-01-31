@@ -1,0 +1,6 @@
+
+.DS_Store
+
+blog/.deploy_git/
+
+blog/node_modules/
