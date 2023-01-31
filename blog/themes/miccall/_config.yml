@@ -19,13 +19,13 @@ Nav:
     categories_name: 分类
     is_use_archives : false
     archives_name: 归档
-    
+
     #Social
     # for more icons, please see http://fontawesome.io/icons/#brand
     icon:
         github: https://github.com/Reuben-Sun
         # gratipay: https://www.zhihu.com/people/reuben-72-27
-        
+
     pages:
         图形:
             link: "/categories/Algorithm/"
@@ -91,7 +91,9 @@ comment:
 #     swiftype | google | local
 search:
     use: google
+    trigger: auto
     swiftype_key: Just another fine responsive  
+    top_n_per_article: 1
     
 
 # Leancloud Views
