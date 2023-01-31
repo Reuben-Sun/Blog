@@ -46,7 +46,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T02:01:25.000Z">
-<meta property="article:modified_time" content="2023-01-31T13:25:57.688Z">
+<meta property="article:modified_time" content="2023-01-31T16:04:23.043Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1675179093930),
+    lastupdate: new Date(1675182842794),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2571,50 +2571,42 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>使用编译器替代预处理器</p>
 <p>尽量使用const、enum定义常量，使用inlines定义函数宏</p>
 <h4 id="const">const</h4>
-<pre><code class="language-c++">#define PI 3.1415926
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PI</span> <span class="token expression"><span class="token number">3.1415926</span></span></span></code></pre>
 <p>因为<code>#define</code>不是语言的一部分，在编译器开始工作前，<code>PI</code>就会被处理掉，所以一旦报错，你无法追踪到<code>PI</code>，只能看到<code>3.1415926</code>，这会<strong>浪费你的时间</strong></p>
 <p>应该改为</p>
-<pre><code class="language-c++">const double Pi 3.1415926;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">double</span> Pi <span class="token number">3.1415926</span><span class="token punctuation">;</span></code></pre>
 <p>值得注意的事</p>
 <ul>
 <li>定义常量指针指向char*-based字符串</li>
 </ul>
-<pre><code class="language-c++">const char* const authorName = &quot;Reuben&quot;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token keyword">const</span> authorName <span class="token operator">=</span> <span class="token string">"Reuben"</span><span class="token punctuation">;</span></code></pre>
 <ul>
 <li>作用域限制在class内的常量，需要让其成为类的一个成员，并且为了让常量至多有一份实体，必须让其成为一个静态成员</li>
 </ul>
-<pre><code class="language-c++">class GemePlayer&#123;
-private:
-	static const int NumTurns = 5;	//这只是一个声明式
-	int scores[NumTurns];
-&#125;;
-const int GamePlayer::NumTurns;		//这是定义式，因为在声明时已经赋值，所以这里就不赋值了
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GemePlayer</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">int</span> NumTurns <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>	<span class="token comment">//这只是一个声明式</span>
+	<span class="token keyword">int</span> scores<span class="token punctuation">[</span>NumTurns<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> GamePlayer<span class="token double-colon punctuation">::</span>NumTurns<span class="token punctuation">;</span>		<span class="token comment">//这是定义式，因为在声明时已经赋值，所以这里就不赋值了</span></code></pre>
 <p>C++要求我们使用的所有东西都提供一个定义式，但如果不取其地址，可以只有声明式，不写定义式</p>
 <p>从这里可以看出，<strong>const可以封装</strong>，而#define不行</p>
 <h4 id="enum">enum</h4>
-<pre><code class="language-c++">class GemePlayer&#123;
-private:
-	enum &#123; NumTurns = 5 &#125;;
-	int scores[NumTurns];
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GemePlayer</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token keyword">enum</span> <span class="token punctuation">&#123;</span> NumTurns <span class="token operator">=</span> <span class="token number">5</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> scores<span class="token punctuation">[</span>NumTurns<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h3 id="const指针">const指针</h3>
 <p>const在星号左边，被指物是常量</p>
-<pre><code class="language-c++">char greeting[] = &quot;Hello&quot;;
-const char* p = greeting;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">char</span> greeting<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> p <span class="token operator">=</span> greeting<span class="token punctuation">;</span></code></pre>
 <p>const在星号右边，指针本身是常量</p>
-<pre><code class="language-c++">char greeting[] = &quot;Hello&quot;;
-char* const p = greeting;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">char</span> greeting<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span><span class="token operator">*</span> <span class="token keyword">const</span> p <span class="token operator">=</span> greeting<span class="token punctuation">;</span></code></pre>
 <p>const在星号两边，被指物和指针都是常量</p>
-<pre><code class="language-c++">char greeting[] = &quot;Hello&quot;;
-const char* const p = greeting;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">char</span> greeting<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> <span class="token keyword">const</span> p <span class="token operator">=</span> greeting<span class="token punctuation">;</span></code></pre>
 <h3 id="确认对象在使用前已经被初始化">确认对象在使用前已经被初始化</h3>
 <p>C++初始化顺序</p>
 <ul>
@@ -2631,56 +2623,51 @@ const char* const p = greeting;
 <ul>
 <li>你可以把copy函数定义为private类型，并不实现他们（甚至参数不需要写参数名）</li>
 </ul>
-<pre><code class="language-c++">class HomeForSale&#123;
-private:
-	HomeForSale(const HomeForSale&amp;);
-  HomeForSale&amp; operator=(const HomeForSale&amp;);
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">HomeForSale</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token function">HomeForSale</span><span class="token punctuation">(</span><span class="token keyword">const</span> HomeForSale<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  HomeForSale<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> HomeForSale<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>可以制作一个不可被copy的类，让子类继承</p>
-<pre><code class="language-c++">class Uncopyable&#123;
-protected:
-	Uncopyable()&#123;&#125;
-  ~Uncopyable()&#123;&#125;
-private:
-  Uncopyable(const Uncopyable&amp;);
-  Uncopyable&amp; operator=(const Uncopyable&amp;);
-&#125;;
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Uncopyable</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token function">Uncopyable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  <span class="token operator">~</span><span class="token function">Uncopyable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token function">Uncopyable</span><span class="token punctuation">(</span><span class="token keyword">const</span> Uncopyable<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Uncopyable<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Uncopyable<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-class HomeForSale: private Uncopyable&#123;
-  ...
-&#125;;
-</code></pre>
+<span class="token keyword">class</span> <span class="token class-name">HomeForSale</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">private</span> <span class="token class-name">Uncopyable</span></span><span class="token punctuation">&#123;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h3 id="为多态基类声明virtual析构函数">为多态基类声明virtual析构函数</h3>
 <h4 id="一定要有一个virtual析构函数">一定要有一个virtual析构函数</h4>
 <ul>
 <li>如果这个类要成为一个基类，那么一定要有一个virtual析构函数</li>
 </ul>
 <p>在工厂模式，我们使用工厂函数构造的对象需要适当的delete掉，但是，我们不能依赖客户去使用delete函数，因为他们可能会用错</p>
-<pre><code class="language-c++">class TimeKeeper&#123;
-public:
-	...
-&#125;;
-class AtomicClock: public TimeKeeper &#123;...&#125;;
-class WaterClock: public TimeKeeper &#123;...&#125;;
-</code></pre>
-<pre><code class="language-c++">TimeKeeper* ptk = getTimeKeeper();		//创建一个动态分配对象
-...
-delete ptk;	//释放对象，避免资源泄漏
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TimeKeeper</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">AtomicClock</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">TimeKeeper</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">WaterClock</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">TimeKeeper</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">TimeKeeper<span class="token operator">*</span> ptk <span class="token operator">=</span> <span class="token function">getTimeKeeper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//创建一个动态分配对象</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">delete</span> ptk<span class="token punctuation">;</span>	<span class="token comment">//释放对象，避免资源泄漏</span></code></pre>
 <p>上面这个过程的问题其实出在<code>getTimeKeeper()</code>指向一个派生类（derived class）对象（比如<code>AtomicClock</code>），而这个对象却要经由一个基类（base class）指针删除（比如<code>TimeKeeper*</code>）</p>
 <p>如果这个基类的析构函数不是virtual的，就会出现问题：</p>
 <ul>
 <li>如果派生类有基类没有的成分（成员变量），这些新成分有可能不会被销毁，于产生了一个诡异的“局部销毁”对象</li>
 </ul>
 <p>解决方法就是给基类一个virtual析构函数</p>
-<pre><code class="language-c++">class TimeKeeper&#123;
-public:
-	TimeKeeper();
-  virtual ~TimeKeeper();
-  ...
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">TimeKeeper</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token function">TimeKeeper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">TimeKeeper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h4 id="最好不要有virtual析构函数">最好不要有virtual析构函数</h4>
 <ul>
 <li>如果这个类不可能成为基类，那么最好不要有virtual析构函数</li>
@@ -2703,36 +2690,35 @@ public:
 </li>
 </ul>
 <p>比较好的方法，这是一个控制数据库连接的函数，关闭连接时要析构相关内容</p>
-<pre><code class="language-c++">class DBConnevtion&#123;
-public:
-    ...
-    static DBConnevtion create();
-    void close();     
-&#125;;
-class DBConn&#123;
-public:
-    ...
-    void close()	//封装给客户用的,关闭连接的函数
-    &#123;
-        db.close();
-        closed = true;
-    &#125;
-    ~DBConn()&#123;
-        if(!closed)&#123;
-            try&#123;
-                db.close();
-            &#125;
-            catch(...)&#123;
-                ...
-                //强制关闭程序或者吞下异常
-            &#125;
-        &#125;
-    &#125;
-private:
-    DBConnection db;
-    bool closed;
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">DBConnevtion</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">static</span> DBConnevtion <span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">DBConn</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>	<span class="token comment">//封装给客户用的,关闭连接的函数</span>
+    <span class="token punctuation">&#123;</span>
+        db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        closed <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">DBConn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>closed<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
+                db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+                <span class="token comment">//强制关闭程序或者吞下异常</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    DBConnection db<span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> closed<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h3 id="不要在构造和析构过程中调用virtual函数">不要在构造和析构过程中调用virtual函数</h3>
 <p>在C++中（Java和C#没有这个烦恼），在构造和析构过程中调用virtual函数，有可能不会带来你所期望的结果</p>
 <p>可以简单理解为<strong>在C++中，基类构造期间，vritual函数不是vritual函数</strong></p>
@@ -2740,63 +2726,57 @@ private:
 <p>同理，进入派生类析构函数的对象，其派生出的成员变量就“消失”了，没法调用，进入基类析构函数的对象，就是一个基类对象，调用的virtual函数是基类版本的</p>
 <h3 id="令operator-返回一个对-this的引用">令operator=返回一个对*this的引用</h3>
 <p>连续赋值</p>
-<pre><code class="language-c++">x = y = z = 15;
-//其实就等于x = (y = (z = 15))；
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">x <span class="token operator">=</span> y <span class="token operator">=</span> z <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">;</span>
+<span class="token comment">//其实就等于x = (y = (z = 15))；</span></code></pre>
 <p>为了实现来连续赋值，赋值操作符必须返回一个reference，指向操作符左侧实参</p>
-<pre><code class="language-c++">class Widget&#123;
-public:
-    Widget&amp; operator=(const Widget&amp; rhs)
-    &#123;
-    	...
-        return *this;
-    &#125;
-    Widget&amp; operator+=(const Widget&amp; rhs)&#123;
-        ...
-        return *this;
-    &#125;
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    Widget<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+    	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    Widget<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">+=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h3 id="在operator-中处理自我赋值">在operator=中处理自我赋值</h3>
 <p>如果对象自己赋给自己，我们称之为自我赋值</p>
-<pre><code class="language-c++">w = w;
-a[i] = a[j]; //当i=j时，自我赋值
-*px = *py;	//px和py指向同一个物体时，自我赋值
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">w <span class="token operator">=</span> w<span class="token punctuation">;</span>
+a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">//当i=j时，自我赋值</span>
+<span class="token operator">*</span>px <span class="token operator">=</span> <span class="token operator">*</span>py<span class="token punctuation">;</span>	<span class="token comment">//px和py指向同一个物体时，自我赋值</span></code></pre>
 <p>在赋值操作中：</p>
 <ol>
 <li>我们会先另左边的操作数先释放掉当前使用的数据</li>
 <li>令其使用右操作数的副本</li>
 <li>最后返回左操作数</li>
 </ol>
-<pre><code class="language-c++">class Widget&#123;
-    ...
-private:
-    Bitmap *pb;
-&#125;;
-//!!!这个不安全
-Widget&amp; Widget::operator=(const Widget&amp; rhs)&#123;
-    delete pb;
-    pb = new Bitmap(*rhs.pb);
-    return *this;
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span><span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    Bitmap <span class="token operator">*</span>pb<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token comment">//!!!这个不安全</span>
+Widget<span class="token operator">&amp;</span> Widget<span class="token double-colon punctuation">::</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">delete</span> pb<span class="token punctuation">;</span>
+    pb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Bitmap</span><span class="token punctuation">(</span><span class="token operator">*</span>rhs<span class="token punctuation">.</span>pb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>如果自我赋值，即rhs和pb指向同一个对象，那么<code>delete pb</code>后，这个对象就已经被销毁了，下面使用的<code>*rhs</code>就是一个已经被删除的对象</p>
 <p>解决方法1：延后delete</p>
-<pre><code class="language-c++">Widget&amp; Widget::operator=(const Widget&amp; rhs)&#123;
-    Bitmap* pOrig = pb;
-    pb = new Bitmap(*rhs.pb);
-    delete pOrig;
-    return *this;
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">Widget<span class="token operator">&amp;</span> Widget<span class="token double-colon punctuation">::</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    Bitmap<span class="token operator">*</span> pOrig <span class="token operator">=</span> pb<span class="token punctuation">;</span>
+    pb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Bitmap</span><span class="token punctuation">(</span><span class="token operator">*</span>rhs<span class="token punctuation">.</span>pb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">delete</span> pOrig<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>解决方法2：使用copy and swap技术</p>
-<pre><code class="language-c++">Widget&amp; Widget::operator=(const Widget&amp; rhs)&#123;
-    Widget temp(rhs);
-    swap(temp);		//令*this与temp交换
-    return *this;
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">Widget<span class="token operator">&amp;</span> Widget<span class="token double-colon punctuation">::</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    Widget <span class="token function">temp</span><span class="token punctuation">(</span>rhs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//令*this与temp交换</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <h3 id="复制对象的一切">复制对象的一切</h3>
 <p>如果你对class的成员变量做修改（比如继承），一定要对copy函数也做修改，不然可能会出错，而且这个错编译器不会报错</p>
 <p>派生类需要重载copy函数，但基类部分的copy要通过调用基类的copy函数（因为基类的许多成员变量可能是private的）</p>
@@ -2834,26 +2814,22 @@ Widget&amp; Widget::operator=(const Widget&amp; rhs)&#123;
 <ul>
 <li>如果new了一个数组，就delete一个数组</li>
 </ul>
-<pre><code class="language-c++">string* ptr1 = new string[100];
-delete [] ptr1;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">string<span class="token operator">*</span> ptr1 <span class="token operator">=</span> <span class="token keyword">new</span> string<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">delete</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> ptr1<span class="token punctuation">;</span></code></pre>
 <ul>
 <li>如果new了一个对象，就delete一个对象</li>
 </ul>
-<pre><code class="language-c++">string* ptr2 = new string;
-delete ptr2;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">string<span class="token operator">*</span> ptr2 <span class="token operator">=</span> <span class="token keyword">new</span> string<span class="token punctuation">;</span>
+<span class="token keyword">delete</span> ptr2<span class="token punctuation">;</span></code></pre>
 <p>很多时候很难确定当前这个对象是数组还是一个对象</p>
-<pre><code class="language-c++">typedef string AddressLines[4];
-string* pal = new AddressLines;
-delete [] pal;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> string AddressLines<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+string<span class="token operator">*</span> pal <span class="token operator">=</span> <span class="token keyword">new</span> AddressLines<span class="token punctuation">;</span>
+<span class="token keyword">delete</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> pal<span class="token punctuation">;</span></code></pre>
 <p>最简单的方法是不用数组，使用STL里的容器，如<code>vector&lt;string&gt;</code></p>
 <h3 id="以独立语句将newed对象置入智能指针">以独立语句将newed对象置入智能指针</h3>
 <p>C++中调用一个函数，会先计算每一个传递进去的实参</p>
 <p>如果按下面的写法，将newed对象置入智能指针中</p>
-<pre><code class="language-c++">分配函数(shared_ptr&lt;Widget&gt;(new Widget), 资源访问);		//不要这样写
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">分配函数<span class="token punctuation">(</span><span class="token generic-function"><span class="token function">shared_ptr</span><span class="token generic class-name"><span class="token operator">&lt;</span>Widget<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> Widget<span class="token punctuation">)</span><span class="token punctuation">,</span> 资源访问<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//不要这样写</span></code></pre>
 <p>需要执行一下函数</p>
 <ul>
 <li>调用“资源访问”函数（A）</li>
@@ -2863,44 +2839,41 @@ delete [] pal;
 <p>然而和C#等语言不同，C++里这几个函数执行顺序无法确定（其实只是A的顺序无法确定，B一定会比C先执行）</p>
 <p>如果执行顺序是BAC，且A执行异常，那么B所返回的指针将会遗失，不会正常放入智能指针中，于是发生资源泄漏</p>
 <p>所以简单的方法是分离语句</p>
-<pre><code class="language-c++">shared_ptr&lt;Widget&gt; pw(new Widget);
-分配函数(pw, 资源访问);
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">shared_ptr<span class="token operator">&lt;</span>Widget<span class="token operator">></span> <span class="token function">pw</span><span class="token punctuation">(</span><span class="token keyword">new</span> Widget<span class="token punctuation">)</span><span class="token punctuation">;</span>
+分配函数<span class="token punctuation">(</span>pw<span class="token punctuation">,</span> 资源访问<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <h2 id="四：设计与声明">四：设计与声明</h2>
 <h3 id="让接口容易被正确使用">让接口容易被正确使用</h3>
 <p>客户会犯错，所以接口要考虑各种错误，接口也不能要求用户记住要做某件事（因为他们可能会忘记）</p>
 <h4 id="限制参数传递">限制参数传递</h4>
 <p>这是一个日期类</p>
-<pre><code class="language-c++">class Date&#123;
-public:
-  Date(int month, int day, int year);
-  ...
-&#125;;
-...
-Date d(4, 20, 2022);
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Date</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Date</span><span class="token punctuation">(</span><span class="token keyword">int</span> month<span class="token punctuation">,</span> <span class="token keyword">int</span> day<span class="token punctuation">,</span> <span class="token keyword">int</span> year<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Date <span class="token function">d</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">2022</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>客户很有可能填错顺序，也有可能填入一个无效的参数</p>
 <p>可以使用<strong>外覆类型（wrapper types）</strong>，当然做出类会更好</p>
-<pre><code class="language-c++">struct Day&#123;
-  explict Day(int d) : val(d) &#123;&#125;
-  int val;
-&#125;;
-struct Month&#123;
-  explict Month(int m) : val(m) &#123;&#125;
-  int val;
-&#125;;
-struct Year&#123;
-  explict Year(int y) : val(y) &#123;&#125;
-  int val;
-&#125;;
-class Date&#123;
-public:
-  Date(const Mouth&amp; month, const Day&amp; day, const Year&amp; year);
-  ...
-&#125;;
-...
-Date d(Month(4), Day(20), Year(2022));
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Day</span><span class="token punctuation">&#123;</span>
+  explict <span class="token function">Day</span><span class="token punctuation">(</span><span class="token keyword">int</span> d<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">val</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">Month</span><span class="token punctuation">&#123;</span>
+  explict <span class="token function">Month</span><span class="token punctuation">(</span><span class="token keyword">int</span> m<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">val</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">Year</span><span class="token punctuation">&#123;</span>
+  explict <span class="token function">Year</span><span class="token punctuation">(</span><span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">val</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Date</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">Date</span><span class="token punctuation">(</span><span class="token keyword">const</span> Mouth<span class="token operator">&amp;</span> month<span class="token punctuation">,</span> <span class="token keyword">const</span> Day<span class="token operator">&amp;</span> day<span class="token punctuation">,</span> <span class="token keyword">const</span> Year<span class="token operator">&amp;</span> year<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Date <span class="token function">d</span><span class="token punctuation">(</span><span class="token function">Month</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Day</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Year</span><span class="token punctuation">(</span><span class="token number">2022</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <h4 id="一致性">一致性</h4>
 <p>自定义的行为要与内置类型的行为一致，比如你不能把<code>operator*</code>重载成<code>operator+</code></p>
 <p>或则像STL中，容器的接口都很一致，比如<code>size</code>、<code>push_back</code>等等</p>
@@ -2949,38 +2922,35 @@ Date d(Month(4), Day(20), Year(2022));
 <li>C++标准库就是这样写的</li>
 </ul>
 <p>这里有一个类，其中有多个成员函数</p>
-<pre><code class="language-c++">class WebBrowser&#123;
-public:
-	void doA();
-  void doB();
-  void doC();
-  ...
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">WebBrowser</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">void</span> <span class="token function">doA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token function">doB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token function">doC</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>现在需要令一个函数做ABC三件事，有两种写法</p>
 <ul>
 <li>成员函数</li>
 </ul>
-<pre><code class="language-c++">class WebBrowser&#123;
-public:
-	...
-  void doEverything()&#123;
-    doA();
-    doB();
-    doC();
-  &#125;
-  ...
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">WebBrowser</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">void</span> <span class="token function">doEverything</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">doA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">doB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">doC</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <ul>
 <li>非成员函数</li>
 </ul>
-<pre><code class="language-c++">void doEverything(WebBrowser&amp; wb)&#123;
-	wb.doA();
-  wb.doB();
-  wb.doC();
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">doEverything</span><span class="token punctuation">(</span>WebBrowser<span class="token operator">&amp;</span> wb<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	wb<span class="token punctuation">.</span><span class="token function">doA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  wb<span class="token punctuation">.</span><span class="token function">doB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  wb<span class="token punctuation">.</span><span class="token function">doC</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>令人意外的是，第二种方法（使用非成员函数）更好</p>
 <h4 id="什么是封装">什么是封装</h4>
 <p>一个东西被封装，那么将不再可见，越多东西被封装，能被看见的东西就越少，那么我们能改变的东西会越少，弹性越小，封装性越强</p>
@@ -2992,11 +2962,10 @@ public:
 </ul>
 <p>那么第二种方式是不是不太符合面向对象呢？因为这个函数不在类里。解决方法也很简单，定义一个工具类，将这个函数定义为该工具类的<strong>静态成员（static member）函数</strong>即可</p>
 <p>或者把相关的非成员函数写在一个namespace里（也可以定义在一个头文件中，这样其他namespace可以选择性使用）</p>
-<pre><code class="language-c++">namespace WebBrowserStuff&#123;
-	class WebBrowser&#123;...&#125;;
-	void doEverything(WebBrowser&amp; wb)&#123;...&#125;
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> WebBrowserStuff<span class="token punctuation">&#123;</span>
+	<span class="token keyword">class</span> <span class="token class-name">WebBrowser</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+	<span class="token keyword">void</span> <span class="token function">doEverything</span><span class="token punctuation">(</span>WebBrowser<span class="token operator">&amp;</span> wb<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <ul>
 <li>
 <p>可拓展性更强</p>
@@ -3014,34 +2983,30 @@ public:
 <h3 id="如果所有参数都需要进行类型转换，使用非成员函数">如果所有参数都需要进行类型转换，使用非成员函数</h3>
 <p>令类支持隐式类型转换是一个非常糟糕的主意，但如果每次都做显示转化又非常麻烦，尤其是当你在做一个数值运算的函数时</p>
 <p>比如一个有理数乘法</p>
-<pre><code class="language-c++">class Rational&#123;
-public:
-  //这个类没有自定义的explict构造函数
-  const Rational opertaor* (const Rational&amp; rhs) const;
-  ...
-&#125;;
-</code></pre>
-<pre><code class="language-c++">Rational oneEighth(1,8);
-Rational oneHalf(1,2);
-Rational result = oneHalf * oneEighth;	//成功
-result = result * oneEighth;	//成功
-result = oneHalf * 2;		//成功，等价于 result = oneHalf.operator*(2)
-result = 2 * oneHalf;		//失败，等价于 result = 2.operator*(oneHalf)
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Rational</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token comment">//这个类没有自定义的explict构造函数</span>
+  <span class="token keyword">const</span> Rational opertaor<span class="token operator">*</span> <span class="token punctuation">(</span><span class="token keyword">const</span> Rational<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">Rational <span class="token function">oneEighth</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Rational <span class="token function">oneHalf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Rational result <span class="token operator">=</span> oneHalf <span class="token operator">*</span> oneEighth<span class="token punctuation">;</span>	<span class="token comment">//成功</span>
+result <span class="token operator">=</span> result <span class="token operator">*</span> oneEighth<span class="token punctuation">;</span>	<span class="token comment">//成功</span>
+result <span class="token operator">=</span> oneHalf <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>		<span class="token comment">//成功，等价于 result = oneHalf.operator*(2)</span>
+result <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">*</span> oneHalf<span class="token punctuation">;</span>		<span class="token comment">//失败，等价于 result = 2.operator*(oneHalf)</span></code></pre>
 <p><code>result = oneHalf * 2;</code>为什么成功，因为这里发生了一次隐式转换，将<code>2</code>转化为了一个<code>Rational</code>类型</p>
 <p>在编译器中可能等价于</p>
-<pre><code class="language-c++">const Rational temp(2);
-result = oneHalf * temp;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> Rational <span class="token function">temp</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+result <span class="token operator">=</span> oneHalf <span class="token operator">*</span> temp<span class="token punctuation">;</span></code></pre>
 <ul>
 <li>如果这个类有自定义的explict构造函数，上面这几个运算都失败，因为无法将<code>2</code>转化为一个<code>Rational</code>类型</li>
 </ul>
 <p><code>result = 2 * oneHalf;	</code>为什么会失败，因为隐式转换只能转换**参数列（parameter list）**内的参数，不能转化成员函数所隶属的对象（即this对象），此时<code>2</code>就是一个int类型，没有我们所自定义的<code>operator*</code>函数，自然会失败</p>
 <p>可以发现，想要实现混合运算，非常麻烦，但是如果把这个运算做成一个非成员函数，会好很多（因为所有的操作数都是参数，都在参数列中，都可以被隐式转换）</p>
-<pre><code class="language-c++">const Rational operator*(const Rational&amp; lhs, const Rational&amp; rhs)&#123;
-  return Rational(lhs.numerator() * rhs.numerator(), lhs.denominator() * rhs.denominator());
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> Rational <span class="token keyword">operator</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">const</span> Rational<span class="token operator">&amp;</span> lhs<span class="token punctuation">,</span> <span class="token keyword">const</span> Rational<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token function">Rational</span><span class="token punctuation">(</span>lhs<span class="token punctuation">.</span><span class="token function">numerator</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> rhs<span class="token punctuation">.</span><span class="token function">numerator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> lhs<span class="token punctuation">.</span><span class="token function">denominator</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> rhs<span class="token punctuation">.</span><span class="token function">denominator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <ul>
 <li>此外要极力避免使用<strong>友元（friend）函数</strong></li>
 <li>成员函数的对立面是非成员函数，一个函数不方便做成成员函数，要先考虑做成非成员函数</li>
@@ -3050,30 +3015,29 @@ result = oneHalf * temp;
 <p>swap函数原本是STL的一部分，后来称为了<strong>异常安全性编程</strong>的核心，以及成为用来处理自我赋值的常见机制。总之swap很重要</p>
 <p>std是一个很特殊的命名空间，客户可以<strong>全特化</strong>（total template specialization)std里面的templates，但是不可以添加新的templates到std里面，std的内容完全由C++标准委员会决定</p>
 <p>全特化：针对某个类做模板函数的特例，如对<code>std::swap</code>做一个针对<code>Widget</code>的特化</p>
-<pre><code class="language-c++">class WidgetImpl&#123;...&#125;;		//这个类的对象中存储着真正的数据
-class Widget&#123;
-public:
-    Widget&amp; operator=(const Widget&amp; rhs)&#123;
-        ...
-        *pImpl = *(rhs.pImpl);
-        ...
-    &#125;
-    ...
-    void swap(Widget&amp; other)&#123;	//这个函数决对不可抛异常
-        using std::swap;
-        swap(pImpl, other.pImpl);//这是pimpl写法，交换两个对象只需要置换其pImpl指针
-    &#125;
-    ...
-private:
-    WidgetImple* pImpl;		//这个类有一个指向资源对象的指针
-&#125;;
-namespace std&#123;
-	template&lt;&gt;
-    void swap&lt;Widget&gt;(Widget&amp; a, Widget&amp; b)&#123;	//这个可以抛异常
-        a.swap(b);	
-    &#125;
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">WidgetImpl</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>		<span class="token comment">//这个类的对象中存储着真正的数据</span>
+<span class="token keyword">class</span> <span class="token class-name">Widget</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    Widget<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+        <span class="token operator">*</span>pImpl <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span>rhs<span class="token punctuation">.</span>pImpl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span>Widget<span class="token operator">&amp;</span> other<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>	<span class="token comment">//这个函数决对不可抛异常</span>
+        <span class="token keyword">using</span> std<span class="token double-colon punctuation">::</span>swap<span class="token punctuation">;</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span>pImpl<span class="token punctuation">,</span> other<span class="token punctuation">.</span>pImpl<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//这是pimpl写法，交换两个对象只需要置换其pImpl指针</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    WidgetImple<span class="token operator">*</span> pImpl<span class="token punctuation">;</span>		<span class="token comment">//这个类有一个指向资源对象的指针</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">namespace</span> std<span class="token punctuation">&#123;</span>
+	<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token operator">></span>
+    <span class="token keyword">void</span> <span class="token generic-function"><span class="token function">swap</span><span class="token generic class-name"><span class="token operator">&lt;</span>Widget<span class="token operator">></span></span></span><span class="token punctuation">(</span>Widget<span class="token operator">&amp;</span> a<span class="token punctuation">,</span> Widget<span class="token operator">&amp;</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>	<span class="token comment">//这个可以抛异常</span>
+        a<span class="token punctuation">.</span><span class="token function">swap</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>	
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>此外，C++的STL容器就是上面这种写法，提供了<code>public swap</code>成员函数和<code>std::swap</code>的特化版本</p>
 <h2 id="五：实现（Implementations）">五：实现（Implementations）</h2>
 <ul>
@@ -3093,11 +3057,10 @@ namespace std&#123;
 <h4 id="循环">循环</h4>
 <p>此外，如果变量只在循环内使用，是将其定义在循环内呢？还是循环外？</p>
 <p><strong>循环内</strong></p>
-<pre><code class="language-c++">for(int i = 0; i &lt; n; i++)&#123;
-  Widget w(...);
-  ...
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  Widget <span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <ul>
 <li>
 <p>n个构造函数+n个析构函数</p>
@@ -3107,12 +3070,11 @@ namespace std&#123;
 </li>
 </ul>
 <p><strong>循环外</strong></p>
-<pre><code class="language-c++">Widget w;
-for(int i = 0; i &lt; n; i++)&#123;
-  w = ...;
-  ...
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">Widget w<span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  w <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <ul>
 <li>一个构造函数+一个析构函数+n个赋值操作</li>
 <li>如果赋值成本比构造+析构要低，这样更好（尤其是n很大的时候）</li>
@@ -3161,21 +3123,19 @@ for(int i = 0; i &lt; n; i++)&#123;
 <p>避免C++类型转换出问题的核心是<strong>避免使用基类的接口处理派生类</strong></p>
 <h4 id="一个对象多个地址">一个对象多个地址</h4>
 <p>C++很神奇，如果一个基类指针指向一个派生类对象，如</p>
-<pre><code class="language-C++">Dervied d;
-Base* b = &amp;d;
-</code></pre>
+<pre class="language-C++" data-language="C++"><code class="language-C++">Dervied d;
+Base* b &#x3D; &amp;d;</code></pre>
 <p>这可能会导致两个指针值不一样，即这个对象有两个地址，一个<code>Derivied*</code>指针一个<code>Base*</code>指针，这派生类指针上往往会有一个<strong>偏移量（offset）</strong>，通过这个偏移量，可以通过派生类指针找到基类指针</p>
 <p>上面这种事在Java、C#、C中绝对不会发生，但是C++可以多继承，很容易出现这种情况（单继承时也会出现），所以<strong>请不要假定对象在C++中如何布局</strong>，更不应该基于这个假设对对象进行类型转换</p>
 <p>如果你想让当前对象调用基类的函数，如果对<code>*this</code>做强制转化，转换为基类，<code>*this</code>其实是先前产生的<code>*this</code>对象的基类部分，这个部分的成员函数可能与当前对象不同，最后导致调用函数出现问题</p>
-<pre><code class="language-c++">class SpecialWindow: public Window&#123;
-public:
-  virtual void onResize()&#123;
-    //static_cast&lt;Window&gt;(*this).onResize();	//这样不好
-    Window::onResize();		//请用这种方式调用基类的onResize函数（作用到当前对象上）
-    ...
-  &#125;
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">SpecialWindow</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Window</span></span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">onResize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//static_cast&lt;Window>(*this).onResize();	//这样不好</span>
+    <span class="token class-name">Window</span><span class="token double-colon punctuation">::</span><span class="token function">onResize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//请用这种方式调用基类的onResize函数（作用到当前对象上）</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <h4 id="dynamic-cast">dynamic_cast</h4>
 <p>这东西执行起来特别慢，尤其是操作深度继承和多重继承的对象</p>
 <p>什么时候使用这个东西？当<strong>你想在</strong>一个你认为是派生类对象的<strong>对象上执行</strong>派生类的操作<strong>函数</strong>，但你手里却只有一个指向基类的引用/指针时</p>
@@ -3187,37 +3147,35 @@ public:
 <h3 id="避免返回指向对象内部成分的handles">避免返回指向对象内部成分的handles</h3>
 <p>前面也写过，我们可以把数据分离出来，对象中只存一个指向数据的指针/引用，这样复制起来会更方便</p>
 <p>但是如果我们传递出指向对象的指针/引用，即使这个数据是private类型，但这个数据是可以会被修改的</p>
-<pre><code class="language-c++">class Point&#123;
-public:
-  ...
-  void setX(int val);
-  ...
-&#125;;
-struct RectData&#123;
-  Point ulhc;		//upper left hand corner
-  Point lrhc;		//lower right hand corner
-&#125;;
-class Rectangle&#123;
-public:
-  ...
-  Point&amp; upperLeft() const &#123; return pData-&gt;ulhc; &#125;	//这样返回了引用，非常不好
-  ...
-private:
-  std::tr1::shared_ptr&lt;RectData&gt; pData;
-&#125;;
-...
-rec.upperLeft().setX(50);		//rec是一个Rectangle类型，我们发现这里居然实现了对Rectangle的修改
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Point</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">void</span> <span class="token function">setX</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">RectData</span><span class="token punctuation">&#123;</span>
+  Point ulhc<span class="token punctuation">;</span>		<span class="token comment">//upper left hand corner</span>
+  Point lrhc<span class="token punctuation">;</span>		<span class="token comment">//lower right hand corner</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Rectangle</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  Point<span class="token operator">&amp;</span> <span class="token function">upperLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> pData<span class="token operator">-></span>ulhc<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>	<span class="token comment">//这样返回了引用，非常不好</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+  std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span>shared_ptr<span class="token operator">&lt;</span>RectData<span class="token operator">></span> pData<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+rec<span class="token punctuation">.</span><span class="token function">upperLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setX</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//rec是一个Rectangle类型，我们发现这里居然实现了对Rectangle的修改</span></code></pre>
 <p><code>upperLeft</code>函数本来只是为了提供给客户获得（get）<code>Rectangle</code>的一个坐标点，结果通过修改其指向/引用的对象。调用一个const函数，修改（set）了<code>Rectangle</code>本身，而且还是一个内部数据<code>RectData</code></p>
 <p>为什么会出现这种情况呢？是因为成员函数返回了一个handles（包括指针、引用、迭代器）</p>
 <p>解决方法很简单，只要让handles不可以被修改，就可以了</p>
-<pre><code class="language-c++">class Rectangle&#123;
-public:
-  ...
-  const Point&amp; upperLeft() const &#123; return pData-&gt;ulhc; &#125;	
-  ...
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Rectangle</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token keyword">const</span> Point<span class="token operator">&amp;</span> <span class="token function">upperLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> pData<span class="token operator">-></span>ulhc<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>	
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>但这样还是返回了指向对象内部的handles，如果所指向的东西不存在，就会导致<strong>dangling handles（空悬的号码牌）</strong>，比如返回了一个对local变量的引用，依然特别危险</p>
 <p>当然，有的时候不得不返回handles，比如<code>operator[]</code></p>
 <h3 id="异常安全性很重要">异常安全性很重要</h3>
@@ -3243,53 +3201,50 @@ public:
 <p>为什么C++要让类的实现放在定义式之中？其中一个重要因素是编译器必须在编译期间知道对象的大小，而知道对象大小的方法就是去访问定义式（这也是C++为什么需要先定义，后使用）</p>
 <p>这个问题在Java等语言中不存在，这些语言的实现类似于**pimpl（pointer to implementation）**写法，如果一个类中有一个自定义的数据类型，我们不需要知道这个类具体有多大，我们只需要分配一个指针大小的空间，让这个指针指向这个类</p>
 <p><em>话说应该不会有人不知道implementation是实现的意思吧</em></p>
-<pre><code class="language-c++">class PersonImpl;	//pimpl写法，这是Person类的前置声明
-class Data;				//Data的前置声明
-class Address;		//Address的前置声明
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">PersonImpl</span><span class="token punctuation">;</span>	<span class="token comment">//pimpl写法，这是Person类的前置声明</span>
+<span class="token keyword">class</span> <span class="token class-name">Data</span><span class="token punctuation">;</span>				<span class="token comment">//Data的前置声明</span>
+<span class="token keyword">class</span> <span class="token class-name">Address</span><span class="token punctuation">;</span>		<span class="token comment">//Address的前置声明</span>
 
-class Persion&#123;	//像这样使用pimpl的类，往往被称为Handle classes
-public:
-  ...
-  std::string name() const;
-  ...
-private:
-  std::tr1::shared_ptr&lt;PersonImpl&gt; pImpl;
-&#125;;
-</code></pre>
+<span class="token keyword">class</span> <span class="token class-name">Persion</span><span class="token punctuation">&#123;</span>	<span class="token comment">//像这样使用pimpl的类，往往被称为Handle classes</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  std<span class="token double-colon punctuation">::</span>string <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+  std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span>shared_ptr<span class="token operator">&lt;</span>PersonImpl<span class="token operator">></span> pImpl<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>在这种设计下，<code>Person</code>就与<code>Data</code>、<code>Address</code>以及<code>Persons</code>的实现分离了，改动这些类也不会导致使用<code>Person</code>的客户重新编译，客户无法看到<code>Person</code>的实现细节，真正实现<strong>接口与实现分离</strong></p>
 <p>这个操作的本质是用<strong>声明的依赖性</strong>替换<strong>定义的依赖性</strong></p>
 <p>此外最好为声明式和定义式提供不同的文件，比如把声明放在一个头文件中，引用这个头文件就可以快速引入多个声明</p>
 <p>此外还有另一种制作<code>Handle class</code>的方法，就是令<code>Person</code>成为一个特殊的抽象基类，称为<code>Interface class</code>，这个类没有成员变量，没有构造函数，单纯描述了几个纯虚函数和一个virtual析构函数。从功能上很接近C#、Java的Interfaces，但是更有弹性（比如可以在其中实现成员变量和成员函数）</p>
-<pre><code class="language-c++">class Person&#123;		//Interface class
-public:
-  virtual ~Person();
-  virtual std::string name() const = 0;
-  ...
-&#125;;
-class Person&#123;		//具现化
-public:
-  static std::tr1::shared_ptr&lt;Person&gt; create(const std::string&amp; name...);
-  ...
-&#125;;
-...
-//使用
-std::tr1::shared_ptr&lt;Person&gt; pp(Person::create(name...));
-std::cout &lt;&lt; pp-&gt;name();
-</code></pre>
-<pre><code class="language-c++">class RealPerson: public Person&#123;	
-public:
-  RealPerson(const std::string&amp; name, ...): theName(name), ...&#123;&#125;
-  virtual ~RealPerson() &#123;&#125;
-  std::string name() const;		
-  ...
-private:
-	std::string theName;
-&#125;;
-std::string ReakPerson::name()&#123;...&#125;
-std::tr1::shared_ptr&lt;Person&gt; Person::create(const std::string&amp; name, ...)&#123;
-  retrun std::tr1::shared_ptr&lt;Person&gt;(new RealPerson(name, ...));
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">&#123;</span>		<span class="token comment">//Interface class</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token base-clause"><span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><span class="token punctuation">;</span>
+  <span class="token keyword">virtual</span> std<span class="token double-colon punctuation">::</span>string <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">&#123;</span>		<span class="token comment">//具现化</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span>shared_ptr<span class="token operator">&lt;</span>Person<span class="token operator">></span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> name<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token comment">//使用</span>
+std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span>shared_ptr<span class="token operator">&lt;</span>Person<span class="token operator">></span> <span class="token function">pp</span><span class="token punctuation">(</span><span class="token class-name">Person</span><span class="token double-colon punctuation">::</span><span class="token function">create</span><span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> pp<span class="token operator">-></span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">RealPerson</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Person</span></span><span class="token punctuation">&#123;</span>	
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">RealPerson</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> name<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">theName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">RealPerson</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  std<span class="token double-colon punctuation">::</span>string <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>		
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	std<span class="token double-colon punctuation">::</span>string theName<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>string <span class="token class-name">ReakPerson</span><span class="token double-colon punctuation">::</span><span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span>shared_ptr<span class="token operator">&lt;</span>Person<span class="token operator">></span> <span class="token class-name">Person</span><span class="token double-colon punctuation">::</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string<span class="token operator">&amp;</span> name<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  retrun std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">shared_ptr</span><span class="token generic class-name"><span class="token operator">&lt;</span>Person<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">RealPerson</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <h2 id="六：继承与面向对象">六：继承与面向对象</h2>
 <ul>
 <li><code>is-a</code>：是一个</li>
@@ -3297,8 +3252,7 @@ std::tr1::shared_ptr&lt;Person&gt; Person::create(const std::string&amp; name, .
 <li><code>is-implemented-in-terms-of</code>：根据xx实现出</li>
 </ul>
 <h3 id="public继承是is-a关系">public继承是is-a关系</h3>
-<pre><code class="language-c++">class Student: public Person&#123;...&#125;;	//Student is a Person
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Student</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Person</span></span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>	<span class="token comment">//Student is a Person</span></code></pre>
 <p>每个学生都是人，但每个人不一定是学生，人这个概念更一般化，学生这个概念更特殊化</p>
 <p><strong>public继承下，可以把子类当父类用</strong>，毕竟需要人的地方绝对可以接受一个学生，父类的函数可以对子类使用</p>
 <p>这就出现了一个问题，子类一定要<code>is a</code>父类，不然会出现问题</p>
@@ -3308,70 +3262,66 @@ std::tr1::shared_ptr&lt;Person&gt; Person::create(const std::string&amp; name, .
 <li>正方形是矩形的特例，矩形可以自由调整长宽，所以正方形也可以自由调整长宽？</li>
 </ul>
 <h3 id="避免遮掩父类成员">避免遮掩父类成员</h3>
-<pre><code class="language-c++">int x;
-void Fun()&#123;
-    double x;
-    ...
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">Fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">double</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>由于<strong>作用域</strong>的<strong>名称遮掩规则</strong>，函数内部的local变量x覆盖了全局变量x</p>
 <h4 id="子类名称会遮掩父类名称，在public继承下是错误的">子类名称会遮掩父类名称，在public继承下是错误的</h4>
 <p>在OOP中，如果子类重载了父类的<code>non-virtual</code>函数，就意味着子类使用同名函数遮掩了父类函数，就意味着<strong>这个父类函数没有被子类继承！</strong>，那么在这种情况下，继承就不是<code>is-a</code>关系了</p>
 <p><strong>在public继承下，子类继承了父类的一切</strong></p>
-<pre><code class="language-c++">class Base&#123;
-public:
-    virtual void f1() = 0;
-    virtual void f1(int);
-    void f2();
-    void f2(double);
-    ...
-private:
-    int x;
-&#125;;
-class Derived: public Base&#123;
-public:
-    virtual void f1();
-    void f2();
-&#125;;
-...
-Derived d;
-int x;
-d.f1();		//正确，调用Derived::f1
-d.f1(x);	//错误，因为Derived::f1遮掩了Base::f1，而Derived::f1中没有f1(int)
-d.f2();		//正确，调用Derived::f2
-d.f2(x);	//错误，因为Derived::f2遮掩了Base::f2，而Derived::f2中没有f2(double)
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Derived d<span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">;</span>
+d<span class="token punctuation">.</span><span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//正确，调用Derived::f1</span>
+d<span class="token punctuation">.</span><span class="token function">f1</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//错误，因为Derived::f1遮掩了Base::f1，而Derived::f1中没有f1(int)</span>
+d<span class="token punctuation">.</span><span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//正确，调用Derived::f2</span>
+d<span class="token punctuation">.</span><span class="token function">f2</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//错误，因为Derived::f2遮掩了Base::f2，而Derived::f2中没有f2(double)</span></code></pre>
 <h4 id="将被遮掩的名称重见天日">将被遮掩的名称重见天日</h4>
 <p>解决起来很简单，只需要让父类的函数在子类作用域内可见，可以<strong>使用using关键字</strong></p>
-<pre><code class="language-c++">class Derived: public Base&#123;
-public:
-    using Base::f1;
-    using Base::f2;
-    virtual void f1();
-    void f2();
-&#125;;
-...
-Derived d;
-int x;
-d.f1();		//正确，调用Derived::f1
-d.f1(x);	//正确，调用Base::f1
-d.f2();		//正确，调用Derived::f2
-d.f2(x);	//正确，调用Base::f2
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">using</span> Base<span class="token double-colon punctuation">::</span>f1<span class="token punctuation">;</span>
+    <span class="token keyword">using</span> Base<span class="token double-colon punctuation">::</span>f2<span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Derived d<span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">;</span>
+d<span class="token punctuation">.</span><span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//正确，调用Derived::f1</span>
+d<span class="token punctuation">.</span><span class="token function">f1</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//正确，调用Base::f1</span>
+d<span class="token punctuation">.</span><span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//正确，调用Derived::f2</span>
+d<span class="token punctuation">.</span><span class="token function">f2</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//正确，调用Base::f2</span></code></pre>
 <p>如果是private继承，子类只继承了父类的一部分，如果子类只想要父类的某一个函数，可以<strong>使用转交函数</strong>，这对象的作用就是不使用using关键字，实现让父类函数出现在子类作用域中</p>
-<pre><code class="language-c++">class Derived: private Base&#123;
-public:
-    virtual void f1()&#123;
-        Base::f1();		//inline转交函数
-    &#125;
-    ...
-&#125;;
-...
-Derived d;
-int x;
-d.f1();		//正确，调用Derived::f1
-d.f1(x);	//错误，因为Derived::f1遮掩了Base::f1
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">private</span> <span class="token class-name">Base</span></span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">Base</span><span class="token double-colon punctuation">::</span><span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//inline转交函数</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Derived d<span class="token punctuation">;</span>
+<span class="token keyword">int</span> x<span class="token punctuation">;</span>
+d<span class="token punctuation">.</span><span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//正确，调用Derived::f1</span>
+d<span class="token punctuation">.</span><span class="token function">f1</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//错误，因为Derived::f1遮掩了Base::f1</span></code></pre>
 <h3 id="区分接口继承和实现继承">区分接口继承和实现继承</h3>
 <p>public继承分为两个部分</p>
 <ul>
@@ -3407,99 +3357,93 @@ d.f1(x);	//错误，因为Derived::f1遮掩了Base::f1
 <h3 id="考虑使用virtual以外的选择">考虑使用virtual以外的选择</h3>
 <h4 id="基于NVI的Template-Method模式">基于NVI的Template Method模式</h4>
 <p>Non-Virtual Interface（NVI）流派主张virtual函数应该为private类型，让客户使用public non-virtual成员函数间接调用virtual函数</p>
-<pre><code class="language-c++">class GameCharacter&#123;
-public：
-    int healthValue() const
-	&#123;
-    	...
-    	int retVal = doHealthValue();
-    	...
-    	return retVal;
-	&#125;
-private：
-    virtual int doHealthValue() const
-    &#123;
-		...
-    &#125;
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span>：
+    <span class="token keyword">int</span> <span class="token function">healthValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
+	<span class="token punctuation">&#123;</span>
+    	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    	<span class="token keyword">int</span> retVal <span class="token operator">=</span> <span class="token function">doHealthValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    	<span class="token keyword">return</span> retVal<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span>：
+    <span class="token keyword">virtual</span> <span class="token keyword">int</span> <span class="token function">doHealthValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
+    <span class="token punctuation">&#123;</span>
+		<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>其中<code>healthValue()</code>被称为virtual函数的<strong>外覆器（wrapper）</strong></p>
 <h4 id="基于函数指针的Strategy模式">基于函数指针的Strategy模式</h4>
-<pre><code class="language-c++">class GameCharacter;
-int defaultHealthCalc(const GameCharacter&amp; gc);
-class GameCharacter&#123;
-public:
-    typedef int (*HealthCalcFunc)(const GameCharacter&amp;);
-    explicit GameCharacter(HealthCalcFunc hcf = defaultHealthCalc): healthFunc(hcf)&#123;&#125;
-    int healthValue() const &#123; return healthFunc(*this); &#125;
-    ...
-private:
-    HealthCalcFunc healthFunc;
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">defaultHealthCalc</span><span class="token punctuation">(</span><span class="token keyword">const</span> GameCharacter<span class="token operator">&amp;</span> gc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>HealthCalcFunc<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> GameCharacter<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">explicit</span> <span class="token function">GameCharacter</span><span class="token punctuation">(</span>HealthCalcFunc hcf <span class="token operator">=</span> defaultHealthCalc<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">healthFunc</span><span class="token punctuation">(</span>hcf<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> <span class="token function">healthValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token function">healthFunc</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    HealthCalcFunc healthFunc<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>在这种模式下，<code>defaultHealthCalc</code>函数不再是<code>GameCharacter</code>体系内的成员函数，通过修改函数指针，就可以让<code>GameCharacter</code>使用不同种类的计算函数，弹性更强，而且可以在运行时变更</p>
 <p>此外<code>defaultHealthCalc</code>函数不需要/不能访问<code>GameCharacter</code>内的<code>non-public</code>部分，</p>
 <h4 id="基于tr1-function的Strategy模式">基于tr1::function的Strategy模式</h4>
 <p>上面使用函数指针，是为了将函数变成某个类似于函数的东西，比如函数指针，比如<code>tr1::function</code>对象</p>
-<pre><code class="language-c++">class GameCharacter;
-int defaultHealthCalc(const GameCharacter&amp; gc);
-class GameCharacter&#123;
-public:
-    typedef std::tr1::function&lt;int (const GameCharacter&amp;)&gt; HealthCalcFunc;
-    explicit GameCharacter(HealthCalcFunc hcf = defaultHealthCalc): healthFunc(hcf)&#123;&#125;
-    int healthValue() const &#123; return healthFunc(*this); &#125;
-    ...
-private:
-    HealthCalcFunc healthFunc;
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">defaultHealthCalc</span><span class="token punctuation">(</span><span class="token keyword">const</span> GameCharacter<span class="token operator">&amp;</span> gc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">typedef</span> std<span class="token double-colon punctuation">::</span>tr1<span class="token double-colon punctuation">::</span>function<span class="token operator">&lt;</span><span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token keyword">const</span> GameCharacter<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token operator">></span> HealthCalcFunc<span class="token punctuation">;</span>
+    <span class="token keyword">explicit</span> <span class="token function">GameCharacter</span><span class="token punctuation">(</span>HealthCalcFunc hcf <span class="token operator">=</span> defaultHealthCalc<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">healthFunc</span><span class="token punctuation">(</span>hcf<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> <span class="token function">healthValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token function">healthFunc</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    HealthCalcFunc healthFunc<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h4 id="古典的Strategy模式">古典的Strategy模式</h4>
-<pre><code class="language-c++">class GameCharacter;
-class HealthCalcFunc&#123;
-public:
-    ...
-    virtual int calc(const GameCharacter&amp; gc) const&#123;...&#125;
-    ...
-&#125;;
-HealthCalcFunc defaultHealthCalc;
-class GameCharacter&#123;
-public:
-    explicit GameCharacter(HealthCalcFunc* phcf = &amp;defaultHealthCalc): pHealthFunc(phcf)&#123;&#125;
-    int healthValue() const &#123; return phealthFunc-&gt;calc(*this); &#125;
-    ...
-private:
-    HealthCalcFunc* pHealthFunc;
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">HealthCalcFunc</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">int</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token keyword">const</span> GameCharacter<span class="token operator">&amp;</span> gc<span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+HealthCalcFunc defaultHealthCalc<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">GameCharacter</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">explicit</span> <span class="token function">GameCharacter</span><span class="token punctuation">(</span>HealthCalcFunc<span class="token operator">*</span> phcf <span class="token operator">=</span> <span class="token operator">&amp;</span>defaultHealthCalc<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">pHealthFunc</span><span class="token punctuation">(</span>phcf<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> <span class="token function">healthValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> phealthFunc<span class="token operator">-></span><span class="token function">calc</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    HealthCalcFunc<span class="token operator">*</span> pHealthFunc<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h3 id="绝不重新定义继承而来的non-virtual函数">绝不重新定义继承而来的non-virtual函数</h3>
 <ul>
 <li>静态绑定（staticcally bound）：non-virtual就是这种</li>
 <li>动态绑定（dynamically bound）：virtual就是这种</li>
 </ul>
-<pre><code class="language-c++">class B&#123;
-public:
-	void f();
-	...
-&#125;;
-class D: public B&#123;
-public:
-  void f();
-  ...
-&#125;;
-...
-D x;
-B* pB = &amp;x;
-D* pD = &amp;x;
-pB-&gt;f();	//调用B::f
-pD-&gt;f();	//调用D::f
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+D x<span class="token punctuation">;</span>
+B<span class="token operator">*</span> pB <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+D<span class="token operator">*</span> pD <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+pB<span class="token operator">-></span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用B::f</span>
+pD<span class="token operator">-></span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用D::f</span></code></pre>
 <h3 id="绝对不重新定义继承而来的缺省参数值">绝对不重新定义继承而来的缺省参数值</h3>
 <p><strong>virtual函数是动态绑定的，缺省参数值是静态绑定的</strong></p>
-<pre><code class="language-c++">class Cricle: public Shape&#123;...&#125;;
-...
-Shape* p1;	//p1的静态类型是Shape*，没有动态类型
-Shape* p2 = new Circle;	//p2的静态类型是Shape*，动态类型是Circle*
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Cricle</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Shape</span></span><span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Shape<span class="token operator">*</span> p1<span class="token punctuation">;</span>	<span class="token comment">//p1的静态类型是Shape*，没有动态类型</span>
+Shape<span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token keyword">new</span> Circle<span class="token punctuation">;</span>	<span class="token comment">//p2的静态类型是Shape*，动态类型是Circle*</span></code></pre>
 <ul>
 <li>静态类型
 <ul>
@@ -3575,75 +3519,72 @@ Shape* p2 = new Circle;	//p2的静态类型是Shape*，动态类型是Circle*
 <li>OOP中经常使用显式接口和运行时多态</li>
 <li>泛型编程更多使用隐式接口和编译期多态</li>
 </ul>
-<pre><code class="language-C++">template&lt;typename T&gt;
+<pre class="language-C++" data-language="C++"><code class="language-C++">template&lt;typename T&gt;
 void doProcessing(T&amp; w)
 &#123;
-    if(w.size() &gt; 10 &amp;&amp; w != someNastyWidget)&#123;
+    if(w.size() &gt; 10 &amp;&amp; w !&#x3D; someNastyWidget)&#123;
         T temp(w)
         temp.normalize();
         temp.swap(w);
     &#125;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <p>从这个例子来看，t的类型应该必须支持size、normalize、swap等函数，这些函数就是一组<strong>隐式接口</strong></p>
 <p>所有涉及t的函数调用，都有可能造成template的具现化（instantiated），使得这些调用能够成功</p>
 <p>这种具现化行为出现在编译期，”以不同的template参数具现化function template“会导致调用不同的函数，这就是<strong>编译期多态</strong></p>
 <h3 id="Traits">Traits</h3>
 <p>一种约定俗成的技术方案，为同一类数据提供统一的操作函数</p>
 <p>比如我们想实现一个通用的decode()，我们不可能每自定义一个类，就重载一次函数，我们可以使用模板来实现。</p>
-<pre><code class="language-C++">enum Type&#123;
+<pre class="language-C++" data-language="C++"><code class="language-C++">enum Type&#123;
     TYPE_1;
     TYPE_2;
 &#125;;
 class FOO&#123;
-    Type type = Type::TYPE_1;
+    Type type &#x3D; Type::TYPE_1;
 &#125;;
 class Bar&#123;
-    Type type = Type::TYPE_2;
+    Type type &#x3D; Type::TYPE_2;
 &#125;;
-//统一的模板函数
+&#x2F;&#x2F;统一的模板函数
 template&lt;typename T&gt;
 void decode(const T&amp; data, char* buf)&#123;
-    if(T::type == Type::TYPE_1)&#123;
+    if(T::type &#x3D;&#x3D; Type::TYPE_1)&#123;
         ...
     &#125;
-    else if(T::type == Type::TYPE_2)&#123;
+    else if(T::type &#x3D;&#x3D; Type::TYPE_2)&#123;
         ...
     &#125;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <p>但是对于系统内置的变量，我们无法对其进行修改，于是我们引入了traits技术</p>
-<pre><code class="language-C++">enum Type&#123;
+<pre class="language-C++" data-language="C++"><code class="language-C++">enum Type&#123;
     TYPE_1;
     TYPE_2;
 &#125;;
 class FOO&#123;
-    Type type = Type::TYPE_1;
+    Type type &#x3D; Type::TYPE_1;
 &#125;;
 class Bar&#123;
-    Type type = Type::TYPE_2;
+    Type type &#x3D; Type::TYPE_2;
 &#125;;
 
 template&lt;typename T&gt;
 struct type_traits&#123;
-    Type type = T::type;
+    Type type &#x3D; T::type;
 &#125;
-//为内置数据类型特化为独有的 type_traits
+&#x2F;&#x2F;为内置数据类型特化为独有的 type_traits
 template&lt;typename int&gt;
 struct type_traits&#123;
-    Type type = Type::TYPE_1;
+    Type type &#x3D; Type::TYPE_1;
 &#125;
-//统一的模板函数
+&#x2F;&#x2F;统一的模板函数
 template&lt;typename T&gt;
 void decode(const T&amp; data, char* buf)&#123;
-    if(type_traits&lt;T&gt;::type == Type::TYPE_1)&#123;
+    if(type_traits&lt;T&gt;::type &#x3D;&#x3D; Type::TYPE_1)&#123;
         ...
     &#125;
-    else if(type_traits&lt;T&gt;::type == Type::TYPE_2)&#123;
+    else if(type_traits&lt;T&gt;::type &#x3D;&#x3D; Type::TYPE_2)&#123;
         ...
     &#125;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <p>该技术使得类型测试在编译期可用，将类型测试放在编译期，可以使得测试代码不进入可执行文件中，这也就是将类型测试的工作量从运行时转到编译期，这也就是为什么TMP能以牺牲编译时长为代价，提高代码运行效率的原因</p>
 <h3 id="模板元编程">模板元编程</h3>
 <p>TMP是一个函数式语言，这类语言经常使用递归。函数式语言的递归不涉及函数调用，而是递归模板具现化</p>
@@ -3654,25 +3595,24 @@ void decode(const T&amp; data, char* buf)&#123;
 <li>递归</li>
 </ol>
 <h4 id="数值运算-递归">数值运算+递归</h4>
-<pre><code class="language-C++">//一个TMP计算阶乘，而且阶乘的技术发生在编译期
+<pre class="language-C++" data-language="C++"><code class="language-C++">&#x2F;&#x2F;一个TMP计算阶乘，而且阶乘的技术发生在编译期
 template&lt;unsigned n&gt;
 struct Factorial
 &#123;
-    enum &#123; value = n * Factorial&lt;n-1&gt;::value &#125;;
+    enum &#123; value &#x3D; n * Factorial&lt;n-1&gt;::value &#125;;
 &#125;;
 template&lt;&gt;
 struct Factorial&lt;0&gt;
 &#123;
-    enum &#123; value = 1 &#125;;
+    enum &#123; value &#x3D; 1 &#125;;
 &#125;;
 
 int main()
 &#123;
     std::cout &lt;&lt; Factorial&lt;5&gt;::value;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <p>C++11TMP这种函数式编程得到了加强，上文也可以这样写</p>
-<pre><code class="language-C++">template&lt;unsigned n&gt;
+<pre class="language-C++" data-language="C++"><code class="language-C++">template&lt;unsigned n&gt;
 struct Factorial
 &#123;
     constexpr static auto value&#123; n * Factorial&lt;n - 1&gt;::value &#125;;
@@ -3680,75 +3620,70 @@ struct Factorial
 template&lt;&gt;
 struct Factorial&lt;0&gt;
 &#123;
-    constexpr static auto value = 1;
-&#125;;
-</code></pre>
+    constexpr static auto value &#x3D; 1;
+&#125;;</code></pre>
 <h4 id="判断">判断</h4>
-<pre><code class="language-C++">template&lt;bool Value&gt;
+<pre class="language-C++" data-language="C++"><code class="language-C++">template&lt;bool Value&gt;
 struct if_constexpr
 &#123;
-    constexpr static auto value = 1;
+    constexpr static auto value &#x3D; 1;
 &#125;;
 
 template&lt;&gt;
 struct if_constexpr&lt;false&gt; &#123;
-    constexpr static auto value = 2;
+    constexpr static auto value &#x3D; 2;
 &#125;;
 
 int main()
 &#123;
     std::cout &lt;&lt; if_constexpr&lt;true&gt;::value &lt;&lt; std::endl;
     std::cout &lt;&lt; if_constexpr&lt;false&gt;::value &lt;&lt; std::endl;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <h3 id="typedef">typedef</h3>
 <p>在泛型编程中，typedef也很常用，他的作用很多，其中有一个是为复杂声明定义一个简单的别名</p>
 <p>下面是一个函数指针的示例</p>
-<pre><code class="language-C++">void add(int x, int y) &#123;
-    std::cout &lt;&lt; &quot;x+y=&quot; &lt;&lt; x + y &lt;&lt; std::endl;
+<pre class="language-C++" data-language="C++"><code class="language-C++">void add(int x, int y) &#123;
+    std::cout &lt;&lt; &quot;x+y&#x3D;&quot; &lt;&lt; x + y &lt;&lt; std::endl;
 &#125;
 void dec(int x, int y) &#123;
-    std::cout &lt;&lt; &quot;x-y=&quot; &lt;&lt; x - y &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;x-y&#x3D;&quot; &lt;&lt; x - y &lt;&lt; std::endl;
 &#125;
 void mul(int x, int y) &#123;
-    std::cout &lt;&lt; &quot;x*y=&quot; &lt;&lt; x*y &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;x*y&#x3D;&quot; &lt;&lt; x*y &lt;&lt; std::endl;
 &#125;
 
-void (*op[3])(int, int) = &#123; add, dec, mul &#125;;
+void (*op[3])(int, int) &#x3D; &#123; add, dec, mul &#125;;
 
 int main()
 &#123;
-    for (int i = 0; i &lt; 3; ++i) &#123;
+    for (int i &#x3D; 0; i &lt; 3; ++i) &#123;
         （*op[i])(4, 3);
     &#125;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <p>如果使用typedef</p>
-<pre><code class="language-C++">typedef void (*Func[3])(int, int);
-Func f = &#123; add, dec, mul &#125;;
+<pre class="language-C++" data-language="C++"><code class="language-C++">typedef void (*Func[3])(int, int);
+Func f &#x3D; &#123; add, dec, mul &#125;;
 
 int main()
 &#123;
-    for (int i = 0; i &lt; 3; ++i) &#123;
+    for (int i &#x3D; 0; i &lt; 3; ++i) &#123;
         f[i](4, 3);
     &#125;
-&#125;
-</code></pre>
+&#125;</code></pre>
 <h2 id="八：定制new和delete">八：定制new和delete</h2>
 <p>Java和C#等语言有自己内置的GC，但C++必须手动管理内存，这虽然麻烦，但是值得，尤其是一些设计苛刻的项目</p>
 <h3 id="new-handler">new-handler</h3>
 <p>当<code>operator new</code>无法分配内存时，会抛异常。在其抛异常前，会调用一个错误处理函数来处理内存不足的问题，即<code>new-handler</code></p>
 <p>使用<code>set_new_handler</code>来指定<code>new-handler</code></p>
-<pre><code class="language-c++">void outOfMem()&#123;
-  std::cerr &lt;&lt; &quot;内存不足\n&quot;;
-  std::abort();
-&#125;
-int main()&#123;
-  std::set_new_handler(outOfMem);		//该函数的参数是一个函数指针
-  int* array = new int[10000000L];
-  ...
-&#125;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">outOfMem</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>cerr <span class="token operator">&lt;&lt;</span> <span class="token string">"内存不足\n"</span><span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span><span class="token function">abort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span><span class="token function">set_new_handler</span><span class="token punctuation">(</span>outOfMem<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//该函数的参数是一个函数指针</span>
+  <span class="token keyword">int</span><span class="token operator">*</span> array <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">10000000L</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>当<code>operator new</code>无法满足内存申请时，会不断调用<code>new-handler</code>函数，直到找到足够的内存，所以<code>new-handler</code>函数应该满足</p>
 <ul>
 <li>让更多的内存可被使用
@@ -3777,51 +3712,47 @@ int main()&#123;
 </ul>
 </li>
 </ul>
-<pre><code class="language-c++">class NewHandlerHolder&#123;
-public:
-  explicit NewHandlerHolder(std::new_handler nh): handler(nh) &#123;&#125;	//获取当前的new_handler
-  ~NewHandlerHolder() &#123; std::set_new_handler(handler); &#125;	
-private:
-  std::new_handler handler;		//用于记录当前的new_handler
-&#125;;
-void* Widget::operator new(std::size_t size) throw(std::bad_alloc)&#123;
-  NewHandlerHolder h(std::set_new_handler(currentHandler));	//安装Widget的new-handler
-  return ::operator new(size);	//分配对象或者抛异常
-&#125;
-//离开这个函数的声明周期时，NewHandlerHolder被析构，new-handler恢复之前的值
-</code></pre>
-<pre><code class="language-c++">void outOfMem();
-Widget::set_new_handler(outOfMem);
-Widget* pwl = new Widget;	//内存不足时会调用outOfMem
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">NewHandlerHolder</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">explicit</span> <span class="token function">NewHandlerHolder</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>new_handler nh<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">handler</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>	<span class="token comment">//获取当前的new_handler</span>
+  <span class="token operator">~</span><span class="token function">NewHandlerHolder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> std<span class="token double-colon punctuation">::</span><span class="token function">set_new_handler</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>	
+<span class="token keyword">private</span><span class="token operator">:</span>
+  std<span class="token double-colon punctuation">::</span>new_handler handler<span class="token punctuation">;</span>		<span class="token comment">//用于记录当前的new_handler</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span><span class="token operator">*</span> Widget<span class="token double-colon punctuation">::</span><span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>size_t size<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>bad_alloc<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  NewHandlerHolder <span class="token function">h</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">set_new_handler</span><span class="token punctuation">(</span>currentHandler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//安装Widget的new-handler</span>
+  <span class="token keyword">return</span> <span class="token double-colon punctuation">::</span><span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//分配对象或者抛异常</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//离开这个函数的声明周期时，NewHandlerHolder被析构，new-handler恢复之前的值</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">outOfMem</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Widget</span><span class="token double-colon punctuation">::</span><span class="token function">set_new_handler</span><span class="token punctuation">(</span>outOfMem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Widget<span class="token operator">*</span> pwl <span class="token operator">=</span> <span class="token keyword">new</span> Widget<span class="token punctuation">;</span>	<span class="token comment">//内存不足时会调用outOfMem</span></code></pre>
 <p>mixin风格的写法</p>
-<pre><code class="language-c++">template&lt;typename T&gt;
-class NewHandlerSupport&#123;
-public:
-  static std::new_handler_set set_new_handler(std::new_handler p) throw();
-  static void* operator new(std::size_t size) throw(std::bad_alloc);
-  ...
-private:
-  static std::new_handler currentHandler;
-&#125;;
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">class</span> <span class="token class-name">NewHandlerSupport</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>new_handler_set <span class="token function">set_new_handler</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>new_handler p<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">static</span> <span class="token keyword">void</span><span class="token operator">*</span> <span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>size_t size<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>bad_alloc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+  <span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>new_handler currentHandler<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-template&lt;typename T&gt;
-std::new_handler NewHandlerSupport&lt;T&gt;::set_new_handler(std::new_handler p) throw()&#123;
-  std::new_handler oldHandler = currentHandler;
-  currentHandler = p;
-  return oldHandler;
-&#125;
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+std<span class="token double-colon punctuation">::</span>new_handler <span class="token class-name">NewHandlerSupport</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token double-colon punctuation">::</span><span class="token function">set_new_handler</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>new_handler p<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>new_handler oldHandler <span class="token operator">=</span> currentHandler<span class="token punctuation">;</span>
+  currentHandler <span class="token operator">=</span> p<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> oldHandler<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-template&lt;typename T&gt;
-void* NewHandlerSupport&lt;T&gt;::operator new(std::size_t size) throw(std::bad_alloc)&#123;
-  NewHandlerHolder h(std::set_new_handler(currentHandler));
-  return ::operator new(size);
-&#125;
-</code></pre>
-<pre><code class="language-c++">class Widget: public NewHandlerSupport&lt;Widget&gt;&#123;
-	...
-&#125;;
-</code></pre>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">void</span><span class="token operator">*</span> NewHandlerSupport<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token double-colon punctuation">::</span><span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>size_t size<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>bad_alloc<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  NewHandlerHolder <span class="token function">h</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">set_new_handler</span><span class="token punctuation">(</span>currentHandler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token double-colon punctuation">::</span><span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">NewHandlerSupport</span><span class="token operator">&lt;</span><span class="token class-name">Widget</span><span class="token operator">></span></span><span class="token punctuation">&#123;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>像这样，一个类继承于一个模版基类，而且这个模版基类以这个类作为类型参数，被称为<strong>怪异的循环模版模式（curiously recurring template pattern，CRTP）</strong></p>
 <h3 id="替换new和delete的时机">替换new和delete的时机</h3>
 <p>C++中所有的news返回的指针都必须要<strong>地址对齐</strong>，int要4对齐，double要8对齐</p>
@@ -3846,48 +3777,41 @@ void* NewHandlerSupport&lt;T&gt;::operator new(std::size_t size) throw(std::bad_
 </li>
 </ul>
 <h3 id="编写new时也要写对应的delete">编写new时也要写对应的delete</h3>
-<pre><code class="language-c++">Widget* pw = new Widget;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">Widget<span class="token operator">*</span> pw <span class="token operator">=</span> <span class="token keyword">new</span> Widget<span class="token punctuation">;</span></code></pre>
 <p>在这里调用了两个函数，一个时用以分配内存的<code>operator new</code>，一个是<code>Widget</code>的构造函数</p>
 <p>如果构造函数调用异常，pw将不会被赋值，客户手中将不会有指针指向之前分配的内存。但如果不释放那个内存，就会导致内存泄漏。所以释放内存是交给C++运行时系统的</p>
 <p>运行时系统会调用<code>operator new</code>所对应的<code>operator delete</code>来释放地址，对于拥有正常签名式的new和delete来说不成问题</p>
-<pre><code class="language-c++">void* operator new(std::size_t) throw(std::bad_alloc);	//普通的new
-void operator delete(void* rawMemory) throw();	//global中的普通的new
-void operator delete(void* rawMemory, std::size_t size) throw();	//class中的new
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span><span class="token operator">*</span> <span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>size_t<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>bad_alloc<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//普通的new</span>
+<span class="token keyword">void</span> <span class="token keyword">operator</span> <span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> rawMemory<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//global中的普通的new</span>
+<span class="token keyword">void</span> <span class="token keyword">operator</span> <span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> rawMemory<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>size_t size<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//class中的new</span></code></pre>
 <p>但当你自定义了一个new，却同时写了一个普通形式的delete，就会出现问题</p>
-<pre><code class="language-c++">void* operator new(std::size_t, void* pMemory) throw();	//placement new，比普通new多带一个参数
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span><span class="token operator">*</span> <span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>size_t<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> pMemory<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//placement new，比普通new多带一个参数</span>
 
-Widget* pw = new (std::cerr) Widget;	//调用operator new，并以cerr作为其实参
-</code></pre>
+Widget<span class="token operator">*</span> pw <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>cerr<span class="token punctuation">)</span> Widget<span class="token punctuation">;</span>	<span class="token comment">//调用operator new，并以cerr作为其实参</span></code></pre>
 <p>当内存分配成功，而构造函数出现异常时，运行时系统有责任取消内存分配，并恢复旧观，但现在运行时系统无法知道真正被调用的<code>operator new</code>时如何运作的，所以运行时系统会去寻找<strong>参数个数与类型</strong>都与<code>operator new</code>相同的某个<code>operator delete</code></p>
-<pre><code class="language-c++">void operator delete(void*, std::ostream&amp;) throw();	//palcement delete
-</code></pre>
-<pre><code class="language-c++">class Widget&#123;
-public:
-  static void* operator new(std::size_t size, std::ostream&amp; logStream) throw(std::bad_alloc);
-  static void operator delete(void* pMemory) throw();
-  static void operator delete(void* pMemoty, std::ostream&amp; logStream) throw();
-  ...
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token keyword">operator</span> <span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>ostream<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//palcement delete</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Widget</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">static</span> <span class="token keyword">void</span><span class="token operator">*</span> <span class="token keyword">operator</span> <span class="token keyword">new</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>size_t size<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>ostream<span class="token operator">&amp;</span> logStream<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>bad_alloc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token keyword">operator</span> <span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> pMemory<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token keyword">operator</span> <span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> pMemoty<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>ostream<span class="token operator">&amp;</span> logStream<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>如果此时调用<code>delete pw</code>，只会调用普通的<code>delete</code>，因为只有在构造时发生异常时，运行时系统才会调用placement delete</p>
 <p>最简单的方式是建立一个base class，令其包含所有正常形式的new和delete，然后继承这个基类，使用using表达式，再扩充new和delete</p>
 <h2 id="九：杂项">九：杂项</h2>
 <h3 id="不要忽视编译器警告">不要忽视编译器警告</h3>
 <p>很多人忽视警告，毕竟一个问题如果真的很严重，应该报错</p>
 <p>比如下面这个错误，虽然只会报一个警告，但会导致错误的程序行为</p>
-<pre><code class="language-c++">class B&#123;
-public:
-  virtual void f() const;
-&#125;;
-class D: public B&#123;
-  virtual void f();
-&#125;;
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span><span class="token punctuation">&#123;</span>
+  <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>报警告</p>
-<pre><code class="language-c++">warning: D::f() hides virtual B::f()
-</code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">warning<span class="token operator">:</span> <span class="token class-name">D</span><span class="token double-colon punctuation">::</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> hides <span class="token keyword">virtual</span> <span class="token class-name">B</span><span class="token double-colon punctuation">::</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>原本的目的是为了在D中重新定义virtual函数<code>f()</code>，但由于B中<code>f()</code>是const，在D中不是，此时B中的<code>f()</code>并没有在D中重新被声明，而是被整个遮掩了</p>
 <h3 id="去熟悉标准程序库">去熟悉标准程序库</h3>
 <p>尤其是TR1</p>
@@ -3948,10 +3872,10 @@ class D: public B&#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-01-31T21:25:57+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-02-01T00:04:23+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jan 31, 2023</p>
+    <p>更新于：Feb 1, 2023</p>
   </a>
 </div>
 
@@ -4034,15 +3958,18 @@ class D: public B&#123;
   
     <div class="prev-next">
       
-        <a class='prev' href='/2023/01/31/hello-world/'>
+        <a class='prev' href='/2023/01/31/hello-world5/'>
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>test</p>
           <p class='content'>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...</p>
         </a>
       
       
-        <a class='next' href='/2023/01/31/hello-world2/'>
-          <p class='title'>test<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...</p>
+        <a class='next' href='/2023/01/31/TA%E9%9D%A2%E8%AF%95%E9%A2%98/'>
+          <p class='title'>TA面试题<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>TA面试题
+这里面不少答案都是我自己凭感觉答的，不保真
+什么是渲染管线
+渲染管线是通过安排CPU发出Draw Call的内容以及顺序，指导GPU进行一系列操作，并协同将开发者期待的图像渲染在屏幕...</p>
         </a>
       
     </div>
@@ -4657,7 +4584,7 @@ class D: public B&#123;
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"http://reuben-sun.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://reuben-sun.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://reuben-sun.github.io/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"http://reuben-sun.github.io/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"http://reuben-sun.github.io/2023/01/31/Effective C++/","name":"Effective C++"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"http://reuben-sun.github.io/","keywords":"reuben computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://reuben-sun.github.io/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"http://reuben-sun.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://reuben-sun.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Effective C++","description":"Reuben的笔记博客","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http://reuben-sun.github.io/2023/01/31/Effective%20C++/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://reuben-sun.github.io/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://reuben-sun.github.io/2023/01/31/Effective%20C++/","wordCount":0,"datePublished":"2023-01-31T02:01:25.000Z","dateModified":"2023-01-31T13:25:57.688Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"http://reuben-sun.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://reuben-sun.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://reuben-sun.github.io/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"http://reuben-sun.github.io/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"http://reuben-sun.github.io/2023/01/31/Effective C++/","name":"Effective C++"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"http://reuben-sun.github.io/","keywords":"reuben computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://reuben-sun.github.io/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"http://reuben-sun.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://reuben-sun.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Effective C++","description":"Reuben的笔记博客","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http://reuben-sun.github.io/2023/01/31/Effective%20C++/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://reuben-sun.github.io/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://reuben-sun.github.io/2023/01/31/Effective%20C++/","wordCount":0,"datePublished":"2023-01-31T02:01:25.000Z","dateModified":"2023-01-31T16:04:23.043Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

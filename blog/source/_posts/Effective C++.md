@@ -55,7 +55,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 
 #### const
 
-```c++
+```cpp
 #define PI 3.1415926
 ```
 
@@ -63,7 +63,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 
 应该改为
 
-```c++
+```cpp
 const double Pi 3.1415926;
 ```
 
@@ -71,13 +71,13 @@ const double Pi 3.1415926;
 
 - 定义常量指针指向char*-based字符串
 
-```c++
+```cpp
 const char* const authorName = "Reuben";
 ```
 
 - 作用域限制在class内的常量，需要让其成为类的一个成员，并且为了让常量至多有一份实体，必须让其成为一个静态成员
 
-```c++
+```cpp
 class GemePlayer{
 private:
 	static const int NumTurns = 5;	//这只是一个声明式
@@ -92,7 +92,7 @@ C++要求我们使用的所有东西都提供一个定义式，但如果不取�
 
 #### enum
 
-```c++
+```cpp
 class GemePlayer{
 private:
 	enum { NumTurns = 5 };
@@ -104,21 +104,21 @@ private:
 
 const在星号左边，被指物是常量
 
-```c++
+```cpp
 char greeting[] = "Hello";
 const char* p = greeting;
 ```
 
 const在星号右边，指针本身是常量
 
-```c++
+```cpp
 char greeting[] = "Hello";
 char* const p = greeting;
 ```
 
 const在星号两边，被指物和指针都是常量
 
-```c++
+```cpp
 char greeting[] = "Hello";
 const char* const p = greeting;
 ```
@@ -146,7 +146,7 @@ C++初始化顺序
 
 - 你可以把copy函数定义为private类型，并不实现他们（甚至参数不需要写参数名）
 
-```c++
+```cpp
 class HomeForSale{
 private:
 	HomeForSale(const HomeForSale&);
@@ -156,7 +156,7 @@ private:
 
 可以制作一个不可被copy的类，让子类继承
 
-```c++
+```cpp
 class Uncopyable{
 protected:
 	Uncopyable(){}
@@ -179,7 +179,7 @@ class HomeForSale: private Uncopyable{
 
 在工厂模式，我们使用工厂函数构造的对象需要适当的delete掉，但是，我们不能依赖客户去使用delete函数，因为他们可能会用错
 
-```c++
+```cpp
 class TimeKeeper{
 public:
 	...
@@ -188,7 +188,7 @@ class AtomicClock: public TimeKeeper {...};
 class WaterClock: public TimeKeeper {...};
 ```
 
-```c++
+```cpp
 TimeKeeper* ptk = getTimeKeeper();		//创建一个动态分配对象
 ...
 delete ptk;	//释放对象，避免资源泄漏
@@ -202,7 +202,7 @@ delete ptk;	//释放对象，避免资源泄漏
 
 解决方法就是给基类一个virtual析构函数
 
-```c++
+```cpp
 class TimeKeeper{
 public:
 	TimeKeeper();
@@ -239,7 +239,7 @@ public:
 
 比较好的方法，这是一个控制数据库连接的函数，关闭连接时要析构相关内容
 
-```c++
+```cpp
 class DBConnevtion{
 public:
     ...
@@ -285,14 +285,14 @@ private:
 
 连续赋值
 
-```c++
+```cpp
 x = y = z = 15;
 //其实就等于x = (y = (z = 15))；
 ```
 
 为了实现来连续赋值，赋值操作符必须返回一个reference，指向操作符左侧实参
 
-```c++
+```cpp
 class Widget{
 public:
     Widget& operator=(const Widget& rhs)
@@ -311,7 +311,7 @@ public:
 
 如果对象自己赋给自己，我们称之为自我赋值
 
-```c++
+```cpp
 w = w;
 a[i] = a[j]; //当i=j时，自我赋值
 *px = *py;	//px和py指向同一个物体时，自我赋值
@@ -323,7 +323,7 @@ a[i] = a[j]; //当i=j时，自我赋值
 2. 令其使用右操作数的副本
 3. 最后返回左操作数
 
-```c++
+```cpp
 class Widget{
     ...
 private:
@@ -341,7 +341,7 @@ Widget& Widget::operator=(const Widget& rhs){
 
 解决方法1：延后delete
 
-```c++
+```cpp
 Widget& Widget::operator=(const Widget& rhs){
     Bitmap* pOrig = pb;
     pb = new Bitmap(*rhs.pb);
@@ -352,7 +352,7 @@ Widget& Widget::operator=(const Widget& rhs){
 
 解决方法2：使用copy and swap技术
 
-```c++
+```cpp
 Widget& Widget::operator=(const Widget& rhs){
     Widget temp(rhs);
     swap(temp);		//令*this与temp交换
@@ -408,21 +408,21 @@ C++的`auto_ptr`是一个**类指针（pointer-like）对象**，也就是**智�
 
 - 如果new了一个数组，就delete一个数组
 
-```c++
+```cpp
 string* ptr1 = new string[100];
 delete [] ptr1;
 ```
 
 - 如果new了一个对象，就delete一个对象
 
-```c++
+```cpp
 string* ptr2 = new string;
 delete ptr2;
 ```
 
 很多时候很难确定当前这个对象是数组还是一个对象
 
-```c++
+```cpp
 typedef string AddressLines[4];
 string* pal = new AddressLines;
 delete [] pal;
@@ -436,7 +436,7 @@ C++中调用一个函数，会先计算每一个传递进去的实参
 
 如果按下面的写法，将newed对象置入智能指针中
 
-```c++
+```cpp
 分配函数(shared_ptr<Widget>(new Widget), 资源访问);		//不要这样写
 ```
 
@@ -452,7 +452,7 @@ C++中调用一个函数，会先计算每一个传递进去的实参
 
 所以简单的方法是分离语句
 
-```c++
+```cpp
 shared_ptr<Widget> pw(new Widget);
 分配函数(pw, 资源访问);
 ```
@@ -467,7 +467,7 @@ shared_ptr<Widget> pw(new Widget);
 
 这是一个日期类
 
-```c++
+```cpp
 class Date{
 public:
   Date(int month, int day, int year);
@@ -481,7 +481,7 @@ Date d(4, 20, 2022);
 
 可以使用**外覆类型（wrapper types）**，当然做出类会更好
 
-```c++
+```cpp
 struct Day{
   explict Day(int d) : val(d) {}
   int val;
@@ -558,7 +558,7 @@ C++默认以值传递的方式传递参数，值传递会创建值的副本（�
 
 这里有一个类，其中有多个成员函数
 
-```c++
+```cpp
 class WebBrowser{
 public:
 	void doA();
@@ -572,7 +572,7 @@ public:
 
 - 成员函数
 
-```c++
+```cpp
 class WebBrowser{
 public:
 	...
@@ -587,7 +587,7 @@ public:
 
 - 非成员函数
 
-```c++
+```cpp
 void doEverything(WebBrowser& wb){
 	wb.doA();
   wb.doB();
@@ -613,7 +613,7 @@ void doEverything(WebBrowser& wb){
 
 或者把相关的非成员函数写在一个namespace里（也可以定义在一个头文件中，这样其他namespace可以选择性使用）
 
-```c++
+```cpp
 namespace WebBrowserStuff{
 	class WebBrowser{...};
 	void doEverything(WebBrowser& wb){...}
@@ -632,7 +632,7 @@ namespace WebBrowserStuff{
 
 比如一个有理数乘法
 
-```c++
+```cpp
 class Rational{
 public:
   //这个类没有自定义的explict构造函数
@@ -641,7 +641,7 @@ public:
 };
 ```
 
-```c++
+```cpp
 Rational oneEighth(1,8);
 Rational oneHalf(1,2);
 Rational result = oneHalf * oneEighth;	//成功
@@ -654,7 +654,7 @@ result = 2 * oneHalf;		//失败，等价于 result = 2.operator*(oneHalf)
 
 在编译器中可能等价于
 
-```c++
+```cpp
 const Rational temp(2);
 result = oneHalf * temp;
 ```
@@ -665,7 +665,7 @@ result = oneHalf * temp;
 
 可以发现，想要实现混合运算，非常麻烦，但是如果把这个运算做成一个非成员函数，会好很多（因为所有的操作数都是参数，都在参数列中，都可以被隐式转换）
 
-```c++
+```cpp
 const Rational operator*(const Rational& lhs, const Rational& rhs){
   return Rational(lhs.numerator() * rhs.numerator(), lhs.denominator() * rhs.denominator());
 }
@@ -684,7 +684,7 @@ std是一个很特殊的命名空间，客户可以**全特化**（total templat
 
 全特化：针对某个类做模板函数的特例，如对`std::swap`做一个针对`Widget`的特化
 
-```c++
+```cpp
 class WidgetImpl{...};		//这个类的对象中存储着真正的数据
 class Widget{
 public:
@@ -739,7 +739,7 @@ namespace std{
 
 **循环内**
 
-```c++
+```cpp
 for(int i = 0; i < n; i++){
   Widget w(...);
   ...
@@ -752,7 +752,7 @@ for(int i = 0; i < n; i++){
 
 **循环外**
 
-```c++
+```cpp
 Widget w;
 for(int i = 0; i < n; i++){
   w = ...;
@@ -806,7 +806,7 @@ Base* b = &d;
 
 如果你想让当前对象调用基类的函数，如果对`*this`做强制转化，转换为基类，`*this`其实是先前产生的`*this`对象的基类部分，这个部分的成员函数可能与当前对象不同，最后导致调用函数出现问题
 
-```c++
+```cpp
 class SpecialWindow: public Window{
 public:
   virtual void onResize(){
@@ -834,7 +834,7 @@ public:
 
 但是如果我们传递出指向对象的指针/引用，即使这个数据是private类型，但这个数据是可以会被修改的
 
-```c++
+```cpp
 class Point{
 public:
   ...
@@ -863,7 +863,7 @@ rec.upperLeft().setX(50);		//rec是一个Rectangle类型，我们发现这里居
 
 解决方法很简单，只要让handles不可以被修改，就可以了
 
-```c++
+```cpp
 class Rectangle{
 public:
   ...
@@ -911,7 +911,7 @@ public:
 
 *话说应该不会有人不知道implementation是实现的意思吧*
 
-```c++
+```cpp
 class PersonImpl;	//pimpl写法，这是Person类的前置声明
 class Data;				//Data的前置声明
 class Address;		//Address的前置声明
@@ -934,7 +934,7 @@ private:
 
 此外还有另一种制作`Handle class`的方法，就是令`Person`成为一个特殊的抽象基类，称为`Interface class`，这个类没有成员变量，没有构造函数，单纯描述了几个纯虚函数和一个virtual析构函数。从功能上很接近C#、Java的Interfaces，但是更有弹性（比如可以在其中实现成员变量和成员函数）
 
-```c++
+```cpp
 class Person{		//Interface class
 public:
   virtual ~Person();
@@ -952,7 +952,7 @@ std::tr1::shared_ptr<Person> pp(Person::create(name...));
 std::cout << pp->name();
 ```
 
-```c++
+```cpp
 class RealPerson: public Person{	
 public:
   RealPerson(const std::string& name, ...): theName(name), ...{}
@@ -976,7 +976,7 @@ std::tr1::shared_ptr<Person> Person::create(const std::string& name, ...){
 
 ### public继承是is-a关系
 
-```c++
+```cpp
 class Student: public Person{...};	//Student is a Person
 ```
 
@@ -993,7 +993,7 @@ class Student: public Person{...};	//Student is a Person
 
 ### 避免遮掩父类成员
 
-```c++
+```cpp
 int x;
 void Fun(){
     double x;
@@ -1009,7 +1009,7 @@ void Fun(){
 
 **在public继承下，子类继承了父类的一切**
 
-```c++
+```cpp
 class Base{
 public:
     virtual void f1() = 0;
@@ -1038,7 +1038,7 @@ d.f2(x);	//错误，因为Derived::f2遮掩了Base::f2，而Derived::f2中没有
 
 解决起来很简单，只需要让父类的函数在子类作用域内可见，可以**使用using关键字**
 
-```c++
+```cpp
 class Derived: public Base{
 public:
     using Base::f1;
@@ -1057,7 +1057,7 @@ d.f2(x);	//正确，调用Base::f2
 
 如果是private继承，子类只继承了父类的一部分，如果子类只想要父类的某一个函数，可以**使用转交函数**，这对象的作用就是不使用using关键字，实现让父类函数出现在子类作用域中
 
-```c++
+```cpp
 class Derived: private Base{
 public:
     virtual void f1(){
@@ -1091,7 +1091,7 @@ public继承分为两个部分
 
 Non-Virtual Interface（NVI）流派主张virtual函数应该为private类型，让客户使用public non-virtual成员函数间接调用virtual函数
 
-```c++
+```cpp
 class GameCharacter{
 public：
     int healthValue() const
@@ -1113,7 +1113,7 @@ private：
 
 #### 基于函数指针的Strategy模式
 
-```c++
+```cpp
 class GameCharacter;
 int defaultHealthCalc(const GameCharacter& gc);
 class GameCharacter{
@@ -1135,7 +1135,7 @@ private:
 
 上面使用函数指针，是为了将函数变成某个类似于函数的东西，比如函数指针，比如`tr1::function`对象
 
-```c++
+```cpp
 class GameCharacter;
 int defaultHealthCalc(const GameCharacter& gc);
 class GameCharacter{
@@ -1151,7 +1151,7 @@ private:
 
 #### 古典的Strategy模式
 
-```c++
+```cpp
 class GameCharacter;
 class HealthCalcFunc{
 public:
@@ -1175,7 +1175,7 @@ private:
 - 静态绑定（staticcally bound）：non-virtual就是这种
 - 动态绑定（dynamically bound）：virtual就是这种
 
-```c++
+```cpp
 class B{
 public:
 	void f();
@@ -1198,7 +1198,7 @@ pD->f();	//调用D::f
 
 **virtual函数是动态绑定的，缺省参数值是静态绑定的**
 
-```c++
+```cpp
 class Cricle: public Shape{...};
 ...
 Shape* p1;	//p1的静态类型是Shape*，没有动态类型
@@ -1476,7 +1476,7 @@ Java和C#等语言有自己内置的GC，但C++必须手动管理内存，这虽
 
 使用`set_new_handler`来指定`new-handler`
 
-```c++
+```cpp
 void outOfMem(){
   std::cerr << "内存不足\n";
   std::abort();
@@ -1501,7 +1501,7 @@ int main(){
 - 不反回
   - 调用`abort`或者`exit`
 
-```c++
+```cpp
 class NewHandlerHolder{
 public:
   explicit NewHandlerHolder(std::new_handler nh): handler(nh) {}	//获取当前的new_handler
@@ -1516,7 +1516,7 @@ void* Widget::operator new(std::size_t size) throw(std::bad_alloc){
 //离开这个函数的声明周期时，NewHandlerHolder被析构，new-handler恢复之前的值
 ```
 
-```c++
+```cpp
 void outOfMem();
 Widget::set_new_handler(outOfMem);
 Widget* pwl = new Widget;	//内存不足时会调用outOfMem
@@ -1524,7 +1524,7 @@ Widget* pwl = new Widget;	//内存不足时会调用outOfMem
 
 mixin风格的写法
 
-```c++
+```cpp
 template<typename T>
 class NewHandlerSupport{
 public:
@@ -1549,7 +1549,7 @@ void* NewHandlerSupport<T>::operator new(std::size_t size) throw(std::bad_alloc)
 }
 ```
 
-```c++
+```cpp
 class Widget: public NewHandlerSupport<Widget>{
 	...
 };
@@ -1578,7 +1578,7 @@ C++中所有的news返回的指针都必须要**地址对齐**，int要4对齐�
 
 ### 编写new时也要写对应的delete
 
-```c++
+```cpp
 Widget* pw = new Widget;
 ```
 
@@ -1588,7 +1588,7 @@ Widget* pw = new Widget;
 
 运行时系统会调用`operator new`所对应的`operator delete`来释放地址，对于拥有正常签名式的new和delete来说不成问题
 
-```c++
+```cpp
 void* operator new(std::size_t) throw(std::bad_alloc);	//普通的new
 void operator delete(void* rawMemory) throw();	//global中的普通的new
 void operator delete(void* rawMemory, std::size_t size) throw();	//class中的new
@@ -1596,7 +1596,7 @@ void operator delete(void* rawMemory, std::size_t size) throw();	//class中的ne
 
 但当你自定义了一个new，却同时写了一个普通形式的delete，就会出现问题
 
-```c++
+```cpp
 void* operator new(std::size_t, void* pMemory) throw();	//placement new，比普通new多带一个参数
 
 Widget* pw = new (std::cerr) Widget;	//调用operator new，并以cerr作为其实参
@@ -1604,11 +1604,11 @@ Widget* pw = new (std::cerr) Widget;	//调用operator new，并以cerr作为其�
 
 当内存分配成功，而构造函数出现异常时，运行时系统有责任取消内存分配，并恢复旧观，但现在运行时系统无法知道真正被调用的`operator new`时如何运作的，所以运行时系统会去寻找**参数个数与类型**都与`operator new`相同的某个`operator delete`
 
-```c++
+```cpp
 void operator delete(void*, std::ostream&) throw();	//palcement delete
 ```
 
-```c++
+```cpp
 class Widget{
 public:
   static void* operator new(std::size_t size, std::ostream& logStream) throw(std::bad_alloc);
@@ -1630,7 +1630,7 @@ public:
 
 比如下面这个错误，虽然只会报一个警告，但会导致错误的程序行为
 
-```c++
+```cpp
 class B{
 public:
   virtual void f() const;
@@ -1642,7 +1642,7 @@ class D: public B{
 
 报警告
 
-```c++
+```cpp
 warning: D::f() hides virtual B::f()
 ```
 
