@@ -5,10 +5,12 @@
 # Site
 title: ReubenSun
 subtitle: ''
-description: ''
+description: 'Reuben的笔记博客'
 author: Reuben Sun
 language: en
 timezone: ''
+favicon: /images/logo.png
+keywords: 'reuben computer graphics engine Technical Artist'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
