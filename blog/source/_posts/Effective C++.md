@@ -5,12 +5,12 @@ title: Effective C++
 # 发布时间
 date: 2023/1/31 10:01:25  
 # 分类
-categories: [Algorithm] 
+categories: [program] 
 # 标签
 tags:
   - C++
 # 作者
-author: Reuben Sun
+#author: Reuben
 # 缩略图
 thumbnail: /images/effectivecxx.png 
 # 显示封面

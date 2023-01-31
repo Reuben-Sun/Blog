@@ -4,13 +4,25 @@
   
     
     <entry>
-      <title>Hello World</title>
+      <title>test</title>
       <link href="/2023/01/31/hello-world/"/>
       <url>/2023/01/31/hello-world/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><p>$\Delta x$<br>$$<br>\lim_{n \rightarrow \infty}s_n=\lim_{n \rightarrow \infty}s_{2n}=s<br>$$</p>]]></content>
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><p>$\Delta x$<br>$$<br>\lim_{n \rightarrow \infty}s_n=\lim_{n \rightarrow \infty}s_{2n}=s<br>$$</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">using</span> <span class="token namespace">System</span><span class="token punctuation">;</span><span class="token keyword">namespace</span> <span class="token namespace">Test</span><span class="token punctuation">&#123;</span>    <span class="token keyword">class</span> <span class="token class-name">MainClass</span>    <span class="token punctuation">&#123;</span>        <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adder</span>        <span class="token punctuation">&#123;</span>            <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">int</span></span> c<span class="token punctuation">;</span>            <span class="token keyword">public</span> <span class="token function">Adder</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> c<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>c <span class="token operator">=</span> c<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>            <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> <span class="token function">Add</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> a<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">int</span></span> b<span class="token punctuation">)</span>            <span class="token punctuation">&#123;</span>                <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c<span class="token punctuation">;</span>            <span class="token punctuation">&#125;</span>        <span class="token punctuation">&#125;</span>        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> args<span class="token punctuation">)</span>        <span class="token punctuation">&#123;</span>            <span class="token class-name">Adder</span> adder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Adder</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token class-name">Func<span class="token punctuation">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">></span></span> method <span class="token operator">=</span> adder<span class="token punctuation">.</span>Add<span class="token punctuation">;</span>            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token punctuation">&#125;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token string">"use strict"</span><span class="token punctuation">;</span><span class="token keyword">const</span> vertex <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">const</span> color <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0.8</span><span class="token punctuation">,</span> <span class="token number">0.8</span><span class="token punctuation">,</span> <span class="token number">0.6</span><span class="token punctuation">]</span><span class="token punctuation">;</span>window<span class="token punctuation">.</span>onload <span class="token operator">=</span> initGL<span class="token punctuation">;</span><span class="token keyword">function</span> <span class="token function">initGL</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token keyword">var</span> _a<span class="token punctuation">,</span> _b<span class="token punctuation">,</span> _c<span class="token punctuation">;</span>    <span class="token keyword">const</span> gl <span class="token operator">=</span> <span class="token punctuation">(</span>_a <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"glcanvas"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> _a <span class="token operator">===</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token operator">:</span> _a<span class="token punctuation">.</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token string">"webgl"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> vsSource <span class="token operator">=</span> <span class="token punctuation">(</span>_b <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"vertex-shader"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> _b <span class="token operator">===</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token operator">:</span> _b<span class="token punctuation">.</span>textContent<span class="token punctuation">,</span> fsSource <span class="token operator">=</span> <span class="token punctuation">(</span>_c <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"fragment-shader"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> _c <span class="token operator">===</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token operator">:</span> _c<span class="token punctuation">.</span>textContent<span class="token punctuation">;</span>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>gl<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'Browser does not support webgl.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token keyword">return</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>vsSource <span class="token operator">&amp;&amp;</span> fsSource<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token keyword">throw</span> <span class="token string">'No shader found.'</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span>    gl<span class="token punctuation">.</span><span class="token function">clearColor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">clearDepth</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span>gl<span class="token punctuation">.</span><span class="token constant">DEPTH_BUFFER_BIT</span> <span class="token operator">|</span> gl<span class="token punctuation">.</span><span class="token constant">COLOR_BUFFER_BIT</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token keyword">const</span> shaderProgram <span class="token operator">=</span> <span class="token function">initShaderProgram</span><span class="token punctuation">(</span>gl<span class="token punctuation">,</span> vsSource<span class="token punctuation">,</span> fsSource<span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">useProgram</span><span class="token punctuation">(</span>shaderProgram<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token keyword">const</span> programInfo <span class="token operator">=</span> <span class="token punctuation">&#123;</span>        <span class="token literal-property property">pos</span><span class="token operator">:</span> gl<span class="token punctuation">.</span><span class="token function">getAttribLocation</span><span class="token punctuation">(</span>shaderProgram<span class="token punctuation">,</span> <span class="token string">"pos"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>        <span class="token literal-property property">color</span><span class="token operator">:</span> gl<span class="token punctuation">.</span><span class="token function">getUniformLocation</span><span class="token punctuation">(</span>shaderProgram<span class="token punctuation">,</span> <span class="token string">"color"</span><span class="token punctuation">)</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>    <span class="token function">initBuffers</span><span class="token punctuation">(</span>gl<span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">vertexAttribPointer</span><span class="token punctuation">(</span>programInfo<span class="token punctuation">.</span>pos<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> gl<span class="token punctuation">.</span><span class="token constant">FLOAT</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">enableVertexAttribArray</span><span class="token punctuation">(</span>programInfo<span class="token punctuation">.</span>pos<span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">uniform3fv</span><span class="token punctuation">(</span>programInfo<span class="token punctuation">.</span>color<span class="token punctuation">,</span> color<span class="token punctuation">)</span><span class="token punctuation">;</span>    gl<span class="token punctuation">.</span><span class="token function">drawArrays</span><span class="token punctuation">(</span>gl<span class="token punctuation">.</span><span class="token constant">TRIANGLES</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">*</span> <span class="token punctuation">&#123;</span>  <span class="token property">box-sizing</span><span class="token punctuation">:</span> border-box<span class="token punctuation">;</span>  <span class="token property">-webkit-box-sizing</span><span class="token punctuation">:</span> border-box<span class="token punctuation">;</span>  <span class="token property">-moz-box-sizing</span><span class="token punctuation">:</span> border-box<span class="token punctuation">;</span>  <span class="token property">outline</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>  <span class="token property">margin</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>  <span class="token property">padding</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
       
       
+      <categories>
+          
+          <category> graphics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
       
     </entry>
     
@@ -26,7 +38,107 @@
       
       <categories>
           
-          <category> Algorithm </category>
+          <category> program </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
+      <link href="/2023/01/31/hello-world2/"/>
+      <url>/2023/01/31/hello-world2/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><p>$\Delta x$<br>$$<br>\lim_{n \rightarrow \infty}s_n=\lim_{n \rightarrow \infty}s_{2n}=s<br>$$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> engine </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
+      <link href="/2023/01/31/hello-world3/"/>
+      <url>/2023/01/31/hello-world3/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><p>$\Delta x$<br>$$<br>\lim_{n \rightarrow \infty}s_n=\lim_{n \rightarrow \infty}s_{2n}=s<br>$$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
+      <link href="/2023/01/31/hello-world4/"/>
+      <url>/2023/01/31/hello-world4/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><p>$\Delta x$<br>$$<br>\lim_{n \rightarrow \infty}s_n=\lim_{n \rightarrow \infty}s_{2n}=s<br>$$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> optics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
+      <link href="/2023/01/31/hello-world5/"/>
+      <url>/2023/01/31/hello-world5/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><p>$\Delta x$<br>$$<br>\lim_{n \rightarrow \infty}s_n=\lim_{n \rightarrow \infty}s_{2n}=s<br>$$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> dcc </category>
           
       </categories>
       

@@ -136,7 +136,7 @@ navbar:
     icon:
     title:
   menu:
-    - name: 博客
+    - name: 主页
       icon: fa-solid fa-rss
       url: /
     - name: 分类
@@ -148,12 +148,12 @@ navbar:
     - name: 归档
       icon: fa-solid fa-archive
       url: archives/
-    - name: 友链
-      icon: fa-solid fa-link
-      url: friends/
-    - name: 关于
-      icon: fa-solid fa-info-circle
-      url: about/
+    #- name: 友链
+      #icon: fa-solid fa-link
+      #url: friends/
+    #- name: 关于
+     # icon: fa-solid fa-info-circle
+      #url: about/
   search: Search...   # Search bar placeholder
 ############################### Navigation Bar ############################### > end
 
@@ -173,34 +173,34 @@ cover:
   subtitle: ''
   search: A Wonderful Theme for Hexo # search bar placeholder
   features:
+    - name: 主页
+      icon: fa-solid fa-house
+      img: #volantis-static/media/twemoji/assets/svg/1f5c3.svg # https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg
+      url: /
     - name: 图形
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f5c3.svg # https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg
-      url: /v4/getting-started/
+      icon: fa-solid fa-images
+      img: #volantis-static/media/twemoji/assets/svg/1f5c3.svg # https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg
+      url: /categories/graphics
     - name: 引擎
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f516.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg
-      url: faqs/
+      icon: fa-solid fa-gear
+      img: #volantis-static/media/twemoji/assets/svg/1f516.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg
+      url: /categories/engine
     - name: 编程
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f396.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg
-      url: /examples/
-    - name: 系统
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f389.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg
-      url: /contributors/
+      icon: fa-solid fa-code
+      img: #volantis-static/media/twemoji/assets/svg/1f396.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg
+      url: /categories/program
     - name: 数学
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f4f0.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg
-      url: /archives/
+      icon: fa-solid fa-plus
+      img: #volantis-static/media/twemoji/assets/svg/1f4f0.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg
+      url: /categories/math
     - name: 光学
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f9ec.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg
-      url: https://github.com/volantis-x/hexo-theme-volantis/
+      icon: fa-solid fa-eye
+      img: #volantis-static/media/twemoji/assets/svg/1f9ec.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg
+      url: /categories/optics
     - name: DCC
-      icon: #
-      img: volantis-static/media/twemoji/assets/svg/1f9ec.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg
-      url: https://github.com/volantis-x/hexo-theme-volantis/
+      icon: fa-solid fa-paint-brush
+      img: #volantis-static/media/twemoji/assets/svg/1f9ec.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg
+      url: /categories/dcc
 ############################### Cover ############################### > end
 
 pages:
@@ -329,7 +329,7 @@ article:
       # https://volantis.js.org/advanced-settings/#多人协同
       author:
         avatar: /images/logo.png 
-        name: 请设置文章作者
+        name: Reuben Sun
         url: /
       # 文章创建日期
       date:
@@ -760,8 +760,8 @@ plugins:
     copy_code: true
     # 如果开启以下配置, hexo.config.highlight.enable 需要设置为 false ; hexo.config.highlight.enable 设置为 true, 则以下配置无效
     # # 不再支持 v11.1.0 以下版本
-    # js: https://unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js # Please set hexo.config.highlight.enable = false !!!
-    # css: https://unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/default.min.css
+    js: https://unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js # Please set hexo.config.highlight.enable = false !!!
+    css: https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.css
     # # # more: https://www.jsdelivr.com/package/npm/@highlightjs/cdn-assets?path=styles
 
   # prismjs
@@ -769,13 +769,14 @@ plugins:
   # https://hexo.io/zh-cn/docs/syntax-highlight#PrismJS
   prismjs:
     copy_code: true
+    line_number: false
     # Please set hexo.config.highlight.enable = false !!! set hexo.config.prismjs.enable = true !!!
     js:
       - https://unpkg.com/prismjs/components/prism-core.min.js
       - https://unpkg.com/prismjs/plugins/autoloader/prism-autoloader.min.js
       - https://unpkg.com/prismjs/plugins/line-numbers/prism-line-numbers.min.js
     css:
-      - https://unpkg.com/prismjs/themes/prism-dark.css
+      - https://unpkg.com/prismjs/themes/prism-tomorrow.css
       - https://unpkg.com/prismjs/plugins/line-numbers/prism-line-numbers.css
 
   # https://scrollrevealjs.org/api/reveal.html
@@ -1236,6 +1237,7 @@ custom_css:
     effect: [shadow, floatable, blur] # [shadow, floatable, blur]
     highlight:
       language: true # show language of codeblock
+      copy_btn: true
       grayscale: false # Enable grayscale effect
     text_align: # left, right, justify, center
       h1: left
