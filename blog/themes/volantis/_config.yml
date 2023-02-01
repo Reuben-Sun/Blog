@@ -382,7 +382,7 @@ article:
 comments:
   title: <i class='fa-solid fa-comments'></i> 评论
   subtitle:
-  service: gitalk
+  service: utterances
   # 可选评论系统 #
 
   # artalk
@@ -443,8 +443,8 @@ comments:
   # utterances
   # https://utteranc.es/
   utterances:
-    repo: xxx/xxx
-    issue-term: pathname
+    repo: Reuben-Sun/reuben-sun.github.io
+    issue-term: title
     issue-number:
     theme:
       light: github-light
