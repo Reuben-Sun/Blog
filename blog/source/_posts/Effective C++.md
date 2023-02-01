@@ -17,6 +17,10 @@ thumbnail: /images/effectivecxx.png
 cover: true
 # 显示目录
 toc: true
+#评论
+gitalk:
+  config:
+    id: /3/
 # 启用插件
 plugins:
   - mathjax

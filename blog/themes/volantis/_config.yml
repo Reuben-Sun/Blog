@@ -382,7 +382,7 @@ article:
 comments:
   title: <i class='fa-solid fa-comments'></i> 评论
   subtitle:
-  service: giscus
+  service: gitalk
   # 可选评论系统 #
 
   # artalk
@@ -474,11 +474,11 @@ comments:
   # https://gitalk.github.io/
   gitalk:
     # 配置项按照yml格式继续填写即可 除了 [id distractionFreeMode] 选项
-    clientID:
-    clientSecret:
-    repo:
-    owner:
-    admin: # []
+    clientID: e0450f8d3d22d8388040
+    clientSecret: d729db3503c84371eddcccda1583f5ce60866317
+    repo: reuben-sun.github.io
+    owner: Reuben-Sun
+    admin: [Reuben-Sun]
     path: # 全局评论地址
 
   # https://vssue.js.org/zh/
