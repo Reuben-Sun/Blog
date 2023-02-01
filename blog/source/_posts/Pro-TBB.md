@@ -534,24 +534,24 @@ void f(PrimesTreeElement::Ptr root){
 $$
 \left[
 \begin{matrix}
-2 & 1 & -1 &|& 8	\\
--3 & -1 & 2 & | & -11 \\
+2 & 1 & -1 &|& 8	\\\\
+-3 & -1 & 2 & | & -11 \\\\
 -2 & 1 & 2 & | & -3
 \end{matrix}
 \right]
 =>
 \left[
 \begin{matrix}
-2 & 1 & -1 &|& 8	\\
-0 & 1/2 & 1/2 & | & 1 \\
+2 & 1 & -1 &|& 8	\\\\
+0 & 1/2 & 1/2 & | & 1 \\\\
 0 & 0 & -1 & | & 1
 \end{matrix}
 \right]
 =>
 \left[
 \begin{matrix}
-1 & 0 & 0 &|& 2	\\
-0 & 1 & 0 & | & 3 \\
+1 & 0 & 0 &|& 2	\\\\
+0 & 1 & 0 & | & 3 \\\\
 0 & 0 & 1 & | & -1
 \end{matrix}
 \right]
@@ -561,35 +561,7 @@ $$
 
 前向替换法就是得到行阶梯矩阵后
 
-
-$$
-\left[
-\begin{matrix}
-a_{11} & 0 & \cdots &  0	\\
-a_{21} & a_{22} & \cdots & 0  \\
-\vdots & \vdots &\ddots & \vdots \\ 
-a_{n1} & a_{n2} &  \cdots & a_{nn}
-\end{matrix}
-\right]
-
-\left[
-\begin{array}{c}
-	x_1\\
-	x_2\\
-	\vdots\\
-	x_n\\
-\end{array}
-\right]
-=
-\left[
-\begin{array}{c}
-	b_1\\
-	b_2\\
-	\vdots\\
-	b_n\\
-\end{array}
-\right]
-$$
+<img src="/images/前向替换.png" alt="前向替换" style="zoom:50%;" />
 
 
 能写出以下式子
@@ -597,9 +569,9 @@ $$
 
 $$
 \begin{cases}	
-x_1 = b_1/a_{11} \\
-x_2 = (b_2-a_{21}x_1)/a_{22}	\\
-\ \vdots	\\
+x_1 = b_1/a_{11} \\\\
+x_2 = (b_2-a_{21}x_1)/a_{22}	\\\\
+\ \vdots	\\\\
 x_n = (b_n -a_{n1}x_1-a_{n2}x_2 - \cdots -a_{nn-1}x_{n-1})/a_{nm}
 \end{cases}
 $$
