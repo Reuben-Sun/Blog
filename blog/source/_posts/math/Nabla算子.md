@@ -29,11 +29,11 @@ plugins:
 
 $\nabla$：Nabla算子，将数量场变成向量场
 
-- 当其作用于函数，如$\nabla F(r)$，意思为求该函数梯度
+- 当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
 
-- 当其点乘函数，如$\nabla \cdot F(r)$，意思为求该函数的散度
+- 当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
 
-- 当其叉乘（三维）函数，如$\nabla \times F(r)$，意思为求该函数的旋度
+- 当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
 
 ### 函数可视化
 
@@ -66,10 +66,10 @@ $$
 \nabla f=
 \left[ 
 \begin{array}{c}
-	\frac{\partial f}{\partial x_1}\\
-	\frac{\partial f}{\partial x_2}\\
-	\vdots\\
-	\frac{\partial f}{\partial x_n}\\
+	\frac{\partial f}{\partial x_1}\\\\
+	\frac{\partial f}{\partial x_2}\\\\
+	\vdots\\\\
+	\frac{\partial f}{\partial x_n}\\\\
 \end{array}
 \right]
 $$
@@ -83,10 +83,10 @@ $$
 $$
 \vec{f}=\left[ 
 \begin{array}{c}
-	f_1\\
-	f_2\\
-	\vdots\\
-	f_n\\
+	f_1\\\\
+	f_2\\\\
+	\vdots\\\\
+	f_n\\\\
 \end{array}
 \right]
 $$
