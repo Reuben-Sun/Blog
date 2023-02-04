@@ -283,7 +283,7 @@ $$
 
 就是使用分治的算法，将一个复杂的偏微分方程（PDE），分解为几个连续的子问题
 
-<img src="../../images/算子分解.png" alt="算子分解"  />
+<img src="/images/算子分解.png" alt="算子分解"  />
 
 在实践中证明，像这样每步操作依赖于上一步，一步一步操作，能提高系统的稳定性
 
@@ -296,10 +296,12 @@ $$
 ### 显式积分器
 
 从过去的状态得到现在的状态，表示简单容易实现
+
 $$
 \mathbf{v}_{t+1}=\mathbf{v}_t+\Delta t \frac{\mathbf{f}_t}{m}
 $$
 
+<!---->
 $$
 \mathbf{x}_{t+1}=\mathbf{x}_t+\Delta t \mathbf{v}_{t+1}
 $$
@@ -323,10 +325,13 @@ $$
 ### 隐式积分器
 
 现在的状态依赖于现在的状态（求$t+1$时刻的信息，结果需要$t+1$时刻的信息），难以实现，但鲁棒性强
+
+<!---->
 $$
 \mathbf{v}_{t+1}=\mathbf{v}_t+\Delta t \mathbf{M}^{-1}\mathbf{f}(\mathbf{x}_{t+1})
 $$
 
+<!---->
 $$
 \mathbf{x}_{t+1}=\mathbf{x}_t+\Delta t \mathbf{v}_{t+1}
 $$
@@ -341,7 +346,7 @@ $$
 
 ![符号](/images/符号.png)
 
-### 参考
+## 参考
 
 [Physics Simulation in Visual Computing](https://interactivecomputergraphics.github.io/physics-simulation/)
 
