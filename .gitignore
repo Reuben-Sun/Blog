@@ -6,3 +6,5 @@ blog/.deploy_git/
 blog/node_modules/
 
 blog/public/
+
+blog/db.json
