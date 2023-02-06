@@ -1,13 +1,14 @@
 ---
 layout: post
 # 标题
-title: SPH入门  
+title: SPH：数学概念  
 # 发布时间
 date: 2023/2/2 22:16:25  
 # 分类
 categories: [graphics] 
 # 标签
 tags:
+  - SPH
   - Physics
 # 作者
 #author: Reuben
