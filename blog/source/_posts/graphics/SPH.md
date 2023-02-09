@@ -1,7 +1,7 @@
 ---
 layout: post
 # 标题
-title: SPH：数学概念  
+title: SPH：入门 
 # 发布时间
 date: 2023/2/2 22:16:25  
 # 分类
@@ -42,11 +42,12 @@ SPH是一种基于拉格朗日视角的算法，是一种空间离散化的算�
 
 SPH进行简单流体模拟，简单来说就是
 
-1. 对于每一个粒子，找到它附近的粒子（[临域搜索](2023/02/06/graphics/%E9%82%BB%E5%9F%9F%E6%90%9C%E7%B4%A2/)）
-2. 计算密度（离散化+质量密度估计）
-3. 计算压强（控制方程，如理想气体状态方程+动量守恒），压强差、粘滞力等
-4. 更新运动状态
-5. 水体渲染（Marching Cube）
+1. 介质离散化，使用多个质点来表示流体（离散化）
+2. 对于每一个粒子，找到它附近的粒子（临域搜索）
+3. 计算密度（质量密度估计）
+4. 计算压强（控制方程，如理想气体状态方程+动量守恒），压强差、粘滞力等
+5. 更新运动状态
+6. 水体渲染（Marching Cube）
 
 ## 离散化
 
@@ -115,7 +116,7 @@ $$
 
 在数学上，$\langle A(x)\rangle $表示平均值
 
-## 质量密度估计
+### 质量密度估计
 
 粒子不需要携带质量密度函数，对于空间中任意位置的点，都可以通过离散化求出该点密度
 
@@ -131,7 +132,7 @@ $$
 
 <img src="/images/流体边界.png" alt="流体边界" style="zoom:50%;" />
 
-##  微分算子的离散化
+###  微分算子的离散化
 
 上面我们已经实现场函数的离散化，实现了质量密度估计。但除此之外，还有一些空间微分算子（导数）值得离散化
 $$
@@ -145,7 +146,7 @@ $$
 - 差分公式（Difference Formula）：用于近似速度的散度
 - 对称公式（Symmetric Formula）：用于近似力、脉冲的梯度
 
-### 差分公式
+#### 差分公式
 
 在高中学微积分时，我们用两个相邻的点组成的线来逼近切线，以此引入了极限、导数的概念。在实际应用中，这两个点不可能无穷近，于是存在误差
 
@@ -161,7 +162,158 @@ $$
 
 > 经计算，二阶导数的误差也是$O(h^2)$
 
-### 对称公式
+#### 对称公式
+
+## 临域搜索
+
+这里介绍最简单的，不做空间优化的临域搜索，进阶内容可以看[临域搜索](2023/02/06/graphics/%E9%82%BB%E5%9F%9F%E6%90%9C%E7%B4%A2/)
+
+由于核函数存在作用范围，我们在积分时，只需要遍历核半径内其他粒子的信息。这样相较于nxn的全遍历，能大幅减少计算，为此我们需要构建临域表
+
+### 网格化
+
+临域搜索是一种基于网格（grid）构建粒子拓扑关系的算法，找到该粒子所在位置和其相邻位置有哪些粒子
+
+我们将整个（粒子作用的）场景均匀切分为一个个三维网格，每个网格为立方体，边长等于核半径$\hslash $，
+
+每个网格拥有一个坐标$(i,j,k)$，用于表示网格在场景中的位置
+
+对于任意一个粒子，其核函数的作用范围是一个球，临域搜索就是计算球内有哪些粒子
+
+<img src="/images/grid.png" alt="grid" style="zoom: 33%;" />
+
+1. 空间网格化
+2. 遍历粒子，记录每个网格中有多少个粒子，有哪些粒子
+3. 遍历粒子，建立临域表
+   1. 求该粒子的核函数球位于哪些网格中
+   2. 遍历那些网格，取出网格中所有粒子，计算距离
+   3. 将距离小于核半径的粒子id存储在临域表中
+
+### 数据结构
+
+| 名称              | Key                                                          | Value                |
+| ----------------- | ------------------------------------------------------------ | -------------------- |
+| _neighbourList    | id.x * maximumParticlesPerCell * 8 + _neighbourTracker[id.x]++ | 临居的id             |
+| _neighbourTracker | id.x                                                         | 当前粒子有多少个临居 |
+| _hashGrid         | hashCellIdx * maximumParticlesPerCell + previousCount        | id.x                 |
+| _hashGridTracker  | hashCellIdx                                                  | 该网格中的粒子数     |
+
+- id.x：当前粒子id
+- hashCellIdx：网格坐标的Hash值
+- maximumParticlesPerCell：每个网格的的粒子最大数量（提前留好空）
+- previousCount：空里有几个粒子
+
+### 球作用于哪些网格
+
+我们发现核函数球最少位于8个网格中（一个2x2x2的立方体），最多位于27个网格中（一个3x3x3的立方体），我们只需要找出核函数球位于哪些网格中，就能减少很多便利
+
+在这里，我们只使用8个网格作为临域（舍弃那些不重要的网格），很显然，球心向哪个方向靠，我们就使用哪8个网格
+
+1. 找到球心所在网格坐标，构建临域坐标表，临域坐标初始均设为球心位置
+2. 判断中心网格的中心坐标与球心的坐标位置关系
+3. 存储临域Hash Key
+
+```cpp
+void GetNearbyKeys(int3 originIndex, float3 position, out int nearbyKeys[8]) 
+{
+    int3 nearbyBucketIndices[8];
+    for (int i = 0; i < 8; i++) 
+    {
+        nearbyBucketIndices[i] = originIndex;
+    }
+
+    if ((originIndex.x + 0.5f) * CellSize <= position.x) 
+    {        
+        nearbyBucketIndices[4].x += 1;
+        nearbyBucketIndices[5].x += 1;
+        nearbyBucketIndices[6].x += 1;
+        nearbyBucketIndices[7].x += 1;
+    }
+    else
+    {
+        nearbyBucketIndices[4].x -= 1;
+        nearbyBucketIndices[5].x -= 1;
+        nearbyBucketIndices[6].x -= 1;
+        nearbyBucketIndices[7].x -= 1;
+    }
+    if ((originIndex.y + 0.5f) * CellSize <= position.y) 
+    {
+        nearbyBucketIndices[2].y += 1;
+        nearbyBucketIndices[3].y += 1;
+        nearbyBucketIndices[6].y += 1;
+        nearbyBucketIndices[7].y += 1;
+    }
+    else
+    {
+        nearbyBucketIndices[2].y -= 1;
+        nearbyBucketIndices[3].y -= 1;
+        nearbyBucketIndices[6].y -= 1;
+        nearbyBucketIndices[7].y -= 1;
+    }
+    if ((originIndex.z + 0.5f) * CellSize <= position.z) 
+    {
+        nearbyBucketIndices[1].z += 1;
+        nearbyBucketIndices[3].z += 1;
+        nearbyBucketIndices[5].z += 1;
+        nearbyBucketIndices[7].z += 1;
+    }
+    else
+    {
+        nearbyBucketIndices[1].z -= 1;
+        nearbyBucketIndices[3].z -= 1;
+        nearbyBucketIndices[5].z -= 1;
+        nearbyBucketIndices[7].z -= 1;
+    }
+
+    for (int j = 0; j < 8; j++) 
+    {
+        int3 nbcellIndex = nearbyBucketIndices[j];
+        if (nbcellIndex.x < 0 || nbcellIndex.x >= Dimensions || nbcellIndex.y < 0 || nbcellIndex.y >= Dimensions || nbcellIndex.z < 0 || nbcellIndex.z >= Dimensions) 
+        {
+            nearbyKeys[j] = -1;		//出界了
+        }
+        else 
+        {
+            nearbyKeys[j] = Hash(nearbyBucketIndices[j]);
+        }
+    }
+}
+//将三维坐标转化为一维hash key
+int Hash(int3 cell) {
+    return cell.x + Dimensions * (cell.y + Dimensions * cell.z);
+}
+```
+
+### 构建临域表
+
+```cpp
+[numthreads(100, 1, 1)]
+void BuildNeighbourList(uint3 id : SV_DispatchThreadID)
+{
+    _neighbourTracker[id.x] = 0;
+    const int3 cell = GetCell(_particles[id.x].position);
+    int cells[8];
+    GetNearbyKeys(cell, _particles[id.x].position, cells);
+
+    for (uint j = 0; j < 8; j++)
+    {
+        if (cells[j] == -1) continue; // Grid does not contain cell.
+        const uint numberOfParticlesInCell = min(_hashGridTracker[cells[j]], maximumParticlesPerCell); ;
+        for (uint index = 0; index < numberOfParticlesInCell; index++)
+        {
+            const uint potentialNeighbour = _hashGrid[cells[j] * maximumParticlesPerCell + index];
+            if (potentialNeighbour == id.x) continue;
+            const float3 v = _particles[potentialNeighbour].position - _particles[id.x].position;
+            if (dot(v, v) < radius2) // Use squared length (= dot) instead of length for performance.
+            {
+                _neighbourList[id.x * maximumParticlesPerCell * 8 + _neighbourTracker[id.x]++] = potentialNeighbour;
+            }
+        }
+    }
+}
+```
+
+
 
 ## 控制方程
 
@@ -353,6 +505,10 @@ $$
 
 - $\mathbf{M}$：质量矩阵
 
+## Marching Cube
+
+
+
 ## 符号表
 
 ![符号](/images/符号.png)
@@ -365,3 +521,4 @@ $$
 
 [MrKill的知乎](https://zhuanlan.zhihu.com/p/426566636)
 
+[alen-cell](https://github.com/alen-cell/PhysicsEngine)
