@@ -3,13 +3,14 @@ layout: post
 # 标题
 title: Probe-based Lighting in Unity Enemies 
 # 发布时间
-date: 2023/2/2 22:16:25  
+date: 2023/2/10 1:16:25  
 # 分类
 categories: [graphics] 
 # 标签
 tags:
   - GI
   - Unity
+  - SIGGRAPH
 # 作者
 #author: Reuben
 # 缩略图
@@ -29,24 +30,27 @@ plugins:
 
 [论文地址](http://advances.realtimerendering.com/s2022/SIGGRAPH2022-Advances-Enemies-Ciardi%20et%20al.pdf)
 
-> 锐评：就这？本质就是一个Volume GI，存了遮罩信息用于偏移采样点，使用紧凑哈希提高了空间利用率，感觉手游大世界完全可以上这个
+> 感觉原理上就是在Volume GI的基础上，存了遮罩信息用于偏移采样点，使用紧凑哈希提高了空间利用率，感觉手游大世界完全可以上这个
 
-<img src="../../images/Enemies.png" alt="Enemies" style="zoom:50%;" />
+<img src="/images/Enemies.png" alt="Enemies" style="zoom:50%;" />
 
 ### 不用Lightmap
 
 - 难以处理复杂的集合体，难以处理LOD
 - 烘焙速度慢，严重制约开发效率
-- 无法处理人物（和动态物体）
+- 无法处理动态物体，无法提供统一的光照
+- 无法处理人物
 - Worse directional quality
 
 ### Adaptive Probe Volumes
 
-距离几何体越近，摆放越密集
+原理类似[极品飞车的稀疏探针网络](/2023/02/10/graphics/%E6%9E%81%E5%93%81%E9%A3%9E%E8%BD%A6/)
 
-<img src="../../images/adaptive.png" alt="adaptive" style="zoom:50%;" />
+使用SDF进行Probe摆放，几何体越密集，摆放密度越高
 
-<img src="../../images/cell.png" alt="cell" style="zoom:50%;" />
+<img src="/images/adaptive.png" alt="adaptive" style="zoom:50%;" />
+
+<img src="/images/cell.png" alt="cell" style="zoom:50%;" />
 
 ### 数据结构
 
@@ -55,7 +59,7 @@ plugins:
 - An indirection buffer存储了cell信息，cell索引→SH指针
 - Spherical Harmonics Pool中存储SH信息，SH指针→SH系数
 
-<img src="../../images/IndirectionBuffer.png" alt="IndirectionBuffer" style="zoom:50%;" />
+<img src="/images/IndirectionBuffer.png" alt="IndirectionBuffer" style="zoom:50%;" />
 
 采样流程：World Position → Cell Indirection → Per-Cell Brick Indirection→ Brick UVW →Trilinear Sample SH Data
 
@@ -78,19 +82,19 @@ Unity的做法是一种辐照度驱动的摆放，由两部分组成
 
 评分：
 
-<img src="../../images/Probe评分.png" alt="Probe评分" style="zoom:50%;" />
+<img src="/images/Probe评分.png" alt="Probe评分" style="zoom:50%;" />
 
 删除：
 
-<img src="../../images/Dilation2.png" alt="Dilation2" style="zoom:67%;" />
+<img src="/images/Dilation2.png" alt="Dilation2" style="zoom:67%;" />
 
 推走：
 
-<img src="../../images/推走Probe.png" alt="推走Probe" style="zoom: 67%;" />
+<img src="/images/推走Probe.png" alt="推走Probe" style="zoom: 67%;" />
 
 效果：
 
-<img src="../../images/Dilation.png" alt="Dilation" style="zoom: 67%;" />
+<img src="/images/Dilation.png" alt="Dilation" style="zoom: 67%;" />
 
 ### 漏光
 
