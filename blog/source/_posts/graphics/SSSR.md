@@ -49,7 +49,7 @@ plugins:
    3. 若C点距离镜头的距离小于等于深度，则说明命中
 4. 将命中位置进行透视投影，使用上一帧的渲染结果作为反射颜色
 
-<img src="../../images/SSR.png" alt="SSR" style="zoom:50%;" />
+<img src="/images/SSR.png" alt="SSR" style="zoom:50%;" />
 
 ### glossy SSR
 
@@ -65,11 +65,11 @@ plugins:
 
 但是在光线数量比较少的情况下，会有大量噪点，效果很差
 
-<img src="../../images/SSR噪点.png" alt="SSR噪点" style="zoom:50%;" />
+<img src="/images/SSR噪点.png" alt="SSR噪点" style="zoom:50%;" />
 
 ## 作者的算法
 
-<img src="../../images/SSSR.png" alt="SSSR" style="zoom: 67%;" />
+<img src="/images/SSSR.png" alt="SSSR" style="zoom: 67%;" />
 
 1. 将屏幕划分为Tile，进行一次低分辨率的光线步进，评估Tile的重要性，需要多少射线
 2. 根据材质粗糙度判断使用何种的RayMarching
@@ -108,7 +108,7 @@ Hi-Z的构建时，对屏幕尺寸的深度进行滤波，每次保存2x2像素�
 - 由于起初我们位于最浅的位置，而步进的光线越来越深，因此第一个min-Z小于C点深度的位置，就是交点位置，我们只需要一直向右，不用回头
   - 这样得到的Mip等级比较高，我们通过降低Mip等级，每次取比C深中最浅的那一个，直到Mip为0
 
-<img src="../../images/HiZTrace.png" alt="HiZTrace"  />
+<img src="/images/HiZTrace.png" alt="HiZTrace"  />
 
 
 
@@ -120,7 +120,7 @@ Hi-Z的构建时，对屏幕尺寸的深度进行滤波，每次保存2x2像素�
 
 ### 蒙特卡洛积分
 
-<img src="../../images/三角形积分.png" alt="三角形" style="zoom: 33%;" />
+<img src="/images/三角形积分.png" alt="三角形" style="zoom: 33%;" />
 
 这是一个三角形，如果我们想求三角形的面积，可以对三角形的高度函数做积分
 
@@ -179,7 +179,7 @@ $$
 
 不过，值得注意的是，我们上面使用的PDF是均匀的，其实并能很好地加速收敛，实际会使用一个和原函数形状类似的PDF来加速收敛（PDF的选择不会影响最终结果，但是会影响收敛速度）
 
-<img src="../../images/重要性采样.png" alt="重要性采样" style="zoom:67%;" />
+<img src="/images/重要性采样.png" alt="重要性采样" style="zoom:67%;" />
 
 ### BRDF生成射线方向
 
@@ -213,7 +213,7 @@ virtual bool scatter(
 
 上面生成新射线方向时，使用法线+球面向量，最后的形状就类似下图红色
 
-<img src="../../images/法线+球.png" alt="法线+球" style="zoom:80%;" />
+<img src="/images/法线+球.png" alt="法线+球" style="zoom:80%;" />
 
 还清除了朝下（射向材质内部的）的射线
 
@@ -227,7 +227,7 @@ u.x = lerp(u.x, 1.0, bias);
 importanceSample(u);
 ```
 
-<img src="../../images/截断.png" alt="截断" style="zoom:67%;" />
+<img src="/images/截断.png" alt="截断" style="zoom:67%;" />
 
 
 
@@ -235,7 +235,7 @@ importanceSample(u);
 
 一种基于预计算的光追，我们假设射线是圆锥形，我们可以根据MipMap层级得到滤波结果
 
-<img src="../../images/coneRayTrace.png" alt="coneRayTrace" style="zoom:67%;" />
+<img src="/images/coneRayTrace.png" alt="coneRayTrace" style="zoom:67%;" />
 
 ## 复用邻居光线
 
