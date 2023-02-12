@@ -60,7 +60,7 @@ cell被细分为brick，在几何体密集的地方，brick越细分
 
 细分的原理是使用Raycast判断一个区域有没有物体（命中点），我们使用SDF加速射线检测
 
-<img src="../../images/SDF推箱子.png" alt="SDF推箱子" style="zoom:50%;" />
+<img src="/images/SDF推箱子.png" alt="SDF推箱子" style="zoom:50%;" />
 
 1. 我们将一个cell划分为4x4的brick，这样就有16条起始边界，这些边界构成了一个正方形
 2. 每一条边界向内发射一条长度为一的射线（使用SDF加速），若没有命中，则向内移动一格
@@ -108,15 +108,13 @@ Unity的做法是一种辐照度驱动的摆放，通过判断Probe位置处四�
 
 <img src="/images/Probe评分.png" alt="Probe评分" style="zoom:50%;" />
 
-对于有效性低/无效的Probe，Unity给出了两种解决方法
-
-- 让墙内Probe变亮（Post-Bake）
-- 让墙内Probe向外偏移（Pre-Bake）
+对于有效性低/无效的Probe，Unity给出的解决方案就是，**让墙内的Probe变亮**
 
 #### Post-Bake
 
 1. 烘焙后遍历Probe，找到在墙内的无效Probe
 2. 搜索其邻居Probe，使用其中**有效**Probe进行加权插值，权重是距离的平方反比
+3. 于是墙内的Probe就成功变亮了
 
 <img src="/images/Dilation2.png" alt="Dilation2" style="zoom:67%;" />
 
@@ -124,34 +122,49 @@ Unity的做法是一种辐照度驱动的摆放，通过判断Probe位置处四�
 
 > 参考《The lighting technology of Detroit Become Human》
 
-使用Post-Bake后，确实黑斑少了，但是我们发现墙体出现了漏光
+使用Post-Bake后，确实黑斑少了，但是我们发现墙体出现了漏光，为此我们加入了Virtual Offset（bake阶段的offset），在烘焙时，将Probe移至墙外，最后再将墙外烘焙的信息写入墙内Probe中，于是既没有破坏网格结构，也实现了墙内Probe变亮
 
-
-
-
-
-
+<img src="/images/probeoffset.png" alt="probeoffset" style="zoom:50%;" />
 
 
 
 ### 漏光
 
-> 我感觉防漏光的本质就是让墙体“变厚”，无论是摆放层面上的遮光板，还是是采样层面的偏移
+> 我感觉防漏光的本质就是让墙体“变厚”，无论是摆放层面上的遮光板，烘焙时期的Virtual Offset，还是是采样层面的偏移
 
-传统的Probe着色，薄墙体由于使用了墙壁另一面的Probe信息，于是发生漏光。为了避免漏光，采样时通常对采样位置进行偏移（Biases）
+传统的Probe采样，薄墙体由于使用了墙壁另一面的Probe信息发生漏光。为了避免漏光，采样时通常对采样位置进行偏移（Biases）
 
 - Normal Bias，采样点沿着法线方向偏移
   - 这样做实际上让物体沿着法线方向变大了
   - 偏移的过多/过少，都会影响效果
+  - 难以调优
 - View Bias，采样点朝着相机方向偏移
   - 依赖于相机
+  - 难以调优
 
-而Unity使用了Validity Based Weighting技术来减弱漏光，号称能完全避免对无效Probe的采样
+#### Validity Based Weighting
 
-原理上是通过标记遮罩得出偏移方向，本质还是对采样点进行偏移
+而Unity使用了Validity Based Weighting技术来减弱漏光，本质还是对采样点进行偏移
 
-- 每一个Probe存储者8bit的遮罩，用于记录其八个方向（2x2x2）的邻居是否有效（这个有效性是Post-Bake时记录的？）
+原理上是通过标记遮罩得出偏移方向，使得偏移方向基于辐照度，而非模型法线、视线，
+
+- 每一个Probe存储者8bit的遮罩，用于记录其八个方向（2x2x2）的邻居是否有效
 - 若某个邻居无效，则推动采样点远离那个邻居（计算偏移的方向和大小）
+
+但我们现在其实只得到了偏移的方向，不知道偏移的距离
+
+#### 遮光板
+
+美术可以手动摆放一个遮光板，使得某些位置上的Probe失效
+
+<img src="/images/遮光板.png" alt="遮光板" style="zoom:50%;" />
+
+这确实让房顶下面不再漏光，但是这让房顶上面的物体过黑了
+
+Unity的做法是对遮光板内Probe的邻居进行判断
+
+- 若邻居Probe都不在室内（Occluding objects），那么不会使用遮光板，使用原本的数据
+- 若邻居有在室内的，室内物体用到该Probe时才会变黑
 
 ### 场景管理
 
