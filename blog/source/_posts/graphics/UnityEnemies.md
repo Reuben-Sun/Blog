@@ -48,11 +48,17 @@ plugins:
 
 cell被细分为brick，在几何体密集的地方，brick越细分
 
-brick细分原理类似[极品飞车的稀疏探针网络](/2023/02/10/graphics/%E6%9E%81%E5%93%81%E9%A3%9E%E8%BD%A6/)，生成场景的SDF，若我们接近几何体，则进行细分
-
 <img src="/images/adaptive.png" alt="adaptive" style="zoom:50%;" />
 
 <img src="/images/cell.png" alt="cell" style="zoom:50%;" />
+
+#### 细分
+
+brick细分原理为稀疏探针网络
+
+<img src="/images/稀疏网格.png" alt="稀疏网格" style="zoom:67%;" />
+
+
 
 ### 数据结构
 
