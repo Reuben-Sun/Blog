@@ -52,15 +52,21 @@ cell被细分为brick，在几何体密集的地方，brick越细分
 
 <img src="/images/cell.png" alt="cell" style="zoom:50%;" />
 
-#### 细分
-
-brick细分原理为稀疏探针网络
-
 <img src="/images/稀疏网格.png" alt="稀疏网格" style="zoom:67%;" />
 
+#### 细分
 
+> 可以参考Lumen中Build Voxel Faces，本质就是推箱子
 
-### 数据结构
+细分的原理是使用Raycast判断一个区域有没有物体（命中点），我们使用SDF加速射线检测
+
+<img src="../../images/SDF推箱子.png" alt="SDF推箱子" style="zoom:50%;" />
+
+1. 我们将一个cell划分为4x4的brick，这样就有16条起始边界，这些边界构成了一个正方形
+2. 每一条边界向内发射一条长度为一的射线（使用SDF加速），若没有命中，则向内移动一格
+3. 直到所有边界都命中后，我们得到右图所示的brick
+
+#### 数据结构
 
 感觉很类似与VolumeGI，由索引buffer和3DTexture组成，通过紧凑哈希来降低存储
 
@@ -69,7 +75,24 @@ brick细分原理为稀疏探针网络
 
 <img src="/images/IndirectionBuffer.png" alt="IndirectionBuffer" style="zoom:50%;" />
 
+#### 采样
+
 采样流程：World Position → Cell Indirection → Per-Cell Brick Indirection→ Brick UVW →Trilinear Sample SH Data
+
+1. 基于着色点posWS生成cellPos
+2. 加载cell信息
+3. 找到该着色点位于cell中哪一个brick（brick的最低层级可能是由相机距着色点距离决定的）
+
+```cpp
+int localBrickIndex = floor(residualPosWS / (_MinBrickSize * pow(3, minFoundBrickLevel)));	//若minFoundBrickLevel=1，那么cell被细分为3x3个brick
+localBrickIndex -= validArea.min;
+```
+
+4. 加载brick信息
+
+5. 通过brick信息+offset采样3DTexture
+
+
 
 ### 接缝
 
@@ -79,30 +102,37 @@ brick细分原理为稀疏探针网络
 
 ### 黑斑
 
-当我们做Probe摆放时，经常会出现Probe放在墙内的情况，这会导致墙面、地板发黑
+当我们做Probe摆放时，由于按网格和brick摆放，经常会出现Probe放在墙内的情况，这会导致墙面、地板发黑
 
-Unity的做法是一种辐照度驱动的摆放，由两部分组成
-
-- Post-Bake：对于某个Probe，查找其相邻Probe信息，若发现有在墙内的Probe，就将其删去
-- Pre-Bake：若发现Probe在墙内，则将Probe根据法线向外偏移至墙外
-
-> 这部分Unity没有讲清楚，但大致内容就是从Probe处出发向四周发射射线（也可能是其他查找方式），根据射线命中的百分比，确定这个位置的有效性。若有效性为0，则说明Probe位于墙体内部，就将其删去或向外推走
-
-评分：
+Unity的做法是一种辐照度驱动的摆放，通过判断Probe位置处四周backface比例，来判断这个Probe的有效性
 
 <img src="/images/Probe评分.png" alt="Probe评分" style="zoom:50%;" />
 
-删除：
+对于有效性低/无效的Probe，Unity给出了两种解决方法
+
+- 让墙内Probe变亮（Post-Bake）
+- 让墙内Probe向外偏移（Pre-Bake）
+
+#### Post-Bake
+
+1. 烘焙后遍历Probe，找到在墙内的无效Probe
+2. 搜索其邻居Probe，使用其中**有效**Probe进行加权插值，权重是距离的平方反比
 
 <img src="/images/Dilation2.png" alt="Dilation2" style="zoom:67%;" />
 
-推走：
+#### Pre-Bake
 
-<img src="/images/推走Probe.png" alt="推走Probe" style="zoom: 67%;" />
+> 参考《The lighting technology of Detroit Become Human》
 
-效果：
+使用Post-Bake后，确实黑斑少了，但是我们发现墙体出现了漏光
 
-<img src="/images/Dilation.png" alt="Dilation" style="zoom: 67%;" />
+
+
+
+
+
+
+
 
 ### 漏光
 
