@@ -44,9 +44,11 @@ plugins:
 
 ### Adaptive Probe Volumes
 
-原理类似[极品飞车的稀疏探针网络](/2023/02/10/graphics/%E6%9E%81%E5%93%81%E9%A3%9E%E8%BD%A6/)
+将空间划分为相同大小的cell，将cell作为分块烘焙、分块加载的最小单位
 
-使用SDF进行Probe摆放，几何体越密集，摆放密度越高
+cell被细分为brick，在几何体密集的地方，brick越细分
+
+brick细分原理类似[极品飞车的稀疏探针网络](/2023/02/10/graphics/%E6%9E%81%E5%93%81%E9%A3%9E%E8%BD%A6/)，生成场景的SDF，若我们接近几何体，则进行细分
 
 <img src="/images/adaptive.png" alt="adaptive" style="zoom:50%;" />
 
