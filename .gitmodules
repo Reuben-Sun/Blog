@@ -1,0 +1,3 @@
+[submodule "blog-note"]
+	path = blog-note
+	url = https://github.com/Reuben-Sun/Blog-Note.git

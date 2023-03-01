@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # default branch
+  workflow_dispatch:
 
 jobs:
   pages:
@@ -12,6 +13,11 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v2
+        with:
+          # Default: ${{ github.token }} ,传参给它更高权限的 token
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          # 把子模块打开
+          submodules: 'true'
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
@@ -25,6 +31,8 @@ jobs:
             ${{ runner.OS }}-npm-cache
       - name: Install Dependencies
         run: npm install
+      - name: Move Note Content
+        run: npm run movefile
       - name: Build
         run: npm run build
       - name: Deploy

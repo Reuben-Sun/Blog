@@ -4,6 +4,8 @@
 node_modules/
 public/
 db.json
-blog/
+blog-note/
 .vscode
 
+source/_posts
+source/images
