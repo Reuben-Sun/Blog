@@ -47,6 +47,8 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           # 把子模块打开
           submodules: true
+      - name: ls
+        run: ls -a blog-note
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
