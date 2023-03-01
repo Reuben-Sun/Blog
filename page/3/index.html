@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1677696859270),
+    lastupdate: new Date(1677696884638),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2381,6 +2381,75 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/dcc/maya插件/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/2023/01/31/dcc/maya%E6%8F%92%E4%BB%B6/"  itemprop="url">
+        Maya插件开发
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Maya
+maya，老东西，行业标准，真难用（不是）
+腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建
+创建一个python工具
+Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件
+创建一个python文件
+import maya.cmds as cmd...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/dcc/">dcc</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/dcc/" itemprop="url"><span itemprop="name">dcc</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/2023/01/31/dcc/maya%E6%8F%92%E4%BB%B6/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
   <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/engine/大象无形UE笔记/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
@@ -2467,7 +2536,7 @@ UE禁用了C++的dynamic_cast，你可以使用Ca...
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/graphics/DX12笔记1/">
+  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/graphics/ddx与ddy/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2485,24 +2554,20 @@ UE禁用了C++的dynamic_cast，你可以使用Ca...
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/2023/01/31/graphics/DX12%E7%AC%94%E8%AE%B01/"  itemprop="url">
-        DX12龙书（一）
+      <a href="/2023/01/31/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
+        ddx与ddy
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        DX12
-环境搭建
-Windows 10/11系统
-安装PIX
-安装Visual Studio 2019
-Windows应用程序
-Windows应用程序使用事件驱动（详情可以去看WPF）
-Windows应用程序的入口点是WinMain函数
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
-&#123...
+        ddx与ddy
+在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
+HLSL deriv_rtx
+ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
+$$
+\mathrm{ddx}=\f...
       
     
   </div>
@@ -2523,7 +2588,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
       </div>
       
         <div>
-          <a class='readmore' href='/2023/01/31/graphics/DX12%E7%AC%94%E8%AE%B01/' itemprop="url">
+          <a class='readmore' href='/2023/01/31/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2599,74 +2664,6 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
       
         <div>
           <a class='readmore' href='/2023/01/31/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/graphics/ddx与ddy/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/2023/01/31/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2023/01/31/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
             阅读全文
           </a>
         </div>
