@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>垃圾回收 | ReubenSun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="垃圾回收 前言 《垃圾回收的算法与实现》读书笔记，其中的代码大多为伪代码 一：概念 GC，Garbage Collection，垃圾回收 功能  找到内存中的垃圾 回收垃圾  为什么需要GC 如果没有GC，程序员需要手动进行内存管理，开发麻烦，容易引发内存泄漏、野指针，而且因此导致的BUG很难被定位，修复麻烦 如果有GC，就可以避免这些问题 GC的种类  保守式GC：不能识别指针和非指针时，一律视">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾回收">
+<meta property="og:url" content="http://reuben-sun.github.io/2023/01/31/engine/GC/index.html">
+<meta property="og:site_name" content="ReubenSun">
+<meta property="og:description" content="垃圾回收 前言 《垃圾回收的算法与实现》读书笔记，其中的代码大多为伪代码 一：概念 GC，Garbage Collection，垃圾回收 功能  找到内存中的垃圾 回收垃圾  为什么需要GC 如果没有GC，程序员需要手动进行内存管理，开发麻烦，容易引发内存泄漏、野指针，而且因此导致的BUG很难被定位，修复麻烦 如果有GC，就可以避免这些问题 GC的种类  保守式GC：不能识别指针和非指针时，一律视">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://reuben-sun.github.io/images/%E4%B8%80%E4%BD%8D%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/%E8%BF%91%E4%BC%BC%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Lisp2%E6%A0%87%E8%AE%B0.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Lisp2%E5%8E%8B%E7%BC%A9.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Lisp2%E7%BB%93%E6%9D%9F.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Two-Finger.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/%E8%A1%A8%E6%A0%BC%E7%AE%97%E6%B3%95%E7%A7%BB%E5%8A%A8%E5%AF%B9%E8%B1%A1%E7%BE%A4.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/%E6%9E%84%E5%BB%BA%E9%97%B4%E9%9A%99%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/句柄.jpeg">
+<meta property="og:image" content="http://reuben-sun.github.io/images/增量式GC.jpeg">
+<meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
+<meta property="article:modified_time" content="2023-03-01T17:22:20.537Z">
+<meta property="article:author" content="Reuben Sun">
+<meta property="article:tag" content="GC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://reuben-sun.github.io/images/%E4%B8%80%E4%BD%8D%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0.png">
+  
+    <link rel="alternate" href="/atom.xml" title="ReubenSun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ReubenSun</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://reuben-sun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-engine/GC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/01/31/engine/GC/" class="article-date">
+  <time datetime="2023-01-31T10:01:25.000Z" itemprop="datePublished">2023-01-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/engine/">engine</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      垃圾回收
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>垃圾回收</h1>
+<h3 id="前言">前言</h3>
+<p>《垃圾回收的算法与实现》读书笔记，其中的代码大多为伪代码</p>
+<h3 id="一：概念">一：概念</h3>
+<p>GC，Garbage Collection，垃圾回收</p>
+<p>功能</p>
+<ul>
+<li>找到内存中的垃圾</li>
+<li>回收垃圾</li>
+</ul>
+<h4 id="为什么需要GC">为什么需要GC</h4>
+<p>如果没有GC，程序员需要手动进行内存管理，开发麻烦，容易引发内存泄漏、野指针，而且因此导致的BUG很难被定位，修复麻烦</p>
+<p>如果有GC，就可以避免这些问题</p>
+<h4 id="GC的种类">GC的种类</h4>
+<ul>
+<li>保守式GC：不能识别指针和非指针时，一律视为非指针</li>
+<li>准确式GC</li>
+</ul>
+<h4 id="GC的算法">GC的算法</h4>
+<ul>
+<li>标记清除法：标记活动对象，其他的都回收</li>
+<li>引用计数法：回收引用值为0的对象</li>
+<li>GC复制法：复制活动对象，其他的都回收</li>
+</ul>
+<h4 id="GC的选取">GC的选取</h4>
+<ul>
+<li>最大暂停时间短：游戏</li>
+<li>整体处理时间短：音频编码</li>
+</ul>
+<h4 id="对象">对象</h4>
+<p>这里的对象并不是OOP里的Object，而是<strong>被应用程序使用的数据的集合</strong>，对象由<strong>头</strong>和<strong>域</strong>构成</p>
+<ul>
+<li>
+<p>头（header）：包含对象的大小和种类</p>
+</li>
+<li>
+<p>域（field）：参考OOP里的成员</p>
+</li>
+</ul>
+<p>对象分为活动对象和非活动对象，GC会保留活动对象，销毁非活动对象</p>
+<h4 id="mutator">mutator</h4>
+<p>可以简单理解为应用程序，在程序运行过程中，会分配/调用/改变对象（只能操作活动对象），伴随着mutator运行，会产生垃圾</p>
+<h4 id="GC算法的评估标准">GC算法的评估标准</h4>
+<ul>
+<li>吞吐量（throughput）：单位时间的处理能力</li>
+<li>最大暂停时间（在进行GC时，mutator会被暂停）</li>
+<li>堆使用效率</li>
+<li>访问局部性</li>
+</ul>
+<h3 id="二：标记清除法">二：标记清除法</h3>
+<p><em>学这一节之前想想操作系统里文件系统</em></p>
+<p>该算法分为两步</p>
+<ol>
+<li>标记阶段：将所有活动对象做上标记</li>
+<li>清除阶段：将所有没被标记的对象回收</li>
+</ol>
+<h4 id="标记阶段">标记阶段</h4>
+<ol>
+<li>通过根，找到直接引用的对象，标记</li>
+<li>递归标记所有能访问到的对象（常用深搜，因为内存使用量更少）</li>
+</ol>
+<pre class="language-c++" data-language="c++"><code class="language-c++">void mark(obj)&#123;
+	if(!obj.mark) 
+        obj.mark &#x3D; true;
+	for(child: obj.children) 
+        mark(*child);
+&#125;</code></pre>
+<h4 id="清除阶段">清除阶段</h4>
+<p>遍历堆，回收所有没有被标记的对象，并将其放入空闲链表，以备分配</p>
+<h4 id="分配策略">分配策略</h4>
+<p>在创建新对象<code>obj</code>时，遍历空闲链表，寻找合适的块，这里使用First-fit算法（因为快）</p>
+<ul>
+<li>First-fit：找到第一个能放下<code>obj</code>的块</li>
+<li>Best-fit：找到最小的能放下<code>obj</code>的块</li>
+<li>Worst-fit：找到最大的能放下<code>obj</code>的块</li>
+</ul>
+<h4 id="合并策略">合并策略</h4>
+<p>分配和回收会导致大量小的分块，于是需要合并，在这里直接遍历堆，将连续的空闲块合并</p>
+<h4 id="评价">评价</h4>
+<p>优点</p>
+<ul>
+<li>实现简单</li>
+<li>与保守式GC兼容（因为对象不会被移动）</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>碎片化，导致空间浪费，访问性能降低</li>
+<li>不支持<strong>写时复制</strong>（比如UNIX中的<code>fork()</code>）</li>
+</ul>
+<h4 id="优化方案">优化方案</h4>
+<h5 id="分级空闲链表">分级空闲链表</h5>
+<p>使用多个空闲链表，分别只连接不同大小的分块，分配时先找所对应的区间，可以提高性能</p>
+<h5 id="BiBOP（Big-Bag-Of-Pages）">BiBOP（Big Bag Of Pages）</h5>
+<p>将大小相近的对象整理成固定大小的块进行管理</p>
+<ul>
+<li>碎片化的原因之一是杂乱散布的大小各异的对象，如果将堆固定分割，就可以减缓碎片化</li>
+</ul>
+<h5 id="位图标记">位图标记</h5>
+<p>不直接堆对象进行标记，而是记录对象的标志位，存储在一个表格中</p>
+<ul>
+<li>与写时复制技术兼容（因为不会修改对象本身，可以复用）</li>
+<li>清除标志位更高效（只需要把表中要清除的对象的标志位改成一个特殊值）</li>
+</ul>
+<h5 id="延迟标记清除法">延迟标记清除法</h5>
+<ul>
+<li>分配时，先调用清除，如果能清出足够的空间来分配，则直接分配，否则进行普通的标记操作</li>
+<li>清除时，同样是First-fit遍历堆，但遍历的起点是上次开始的地点的右侧</li>
+<li>延迟的内核是不主动清除，而是等到要分配时再清除</li>
+</ul>
+<h3 id="三：引用计数法">三：引用计数法</h3>
+<p><em>学这一节前，想想智能指针</em></p>
+<p>引用计数法中，对象会记录自己被引用次数，主要分为两个阶段</p>
+<ol>
+<li>创建新对象：分配内存，将对象引用次数设为1</li>
+<li>更新指针：先增后减计数器值，若引用次数为0则回收</li>
+</ol>
+<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;更新指针ptr，让其指向obj
+void update_ptr(ptr, obj)&#123;	
+	inc_ref_cnt(obj);	&#x2F;&#x2F;obj要被ptr引用了，所以obj计数值++
+    dec_ref_cnt(*ptr);	&#x2F;&#x2F;ptr之前引用的东西不再被引用
+    *ptr &#x3D; obj;
+&#125;
+void dec_ref_cnt(obj)&#123;
+    obj.ref_cnt--;	&#x2F;&#x2F;obj不再被引用，所以计数值--
+    if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;	&#x2F;&#x2F;如果obj没人用了，obj就要被清除
+        for(child: obj.children)&#123;	&#x2F;&#x2F;obj被清除了，那obj引用的对象，被引用次数要--
+            dec_ref_cnt(*child);
+        &#125;
+        reclaim(obj);	&#x2F;&#x2F;执行回收
+    &#125;
+&#125;</code></pre>
+<h4 id="评价-2">评价</h4>
+<p>优点：</p>
+<ul>
+<li>对象变成垃圾时立刻被回收（延迟标记清除算法要等到分块用尽后才开始回收垃圾）</li>
+<li>最大暂停时间短（只有在更新指针的时候才会打断mutator）</li>
+<li>减少延根指针遍历所有子节点的次数（尤其在分布式系统中，效果显著）</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>频繁进行计数值的操作</li>
+<li>计数器本身空间比较大（32位系统的计数器就要32位大小）</li>
+<li><strong>循环引用无法回收</strong>
+<ul>
+<li>如果两个物体互相引用，并不和其他对象有联系，于是他们成为了一座“孤岛”，成为了事实意义上的垃圾，但是却无法被回收（因为只要被引用，就不算垃圾）</li>
+</ul>
+</li>
+</ul>
+<h4 id="优化方案-2">优化方案</h4>
+<h5 id="延迟引用计数法">延迟引用计数法</h5>
+<p>解决频繁操作</p>
+<ul>
+<li>使用ZCT表（Zero Count Table），记录所有执行<code>dec_ref_cnt</code>后计数值变成0的对象（也就是说计数值变成0，不会立刻被视为垃圾回收），当ZCT表满了以后，开始回收表中的对象</li>
+<li>优点：延迟了根引用的计数（只有要回收时才会一起操作），降低了计数值的操作频率</li>
+<li>缺点
+<ul>
+<li>不再能即刻回收垃圾（你可以理解为以前有垃圾就仍，现在要先堆一波垃圾再扔）</li>
+<li>最大暂停时间延长（<code>scan_zct()</code>要访问整个ZCT，这个过程muator是被中断的）</li>
+</ul>
+</li>
+</ul>
+<pre class="language-c++" data-language="c++"><code class="language-c++">void dec_ref_cnt(obj)&#123;
+    obj.ref_cnt--;
+    if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;	&#x2F;&#x2F;计数值变为0，可能会变成垃圾
+        if(is_full($zct))&#123;
+            scan_zct();		&#x2F;&#x2F;如果zct表满了，就扫描zct，并回收
+        &#125;
+        push($zct, obj);	&#x2F;&#x2F;将obj放入zct表
+    &#125;
+&#125;
+void scane_zct()&#123;
+    fot(r: $root)&#123;
+        (*r).ref_cnt++;	&#x2F;&#x2F;根直接引用的对象的计数器++，直接引用计数时，根会极频繁改动
+    &#125;
+    for(obj: $zct)&#123;
+        if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;
+            remove($zct, obj);
+            delete(obj);
+        &#125;
+    &#125;
+    fot(r: $root)&#123;
+        (*r).ref_cnt--;	
+    &#125;
+&#125;</code></pre>
+<h5 id="Sticky引用计数法">Sticky引用计数法</h5>
+<p>解决空间浪费</p>
+<p>32位电脑意味着可以有$2^{32}$个对象，这些对象可能都会引用<code>obj</code>，所以<code>obj</code>的计数位应当可以记录被引用$2^{32}$次，所以计数位要有32位</p>
+<p>如果计数位太少，一些比较大的对象就无法正常表示（直接做饱和运算，汽车速度超过速度计的最大值会停在最大值处），一旦出现这种情况，我们可以</p>
+<ul>
+<li>什么都不做
+<ul>
+<li>这会导致如果一个物体被引用的次数特别多，超出了目前表示的范围，即使他变成了垃圾也无法回收</li>
+<li>但是，事实上绝大多数对象计数值一直在0和1间变化（生成后立刻回收），所以很少出现溢出</li>
+<li>而且一个对象被频繁引用，说明他十分重要，十分重要的东西被回收的概率并不大</li>
+<li>很多时候不需要保证内存永不泄露，只需要保证一段时间内不泄露就行，很多软件，用户不会一直开着的</li>
+</ul>
+</li>
+<li>结合使用标记清除算法
+<ul>
+<li>什么都不做，可能会导致内存耗尽，如果耗尽，那就用标记清除法清一次（相当于垃圾太多了，管不来了，就干脆来一次大扫除）</li>
+</ul>
+</li>
+</ul>
+<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;标记
+void mark()&#123;	
+    for(r: $roots)&#123;
+        push(*r, $stack);	&#x2F;&#x2F;将所有根直接引用对象入栈
+    &#125;
+    while(!$stack.empty())&#123;
+        obj &#x3D; pop($stack);
+        obj.ref_cnt++;
+        if(obj.ref_cnt &#x3D;&#x3D; 1)&#123;	&#x2F;&#x2F;这说明obj只进栈一次
+            for(child: obj.children)&#123;
+                push(*child, $stack);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+&#x2F;&#x2F;清除
+void sweep()&#123;
+    index &#x3D; $heap_top;
+    while(index &lt; $heap_end)&#123;	&#x2F;&#x2F;遍历整个堆
+        if(index.ref_cnt &#x3D;&#x3D; 0)&#123;
+            reclaim(index);		&#x2F;&#x2F;回收计数值为0的对象
+        &#125;
+        index +&#x3D; index.size;
+    &#125;
+&#125;</code></pre>
+<h5 id="一位引用计数法">一位引用计数法</h5>
+<p>是Sticky的极端，计数位只有一位（两个tag，一个MULTIPLE，一个UNIQUE），而且将计数位放在指针上，而非放在对象上</p>
+<p><img src="/images/%E4%B8%80%E4%BD%8D%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0.png" alt="一位引用计数"></p>
+<pre class="language-c++" data-language="c++"><code class="language-c++">void copy_ptr(dest_ptr, src_ptr)&#123;
+    delete_ptr(dest_ptr);
+    *dest_ptr &#x3D; *src_ptr;
+    set_tag(dest_ptr, MULTIPLE);
+    if(src_ptr.tag &#x3D;&#x3D; UNIQUE)&#123;
+        set_tag(src_ptr, MULTIPLE);
+    &#125;
+&#125;
+void delete_ptr(ptr)&#123;
+    if(ptr.tag &#x3D;&#x3D; UNIQUE)	
+        reclaim(*ptr);	&#x2F;&#x2F;如果对象以前只被引用一次，那么这次就要被回收
+&#125;</code></pre>
+<p>优点</p>
+<ul>
+<li>cache命中率高</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>同Sticky，而且更严重</li>
+</ul>
+<h5 id="部分标记清除法">部分标记清除法</h5>
+<p>解决循环引用</p>
+<p>只对可能会有循环引用的对象使用标记清除法，其他对象使用引用计数法</p>
+<p>每个对象会有两个状态位（于是就有四个状态），分别为</p>
+<ul>
+<li>BLACK：绝对不是垃圾的对象（初始值）</li>
+<li>WHILE：绝对是垃圾的对象</li>
+<li>GRAY：搜索完毕的对象</li>
+<li>HATCH：可能是循环垃圾的对象</li>
+</ul>
+<pre class="language-c++" data-language="c++"><code class="language-c++">void dec_ref_cnt(obj)&#123;
+    obj.ref_cnt--;
+    if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;
+        delete(obj);
+    &#125;
+    else if(obj.color !&#x3D; HATCH)&#123;
+        obj.color &#x3D; HATCH;
+        queue.push(obj);
+    &#125;
+&#125;</code></pre>
+<p>对放入队列的对象进行标记清除算法</p>
+<pre class="language-c++" data-language="c++"><code class="language-c++">Object new_obj(size)&#123;
+    obj &#x3D; pickup_chunk(size);	&#x2F;&#x2F;分配内存
+    if(obj !&#x3D; null)&#123;	&#x2F;&#x2F;如果分配成功
+        obj.color &#x3D; BLACK;
+        obj.ref_cnt &#x3D; 1;
+        return obj;
+    &#125;
+    else if(!queue.empty())&#123;	&#x2F;&#x2F;说明现在空间不足，要回收垃圾，先看是否存在HATCH物体
+        scan_hatch_queue();		
+        return new_obj(size);	&#x2F;&#x2F;回收queue内后重新尝试分配
+    &#125;
+    else&#123;
+        allocation_fall();
+    &#125;
+&#125;
+void scan_hatch_queue()&#123;	&#x2F;&#x2F;循环扫描队列，直至队列为空
+    obj &#x3D; queue.pop();
+    if(obj.color &#x3D;&#x3D; HATCH)&#123;
+        paint_gray(obj);	&#x2F;&#x2F;把obj和其孩子变为GRAY，孩子们引用值--
+        scan_gray(obj);		&#x2F;&#x2F;引用值&gt;0涂黑，等于0涂白
+        collect_while(obj);
+    &#125;
+    else if(!queue.empty())&#123;
+        scane_hatch_queue();
+    &#125;
+&#125;
+void paint_gray(obj)&#123;
+    if(obj.color &#x3D;&#x3D; (BLACK | HATCH))&#123;	
+        obj.color &#x3D; GRAY;	
+        for(child: obj.children)&#123;
+            (*child).ref_cnt--;
+            paint_gray(*child);
+        &#125;
+    &#125;
+&#125;
+void scan_gray(obj)&#123;
+    if(obj.color &#x3D;&#x3D; GRAY)&#123;
+        if(obj.ref_cnt &gt; 0)&#123;
+            paint_black(obj);
+        &#125;
+        else&#123;
+            obj.color &#x3D; WHITE;
+            for(child: children(obj))&#123;
+                scan_gray(*child);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+void paint_black(obj)&#123;
+     obj.color &#x3D; BLACK;
+	 for(child : children(obj))&#123;
+		(*child).ref_cnt++
+		if((*child).color !&#x3D; BLACK)&#123;
+			paint_black(*child)            
+        &#125;          
+     &#125;		
+&#125;
+void collect_while()&#123;
+    if(obj.color &#x3D;&#x3D; WHILE)&#123;
+        obj.color &#x3D; BLACK;
+        for(child: obj.children)&#123;
+            collect_while(*child);
+        &#125;
+        reclaim(obj);
+    &#125;
+&#125;</code></pre>
+<p>优点</p>
+<ul>
+<li>可以回收循环引用</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>一个对象要被查找三次，导致最大暂停时间+++</li>
+</ul>
+<h3 id="四：GC复制法">四：GC复制法</h3>
+<p><em>想一下渲染中的双缓冲</em></p>
+<p>先把整个空间分为等大的两部分，From和To，我们用From空间分配活动对象</p>
+<p>GC时，把所有活动对象（递归）复制到其他空间（To空间），然后把原空间（From空间）所有对象回收，然后把空间互换</p>
+<h4 id="评价-3">评价</h4>
+<p>优点</p>
+<ul>
+<li>吞吐量大</li>
+<li>分配速度快（Frist-fit）</li>
+<li>不会发生碎片化（每次回收时，都会把所有对象重新排在From空间的开头，这个操作被称为<strong>压缩</strong>）</li>
+<li>兼容缓存</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>堆效率低（因为二等分后，只能利用其中一半）</li>
+<li>不兼容保守式GC</li>
+<li>复制对象时要递归复制，会消耗栈，可能导致栈溢出</li>
+</ul>
+<h4 id="优化方案-3">优化方案</h4>
+<h5 id="Cheney-GC复制法">Cheney GC复制法</h5>
+<p>从递归复制改为迭代复制（基于队列的广度优先搜索）</p>
+<p>下图搜索顺序：A BC DEFG HIJKLMNO</p>
+<p>![Cheney GC](/images/Cheney GC.png)</p>
+<p>优点</p>
+<ul>
+<li>从递归变成迭代，降低栈压力</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>不利于缓存（在上图，我们假设每个页最多存放三个块，我们发现有引用关系的对象很可能不在同一个块中）</li>
+</ul>
+<h5 id="近似深度优先搜索方法">近似深度优先搜索方法</h5>
+<p>在页间做深度优先搜索，在页内做广度优先搜索</p>
+<p>下图搜索顺序：ABC DHI EJK FLM GNO</p>
+<p><img src="/images/%E8%BF%91%E4%BC%BC%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88.png" alt="近似深度优先"></p>
+<h5 id="多空间复制法">多空间复制法</h5>
+<p>把空间分成十份，一个From，一个To，八个标记清除法</p>
+<h3 id="五：标记压缩法">五：标记压缩法</h3>
+<p>结合了标记清除法的标记+GC复制法的压缩</p>
+<h4 id="Lisp2算法">Lisp2算法</h4>
+<p><em>类比原地删除数组中某个元素</em></p>
+<p>标记方法和标记清除法一样，标记后遍历堆，将所有活动对象压缩到左侧</p>
+<p><img src="/images/Lisp2%E6%A0%87%E8%AE%B0.png" alt="Lisp2标记"></p>
+<p><img src="/images/Lisp2%E5%8E%8B%E7%BC%A9.png" alt="Lisp2压缩"></p>
+<p><img src="/images/Lisp2%E7%BB%93%E6%9D%9F.png" alt="Lisp2结束"></p>
+<p>优点</p>
+<ul>
+<li>比GC复制法堆效率高，比标记压缩法碎片少</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>三次遍历堆，效率过低</li>
+</ul>
+<h4 id="Two-Finger算法">Two-Finger算法</h4>
+<p>这个算法优缺点很明显，所以先说优缺点，再谈实现</p>
+<p>优点</p>
+<ul>
+<li>只需要两次遍历堆</li>
+<li>不需要额外的forward指针（Lisp2的对号）</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>对象大小必须一致（可以与BiBOP结合使用）</li>
+<li>压缩时破坏排序（一般有引用关系的对象会放在一起），于是不适合缓存</li>
+</ul>
+<p>在Lisp2算法中，可以说几乎每一个活动对象都需要移动，一般来说越靠近左边，移动的概率、距离越小，而越后面则越大（可以类比幽灵堵车）</p>
+<p>我们能不能固定前面的对象，只移动后面的对象，从而实现压缩呢？（如果后面的对象和前面的对象大小一致，完全可以）</p>
+<p><img src="/images/Two-Finger.png" alt="Two-Finger"></p>
+<h4 id="表格算法">表格算法</h4>
+<p>算法分为三部：移动对象群，构建间隙表格，更新指针</p>
+<ul>
+<li>移动对象群（Lisp2一次移动一个对象，这个一次移动所有相邻对象）</li>
+</ul>
+<p><img src="/images/%E8%A1%A8%E6%A0%BC%E7%AE%97%E6%B3%95%E7%A7%BB%E5%8A%A8%E5%AF%B9%E8%B1%A1%E7%BE%A4.png" alt="表格算法移动对象群"></p>
+<ul>
+<li>构建间隙表格（设一个小格子尺寸为50）
+<ul>
+<li>a到b：live在B开头，scan在D开头，于是将B的初始位置和B向左移动的距离$(100,100)$写到D处</li>
+<li>b到c：
+<ul>
+<li>先把间隙表格向后移动，移到FG之后，于是H处写入$(100,100)$</li>
+<li>FG的初始位置和向左移动的距离为$(550,300)$，写入H之后（后是左边的G）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E6%9E%84%E5%BB%BA%E9%97%B4%E9%9A%99%E8%A1%A8%E6%A0%BC.png" alt="构建间隙表格"></p>
+<ul>
+<li>更新指针</li>
+</ul>
+<h4 id="ImmixGC算法">ImmixGC算法</h4>
+<h3 id="六：保守式GC">六：保守式GC</h3>
+<p>把疑似指针的一律视为指针</p>
+<h4 id="不明确的根">不明确的根</h4>
+<p>常见的根有</p>
+<ul>
+<li>寄存器</li>
+<li>调用栈</li>
+<li>全局变量空间</li>
+</ul>
+<p>在c++等语言里，<code>int</code>这种内置变量（非指针）和<code>void*</code>指针都存放在栈里，GC无法区分两者的区别，保守式GC就干脆不区分两者</p>
+<p>存储着不确定对象的根，称为不明确的根，而基于这些根的GC算法，被称为保守式GC（ambiguous GC）</p>
+<h4 id="检查内容">检查内容</h4>
+<ul>
+<li>是否<strong>位对齐</strong>（32位CPU，指针是4的倍数，64位CPU，指针是8的倍数）
+<ul>
+<li>不对齐的一定是非指针</li>
+</ul>
+</li>
+<li>是否指向堆内
+<ul>
+<li>对象放在堆中，所以指针一定指向堆</li>
+</ul>
+</li>
+<li>是否指向对象开头</li>
+</ul>
+<p>我们发现，有的时候我们会遇到一些格式与指针一致的非指针，我们称之为<strong>貌似指针的非指针（false pointer）</strong></p>
+<p>在标记清除算法中，遇到这种貌似指针的非指针，会胡乱找到一个对象，我们不知道这个对象是活动对象还是非活动对象，所以<strong>一律视为活动对象</strong>，进行标记</p>
+<p>注意：保守GC是只有当判断不出来到底是不是指针时才将其视为指针，而不是把所有对象都视为指针（迫不得已，凑合凑合用）</p>
+<h4 id="评价-4">评价</h4>
+<p>优点</p>
+<ul>
+<li>开发容易，程序员不需要意识到GC的存在</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>识别指针和非指针需要付出代价（检查内容）</li>
+<li>将false pointer指向的错误对象视为活动对象，这些东西不会被用到，却进栈了</li>
+<li>支持保守GC的算法不多</li>
+</ul>
+<h4 id="准确式GC">准确式GC</h4>
+<p>正确的根（exact roots）可以精确地识别指针和非指针</p>
+<p>基于正确的根的GC被称为<strong>准确式GC</strong></p>
+<h5 id="构建正确的根的方法：打标签">构建正确的根的方法：打标签</h5>
+<ul>
+<li>32位CPU指针的值是4的倍数，那么其<strong>低2位</strong>一定是0</li>
+<li>我们可以将所有非指针左移1位，然后将其<strong>低1位</strong>置为1</li>
+</ul>
+<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;打标签
+int addTag(int a)&#123;
+    a &#x3D; a &lt;&lt; 1;	&#x2F;&#x2F;小心溢出，如果会溢出，就用一个更大的数据结构
+	a &#x3D; a|1;
+    return a;
+&#125;
+&#x2F;&#x2F;去标签（在使用时需要恢复成正常数值），而且使用完后还有再次打标签
+int getValue(int a)&#123;
+    a  &#x3D; a &gt;&gt; 1;
+    return a;
+&#125;</code></pre>
+<p>除了打标签，还可以专门构建一个只存放指针的根，比如一些使用虚拟机（VM）的语言</p>
+<h5 id="评价-5">评价</h5>
+<p>优点</p>
+<ul>
+<li>不需要判断是否为指针，没有判断带来的性能代价</li>
+<li>堆中只会存在指针，可以适用于一些移动对象的GC算法</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>构建准确的根需要性能成本</li>
+<li>语言使用时更麻烦</li>
+</ul>
+<h4 id="间接引用">间接引用</h4>
+<p>为什么保守式GC不能移动对象？因为一个false pointer可能是一个非指针，移动会导致问题</p>
+<h5 id="句柄">句柄</h5>
+<p>如图，即使我们移动了堆中的对象，也却不会改变根内的内容</p>
+<img src="/images/句柄.jpeg" alt="句柄" style="zoom:50%;" />
+<p>优点：</p>
+<ul>
+<li>可以使用复制算法</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>访问一个对象需要访问两次内存</li>
+</ul>
+<h4 id="MostlyCopyingGC">MostlyCopyingGC</h4>
+<p>保守式GC复制算法</p>
+<h4 id="黑名单">黑名单</h4>
+<p>有的false pointer即使是非指针，错把他当指针用也可以找到一个对象（尽管这个过程是未定义的），如果这个非指针可以做到这个事，拿我们就把这个非指针指向的地址存放到<strong>黑名单</strong>中</p>
+<p>黑名单中存放的是地址，如果在这些地址中分配空间，可能会导致未定义事件</p>
+<p>所以在这些地址上分配对象时要十分小心，比如只能分配小对象、只能分配没有子对象的小对象，因为这些对象比较小，即使变成垃圾，被错误识别了，危害也比较小</p>
+<h3 id="七：分代垃圾回收">七：分代垃圾回收</h3>
+<p>引入了年龄这一概念，优先回收那些容易成为垃圾的对象</p>
+<h4 id="年龄">年龄</h4>
+<p>我们在引用计数法中提到过，绝大多数的对象生成后立刻会被回收，而被引用次数多多对象很难变成垃圾</p>
+<p>于是我们引入年龄这一概念，初始为0，每经历一次GC算法，如果没有被回收，则年龄+1</p>
+<p>我们发现年龄越大，说明对象越重要，越不容易被回收，于是年龄越大，参与回收的频率就越低</p>
+<h4 id="评价-6">评价</h4>
+<p>优点</p>
+<ul>
+<li>提高吞吐量</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>很多对象出生立刻回收只是一个经验，不适合所有程序，一旦某程序对象比较“长寿”，会起反作用</li>
+</ul>
+<h3 id="八：增量式垃圾回收">八：增量式垃圾回收</h3>
+<p><em>想一想单核CPU并行的本质，就是将线程切分，来回切换</em></p>
+<p>通过逐步推进垃圾回收来控制最大暂停时间，不一次执行完GC，而是执行一会mutator，执行一会GC</p>
+<img src="/images/增量式GC.jpeg" alt="增量式GC" style="zoom:50%;" />
+<ul>
+<li>三色标记法</li>
+</ul>
+<h4 id="评价-7">评价</h4>
+<p>优点</p>
+<ul>
+<li>降低最大暂停时间</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>降低了吞吐量</li>
+</ul>
+<h3 id="九：RC-Immix算法">九：RC Immix算法</h3>
+<p><em>这是一个2013年的算法，听懂掌声</em></p>
+<p>将合并型引用计数法和Immix组合到一起，改善了引用计数法的吞吐量</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://reuben-sun.github.io/2023/01/31/engine/GC/" data-id="clepy40ny0004glnk6wsm4rcq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/" rel="tag">GC</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/01/31/dcc/maya%E6%8F%92%E4%BB%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Maya插件开发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/31/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">大象无形UE笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dcc/">dcc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/engine/">engine</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/graphics/">graphics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/math/">math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/optics/">optics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/program/">program</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DX12/" rel="tag">DX12</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deferred-Render/" rel="tag">Deferred Render</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GC/" rel="tag">GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GI/" rel="tag">GI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Metal/" rel="tag">Metal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PM/" rel="tag">PM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Physics/" rel="tag">Physics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SIGGRAPH/" rel="tag">SIGGRAPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPH/" rel="tag">SPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TA/" rel="tag">TA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unreal/" rel="tag">Unreal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shader/" rel="tag">shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E5%AD%A6/" rel="tag">光学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag">微积分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" rel="tag">高等数学</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/DX12/" style="font-size: 10px;">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 10px;">Deferred Render</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/GI/" style="font-size: 15px;">GI</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Metal/" style="font-size: 10px;">Metal</a> <a href="/tags/PM/" style="font-size: 10px;">PM</a> <a href="/tags/Physics/" style="font-size: 12.5px;">Physics</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SIGGRAPH/" style="font-size: 15px;">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 12.5px;">SPH</a> <a href="/tags/TA/" style="font-size: 15px;">TA</a> <a href="/tags/Unity/" style="font-size: 12.5px;">Unity</a> <a href="/tags/Unreal/" style="font-size: 10px;">Unreal</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/shader/" style="font-size: 10px;">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 20px;">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">并行计算</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 10px;">微积分</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 17.5px;">高等数学</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/26/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/">光学复习</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E8%A1%8D%E5%B0%84/">衍射</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E5%B9%B2%E6%B6%89/">干涉</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/18/program/AskQuestion/">提问的智慧</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/13/graphics/DOSDF/">Dynamic Occlusion with SDF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Reuben Sun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

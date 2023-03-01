@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Maya插件开发 | ReubenSun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Maya maya，老东西，行业标准，真难用（不是） 腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建 创建一个python工具 Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件 创建一个python文件 import maya.cmds as cmds">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maya插件开发">
+<meta property="og:url" content="http://reuben-sun.github.io/2023/01/31/dcc/maya%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="ReubenSun">
+<meta property="og:description" content="Maya maya，老东西，行业标准，真难用（不是） 腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建 创建一个python工具 Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件 创建一个python文件 import maya.cmds as cmds">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://reuben-sun.github.io/images/maya%E4%BF%9D%E5%AD%98%E5%B7%A5%E5%85%B7%E6%A0%8F.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/maya%E8%84%9A%E6%9C%AC.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/%E6%98%BE%E7%A4%BA%E4%BA%8C%E8%80%85.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/maya%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%BC%96%E8%BE%91%E5%99%A8.png">
+<meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
+<meta property="article:modified_time" content="2023-03-01T17:22:20.537Z">
+<meta property="article:author" content="Reuben Sun">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://reuben-sun.github.io/images/maya%E4%BF%9D%E5%AD%98%E5%B7%A5%E5%85%B7%E6%A0%8F.png">
+  
+    <link rel="alternate" href="/atom.xml" title="ReubenSun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ReubenSun</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://reuben-sun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-dcc/maya插件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/01/31/dcc/maya%E6%8F%92%E4%BB%B6/" class="article-date">
+  <time datetime="2023-01-31T10:01:25.000Z" itemprop="datePublished">2023-01-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/dcc/">dcc</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Maya插件开发
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>Maya</h1>
+<p>maya，老东西，行业标准，真难用（不是）</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76957745">腾讯巨神级TA</a>、<a target="_blank" rel="noopener" href="http://www.zt-page.com/?p=109">碧血红天的blog</a>、<a target="_blank" rel="noopener" href="https://www.cnblogs.com/3lina/p/11672415.html">Pycharm环境搭建</a></p>
+<h3 id="创建一个python工具">创建一个python工具</h3>
+<p>Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件</p>
+<h4 id="创建一个python文件">创建一个python文件</h4>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> maya<span class="token punctuation">.</span>cmds <span class="token keyword">as</span> cmds
+
+
+<span class="token keyword">def</span> <span class="token function">createWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> cmds<span class="token punctuation">.</span>window<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">,</span> exists<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cmds<span class="token punctuation">.</span>deleteUI<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">)</span>
+    windowvar <span class="token operator">=</span> cmds<span class="token punctuation">.</span>window<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">)</span>
+    cmds<span class="token punctuation">.</span>columnLayout<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    checkButton <span class="token operator">=</span> cmds<span class="token punctuation">.</span>button<span class="token punctuation">(</span>l<span class="token operator">=</span><span class="token string">'Test'</span><span class="token punctuation">,</span> command<span class="token operator">=</span><span class="token string">'testFunc()'</span><span class="token punctuation">)</span>
+    cmds<span class="token punctuation">.</span>showWindow<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">testFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> <span class="token string">"Hello"</span>
+
+createWindow<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h4 id="添加到工具栏">添加到工具栏</h4>
+<p>当你的代码完成后，可以将其固定到工具架上</p>
+<p><img src="/images/maya%E4%BF%9D%E5%AD%98%E5%B7%A5%E5%85%B7%E6%A0%8F.png" alt="maya保存工具栏"></p>
+<h4 id="怎么写">怎么写</h4>
+<p>这应该是很多人写maya插件最大的疑惑，我的建议是先学美术，开着脚本编辑器，按照美术流程走一遍，你会发现你每一次操作，脚本编辑器都会输出一个指令，这个应该能让你深受启发</p>
+<p><img src="/images/maya%E8%84%9A%E6%9C%AC.png" alt="maya脚本"></p>
+<p>如果你的脚本编辑器没有显示，那么在脚本编辑器中设置<strong>显示二者</strong></p>
+<p><img src="/images/%E6%98%BE%E7%A4%BA%E4%BA%8C%E8%80%85.png" alt="显示二者"></p>
+<h3 id="常用API">常用API</h3>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> maya<span class="token punctuation">.</span>cmds <span class="token keyword">as</span> cmds	<span class="token comment">#这是一个将MEL指令用python封装的库，适合面向过程编程</span>
+<span class="token keyword">import</span> maya<span class="token punctuation">.</span>OpenMaya <span class="token keyword">as</span> om	<span class="token comment">#拥有cmd没有的功能，运行效率更高</span></code></pre>
+<ul>
+<li>
+<p>删除：<code>cmds.delete(p)</code></p>
+</li>
+<li>
+<p>选中：<code>p = cmds.ls('Name')</code></p>
+</li>
+<li>
+<p>创建</p>
+<ul>
+<li>Cube：<code>pCube = cmds.polyCube(w=10, h=10, d=10, name='myCube')</code></li>
+</ul>
+</li>
+<li>
+<p>移动（到指定位置）</p>
+<ul>
+<li>平移：<code>cmds.move(0, 10, 0, pCube)</code></li>
+<li>缩放：<code>cmds.scale(2, 2, 2, pCube)</code></li>
+<li>旋转：<code>cmds.rotate(45, 45, 0, pCube)</code></li>
+</ul>
+</li>
+<li>
+<p>选择（得到的是对象数组）</p>
+<ul>
+<li>当前选择：<code>list = cmds.ls(selection=True)</code></li>
+</ul>
+</li>
+<li>
+<p>读参数</p>
+<ul>
+<li>位置：<code>cmds.getAttr('%s.translate ' % (p))</code></li>
+<li>位置（某一维）：<code>y = cmds.getAttr('%s.translateY ' % (p))</code></li>
+</ul>
+</li>
+<li>
+<p>写参数</p>
+<ul>
+<li>位置（某一维）：<code>cmds.setAttr('%s.translateX' % (p), 10)</code></li>
+</ul>
+</li>
+</ul>
+<p>想知道maya物体的参数，可以通过表达式编辑器查看（窗口-动画编辑器-表达式编辑器）</p>
+<p><img src="/images/maya%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%BC%96%E8%BE%91%E5%99%A8.png" alt="maya表达式编辑器"></p>
+<ul>
+<li>得到顶点数据</li>
+</ul>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">printVertexPos</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    selectObjectList <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span>selection<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    VertexArray <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span><span class="token string">'&#123;&#125;.vtx[:]'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>selectObjectList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fl <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> v <span class="token keyword">in</span> VertexArray<span class="token punctuation">:</span>
+        <span class="token keyword">print</span> cmds<span class="token punctuation">.</span>xform<span class="token punctuation">(</span>v<span class="token punctuation">,</span> query <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">,</span> translation <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">,</span> worldSpace <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<h3 id="工具实例">工具实例</h3>
+<h4 id="平滑法线">平滑法线</h4>
+<p><a target="_blank" rel="noopener" href="https://github.com/Reuben-Sun/Note-of-Graphics/blob/main/Code/MayaPython/SmoothNormal.py">平滑法线</a></p>
+<h4 id="模型展2UV">模型展2UV</h4>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment">#创建一个名称为sph的多边形</span>
+<span class="token keyword">def</span> <span class="token function">createFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+   cmds<span class="token punctuation">.</span>polySphere<span class="token punctuation">(</span>n<span class="token operator">=</span><span class="token string">'sph'</span><span class="token punctuation">)</span>
+
+<span class="token comment">#删除除了map1以外所有的uvmap</span>
+<span class="token keyword">def</span> <span class="token function">deleteUVs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    au <span class="token operator">=</span> cmds<span class="token punctuation">.</span>polyUVSet<span class="token punctuation">(</span>query<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> allUVSets<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>au<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cmds<span class="token punctuation">.</span>polyUVSet<span class="token punctuation">(</span>delete<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> uvSet<span class="token operator">=</span>au<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">#自动展选中物体的2UV，并命名为map2</span>
+<span class="token keyword">def</span> <span class="token function">pickUV2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token builtin">list</span> <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span>dag<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> selection<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    au <span class="token operator">=</span> cmds<span class="token punctuation">.</span>polyUVSet<span class="token punctuation">(</span>query<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> allUVSets<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>au<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cmds<span class="token punctuation">.</span>polyAutoProjection<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">'.f[*]'</span><span class="token punctuation">,</span> cm <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> uvs<span class="token operator">=</span> <span class="token string">'map2'</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">"map2 has been exited"</span></code></pre>
+<h4 id="动画clip">动画clip</h4>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment">#输出选中的动画片段的开始帧和结束帧</span>
+<span class="token keyword">def</span> <span class="token function">printClip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token builtin">list</span> <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span>selection<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> p <span class="token keyword">in</span> <span class="token builtin">list</span><span class="token punctuation">:</span>
+        start <span class="token operator">=</span> cmds<span class="token punctuation">.</span>getAttr<span class="token punctuation">(</span><span class="token string">'%s.clipStart '</span> <span class="token operator">%</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        end <span class="token operator">=</span> cmds<span class="token punctuation">.</span>getAttr<span class="token punctuation">(</span><span class="token string">'%s.clipStart '</span> <span class="token operator">%</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> cmds<span class="token punctuation">.</span>getAttr<span class="token punctuation">(</span><span class="token string">'%s.clipDuration '</span> <span class="token operator">%</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span> start
+        <span class="token keyword">print</span> end</code></pre>
+<h4 id="打开文件">打开文件</h4>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">openFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+   path <span class="token operator">=</span> <span class="token string">'C:/Users/Admin/Desktop/多边形.fbx'</span>
+   cmds<span class="token punctuation">.</span><span class="token builtin">file</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> i<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<h4 id="开关UV编辑器">开关UV编辑器</h4>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">openUVPanel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+   <span class="token keyword">if</span> cmds<span class="token punctuation">.</span>window<span class="token punctuation">(</span><span class="token string">'polyTexturePlacementPanel1Window'</span><span class="token punctuation">,</span> ex<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        cmds<span class="token punctuation">.</span>deleteUI<span class="token punctuation">(</span><span class="token string">'polyTexturePlacementPanel1Window'</span><span class="token punctuation">)</span>
+        mel<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">'toggleUVToolkit;'</span><span class="token punctuation">)</span>
+   <span class="token keyword">else</span><span class="token punctuation">:</span>
+        mel<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">'texturePanelShow;'</span><span class="token punctuation">)</span></code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://reuben-sun.github.io/2023/01/31/dcc/maya%E6%8F%92%E4%BB%B6/" data-id="clepy40nw0003glnk2i8y5k6d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/02/01/program/Csharpe/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          WPF中的C#
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/01/31/engine/GC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">垃圾回收</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dcc/">dcc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/engine/">engine</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/graphics/">graphics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/math/">math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/optics/">optics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/program/">program</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DX12/" rel="tag">DX12</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deferred-Render/" rel="tag">Deferred Render</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GC/" rel="tag">GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GI/" rel="tag">GI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Metal/" rel="tag">Metal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PM/" rel="tag">PM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Physics/" rel="tag">Physics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SIGGRAPH/" rel="tag">SIGGRAPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPH/" rel="tag">SPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TA/" rel="tag">TA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unreal/" rel="tag">Unreal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shader/" rel="tag">shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E5%AD%A6/" rel="tag">光学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag">微积分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" rel="tag">高等数学</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/DX12/" style="font-size: 10px;">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 10px;">Deferred Render</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/GI/" style="font-size: 15px;">GI</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Metal/" style="font-size: 10px;">Metal</a> <a href="/tags/PM/" style="font-size: 10px;">PM</a> <a href="/tags/Physics/" style="font-size: 12.5px;">Physics</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SIGGRAPH/" style="font-size: 15px;">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 12.5px;">SPH</a> <a href="/tags/TA/" style="font-size: 15px;">TA</a> <a href="/tags/Unity/" style="font-size: 12.5px;">Unity</a> <a href="/tags/Unreal/" style="font-size: 10px;">Unreal</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/shader/" style="font-size: 10px;">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 20px;">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">并行计算</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 10px;">微积分</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 17.5px;">高等数学</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/26/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/">光学复习</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E8%A1%8D%E5%B0%84/">衍射</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E5%B9%B2%E6%B6%89/">干涉</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/18/program/AskQuestion/">提问的智慧</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/13/graphics/DOSDF/">Dynamic Occlusion with SDF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Reuben Sun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>干涉 | ReubenSun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="六：干涉 内容概述  干涉（Interference），光的叠加不满足线性叠加，证明了光的波性 干涉条件 干涉方法与装置 干涉仪  干涉 干涉让光学从线性光学变成非线性光学 线性光学 在几何光学中，我们认为光是独立传播的 光是一种横波，光在介质中传播会引起介质粒子振动，若独立传播成立，那么两束光的交叉区域，粒子的振动是两个振动的叠加，这就是叠加原理 光的叠加实际上是介质的性质（因为描述的是介质粒子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="干涉">
+<meta property="og:url" content="http://reuben-sun.github.io/2023/02/25/optics/%E5%B9%B2%E6%B6%89/index.html">
+<meta property="og:site_name" content="ReubenSun">
+<meta property="og:description" content="六：干涉 内容概述  干涉（Interference），光的叠加不满足线性叠加，证明了光的波性 干涉条件 干涉方法与装置 干涉仪  干涉 干涉让光学从线性光学变成非线性光学 线性光学 在几何光学中，我们认为光是独立传播的 光是一种横波，光在介质中传播会引起介质粒子振动，若独立传播成立，那么两束光的交叉区域，粒子的振动是两个振动的叠加，这就是叠加原理 光的叠加实际上是介质的性质（因为描述的是介质粒子">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/%E6%99%AE%E9%80%9A%E5%85%89%E6%BA%90%E7%9B%B8%E5%B9%B2%E5%85%89.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/%E6%9D%A8%E6%B0%8F%E5%8F%8C%E7%BC%9D%E5%B9%B2%E6%B6%89.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/杨氏干涉.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/杨氏干涉彩色条纹.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/菲尼尔双平面镜.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/劳埃德镜.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/菲涅尔双棱镜.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/条纹移动.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/光源宽度.png">
+<meta property="og:image" content="http://reuben-sun.github.io/2023/02/25/images/薄膜干涉.png">
+<meta property="article:published_time" content="2023-02-25T10:01:25.000Z">
+<meta property="article:modified_time" content="2023-03-01T17:22:20.541Z">
+<meta property="article:author" content="Reuben Sun">
+<meta property="article:tag" content="光学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://reuben-sun.github.io/2023/02/25/images/%E6%99%AE%E9%80%9A%E5%85%89%E6%BA%90%E7%9B%B8%E5%B9%B2%E5%85%89.png">
+  
+    <link rel="alternate" href="/atom.xml" title="ReubenSun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ReubenSun</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://reuben-sun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-optics/干涉" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/02/25/optics/%E5%B9%B2%E6%B6%89/" class="article-date">
+  <time datetime="2023-02-25T10:01:25.000Z" itemprop="datePublished">2023-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/optics/">optics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      干涉
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>六：干涉</h1>
+<h2 id="内容概述">内容概述</h2>
+<ul>
+<li>干涉（Interference），光的叠加不满足线性叠加，证明了光的波性</li>
+<li>干涉条件</li>
+<li>干涉方法与装置</li>
+<li>干涉仪</li>
+</ul>
+<h2 id="干涉">干涉</h2>
+<p>干涉让光学从线性光学变成非线性光学</p>
+<h3 id="线性光学">线性光学</h3>
+<p>在几何光学中，我们认为光是独立传播的</p>
+<p>光是一种横波，光在介质中传播会引起介质粒子振动，若独立传播成立，那么两束光的交叉区域，粒子的振动是两个振动的叠加，这就是<strong>叠加原理</strong></p>
+<p>光的叠加实际上是介质的性质（因为描述的是介质粒子振动的叠加）</p>
+<ul>
+<li>线性介质：在该介质中，波满足叠加原理</li>
+<li>非线性介质：在该介质中，波不满足叠加原理</li>
+</ul>
+<p>违反叠加原理的介质是非线性介质，现象是非线性现象，学科是非线性光学</p>
+<p>此外，叠加原理只有在低强度光下才成立，因此激光发明后，非线性光学才蓬勃发展</p>
+<h3 id="复振幅叠加法">复振幅叠加法</h3>
+<p>求解相干光强有三种方法，实际分析时通常使用复振幅法</p>
+<ul>
+<li>三角函数法：波可以由三角函数表示，对三角函数做恒等变化，即可求相干光强</li>
+<li>矢量图解法</li>
+<li>复振幅法</li>
+</ul>
+<p>首先将三角函数表示为复振幅<br>
+$$<br>
+\tilde{\mathbf{E}_i}=\mathbf{A}_i e^{i\varphi <em>i}<br>
+$$<br>
+复振幅的叠加<br>
+$$<br>
+\tilde{\mathbf{E}}=\sum</em>{i=1}^n\tilde{\mathbf{E}_i}<br>
+$$<br>
+合光强<br>
+$$<br>
+I = \tilde{\mathbf{E}}\cdot \tilde{\mathbf{E}}^*<br>
+$$</p>
+<h3 id="相干叠加">相干叠加</h3>
+<p>现在有两个相同频率（frequency）相同偏振（polarization）的光波，下面是他们电场强度随时间的变化（用复数表示三角函数）<br>
+$$<br>
+\mathbf{E_1}=\mathbf{A_1} e^{i(kr_1-\omega t+\varphi _{01})}<br>
+$$</p>
+<p>$$<br>
+\mathbf{E_2}=\mathbf{A_2} e^{i(kr_2-\omega t+\varphi _{02})}<br>
+$$</p>
+<p>他们相交于点P，根据叠加原理，P点点电场强度为<br>
+$$<br>
+\mathbf{E}=\mathbf{E_1}+\mathbf{E_2}=[\mathbf{A_1}e^{i(kr_1+\varphi_{01})} + \mathbf{A_2}e^{i(kr_2+\varphi_{02})}]e^{-i\omega t}<br>
+$$<br>
+显然，振幅为<br>
+$$<br>
+\tilde{\mathbf{E}}=\mathbf{A_1}e^{i(kr_1+\varphi_{01})} + \mathbf{A_2}e^{i(kr_2+\varphi_{02})}<br>
+$$<br>
+由于光过于高频，我们没法实时进行光电场强度的检测，于是我们使用光强（intensity，$I$）来进行推导</p>
+<p>$$<br>
+I \propto \tilde{\mathbf{E}}\cdot \tilde{\mathbf{E}}^*=\mathbf{A_1}^2+\mathbf{A_2}^2+2\mathbf{A_1A_2}\cos(kr_1-kr_2+\varphi_{01}-\varphi_{02})<br>
+$$</p>
+<p>$$<br>
+I = I_1+ I_2 + 2\sqrt{I_1I_2}\cos \delta<br>
+$$</p>
+<p>$$<br>
+\delta=kr_1-kr_2+\varphi_{01}-\varphi_{02}<br>
+$$</p>
+<p>我们发现，两个光波进行叠加，光强不只是简单叠加，还有一个尾巴，这个尾巴就是<strong>干涉</strong></p>
+<p>干涉：因波的叠加引起强度重新分布的现象</p>
+<p>并且我们发现：</p>
+<ul>
+<li>
+<p>干涉强度与时间无关，与空间位置有关，且保持不变</p>
+</li>
+<li>
+<p>当$\delta=2m\pi$，干涉强度最大，我们称之为构造干涉（constructive interference）</p>
+</li>
+</ul>
+<p>$$<br>
+I=(\mathbf{A_1}+\mathbf{A_2})^2<br>
+$$</p>
+<ul>
+<li>当$\delta=(2m+1)\pi$，干涉强度最小，我们称之为相消干涉（destructive interference）</li>
+</ul>
+<p>$$<br>
+I=(\mathbf{A_1}-\mathbf{A_2})^2<br>
+$$</p>
+<h3 id="非相干叠加">非相干叠加</h3>
+<p>一般而言，两个光频率和偏振不一样，经过推导<br>
+$$<br>
+I_{12}=2\mathbf{A_1}\cdot \mathbf{A_2} \cos [(\omega_2 - \omega_1)t + \theta_1 - \theta_2]<br>
+$$<br>
+我们到处干涉强度为0的条件</p>
+<ul>
+<li>两个光频率不同，$\cos[…]$的均值为0</li>
+<li>两个光光矢量垂直，$\mathbf{A_1}\cdot \mathbf{A_2}=0$</li>
+<li>两个光夹角（相位差）迅速且无序变化，$\cos[…]$的均值为0</li>
+</ul>
+<h3 id="干涉条件">干涉条件</h3>
+<p>因此我们总结出发生干涉的条件</p>
+<ul>
+<li>频率相同</li>
+<li>相同的平行分量</li>
+<li>固定的相位差</li>
+</ul>
+<p>如果不满足干涉条件，那么平均下来<br>
+$$<br>
+I=I_1+I_2<br>
+$$</p>
+<h2 id="获得干涉光">获得干涉光</h2>
+<p>普通光源：普通光源的发光单位为原子、分子，不同原子间的发光是独立的，他们的频率、偏振、相位都是不同的，因此他们的光是不会发生干涉的</p>
+<p>使用杨氏干涉实验、菲涅尔双棱镜、劳埃德镜可以将普通光源变成干涉光</p>
+<p><img src="../../images/%E6%99%AE%E9%80%9A%E5%85%89%E6%BA%90%E7%9B%B8%E5%B9%B2%E5%85%89.png" alt="普通光源相干光"></p>
+<h3 id="杨氏双缝干涉实验">杨氏双缝干涉实验</h3>
+<p>杨氏实验是通过两个点波光源进行干涉实验的典型</p>
+<p>如果光是一种波，那么光在传播过程中应该会有波前（传播最靠前的波阵面），提取一个波前，并将其分为两部分，就能得到两个相干光</p>
+<p>现在有一个非常窄的单色光源，经过两个带缝平面，会生成两个相干光，进而发生衍射现象，在平面留下明暗条纹</p>
+<p><img src="../../images/%E6%9D%A8%E6%B0%8F%E5%8F%8C%E7%BC%9D%E5%B9%B2%E6%B6%89.png" alt="杨氏双缝干涉"></p>
+<p>$$<br>
+I=4I_1\cos^2\frac{\pi \Delta}{\lambda}<br>
+$$</p>
+<ul>
+<li>若$\Delta=m\lambda, I=I_{max}=4I_1$，呈现亮条纹</li>
+<li>若$\Delta=(2m-1)\lambda/2, I=I_{min}=0$，呈现暗条纹</li>
+</ul>
+<img src="../../images/杨氏干涉.png" alt="杨氏干涉" style="zoom: 50%;" />
+<p>当间距不大时，角度比较小，缝间距是相同的，间距为<br>
+$$<br>
+\Delta x=\frac{D}{d}\lambda<br>
+$$<br>
+如果传入的是白光，条纹将为彩色</p>
+<img src="../../images/杨氏干涉彩色条纹.png" alt="杨氏干涉彩色条纹" style="zoom:50%;" />
+<h3 id="其他干涉仪器">其他干涉仪器</h3>
+<p>本质都是杨氏双缝干涉，条纹间距都满足<br>
+$$<br>
+\Delta x=\frac{D}{d}\lambda<br>
+$$</p>
+<h4 id="菲涅尔双平面镜">菲涅尔双平面镜</h4>
+<img src="../../images/菲尼尔双平面镜.png" alt="菲尼尔双平面镜" style="zoom:50%;" />
+<h4 id="劳埃德镜">劳埃德镜</h4>
+<img src="../../images/劳埃德镜.png" alt="劳埃德镜" style="zoom:67%;" />
+<h4 id="菲涅尔双棱镜">菲涅尔双棱镜</h4>
+<img src="../../images/菲涅尔双棱镜.png" alt="菲涅尔双棱镜" style="zoom:50%;" />
+<h3 id="干涉条纹的移动">干涉条纹的移动</h3>
+<p>我们不仅观测到明暗条纹，还观测到条纹的移动和变化</p>
+<ul>
+<li>
+<p>移动光源，对于屏幕上一点，求多少个条纹经过该点</p>
+<ul>
+<li>对于屏幕上点P，经过点P的条纹数取决于两条相干光线的光程差（OPL）</li>
+<li>当光程差增减一个$\lambda$时，就会经过一条条纹</li>
+</ul>
+</li>
+<li>
+<p>移动光源，对于特定的一个条纹，求其移动了多长距离</p>
+<ul>
+<li>杨氏双缝中</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>
+\delta x = -\frac{D}{R}\delta s<br>
+$$</p>
+<img src="../../images/条纹移动.png" alt="条纹移动" style="zoom:50%;" />
+<h2 id="时空相干性">时空相干性</h2>
+<p>现实中的普通光源的发光单元为原子、分子，靠自发辐射发光（激光光源靠受激辐射），这是一个随机过程，产生的光是随机、无规律、不相干的。看起来我们无法用普通光源做干涉实验，但实际上杨氏双缝是可以使用普通光源的，因为杨氏双缝中两个光都是由同一束光分割而成的</p>
+<p>尽管普通光源的相位随机，但是杨氏双缝两束光的相位差与原光源相位无关，仅与空间位置有关</p>
+<p>不过，光源的尺寸和光谱尺寸仍然会对杨氏干涉产生影响</p>
+<p>在杨氏干涉中，我们使用了很窄的单色光源，然而现实中光源总是有尺寸，其颜色也不是单色而是光谱中一小段</p>
+<p>空间相干性：光源尺寸对干涉强度的影响</p>
+<p>时间相干性：光谱尺寸对干涉强度的影响（也就是说光不是真的纯色）</p>
+<h3 id="空间相干性">空间相干性</h3>
+<p>干涉条纹的衬比度（constrast）定义为<br>
+$$<br>
+\gamma = \frac{I_\max-I_\min}{I_\max + I_\min}<br>
+$$<br>
+任何光源都有一定的宽度，我们将其视为多个不相干的点光源排布，屏幕上的总强度为各个光源的干涉条纹的线性叠加</p>
+<p>我们发现沿着x轴方向的长度会让条纹模糊</p>
+<p>沿着y轴方向的长度会让亮纹和亮纹重叠，于是条纹更清晰</p>
+<p>我们在做杨氏双缝时常常使用平行于y轴方向的光</p>
+<img src="../../images/光源宽度.png" alt="光源宽度" style="zoom:50%;" />
+<h3 id="时间相干性">时间相干性</h3>
+<h2 id="薄膜干涉">薄膜干涉</h2>
+<p>薄膜干涉（Thin film interference）：光在薄膜表面发生反射和折射，反射光和折射光发生干涉</p>
+<blockquote>
+<p>比如彩色太阳眼镜和阳光下的七彩肥皂泡</p>
+</blockquote>
+<p>光线在射向薄膜后会发生反射和透射，透射光可能会再次反射透射，返回薄膜表面，进而和入射光相遇，发生干涉</p>
+<img src="../../images/薄膜干涉.png" alt="薄膜干涉" style="zoom:50%;" />
+<h3 id="等倾斜角干涉">等倾斜角干涉</h3>
+<h3 id="等厚度干涉">等厚度干涉</h3>
+<h2 id="干涉仪">干涉仪</h2>
+<h3 id="迈克耳孙干涉仪">迈克耳孙干涉仪</h3>
+<h3 id="法布里-珀罗干涉仪">法布里-珀罗干涉仪</h3>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://reuben-sun.github.io/2023/02/25/optics/%E5%B9%B2%E6%B6%89/" data-id="clepy40ot001yglnkau1mcuro" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%89%E5%AD%A6/" rel="tag">光学</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/02/25/optics/%E8%A1%8D%E5%B0%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          衍射
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/02/18/program/AskQuestion/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">提问的智慧</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dcc/">dcc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/engine/">engine</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/graphics/">graphics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/math/">math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/optics/">optics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/program/">program</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DX12/" rel="tag">DX12</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deferred-Render/" rel="tag">Deferred Render</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GC/" rel="tag">GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GI/" rel="tag">GI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Metal/" rel="tag">Metal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PM/" rel="tag">PM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Physics/" rel="tag">Physics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SIGGRAPH/" rel="tag">SIGGRAPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPH/" rel="tag">SPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TA/" rel="tag">TA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unreal/" rel="tag">Unreal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shader/" rel="tag">shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E5%AD%A6/" rel="tag">光学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag">微积分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" rel="tag">高等数学</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/DX12/" style="font-size: 10px;">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 10px;">Deferred Render</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/GI/" style="font-size: 15px;">GI</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Metal/" style="font-size: 10px;">Metal</a> <a href="/tags/PM/" style="font-size: 10px;">PM</a> <a href="/tags/Physics/" style="font-size: 12.5px;">Physics</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SIGGRAPH/" style="font-size: 15px;">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 12.5px;">SPH</a> <a href="/tags/TA/" style="font-size: 15px;">TA</a> <a href="/tags/Unity/" style="font-size: 12.5px;">Unity</a> <a href="/tags/Unreal/" style="font-size: 10px;">Unreal</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/shader/" style="font-size: 10px;">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 20px;">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">并行计算</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 10px;">微积分</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 17.5px;">高等数学</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/26/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/">光学复习</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E8%A1%8D%E5%B0%84/">衍射</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E5%B9%B2%E6%B6%89/">干涉</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/18/program/AskQuestion/">提问的智慧</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/13/graphics/DOSDF/">Dynamic Occlusion with SDF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Reuben Sun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

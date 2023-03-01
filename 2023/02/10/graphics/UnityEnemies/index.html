@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Probe-based Lighting in Unity Enemies | ReubenSun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Probe-based Lighting in Unity Enemies 2022年SIGGRAPH，Unity发布了一个数字人项目，在头发、眼球、GI方面效果非常好，我们来分析一下他的Probe-based GI 论文地址  感觉原理上就是在Volume GI的基础上，存了遮罩信息用于偏移采样点，使用紧凑哈希提高了空间利用率，感觉手游大世界完全可以上这个   不用Lightmap  难以处理复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Probe-based Lighting in Unity Enemies">
+<meta property="og:url" content="http://reuben-sun.github.io/2023/02/10/graphics/UnityEnemies/index.html">
+<meta property="og:site_name" content="ReubenSun">
+<meta property="og:description" content="Probe-based Lighting in Unity Enemies 2022年SIGGRAPH，Unity发布了一个数字人项目，在头发、眼球、GI方面效果非常好，我们来分析一下他的Probe-based GI 论文地址  感觉原理上就是在Volume GI的基础上，存了遮罩信息用于偏移采样点，使用紧凑哈希提高了空间利用率，感觉手游大世界完全可以上这个   不用Lightmap  难以处理复">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Enemies.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/adaptive.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/cell.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/稀疏网格.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/SDF推箱子.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/IndirectionBuffer.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Probe评分.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/Dilation2.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/probeoffset.png">
+<meta property="og:image" content="http://reuben-sun.github.io/images/遮光板.png">
+<meta property="article:published_time" content="2023-02-10T01:16:25.000Z">
+<meta property="article:modified_time" content="2023-03-01T17:22:20.537Z">
+<meta property="article:author" content="Reuben Sun">
+<meta property="article:tag" content="GI">
+<meta property="article:tag" content="SIGGRAPH">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://reuben-sun.github.io/images/Enemies.png">
+  
+    <link rel="alternate" href="/atom.xml" title="ReubenSun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ReubenSun</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://reuben-sun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-graphics/UnityEnemies" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/02/10/graphics/UnityEnemies/" class="article-date">
+  <time datetime="2023-02-10T01:16:25.000Z" itemprop="datePublished">2023-02-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/graphics/">graphics</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Probe-based Lighting in Unity Enemies
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>Probe-based Lighting in Unity Enemies</h1>
+<p>2022年SIGGRAPH，Unity发布了一个数字人项目，在头发、眼球、GI方面效果非常好，我们来分析一下他的Probe-based GI</p>
+<p><a target="_blank" rel="noopener" href="http://advances.realtimerendering.com/s2022/SIGGRAPH2022-Advances-Enemies-Ciardi%20et%20al.pdf">论文地址</a></p>
+<blockquote>
+<p>感觉原理上就是在Volume GI的基础上，存了遮罩信息用于偏移采样点，使用紧凑哈希提高了空间利用率，感觉手游大世界完全可以上这个</p>
+</blockquote>
+<img src="/images/Enemies.png" alt="Enemies" style="zoom:50%;" />
+<h3 id="不用Lightmap">不用Lightmap</h3>
+<ul>
+<li>难以处理复杂的集合体，难以处理LOD</li>
+<li>烘焙速度慢，严重制约开发效率</li>
+<li>无法处理动态物体，无法提供统一的光照</li>
+<li>无法处理人物</li>
+<li>Worse directional quality</li>
+</ul>
+<h3 id="Adaptive-Probe-Volumes">Adaptive Probe Volumes</h3>
+<p>将空间划分为相同大小的cell，将cell作为分块烘焙、分块加载的最小单位</p>
+<p>cell被细分为brick，在几何体密集的地方，brick越细分</p>
+<img src="/images/adaptive.png" alt="adaptive" style="zoom:50%;" />
+<img src="/images/cell.png" alt="cell" style="zoom:50%;" />
+<img src="/images/稀疏网格.png" alt="稀疏网格" style="zoom:67%;" />
+<h4 id="细分">细分</h4>
+<blockquote>
+<p>可以参考Lumen中Build Voxel Faces，本质就是推箱子</p>
+</blockquote>
+<p>细分的原理是使用Raycast判断一个区域有没有物体（命中点），我们使用SDF加速射线检测</p>
+<img src="/images/SDF推箱子.png" alt="SDF推箱子" style="zoom:50%;" />
+<ol>
+<li>我们将一个cell划分为4x4的brick，这样就有16条起始边界，这些边界构成了一个正方形</li>
+<li>每一条边界向内发射一条长度为一的射线（使用SDF加速），若没有命中，则向内移动一格</li>
+<li>直到所有边界都命中后，我们得到右图所示的brick</li>
+</ol>
+<h4 id="数据结构">数据结构</h4>
+<p>感觉很类似与VolumeGI，由索引buffer和3DTexture组成，通过紧凑哈希来降低存储</p>
+<ul>
+<li>An indirection buffer存储了cell信息，cell索引→SH指针</li>
+<li>Spherical Harmonics Pool中存储SH信息，SH指针→SH系数</li>
+</ul>
+<img src="/images/IndirectionBuffer.png" alt="IndirectionBuffer" style="zoom:50%;" />
+<h4 id="采样">采样</h4>
+<p>采样流程：World Position → Cell Indirection → Per-Cell Brick Indirection→ Brick UVW →Trilinear Sample SH Data</p>
+<ol>
+<li>基于着色点posWS生成cellPos</li>
+<li>加载cell信息</li>
+<li>找到该着色点位于cell中哪一个brick（brick的最低层级可能是由相机距着色点距离决定的）</li>
+</ol>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> localBrickIndex <span class="token operator">=</span> <span class="token function">floor</span><span class="token punctuation">(</span>residualPosWS <span class="token operator">/</span> <span class="token punctuation">(</span>_MinBrickSize <span class="token operator">*</span> <span class="token function">pow</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> minFoundBrickLevel<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//若minFoundBrickLevel=1，那么cell被细分为3x3个brick</span>
+localBrickIndex <span class="token operator">-=</span> validArea<span class="token punctuation">.</span>min<span class="token punctuation">;</span></code></pre>
+<ol start="4">
+<li>
+<p>加载brick信息</p>
+</li>
+<li>
+<p>通过brick信息+offset采样3DTexture</p>
+</li>
+</ol>
+<h3 id="接缝">接缝</h3>
+<p>我们根据场景几何体密度构建空间八叉树，对于稀疏空间使用精度更低的高Subdiv Level存储Probe信息，在Level交界处有时会有明显的接缝问题</p>
+<p>解决方法：采样时加入抖动</p>
+<h3 id="黑斑">黑斑</h3>
+<p>当我们做Probe摆放时，由于按网格和brick摆放，经常会出现Probe放在墙内的情况，这会导致墙面、地板发黑</p>
+<p>Unity的做法是一种辐照度驱动的摆放，通过判断Probe位置处四周backface比例，来判断这个Probe的有效性</p>
+<img src="/images/Probe评分.png" alt="Probe评分" style="zoom:50%;" />
+<p>对于有效性低/无效的Probe，Unity给出的解决方案就是，<strong>让墙内的Probe变亮</strong></p>
+<h4 id="Post-Bake">Post-Bake</h4>
+<ol>
+<li>烘焙后遍历Probe，找到在墙内的无效Probe</li>
+<li>搜索其邻居Probe，使用其中<strong>有效</strong>Probe进行加权插值，权重是距离的平方反比</li>
+<li>于是墙内的Probe就成功变亮了</li>
+</ol>
+<img src="/images/Dilation2.png" alt="Dilation2" style="zoom:67%;" />
+<h4 id="Pre-Bake">Pre-Bake</h4>
+<blockquote>
+<p>参考《The lighting technology of Detroit Become Human》</p>
+</blockquote>
+<p>使用Post-Bake后，确实黑斑少了，但是我们发现墙体出现了漏光，为此我们加入了Virtual Offset（bake阶段的offset），在烘焙时，将Probe移至墙外，最后再将墙外烘焙的信息写入墙内Probe中，于是既没有破坏网格结构，也实现了墙内Probe变亮</p>
+<img src="/images/probeoffset.png" alt="probeoffset" style="zoom:50%;" />
+<h3 id="漏光">漏光</h3>
+<blockquote>
+<p>我感觉防漏光的本质就是让墙体“变厚”，无论是摆放层面上的遮光板，烘焙时期的Virtual Offset，还是是采样层面的偏移</p>
+</blockquote>
+<p>传统的Probe采样，薄墙体由于使用了墙壁另一面的Probe信息发生漏光。为了避免漏光，采样时通常对采样位置进行偏移（Biases）</p>
+<ul>
+<li>Normal Bias，采样点沿着法线方向偏移
+<ul>
+<li>这样做实际上让物体沿着法线方向变大了</li>
+<li>偏移的过多/过少，都会影响效果</li>
+<li>难以调优</li>
+</ul>
+</li>
+<li>View Bias，采样点朝着相机方向偏移
+<ul>
+<li>依赖于相机</li>
+<li>难以调优</li>
+</ul>
+</li>
+</ul>
+<h4 id="Validity-Based-Weighting">Validity Based Weighting</h4>
+<p>而Unity使用了Validity Based Weighting技术来减弱漏光，本质还是对采样点进行偏移</p>
+<p>原理上是通过标记遮罩得出偏移方向，使得偏移方向基于辐照度，而非模型法线、视线，</p>
+<ul>
+<li>每一个Probe存储者8bit的遮罩，用于记录其八个方向（2x2x2）的邻居是否有效</li>
+<li>若某个邻居无效，则推动采样点远离那个邻居（计算偏移的方向和大小）</li>
+</ul>
+<p>但我们现在其实只得到了偏移的方向，不知道偏移的距离</p>
+<h4 id="遮光板">遮光板</h4>
+<p>美术可以手动摆放一个遮光板，使得某些位置上的Probe失效</p>
+<img src="/images/遮光板.png" alt="遮光板" style="zoom:50%;" />
+<p>这确实让房顶下面不再漏光，但是这让房顶上面的物体过黑了</p>
+<p>Unity的做法是对遮光板内Probe的邻居进行判断</p>
+<ul>
+<li>若邻居Probe都不在室内（Occluding objects），那么不会使用遮光板，使用原本的数据</li>
+<li>若邻居有在室内的，室内物体用到该Probe时才会变黑</li>
+</ul>
+<h3 id="场景管理">场景管理</h3>
+<p>将球偕信息编码在3DTexture中比较好做Streaming</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://reuben-sun.github.io/2023/02/10/graphics/UnityEnemies/" data-id="clepy40ob000oglnkf3v85g73" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GI/" rel="tag">GI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SIGGRAPH/" rel="tag">SIGGRAPH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/02/10/graphics/SSSR/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SSSR
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/02/09/program/GoogleC++/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Google C++代码规范</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/dcc/">dcc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/engine/">engine</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/graphics/">graphics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/math/">math</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/optics/">optics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/program/">program</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DX12/" rel="tag">DX12</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deferred-Render/" rel="tag">Deferred Render</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GC/" rel="tag">GC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GI/" rel="tag">GI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Metal/" rel="tag">Metal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PM/" rel="tag">PM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Physics/" rel="tag">Physics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SIGGRAPH/" rel="tag">SIGGRAPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPH/" rel="tag">SPH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TA/" rel="tag">TA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/" rel="tag">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unreal/" rel="tag">Unreal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shader/" rel="tag">shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%89%E5%AD%A6/" rel="tag">光学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" rel="tag">并行计算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag">微积分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" rel="tag">高等数学</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/DX12/" style="font-size: 10px;">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 10px;">Deferred Render</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/GI/" style="font-size: 15px;">GI</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Metal/" style="font-size: 10px;">Metal</a> <a href="/tags/PM/" style="font-size: 10px;">PM</a> <a href="/tags/Physics/" style="font-size: 12.5px;">Physics</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/SIGGRAPH/" style="font-size: 15px;">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 12.5px;">SPH</a> <a href="/tags/TA/" style="font-size: 15px;">TA</a> <a href="/tags/Unity/" style="font-size: 12.5px;">Unity</a> <a href="/tags/Unreal/" style="font-size: 10px;">Unreal</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/shader/" style="font-size: 10px;">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 20px;">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">并行计算</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 10px;">微积分</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 17.5px;">高等数学</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/26/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/">光学复习</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E8%A1%8D%E5%B0%84/">衍射</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/25/optics/%E5%B9%B2%E6%B6%89/">干涉</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/18/program/AskQuestion/">提问的智慧</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/13/graphics/DOSDF/">Dynamic Occlusion with SDF</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Reuben Sun<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
