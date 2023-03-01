@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1677694133262),
+    lastupdate: new Date(1677694888679),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2930,7 +2930,7 @@ $$
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/optics/几何光学/">
+  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/math/Nabla算子/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2948,25 +2948,30 @@ $$
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/2023/01/31/optics/%E5%87%A0%E4%BD%95%E5%85%89%E5%AD%A6/"  itemprop="url">
-        几何光学
+      <a href="/2023/01/31/math/Nabla%E7%AE%97%E5%AD%90/"  itemprop="url">
+        Nabla算子
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        四：几何光学
-几何光学，也被称为射线光学（Ray optics），忽略光的波动性，以几何方法来研究光在均匀介质中的传播
-基本定律
-几何光学包含两个部分，一个是光学三定律，定性描述了几何光学中光的传递，一个是费马原理，定量计算了光的传播（通常为光学元件间近轴传播）
-光学三定律
+        Nabla算子
+参考
+$\nabla$：Nabla算子，将数量场变成向量场
 
-光在均匀介质中沿直线传播
-光的反射、折射定律
 
-反射角等于入射角
-入射角与折射角的正弦值之比等于折射率之比（Snel...
+当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
+
+
+当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
+
+
+当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
+
+
+函数可视化
+对于函数$f(x,y)=x^2+y^2$，我们有两种可视化...
       
     
   </div>
@@ -2977,17 +2982,17 @@ $$
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/optics/">optics</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/2023/01/31/optics/%E5%87%A0%E4%BD%95%E5%85%89%E5%AD%A6/' itemprop="url">
+          <a class='readmore' href='/2023/01/31/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3003,7 +3008,7 @@ $$
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/optics/反射和折射/">
+  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/math/复变函数/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3021,29 +3026,38 @@ $$
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/2023/01/31/optics/%E5%8F%8D%E5%B0%84%E5%92%8C%E6%8A%98%E5%B0%84/"  itemprop="url">
-        反射和折射
+      <a href="/2023/01/31/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
+        复变函数
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        五：反射与折射
-内容概述
+        复变函数
+复变函数
+复数
+复数可以表示为实数和纯虚数的和
+代数式：
+$$
+z=x+\mathrm{i}y
+$$
 
-光在单层各项同性表面的反射与折射
-菲涅尔方程
-全内反射
-相位突变，布鲁斯特角
+x：实部，记为Re z
+y：虚部，记为Im z
 
-菲涅尔方程
-菲涅尔方程
-各项同性介质（Isotropic medium）：折射率处处相同的材质
-光密介质：折射率高的介质（这是一个相对概念）
-光疏介质：折射率低的介质（这是一个相对概念）
-在几何光学中的那些反射方程，只能得到入射光、反射光、折射光间的方向关系
-而菲涅尔方程（Fresne...
+复平面：
+
+极坐标下
+$$
+\begin{cases}
+\rho=\sqrt{x^2+y^2} \
+\varphi=\arctan (y/x)
+\end{cases}
+$$
+$$
+\begin{cases}
+x=\rho \cos...
       
     
   </div>
@@ -3054,17 +3068,17 @@ $$
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/optics/">optics</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/2023/01/31/optics/%E5%8F%8D%E5%B0%84%E5%92%8C%E6%8A%98%E5%B0%84/' itemprop="url">
+          <a class='readmore' href='/2023/01/31/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3080,7 +3094,7 @@ $$
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/optics/波动光学/">
+  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/math/微积分/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3098,31 +3112,29 @@ $$
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/2023/01/31/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/"  itemprop="url">
-        波动光学
+      <a href="/2023/01/31/math/%E5%BE%AE%E7%A7%AF%E5%88%86/"  itemprop="url">
+        微积分
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        二：波动光学
-内容概述
-
-简谐波（simple harmonic waves）
-傅里叶变换（Fourier Transform）
-波的物理量
-
-数学基础
-常用函数
-三角函数
-欧拉公式
+        微积分
+无穷级数
+从有限项之和拓展到无限项之和
+一根绳子，日取其半，万世不竭。但无论截取多少次，最后总长应该还是这跟绳子，即
 $$
-e^{\mathrm{i}x}=\cos x + \mathrm{i}\sin x
+1=\frac{1}{2}+\frac{1}{2^2}+\frac{1}{2^3}+…+\frac{1}{2^n}+…
 $$
-三角函数的复数表示
+另一个例子
 $$
-\sin z=\frac{e^{\mathrm{i}z}-e^{-\mathrm{i}z...
+1+(-1)+1+(-1)+1+(-1)…
+$$
+等于多少呢？
+到底是
+$$
+1+[(-1)+1]+[(-1)+1]…...
       
     
   </div>
@@ -3133,17 +3145,17 @@ $$
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/optics/">optics</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/2023/01/31/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/' itemprop="url">
+          <a class='readmore' href='/2023/01/31/math/%E5%BE%AE%E7%A7%AF%E5%88%86/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3159,7 +3171,7 @@ $$
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/optics/电磁波/">
+  <link itemprop="mainEntityOfPage" href="http://reuben-sun.github.io/2023/01/31/math/概率论/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3177,26 +3189,46 @@ $$
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/2023/01/31/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/"  itemprop="url">
-        电磁波
+      <a href="/2023/01/31/math/%E6%A6%82%E7%8E%87%E8%AE%BA/"  itemprop="url">
+        概率论
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        三：电磁波
-内容概述
+        概率论
+一：随机事件与概率
+事件
+事件的概念
 
-横波的性质（nature），强度（intensity），能量流动（energyflow）
-偏振态（Polarization states），琼斯矩阵（Jones matrix/vector）
-吸收（Absorption），色散（dispersion），折射率（refractive index）
-微小粒子导致的散射（Scattering）
+样本空间$\Omega$
 
-波
-构成波的条件：
+其单元素子集：基本事件
+其最大子集：必然事件
+最小子集：即空集$\empty$，不可能事件
 
-波源
+
+事件域$F$
+
+事件的关系
+
+包含
+
+$A\subset B$：A被包含在B、B包含A、A发生时B一定发生
+
+
+相等
+
+$A=B$：A等于B，两事件是同一个集合、描述的是同一件事
+
+
+互不相容
+
+A和B不能同时发生
+
+
+
 ...
       
     
@@ -3208,17 +3240,17 @@ $$
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/optics/">optics</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/2023/01/31/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/' itemprop="url">
+          <a class='readmore' href='/2023/01/31/math/%E6%A6%82%E7%8E%87%E8%AE%BA/' itemprop="url">
             阅读全文
           </a>
         </div>
