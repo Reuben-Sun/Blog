@@ -23,12 +23,13 @@ jobs:
         with:
           # Default: ${{ github.token }} ,传参给它更高权限的 token
           token: ${{ secrets.PERSONAL_TOKEN }}
+          submodules: true
 
       # Update references
-      - name: Git Sumbodule Update
+      - name: Pull & update submodules recursively
         run: |
-          git pull --recurse-submodules
-          git submodule update --remote --recursive        
+          git submodule update --init --recursive
+          git submodule update --recursive --remote  
 
       - name: Commit update
         run: |
