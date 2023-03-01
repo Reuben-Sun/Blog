@@ -14,8 +14,8 @@ keywords: 'reubensun computer graphics engine Technical Artist'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://reuben-sun.github.io/
-permalink: :year/:month/:day/:title/
+url: https://reubensun.com/
+permalink: :title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -102,8 +102,8 @@ theme: Volantis
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: git
-  repository: https://github.com/Reuben-Sun/reuben-sun.github.io.git
-  branch: main
+# deploy:
+#   type: git
+#   repository: https://github.com/Reuben-Sun/reuben-sun.github.io.git
+#   branch: main
 
