@@ -33,6 +33,7 @@
     "markdown-it-emoji": "^2.0.2",
     "markdown-it-expandable": "^1.0.2",
     "markdown-it-imsize": "^2.0.1",
-    "markdown-it-mark": "^3.0.1"
+    "markdown-it-mark": "^3.0.1",
+    "replace-in-file": "^6.3.5"
   }
 }

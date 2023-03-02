@@ -17,12 +17,13 @@ cd ..
 npm install
 ```
 
-4. 拷贝/移动文件
+4. 拷贝/移动文件，替换图片URL
    通过文件管理器将 /blog-node 下的文件复制到 sources 文件夹，并将 articles 重命名为 _posts
 
    或者使用下面的指令自动移动
 ```bash
 npm run movefile
+# or node bin/movefile.js
 ```
 
 5. 修改后编译
