@@ -42,11 +42,11 @@
 <meta property="og:title" content="傅立叶变化光学">
 <meta property="og:url" content="https://reubensun.com/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="八、傅立叶变换光学 内容概述  衍射系统的屏函数 夫朗禾费衍射的傅立叶频谱分析 阿贝成像原理和相衬显微镜  变换光学 前面几章，我们使用波的叠加来分析描述干涉衍射，而傅立叶变化光学中，我们使用光场变换的观点来看待干涉衍射 屏函数 衍射屏左侧的空间叫照明空间，其中的场被称为入射场$\tilde{U}_1$ 衍射屏右侧的空间叫衍射空间，其中的场被称为衍射场$\tilde{U}_2$ 接收屏处的场叫接收">
+<meta property="og:description" content="八、傅立叶变换光学 内容概述  衍射系统的屏函数 夫朗禾费衍射的傅立叶频谱分析 阿贝成像原理和相衬显微镜  变换光学 前面几章，我们使用波的叠加来分析描述干涉衍射，而傅立叶变化光学中，我们使用光场变换的观点来看待干涉衍射 傅立叶光学的本质就是将复杂的光学现象切分为多个不同频率、不同取向的正弦光栅之和  傅立叶展开的本质是将复杂的函数切分为多个三角函数之和  屏函数 衍射屏左侧的空间叫照明空间，其中">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-03-02T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-03-02T12:11:41.956Z">
+<meta property="article:modified_time" content="2023-03-02T13:05:53.613Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="光学">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1677759121316),
+    lastupdate: new Date(1677762368777),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2544,6 +2544,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h2 id="变换光学">变换光学</h2>
 <p>前面几章，我们使用波的叠加来分析描述干涉衍射，而傅立叶变化光学中，我们使用光场变换的观点来看待干涉衍射</p>
+<p>傅立叶光学的本质就是将复杂的光学现象切分为多个不同频率、不同取向的正弦光栅之和</p>
+<blockquote>
+<p>傅立叶展开的本质是将复杂的函数切分为多个三角函数之和</p>
+</blockquote>
 <h3 id="屏函数">屏函数</h3>
 <p>衍射屏左侧的空间叫照明空间，其中的场被称为入射场$\tilde{U}_1$</p>
 <p>衍射屏右侧的空间叫衍射空间，其中的场被称为衍射场$\tilde{U}_2$</p>
@@ -2559,6 +2563,7 @@ $$</p>
 </ul>
 <h3 id="相因子判断法">相因子判断法</h3>
 <h2 id="正弦光栅衍射">正弦光栅衍射</h2>
+<p>正弦光栅从数学上，就是傅立叶级数的基函数</p>
 <h3 id="光栅">光栅</h3>
 <p>光栅：具有周期性的空间结构或光学性能的衍射屏统称为光栅</p>
 <p>光栅的种类：</p>
@@ -2568,6 +2573,12 @@ $$</p>
 <li>黑白光栅、正弦光栅</li>
 <li>一维、二维、三维光栅</li>
 </ul>
+<h2 id="阿贝成像原理">阿贝成像原理</h2>
+<p>衍射屏的屏函数可以展开为傅立叶级数</p>
+<img src="../../images/傅立叶屏函数.png" class="lazyload" data-srcset="../../images/傅立叶屏函数.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="傅立叶屏函数" style="zoom:50%;" />
+<h2 id="相衬显微镜">相衬显微镜</h2>
+<p>显微镜看的切片都很薄，对光的吸收很小，如果不染色，很难引起透射光振幅的变化，因此显微镜是相位型的</p>
+<p>如果我们想要显微镜看东西更清楚，可以通过增加相位移的方式增大图像的反衬度（衬比度）</p>
 
   </div>
   
@@ -2592,7 +2603,7 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-02T12:11:41+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-02T13:05:53+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年3月2日</p>
@@ -2678,6 +2689,20 @@ $$</p>
   
     <div class="prev-next">
       
+        <a class='prev' href='/optics/%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>各项异性</p>
+          <p class='content'>十、各向异性
+内容概述
+
+光在各向异性的介质中的传播
+偏振
+
+双折射晶体
+透过双折射晶体（比如方解石晶体），在某些角度只有一个像，在某些角度会有两个像
+双折射
+现象：一束光经过晶体后被分为了两束...</p>
+        </a>
+      
       
         <a class='next' href='/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/'>
           <p class='title'>光学复习<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
@@ -2752,7 +2777,7 @@ $$</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E6%8D%A2%E5%85%89%E5%AD%A6"><span class="toc-text">变换光学</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%8F%E5%87%BD%E6%95%B0"><span class="toc-text">屏函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%9B%A0%E5%AD%90%E5%88%A4%E6%96%AD%E6%B3%95"><span class="toc-text">相因子判断法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%A6%E5%85%89%E6%A0%85%E8%A1%8D%E5%B0%84"><span class="toc-text">正弦光栅衍射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E6%A0%85"><span class="toc-text">光栅</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E6%8D%A2%E5%85%89%E5%AD%A6"><span class="toc-text">变换光学</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%8F%E5%87%BD%E6%95%B0"><span class="toc-text">屏函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%9B%A0%E5%AD%90%E5%88%A4%E6%96%AD%E6%B3%95"><span class="toc-text">相因子判断法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%A6%E5%85%89%E6%A0%85%E8%A1%8D%E5%B0%84"><span class="toc-text">正弦光栅衍射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E6%A0%85"><span class="toc-text">光栅</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BF%E8%B4%9D%E6%88%90%E5%83%8F%E5%8E%9F%E7%90%86"><span class="toc-text">阿贝成像原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E8%A1%AC%E6%98%BE%E5%BE%AE%E9%95%9C"><span class="toc-text">相衬显微镜</span></a></li></ol>
   </div>
 </section>
 
@@ -3296,7 +3321,7 @@ $$</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/傅立叶变化光学/","name":"傅立叶变化光学"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"傅立叶变化光学","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/","wordCount":0,"datePublished":"2023-03-02T10:01:25.000Z","dateModified":"2023-03-02T12:11:41.956Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/傅立叶变化光学/","name":"傅立叶变化光学"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"傅立叶变化光学","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/","wordCount":0,"datePublished":"2023-03-02T10:01:25.000Z","dateModified":"2023-03-02T13:05:53.613Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
