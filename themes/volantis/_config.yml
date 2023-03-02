@@ -443,7 +443,7 @@ comments:
   # utterances
   # https://utteranc.es/
   utterances:
-    repo: Reuben-Sun/reuben-sun.github.io
+    repo: Reuben-Sun/Blog
     issue-term: title
     issue-number:
     theme:
