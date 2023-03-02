@@ -4,11 +4,36 @@
   
     
     <entry>
-      <title>各项异性</title>
+      <title>光学：光源</title>
+      <link href="/optics/%E5%85%89%E6%BA%90/"/>
+      <url>/optics/%E5%85%89%E6%BA%90/</url>
+      
+        <content type="html"><![CDATA[<h1>十一：光源</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> optics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 光学 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>光学：各项异性</title>
       <link href="/optics/%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/"/>
       <url>/optics/%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/</url>
       
-        <content type="html"><![CDATA[<h1>十、各向异性</h1><h2 id="内容概述">内容概述</h2><ul><li>光在各向异性的介质中的传播</li><li>偏振</li></ul><h2 id="双折射晶体">双折射晶体</h2><p>透过双折射晶体（比如方解石晶体），在某些角度只有一个像，在某些角度会有两个像</p><h3 id="双折射">双折射</h3><p>现象：一束光经过晶体后被分为了两束光</p><p>我们称之为o光和e光</p><ul><li>o光：按折射定律传播的光</li><li>e光：不按折射定律传播的光</li></ul><p>光轴：光束沿着光轴传播时，o光和e光不分开（这个方向两个折射率是相同的）</p><img src="/images/方解石.png" class="lazyload" data-srcset="/images/方解石.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="方解石" style="zoom:50%;" /><ul><li><p>主截面：界面法线和光轴构成的平面</p></li><li><p>主平面：晶体内光线和光轴构成的平面</p></li></ul><p>o光和e光都是线偏振光，o光的振动方向与主平面垂直，e光的振动方向与主平面平行</p><ul><li>单轴晶体：只有一个光轴的晶体，比如方解石、石英</li><li>双轴晶体：有两个光轴方向的晶体，比如云母、蓝宝石、硫磺</li></ul><p>o光和e光的光速不同，波面形状也不同</p><ul><li>o光沿各个方向的传播速度相同，于是波面是一个球</li><li>e光沿着不同方向传播速度不同，我们特别的选取垂直于光轴的面作为e光的波面，这个波面是一个椭圆<ul><li>这两个椭圆是相切的，但大小不确定</li><li>若o光比e光大，那么是正晶体</li><li>若o光比e光小，那么是负晶体</li></ul></li></ul><img src="/images/正负晶体.png" class="lazyload" data-srcset="/images/正负晶体.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="正负晶体" style="zoom:50%;" /><h2 id="惠更斯作图法">惠更斯作图法</h2><h2 id="偏振光的获取">偏振光的获取</h2>]]></content>
+        <content type="html"><![CDATA[<h1>十：各向异性</h1><h2 id="内容概述">内容概述</h2><ul><li>光在各向异性的介质中的传播</li><li>偏振</li></ul><h2 id="双折射晶体">双折射晶体</h2><p>透过双折射晶体（比如方解石晶体），在某些角度只有一个像，在某些角度会有两个像</p><h3 id="双折射">双折射</h3><p>现象：一束光经过晶体后被分为了两束光</p><p>我们称之为o光和e光</p><ul><li>o光：按折射定律传播的光</li><li>e光：不按折射定律传播的光</li></ul><p>光轴：光束沿着光轴传播时，o光和e光不分开（这个方向两个折射率是相同的）</p><img src="/images/方解石.png" class="lazyload" data-srcset="/images/方解石.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="方解石" style="zoom:50%;" /><ul><li><p>主截面：界面法线和光轴构成的平面</p></li><li><p>主平面：晶体内光线和光轴构成的平面</p></li></ul><p>o光和e光都是线偏振光，o光的振动方向与主平面垂直，e光的振动方向与主平面平行</p><ul><li>单轴晶体：只有一个光轴的晶体，比如方解石、石英</li><li>双轴晶体：有两个光轴方向的晶体，比如云母、蓝宝石、硫磺</li></ul><p>o光和e光的光速不同，波面形状也不同</p><ul><li>o光沿各个方向的传播速度相同，于是波面是一个球</li><li>e光沿着不同方向传播速度不同，我们特别的选取垂直于光轴的面作为e光的波面，这个波面是一个椭圆<ul><li>这两个椭圆是相切的，但大小不确定</li><li>若o光比e光大，那么是正晶体</li><li>若o光比e光小，那么是负晶体</li></ul></li></ul><img src="/images/正负晶体.png" class="lazyload" data-srcset="/images/正负晶体.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="正负晶体" style="zoom:50%;" /><h2 id="惠更斯作图法">惠更斯作图法</h2><img src="/images/惠更斯绘图.png" class="lazyload" data-srcset="/images/惠更斯绘图.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="惠更斯绘图" style="zoom:50%;" /><ul><li>偏振态：我们在光线上各距离绘制短线和圆点，用来表示偏振<ul><li>短线表示偏振沿着纸面</li><li>点表示偏振垂直纸面</li><li>自然光横线和点的数量应该一样多</li></ul></li></ul><h3 id="绘制折射光">绘制折射光</h3><ol><li>过A点做边缘光线的垂线AB，垂足为B</li><li>我们能求出光线的传播时间$t=\overline{BB’}/c $</li><li>以A为圆心，做一个半径为$\mathrm{v}_o t$的圆，这是o光波面</li><li>以A为中心，做一个半轴为$\mathrm{v}_o t 和 \mathrm{v}_e t$的椭圆，椭圆要和圆在光轴处相切</li><li>从B’出发做圆和椭圆的切线，切点为$A’_o,A’_e$</li><li>o光折射光为$AA’_o$</li><li>e光折射光为$AA’_e$</li></ol><h2 id="光的偏振">光的偏振</h2><p>由于晶体可以分离o光和e光，因此可以做成偏振器</p><h3 id="光的偏振状态">光的偏振状态</h3><blockquote><p>回忆一下</p></blockquote><p>光有五种偏振状态</p><ul><li>自然光</li><li>部分偏振光</li><li>线偏振光</li><li>圆偏振光</li><li>椭圆偏振光</li></ul><p>光偏振状态的检验：将光通过检偏器，旋转检偏器，通过光强的变化判断</p><ul><li>无变化：自然光、圆偏振光</li><li>有变化但没有消光：部分偏振光、椭圆偏振光</li><li>有变化且有消光，线偏振光</li></ul><p>仅通过检偏，只能简单分出三类光，无法更近一步区分偏振态，而<strong>使用晶体可以明确知道偏振态</strong></p><h3 id="光在晶体中的传播">光在晶体中的传播</h3><h4 id="洛匈棱镜">洛匈棱镜</h4><p>由两块冰洲石构成</p><ul><li>左侧光轴平行纸平面和入射光，光线进入时不会发生双折射</li><li>右侧光轴垂直纸平面，光线进入后o光变e光，e光变o光</li></ul><img src="/images/洛匈棱镜.png" class="lazyload" data-srcset="/images/洛匈棱镜.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="洛匈棱镜" style="zoom:50%;" /><h4 id="沃拉斯顿棱镜">沃拉斯顿棱镜</h4><img src="/images/沃拉斯顿棱镜.png" class="lazyload" data-srcset="/images/沃拉斯顿棱镜.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="沃拉斯顿棱镜" style="zoom:50%;" /><ul><li>光线进入左侧，o光和e光方向不变，速度改变，e光会比o光快</li></ul><h4 id="尼科尔棱镜">尼科尔棱镜</h4><p><img src="/images/niker.gif" class="lazyload" data-srcset="/images/niker.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="niker"></p><h3 id="偏振光的获取和检验">偏振光的获取和检验</h3><p>核心思想为<strong>垂直振动和合成</strong>，任何一个偏振态，都是两个垂直振动的合成</p>]]></content>
       
       
       <categories>
@@ -29,11 +54,11 @@
     
     
     <entry>
-      <title>傅立叶变化光学</title>
+      <title>光学：傅立叶变化光学</title>
       <link href="/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/"/>
       <url>/optics/%E5%82%85%E7%AB%8B%E5%8F%B6%E5%8F%98%E5%8C%96%E5%85%89%E5%AD%A6/</url>
       
-        <content type="html"><![CDATA[<h1>八、傅立叶变换光学</h1><h2 id="内容概述">内容概述</h2><ul><li>衍射系统的屏函数</li><li>夫朗禾费衍射的傅立叶频谱分析</li><li>阿贝成像原理和相衬显微镜</li></ul><h2 id="变换光学">变换光学</h2><p>前面几章，我们使用波的叠加来分析描述干涉衍射，而傅立叶变化光学中，我们使用光场变换的观点来看待干涉衍射</p><p>傅立叶光学的本质就是将复杂的光学现象切分为多个不同频率、不同取向的正弦光栅之和</p><blockquote><p>傅立叶展开的本质是将复杂的函数切分为多个三角函数之和</p></blockquote><h3 id="屏函数">屏函数</h3><p>衍射屏左侧的空间叫照明空间，其中的场被称为入射场$\tilde{U}_1$</p><p>衍射屏右侧的空间叫衍射空间，其中的场被称为衍射场$\tilde{U}_2$</p><p>接收屏处的场叫接收场$\tilde{U}$</p><img src="/images/傅立叶衍射.png" class="lazyload" data-srcset="/images/傅立叶衍射.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="傅立叶衍射" style="zoom:50%;" /><p>使用<strong>屏函数</strong>$\tilde{t}$来描述衍射屏对入射光的波前的改变</p><p>$$<br>\tilde{t}(x,y)=\frac{\tilde{U}_1}{\tilde{U}_2}=t(x,y)\exp [i\varphi_t(x,y)]<br>$$</p><ul><li>$t(x,y)$是屏函数的模，若模为固定值，则该衍射屏为相位型。比如透镜、棱镜</li><li>$\varphi_t$是屏函数的相位，若相位为固定值，则该衍射屏为振幅型。比如单孔、圆孔</li></ul><h3 id="相因子判断法">相因子判断法</h3><h2 id="正弦光栅衍射">正弦光栅衍射</h2><p>正弦光栅从数学上，就是傅立叶级数的基函数</p><h3 id="光栅">光栅</h3><p>光栅：具有周期性的空间结构或光学性能的衍射屏统称为光栅</p><p>光栅的种类：</p><ul><li>透射光栅、反射光栅</li><li>平面光栅、凹面光栅</li><li>黑白光栅、正弦光栅</li><li>一维、二维、三维光栅</li></ul><h2 id="阿贝成像原理">阿贝成像原理</h2><p>衍射屏的屏函数可以展开为傅立叶级数</p><img src="/images/傅立叶屏函数.png" class="lazyload" data-srcset="/images/傅立叶屏函数.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="傅立叶屏函数" style="zoom:50%;" /><h2 id="相衬显微镜">相衬显微镜</h2><p>显微镜看的切片都很薄，对光的吸收很小，如果不染色，很难引起透射光振幅的变化，因此显微镜是相位型的</p><p>如果我们想要显微镜看东西更清楚，可以通过增加相位移的方式增大图像的反衬度（衬比度）</p>]]></content>
+        <content type="html"><![CDATA[<h1>八：傅立叶变换光学</h1><h2 id="内容概述">内容概述</h2><ul><li>衍射系统的屏函数</li><li>夫朗禾费衍射的傅立叶频谱分析</li><li>阿贝成像原理和相衬显微镜</li></ul><h2 id="变换光学">变换光学</h2><p>前面几章，我们使用波的叠加来分析描述干涉衍射，而傅立叶变化光学中，我们使用光场变换的观点来看待干涉衍射</p><p>傅立叶光学的本质就是将复杂的光学现象切分为多个不同频率、不同取向的正弦光栅之和</p><blockquote><p>傅立叶展开的本质是将复杂的函数切分为多个三角函数之和</p></blockquote><h3 id="屏函数">屏函数</h3><p>衍射屏左侧的空间叫照明空间，其中的场被称为入射场$\tilde{U}_1$</p><p>衍射屏右侧的空间叫衍射空间，其中的场被称为衍射场$\tilde{U}_2$</p><p>接收屏处的场叫接收场$\tilde{U}$</p><img src="/images/傅立叶衍射.png" class="lazyload" data-srcset="/images/傅立叶衍射.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="傅立叶衍射" style="zoom:50%;" /><p>使用<strong>屏函数</strong>$\tilde{t}$来描述衍射屏对入射光的波前的改变</p><p>$$<br>\tilde{t}(x,y)=\frac{\tilde{U}_1}{\tilde{U}_2}=t(x,y)\exp [i\varphi_t(x,y)]<br>$$</p><ul><li>$t(x,y)$是屏函数的模，若模为固定值，则该衍射屏为相位型。比如透镜、棱镜</li><li>$\varphi_t$是屏函数的相位，若相位为固定值，则该衍射屏为振幅型。比如单孔、圆孔</li></ul><h3 id="相因子判断法">相因子判断法</h3><h2 id="正弦光栅衍射">正弦光栅衍射</h2><p>正弦光栅从数学上，就是傅立叶级数的基函数</p><h3 id="光栅">光栅</h3><p>光栅：具有周期性的空间结构或光学性能的衍射屏统称为光栅</p><p>光栅的种类：</p><ul><li>透射光栅、反射光栅</li><li>平面光栅、凹面光栅</li><li>黑白光栅、正弦光栅</li><li>一维、二维、三维光栅</li></ul><h2 id="阿贝成像原理">阿贝成像原理</h2><p>衍射屏的屏函数可以展开为傅立叶级数</p><img src="/images/傅立叶屏函数.png" class="lazyload" data-srcset="/images/傅立叶屏函数.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="傅立叶屏函数" style="zoom:50%;" /><h2 id="相衬显微镜">相衬显微镜</h2><p>显微镜看的切片都很薄，对光的吸收很小，如果不染色，很难引起透射光振幅的变化，因此显微镜是相位型的</p><p>如果我们想要显微镜看东西更清楚，可以通过增加相位移的方式增大图像的反衬度（衬比度）</p>]]></content>
       
       
       <categories>
@@ -54,7 +79,7 @@
     
     
     <entry>
-      <title>衍射</title>
+      <title>光学：衍射</title>
       <link href="/optics/%E8%A1%8D%E5%B0%84/"/>
       <url>/optics/%E8%A1%8D%E5%B0%84/</url>
       
@@ -79,7 +104,7 @@
     
     
     <entry>
-      <title>干涉</title>
+      <title>光学：干涉</title>
       <link href="/optics/%E5%B9%B2%E6%B6%89/"/>
       <url>/optics/%E5%B9%B2%E6%B6%89/</url>
       
@@ -791,7 +816,7 @@
     
     
     <entry>
-      <title>几何光学</title>
+      <title>光学：几何光学</title>
       <link href="/optics/%E5%87%A0%E4%BD%95%E5%85%89%E5%AD%A6/"/>
       <url>/optics/%E5%87%A0%E4%BD%95%E5%85%89%E5%AD%A6/</url>
       
@@ -816,7 +841,7 @@
     
     
     <entry>
-      <title>反射和折射</title>
+      <title>光学：反射和折射</title>
       <link href="/optics/%E5%8F%8D%E5%B0%84%E5%92%8C%E6%8A%98%E5%B0%84/"/>
       <url>/optics/%E5%8F%8D%E5%B0%84%E5%92%8C%E6%8A%98%E5%B0%84/</url>
       
@@ -841,7 +866,7 @@
     
     
     <entry>
-      <title>波动光学</title>
+      <title>光学：波动光学</title>
       <link href="/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/"/>
       <url>/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/</url>
       
@@ -866,7 +891,7 @@
     
     
     <entry>
-      <title>电磁波</title>
+      <title>光学：电磁波</title>
       <link href="/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/"/>
       <url>/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/</url>
       
