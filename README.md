@@ -38,3 +38,6 @@ hexo g
 hexo s
 ```
 
+### 参考
+
+[Git Action](https://juejin.cn/post/7006186847458033672)

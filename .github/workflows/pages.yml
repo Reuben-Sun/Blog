@@ -5,11 +5,6 @@ on:
     branches:
       - main # default branch
   workflow_dispatch:
-    input:
-      name:
-        description: 'Git Message'
-        required: false
-        default: 'Self commit'
 
 jobs:
   pages:
@@ -45,4 +40,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          commit_message: 'Deploy: ${{ github.event.inputs.name }}'
+          commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
