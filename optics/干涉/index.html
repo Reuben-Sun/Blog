@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-25T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-03-03T12:30:16.191Z">
+<meta property="article:modified_time" content="2023-03-03T14:41:21.556Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="光学">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1677846619250),
+    lastupdate: new Date(1677854486487),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2703,6 +2703,17 @@ $$</p>
 <li>$\sin \theta \approx \tan \theta = x/D$</li>
 <li>有了光程差，就能知道这是几个波长，是明是暗</li>
 </ol>
+<h3 id="可见条纹的最大级数">可见条纹的最大级数</h3>
+<p>$$<br>
+j_\max= d/\lambda<br>
+$$</p>
+<h3 id="求P点光强">求P点光强</h3>
+<p>$$<br>
+I=A_1^2+A_2^2+2A_1A_2\cos \Delta\varphi<br>
+$$</p>
+<p>$$<br>
+\Delta \varphi = k \cdot \delta<br>
+$$</p>
 <h3 id="干涉条纹的移动">干涉条纹的移动</h3>
 <p>我们不仅观测到明暗条纹，还观测到条纹的移动和变化</p>
 <ul>
@@ -2762,7 +2773,10 @@ $$</p>
 <p>比如彩色太阳眼镜和阳光下的七彩肥皂泡</p>
 </blockquote>
 <p>光线在射向薄膜后会发生反射和透射，透射光可能会再次反射透射，返回薄膜表面，进而和入射光相遇，发生干涉</p>
-<img src="/images/薄膜干涉.png" class="lazyload" data-srcset="/images/薄膜干涉.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="薄膜干涉" style="zoom:50%;" />
+<ul>
+<li>第一种是入射光和透射光干涉，干涉发生在薄膜表面</li>
+<li>第二种是（平行的）透射光干涉，干涉发生在无穷远，需要用透镜汇聚</li>
+</ul>
 <p>根据薄膜上下两个面的关系，分为</p>
 <ul>
 <li>等厚干涉（上下两个面不平行）</li>
@@ -2770,14 +2784,24 @@ $$</p>
 </ul>
 <p>特别注意！等厚和等倾是指的条纹间距，而不是薄膜形状，等厚的条纹需要上下不平行的薄膜</p>
 <h3 id="等厚度干涉">等厚度干涉</h3>
+<img src="/images/薄膜干涉.png" class="lazyload" data-srcset="/images/薄膜干涉.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="薄膜干涉" style="zoom:50%;" />
 <p>等厚干涉发生在薄膜表面</p>
 <p>厚度不均匀的薄膜发生的干涉，入射光为<strong>平行光</strong>，决定条纹间距的是因厚度不均带来的光程差<br>
 $$<br>
-\Delta L(P)\approx 2nh\cos i<br>
+\delta = 2nh\sqrt{n^2-n_0^2\sin^2 i_1} +\lambda/2<br>
 $$</p>
 <ul>
 <li>$i$是折射角</li>
 </ul>
+<p>常见的等厚干涉有</p>
+<ul>
+<li>披肩：光线垂直入射</li>
+</ul>
+<p><img src="/images/%E7%A9%BA%E6%B0%94%E5%8A%88%E5%B0%96.png" class="lazyload" data-srcset="/images/%E7%A9%BA%E6%B0%94%E5%8A%88%E5%B0%96.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="空气劈尖"></p>
+<ul>
+<li>牛顿环</li>
+</ul>
+<p><img src="/images/%E7%89%9B%E9%A1%BF%E7%8E%AF.png" class="lazyload" data-srcset="/images/%E7%89%9B%E9%A1%BF%E7%8E%AF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="牛顿环"></p>
 <h3 id="增透膜与高反膜">增透膜与高反膜</h3>
 <blockquote>
 <p>汽油膜，肥皂泡，昆虫翅膀</p>
@@ -2808,14 +2832,21 @@ $$<br>
 h=\frac{\lambda_0}{4n}<br>
 $$</p>
 <h3 id="等倾斜角干涉">等倾斜角干涉</h3>
+<img src="/images/等倾干涉.png" class="lazyload" data-srcset="/images/等倾干涉.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="等倾干涉" style="zoom:50%;" />
 <p>等倾干涉发生在无穷远处</p>
 <p>上下表面平行的薄膜发生的干涉，入射光为<strong>点光源</strong><br>
 $$<br>
-\Delta L(P)=-\frac{\lambda_0}{2h\sin i_k}<br>
+\delta = 2nh\cos i_2<br>
 $$</p>
-<h3 id="半波损失">半波损失</h3>
+<h4 id="半波损失">半波损失</h4>
 <p>波从光疏射向光密，在反射过程中会产生$\pi$个相位跃变，我们称之为<strong>半波损失</strong></p>
-<p>由于半波损失的存在，薄膜干涉明暗条纹的产生条件实际上与杨氏双缝相反</p>
+<p>由于半波损失的存在，薄膜干涉明暗条纹的产生条件实际上与杨氏双缝相反<br>
+$$<br>
+\delta = 2nh\cos i_2 + \lambda/2<br>
+$$</p>
+<h4 id="等倾图样">等倾图样</h4>
+<p>内高外低，内疏外密</p>
+<img src="/images/等倾图样.png" class="lazyload" data-srcset="/images/等倾图样.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="等倾图样" style="zoom: 67%;" />
 <h2 id="干涉仪">干涉仪</h2>
 <h3 id="多光束干涉">多光束干涉</h3>
 <img src="/images/多光束干涉.png" class="lazyload" data-srcset="/images/多光束干涉.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="多光束干涉" style="zoom:50%;" />
@@ -2824,8 +2855,11 @@ $$
 $$
 光在介质内不断反射折射，新的反射折射光强度成等比数列
 <h3 id="迈克耳孙干涉仪">迈克耳孙干涉仪</h3>
+<p>使用分振幅法将两个相互垂直的平面镜等效为空气薄膜，空气薄膜可以等倾，也可以等厚</p>
+<img src="/images/迈克耳孙.png" class="lazyload" data-srcset="/images/迈克耳孙.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="迈克耳孙" style="zoom:50%;" />
 <h3 id="法布里-珀罗干涉仪">法布里-珀罗干涉仪</h3>
 <p>由两个梯形透镜组成，用于生成等倾干涉条纹</p>
+<img src="/images/法布里-珀罗.png" class="lazyload" data-srcset="/images/法布里-珀罗.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="法布里-珀罗" style="zoom:50%;" />
 
   </div>
   
@@ -2850,7 +2884,7 @@ $$
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-03T12:30:16+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-03T14:41:21+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年3月3日</p>
@@ -3020,7 +3054,7 @@ $$
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89"><span class="toc-text">干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%85%89%E5%AD%A6"><span class="toc-text">线性光学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%8C%AF%E5%B9%85%E5%8F%A0%E5%8A%A0%E6%B3%95"><span class="toc-text">复振幅叠加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%B9%B2%E5%8F%A0%E5%8A%A0"><span class="toc-text">相干叠加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E7%9B%B8%E5%B9%B2%E5%8F%A0%E5%8A%A0"><span class="toc-text">非相干叠加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E6%9D%A1%E4%BB%B6"><span class="toc-text">干涉条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A8%E6%B0%8F%E5%B9%B2%E6%B6%89"><span class="toc-text">杨氏干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%AC%E6%AF%94%E5%BA%A6"><span class="toc-text">衬比度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A8%E6%B0%8F%E5%8F%8C%E7%BC%9D%E5%B9%B2%E6%B6%89%E5%AE%9E%E9%AA%8C"><span class="toc-text">杨氏双缝干涉实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E4%B8%80%E7%82%B9%E7%9A%84%E6%9A%97%E4%BA%AE"><span class="toc-text">判断一点的暗亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E6%9D%A1%E7%BA%B9%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="toc-text">干涉条纹的移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B9%B2%E6%B6%89%E4%BB%AA%E5%99%A8"><span class="toc-text">其他干涉仪器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E5%8F%8C%E5%B9%B3%E9%9D%A2%E9%95%9C"><span class="toc-text">菲涅尔双平面镜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%B3%E5%9F%83%E5%BE%B7%E9%95%9C"><span class="toc-text">劳埃德镜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E5%8F%8C%E6%A3%B1%E9%95%9C"><span class="toc-text">菲涅尔双棱镜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A9%E8%89%B2%E5%85%89%E6%9D%A8%E6%B0%8F%E5%8F%8C%E7%BC%9D"><span class="toc-text">彩色光杨氏双缝</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E7%A9%BA%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="toc-text">时空相干性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="toc-text">空间相干性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="toc-text">时间相干性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89"><span class="toc-text">薄膜干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%8E%9A%E5%BA%A6%E5%B9%B2%E6%B6%89"><span class="toc-text">等厚度干涉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E9%80%8F%E8%86%9C%E4%B8%8E%E9%AB%98%E5%8F%8D%E8%86%9C"><span class="toc-text">增透膜与高反膜</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E9%80%8F%E8%86%9C"><span class="toc-text">增透膜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E5%8F%8D%E8%86%9C"><span class="toc-text">增反膜</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%80%BE%E6%96%9C%E8%A7%92%E5%B9%B2%E6%B6%89"><span class="toc-text">等倾斜角干涉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1"><span class="toc-text">半波损失</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E4%BB%AA"><span class="toc-text">干涉仪</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%85%89%E6%9D%9F%E5%B9%B2%E6%B6%89"><span class="toc-text">多光束干涉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%88%E5%85%8B%E8%80%B3%E5%AD%99%E5%B9%B2%E6%B6%89%E4%BB%AA"><span class="toc-text">迈克耳孙干涉仪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%B8%83%E9%87%8C-%E7%8F%80%E7%BD%97%E5%B9%B2%E6%B6%89%E4%BB%AA"><span class="toc-text">法布里-珀罗干涉仪</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89"><span class="toc-text">干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%85%89%E5%AD%A6"><span class="toc-text">线性光学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%8C%AF%E5%B9%85%E5%8F%A0%E5%8A%A0%E6%B3%95"><span class="toc-text">复振幅叠加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%B9%B2%E5%8F%A0%E5%8A%A0"><span class="toc-text">相干叠加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E7%9B%B8%E5%B9%B2%E5%8F%A0%E5%8A%A0"><span class="toc-text">非相干叠加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E6%9D%A1%E4%BB%B6"><span class="toc-text">干涉条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A8%E6%B0%8F%E5%B9%B2%E6%B6%89"><span class="toc-text">杨氏干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%AC%E6%AF%94%E5%BA%A6"><span class="toc-text">衬比度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A8%E6%B0%8F%E5%8F%8C%E7%BC%9D%E5%B9%B2%E6%B6%89%E5%AE%9E%E9%AA%8C"><span class="toc-text">杨氏双缝干涉实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E4%B8%80%E7%82%B9%E7%9A%84%E6%9A%97%E4%BA%AE"><span class="toc-text">判断一点的暗亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%A7%81%E6%9D%A1%E7%BA%B9%E7%9A%84%E6%9C%80%E5%A4%A7%E7%BA%A7%E6%95%B0"><span class="toc-text">可见条纹的最大级数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82P%E7%82%B9%E5%85%89%E5%BC%BA"><span class="toc-text">求P点光强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E6%9D%A1%E7%BA%B9%E7%9A%84%E7%A7%BB%E5%8A%A8"><span class="toc-text">干涉条纹的移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B9%B2%E6%B6%89%E4%BB%AA%E5%99%A8"><span class="toc-text">其他干涉仪器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E5%8F%8C%E5%B9%B3%E9%9D%A2%E9%95%9C"><span class="toc-text">菲涅尔双平面镜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%B3%E5%9F%83%E5%BE%B7%E9%95%9C"><span class="toc-text">劳埃德镜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E5%8F%8C%E6%A3%B1%E9%95%9C"><span class="toc-text">菲涅尔双棱镜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A9%E8%89%B2%E5%85%89%E6%9D%A8%E6%B0%8F%E5%8F%8C%E7%BC%9D"><span class="toc-text">彩色光杨氏双缝</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E7%A9%BA%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="toc-text">时空相干性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="toc-text">空间相干性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B8%E5%B9%B2%E6%80%A7"><span class="toc-text">时间相干性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%96%84%E8%86%9C%E5%B9%B2%E6%B6%89"><span class="toc-text">薄膜干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%8E%9A%E5%BA%A6%E5%B9%B2%E6%B6%89"><span class="toc-text">等厚度干涉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E9%80%8F%E8%86%9C%E4%B8%8E%E9%AB%98%E5%8F%8D%E8%86%9C"><span class="toc-text">增透膜与高反膜</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E9%80%8F%E8%86%9C"><span class="toc-text">增透膜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E5%8F%8D%E8%86%9C"><span class="toc-text">增反膜</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%80%BE%E6%96%9C%E8%A7%92%E5%B9%B2%E6%B6%89"><span class="toc-text">等倾斜角干涉</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8A%E6%B3%A2%E6%8D%9F%E5%A4%B1"><span class="toc-text">半波损失</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E5%80%BE%E5%9B%BE%E6%A0%B7"><span class="toc-text">等倾图样</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E4%BB%AA"><span class="toc-text">干涉仪</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%85%89%E6%9D%9F%E5%B9%B2%E6%B6%89"><span class="toc-text">多光束干涉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%88%E5%85%8B%E8%80%B3%E5%AD%99%E5%B9%B2%E6%B6%89%E4%BB%AA"><span class="toc-text">迈克耳孙干涉仪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%B8%83%E9%87%8C-%E7%8F%80%E7%BD%97%E5%B9%B2%E6%B6%89%E4%BB%AA"><span class="toc-text">法布里-珀罗干涉仪</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3564,7 +3598,7 @@ $$
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/干涉/","name":"光学：干涉"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学：干涉","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%B9%B2%E6%B6%89/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%B9%B2%E6%B6%89/","wordCount":0,"datePublished":"2023-02-25T10:01:25.000Z","dateModified":"2023-03-03T12:30:16.191Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/干涉/","name":"光学：干涉"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学：干涉","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%B9%B2%E6%B6%89/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%B9%B2%E6%B6%89/","wordCount":0,"datePublished":"2023-02-25T10:01:25.000Z","dateModified":"2023-03-03T14:41:21.556Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
