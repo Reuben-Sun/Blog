@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-25T10:10:25.000Z">
-<meta property="article:modified_time" content="2023-03-03T05:24:52.617Z">
+<meta property="article:modified_time" content="2023-03-03T07:06:01.924Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="光学">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1677821095482),
+    lastupdate: new Date(1677827167416),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2562,8 +2562,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="衍射的分类">衍射的分类</h3>
 <ul>
-<li>菲尼尔衍射：光源和接收屏距离有限</li>
-<li>夫朗禾费衍射：光源和接收屏距离无限（也就是入射光是平行光）</li>
+<li>菲尼尔衍射（近场衍射）：光源和接收屏距离有限</li>
+<li>夫朗禾费衍射（远场衍射）：光源和接收屏距离无限（也就是入射光是平行光）</li>
 </ul>
 <p>夫朗禾费衍射需要用透镜将平行光汇聚</p>
 <img src="/images/三种衍射.png" class="lazyload" data-srcset="/images/三种衍射.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="三种衍射" style="zoom:50%;" />
@@ -2615,11 +2615,61 @@ K=\frac{e^{-i\pi/2}}{\lambda}<br>
 $$<br>
 于是衍射积分公式转化为：</p>
 <img src="/images/基尔霍夫求解波动方程.png" class="lazyload" data-srcset="/images/基尔霍夫求解波动方程.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="基尔霍夫求解波动方程" style="zoom:50%;" />
-<h2 id="巴俾涅原理">巴俾涅原理</h2>
+<h3 id="巴俾涅原理">巴俾涅原理</h3>
 <p>两个互补的衍射屏叠加，效果等同于自由传播</p>
-<h2 id="单缝夫琅禾费衍射">单缝夫琅禾费衍射</h2>
-<h2 id="小孔夫琅禾费衍射">小孔夫琅禾费衍射</h2>
-<h2 id="多缝衍射">多缝衍射</h2>
+<h2 id="衍射图样">衍射图样</h2>
+<h3 id="圆孔衍射">圆孔衍射</h3>
+<p>圆孔衍射：亮暗相间的同心圆环，中心可能是暗也可能是亮的</p>
+<p>中心强度与孔径明暗，与屏幕距离不敏感</p>
+<img src="/images/圆孔衍射.jpeg" class="lazyload" data-srcset="/images/圆孔衍射.jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="圆孔衍射" style="zoom:60%;" />
+<h3 id="圆屏衍射">圆屏衍射</h3>
+<p>圆屏衍射：亮暗相间的同心圆环，但中心总是一个亮点</p>
+<p>亮点与物体大小、屏幕距离都无关，这个亮点我们称为柏松亮斑</p>
+<img src="/images/圆屏衍射.png" class="lazyload" data-srcset="/images/圆屏衍射.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="圆屏衍射" style="zoom:50%;" />
+<blockquote>
+<p>一个圆球的影子，中心居然会有一个亮点，衍射，很神奇吧</p>
+</blockquote>
+<h2 id="菲涅尔波带片">菲涅尔波带片</h2>
+<p>根据菲尼尔衍射原理，将偶数个半波带遮挡住，就能得到菲涅尔波带片（就是对一个平整的圆形玻璃，将其表面部分图黑一个个同心圆环）</p>
+<img src="/images/菲涅尔波带片.png" class="lazyload" data-srcset="/images/菲涅尔波带片.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="菲涅尔波带片" style="zoom:50%;" />
+<p>若一个波带片有20个半波带，遮挡偶数个半波带，轴上中心点的光强为<br>
+$$<br>
+A’=A_1+A_2+A_3+A_4+A_{19}\approx 10A_1=20A_0<br>
+$$</p>
+<p>$$<br>
+I’=A’^2=400A_0^2=400I<br>
+$$<br>
+我们发现中心点的光强变强，因此菲涅尔波带片相当于透镜，可以汇聚光强</p>
+<h3 id="涂黑半径">涂黑半径</h3>
+<p>$$<br>
+\rho_K=\sqrt{k}\rho_1<br>
+$$</p>
+<ul>
+<li>k取1,2,3…</li>
+</ul>
+<h3 id="成像公式">成像公式</h3>
+<p>$$<br>
+\frac{1}{R}+\frac{1}{b}=\frac{1}{f}<br>
+$$</p>
+<ul>
+<li>R：点光源到波带片的距离</li>
+<li>b：波带片到汇聚点到距离</li>
+</ul>
+<h3 id="波带片与透镜">波带片与透镜</h3>
+<ul>
+<li>相同
+<ul>
+<li>都能汇聚能量</li>
+</ul>
+</li>
+<li>不同
+<ul>
+<li>透镜只有一个汇聚点，波带片有多个实汇聚点和虚汇聚点</li>
+<li>透镜满足等光程性，波带片相邻波带片间有一个波长的光程差</li>
+<li>波带片面积大、轻便、可折叠</li>
+</ul>
+</li>
+</ul>
 
   </div>
   
@@ -2644,7 +2694,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-03T05:24:52+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-03T07:06:01+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年3月3日</p>
@@ -2818,7 +2868,7 @@ $$<br>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8D%E5%B0%84"><span class="toc-text">衍射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8D%E5%B0%84%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">衍射的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E4%B8%8E%E8%A1%8D%E5%B0%84%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">干涉与衍射的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%A0%E6%9B%B4%E6%96%AF-%E8%8F%B2%E6%B6%85%E5%B0%94%E5%8E%9F%E7%90%86"><span class="toc-text">惠更斯-菲涅尔原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%A0%E6%9B%B4%E6%96%AF"><span class="toc-text">惠更斯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94"><span class="toc-text">菲涅尔</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%BE%E6%96%9C%E5%9B%A0%E5%AD%90"><span class="toc-text">倾斜因子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E7%A7%AF%E5%88%86%E5%AE%9A%E5%BE%8B"><span class="toc-text">基尔霍夫积分定律</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%B4%E4%BF%BE%E6%B6%85%E5%8E%9F%E7%90%86"><span class="toc-text">巴俾涅原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E7%BC%9D%E5%A4%AB%E7%90%85%E7%A6%BE%E8%B4%B9%E8%A1%8D%E5%B0%84"><span class="toc-text">单缝夫琅禾费衍射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%AD%94%E5%A4%AB%E7%90%85%E7%A6%BE%E8%B4%B9%E8%A1%8D%E5%B0%84"><span class="toc-text">小孔夫琅禾费衍射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BC%9D%E8%A1%8D%E5%B0%84"><span class="toc-text">多缝衍射</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8D%E5%B0%84"><span class="toc-text">衍射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8D%E5%B0%84%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">衍射的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B2%E6%B6%89%E4%B8%8E%E8%A1%8D%E5%B0%84%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">干涉与衍射的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%A0%E6%9B%B4%E6%96%AF-%E8%8F%B2%E6%B6%85%E5%B0%94%E5%8E%9F%E7%90%86"><span class="toc-text">惠更斯-菲涅尔原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%A0%E6%9B%B4%E6%96%AF"><span class="toc-text">惠更斯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94"><span class="toc-text">菲涅尔</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%80%BE%E6%96%9C%E5%9B%A0%E5%AD%90"><span class="toc-text">倾斜因子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E7%A7%AF%E5%88%86%E5%AE%9A%E5%BE%8B"><span class="toc-text">基尔霍夫积分定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%B4%E4%BF%BE%E6%B6%85%E5%8E%9F%E7%90%86"><span class="toc-text">巴俾涅原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8D%E5%B0%84%E5%9B%BE%E6%A0%B7"><span class="toc-text">衍射图样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%86%E5%AD%94%E8%A1%8D%E5%B0%84"><span class="toc-text">圆孔衍射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%86%E5%B1%8F%E8%A1%8D%E5%B0%84"><span class="toc-text">圆屏衍射</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E6%B3%A2%E5%B8%A6%E7%89%87"><span class="toc-text">菲涅尔波带片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%82%E9%BB%91%E5%8D%8A%E5%BE%84"><span class="toc-text">涂黑半径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%83%8F%E5%85%AC%E5%BC%8F"><span class="toc-text">成像公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A2%E5%B8%A6%E7%89%87%E4%B8%8E%E9%80%8F%E9%95%9C"><span class="toc-text">波带片与透镜</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3362,7 +3412,7 @@ $$<br>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/衍射/","name":"光学：衍射"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学：衍射","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E8%A1%8D%E5%B0%84/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E8%A1%8D%E5%B0%84/","wordCount":0,"datePublished":"2023-02-25T10:10:25.000Z","dateModified":"2023-03-03T05:24:52.617Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/衍射/","name":"光学：衍射"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学：衍射","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E8%A1%8D%E5%B0%84/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E8%A1%8D%E5%B0%84/","wordCount":0,"datePublished":"2023-02-25T10:10:25.000Z","dateModified":"2023-03-03T07:06:01.924Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
