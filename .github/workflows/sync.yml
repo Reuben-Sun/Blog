@@ -2,7 +2,7 @@ name: Sync
 
 on:
   workflow_dispatch:
-      input:
+      inputs:
         name:
           description: 'Git Message'
           required: false
