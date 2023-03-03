@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-03-03T15:01:25.000Z">
-<meta property="article:modified_time" content="2023-03-03T12:01:46.354Z">
+<meta property="article:modified_time" content="2023-03-03T12:07:32.204Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="光学">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1677844910325),
+    lastupdate: new Date(1677845255505),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2646,6 +2646,59 @@ $$</p>
 <h4 id="记偏振态的技巧">记偏振态的技巧</h4>
 <p>$\delta = 0$时，是一个左下到右上的线偏振，随着$\delta$增大，偏振的形状呈正弦形状，左顺右逆</p>
 <p><img src="/images/%E5%B7%A6%E9%A1%BA%E5%8F%B3%E9%80%86.png" class="lazyload" data-srcset="/images/%E5%B7%A6%E9%A1%BA%E5%8F%B3%E9%80%86.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="左顺右逆"></p>
+<h3 id="7-36">7.36</h3>
+<blockquote>
+<p>证明组速度可以写成</p>
+</blockquote>
+<p>$$<br>
+v_g=\frac{c}{n}+\frac{\lambda c}{n^2}\frac{\mathrm{d}n}{\mathrm{d}\lambda}<br>
+$$</p>
+<p>证明</p>
+<img src="/images/求证组速度表示.png" class="lazyload" data-srcset="/images/求证组速度表示.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="求证组速度表示" style="zoom: 33%;" />
+<h3 id="5-5">5.5</h3>
+<h2 id="考试例题">考试例题</h2>
+<h3 id="求反射光偏振">求反射光偏振</h3>
+<img src="/images/求反射光偏振.png" class="lazyload" data-srcset="/images/求反射光偏振.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="求反射光偏振" style="zoom:50%;" />
+<ol>
+<li>根据shell公式求折射角</li>
+</ol>
+<p>$$<br>
+1 \times \sin \theta = n\sin \gamma<br>
+$$</p>
+<p>$$<br>
+\gamma = 18.7^{\circ}<br>
+$$</p>
+<ol start="2">
+<li>根据菲涅尔公式求出反射光ps偏振比</li>
+</ol>
+<p>$$<br>
+r_p=\frac{\tan (\alpha - \gamma)}{\tan (\alpha + \gamma)}=0.176<br>
+$$</p>
+<p>$$<br>
+r_s=-\frac{\sin (\alpha - \gamma)}{\sin (\alpha + \gamma)}=-0.261<br>
+$$</p>
+<ol start="3">
+<li>得到反射光ps分量</li>
+</ol>
+<p>$$<br>
+E_p=r_pE_0\cos 45^\circ<br>
+$$</p>
+<p>$$<br>
+E_s=r_sE_0\sin 45^\circ<br>
+$$</p>
+<ol start="4">
+<li>求反射光的偏振和入射面的夹角$\theta’$</li>
+</ol>
+<p>$$<br>
+\theta’=\arctan|\frac{r_s}{r_p}|=\arctan 1.483=56^\circ<br>
+$$</p>
+<ol start="5">
+<li>由于入射角小于布鲁斯特角</li>
+</ol>
+<p>$$<br>
+\alpha_B = \arctan n=57.3^\circ<br>
+$$</p>
+<p>所以ps都有相位移，合成后仍在13象限</p>
 
   </div>
   
@@ -2670,7 +2723,7 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-03T12:01:46+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-03T12:07:32+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年3月3日</p>
@@ -2831,7 +2884,7 @@ $$</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0%E9%87%8D%E7%82%B9"><span class="toc-text">复习重点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90"><span class="toc-text">作业解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-32"><span class="toc-text">3.32</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a"><span class="toc-text">a</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b"><span class="toc-text">b</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c"><span class="toc-text">c</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4"><span class="toc-text">8.4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ab"><span class="toc-text">ab</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-2"><span class="toc-text">c</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d"><span class="toc-text">d</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%81%8F%E6%8C%AF%E6%80%81%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-text">记偏振态的技巧</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0%E9%87%8D%E7%82%B9"><span class="toc-text">复习重点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E8%A7%A3%E6%9E%90"><span class="toc-text">作业解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-32"><span class="toc-text">3.32</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a"><span class="toc-text">a</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b"><span class="toc-text">b</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c"><span class="toc-text">c</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4"><span class="toc-text">8.4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ab"><span class="toc-text">ab</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-2"><span class="toc-text">c</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d"><span class="toc-text">d</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%81%8F%E6%8C%AF%E6%80%81%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-text">记偏振态的技巧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-36"><span class="toc-text">7.36</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5"><span class="toc-text">5.5</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E8%AF%95%E4%BE%8B%E9%A2%98"><span class="toc-text">考试例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82%E5%8F%8D%E5%B0%84%E5%85%89%E5%81%8F%E6%8C%AF"><span class="toc-text">求反射光偏振</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3375,7 +3428,7 @@ $$</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/光学复习/","name":"光学复习"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学复习","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/","wordCount":0,"datePublished":"2023-03-03T15:01:25.000Z","dateModified":"2023-03-03T12:01:46.354Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/光学复习/","name":"光学复习"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学复习","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/","wordCount":0,"datePublished":"2023-03-03T15:01:25.000Z","dateModified":"2023-03-03T12:07:32.204Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
