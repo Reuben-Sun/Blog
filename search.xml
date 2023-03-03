@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>光学复习</title>
+      <link href="/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/"/>
+      <url>/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<h1>光学复习</h1><h2 id="复习重点">复习重点</h2><ul><li>[x] 相速度</li><li>[x] 偏振态</li><li>[x] 费马原理</li><li>[x] 横向放大率</li><li>[x] 薄透镜成像</li><li>[ ] 透镜组成像（做图法）</li><li>[ ] 反射过程中的相移</li><li>[ ] 布鲁斯特角</li><li>[ ] 反射光与折射光的偏振态</li><li>[x] 全反射</li><li>[x] 相干条件</li><li>[x] 杨氏双缝干涉</li><li>[x] 时间、空间相干性</li><li>[x] 等倾干涉</li><li>[x] 等厚干涉</li><li>[ ] 迈克尔逊干涉仪</li><li>[ ] 多光束干涉</li><li>[x] 增反膜与增透膜</li><li>[x] 惠更斯-菲涅尔原理</li><li>[x] 衍射的分类</li><li>[ ] 衍射与傅立叶变换</li><li>[ ] 单缝衍射</li><li>[x] 圆孔衍射</li><li>[ ] Airy斑</li><li>[ ] 瑞丽判据</li><li>[ ] 多缝衍射</li><li>[x] 光栅方程</li><li>[ ] Abbe成像原理</li><li>[ ] 最小分辨距离、角度</li><li>[x] 光栅</li><li>[x] 双折射</li><li>[x] 惠更斯作图法</li><li>[ ] 波片</li><li>[x] 光偏振态的改变与检测</li><li>[x] 黑体辐射与光量子</li></ul><h2 id="作业解析">作业解析</h2><h3 id="3-32">3.32</h3><blockquote><p>一个4.0 v白炽手电筒灯泡消耗0.25 A，将约1.0%的耗散功率转化为光(λ≈550 nm)。如果梁的截面积是10平方厘米，近似圆柱形</p><p>(a)每秒发射多少光子?(b)每米光束中有多少光子?©光束离开手电筒时的通量密度是多少?</p></blockquote><h4 id="a">a</h4><p>根据功率和光的能量公式<br>$$<br>P=UI<br>$$</p><p>$$<br>n\hslash c/\lambda=0.01P<br>$$</p><p>求出n</p><h4 id="b">b</h4><p>每米光子数=光子总数/长度<br>$$<br>nt=ct<br>$$</p><p>$$<br>c=3.0\times 10^8<br>$$</p><h4 id="c">c</h4><p>$$<br>密度=0.01P/S<br>$$</p><h3 id="8-4">8.4</h3><blockquote><p>描述下列光的偏振态</p></blockquote><img src="/images/求下列偏振态.png" class="lazyload" data-srcset="/images/求下列偏振态.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="求下列偏振态" style="zoom:50%;" /><p>根据xy的振幅和相位判断偏振态<br>$$<br>\delta=(E_x/E_y)\Delta \varphi<br>$$</p><h4 id="ab">ab</h4><p>$$<br>E_x/E_y=-1<br>$$</p><p>$$<br>phase(E_x)=phase(E_y)<br>$$</p><p>偏振方向为<br>$$<br>-\pi/4<br>$$</p><h4 id="c-2">c</h4><p>$$<br>E_x/E_y=1<br>$$</p><p>$$<br>phase(E_x)=phase(E_y)+\pi/4<br>$$</p><p>偏振方向为<br>$$<br>\pi/4<br>$$</p><h4 id="d">d</h4><p>$$<br>E_x/E_y=1<br>$$</p><p>$$<br>phase(E_x)=phase(E_y)-\pi/2<br>$$</p><p>偏振方向为<br>$$<br>-\pi/2<br>$$</p><h4 id="记偏振态的技巧">记偏振态的技巧</h4><p>$\delta = 0$时，是一个左下到右上的线偏振，随着$\delta$增大，偏振的形状呈正弦形状，左顺右逆</p><p><img src="/images/%E5%B7%A6%E9%A1%BA%E5%8F%B3%E9%80%86.png" class="lazyload" data-srcset="/images/%E5%B7%A6%E9%A1%BA%E5%8F%B3%E9%80%86.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="左顺右逆"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> optics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 光学 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>光学：光源</title>
       <link href="/optics/%E5%85%89%E6%BA%90/"/>
       <url>/optics/%E5%85%89%E6%BA%90/</url>
