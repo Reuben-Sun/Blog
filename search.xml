@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Godot 4.0源码阅读</title>
+      <link href="/engine/Godot/"/>
+      <url>/engine/Godot/</url>
+      
+        <content type="html"><![CDATA[<h1>Godot 4.0源码阅读</h1><p>近期Godot 4.0发布了，更新了许多厉害的图形feature，引擎代码是开源的，而且代码量远比Unreal Engine小，于是准备看看，不定期更新</p><h2 id="编译">编译</h2><ol><li>Github Fork项目，<a href="https://github.com/godotengine/godot">项目地址</a></li><li>安装Python（我使用的是Anaconda3）</li><li>安装Scons（使用Python安装，我使用的是Anaconda）</li><li>拉取项目，进入项目根目录</li><li>运行代码，生成Visual Studio项目（不过我是用Rider打开的）</li></ol><pre class="language-powershell" data-language="powershell"><code class="language-powershell">scons p=windows vsproj-yes</code></pre><ol start="6"><li>编译（首次构建可能要二十分钟）</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> engine </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> GC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Google C++代码规范</title>
       <link href="/program/GoogleC++/"/>
       <url>/program/GoogleC++/</url>
