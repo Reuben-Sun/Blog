@@ -42,11 +42,11 @@
 <meta property="og:title" content="Metal：TBDR">
 <meta property="og:url" content="https://reubensun.com/graphics/TiledDeferred/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Tile Base Deferred Rendering 基于Apple M1和Metal图形库，项目地址 移动端GPU渲染架构   IMR（Immediate Mode Rending），即时模式渲染，按drawcall顺序绘制 TBR（Tile Base Rendering）  将画面分割为一个个tile，在VS对每一个tile处理，将结果存到On-Chip Memory上 FS读信息，渲染每">
+<meta property="og:description" content="Tile Base Deferred Rendering 基于Apple M1和Metal图形库 移动端GPU渲染架构   IMR（Immediate Mode Rending），即时模式渲染，按drawcall顺序绘制 TBR（Tile Base Rendering）  将画面分割为一个个tile，在VS对每一个tile处理，将结果存到On-Chip Memory上 FS读信息，渲染每一个til">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-08T14:33:25.000Z">
-<meta property="article:modified_time" content="2023-03-07T06:16:25.860Z">
+<meta property="article:modified_time" content="2023-03-07T10:27:25.145Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Metal">
 <meta property="article:tag" content="Deferred Render">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1678169792724),
+    lastupdate: new Date(1678184849756),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2537,7 +2537,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>Tile Base Deferred Rendering</h1>
-<p>基于Apple M1和Metal图形库，<a target="_blank" rel="noopener" href="https://github.com/Reuben-Sun/TinyMetalEngine">项目地址</a></p>
+<p>基于Apple M1和Metal图形库</p>
 <h3 id="移动端GPU渲染架构">移动端GPU渲染架构</h3>
 <p><img src="/images/%E7%A7%BB%E5%8A%A8%E7%AB%AFGPU.png" class="lazyload" data-srcset="/images/%E7%A7%BB%E5%8A%A8%E7%AB%AFGPU.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="移动端GPU"></p>
 <ul>
@@ -2556,7 +2556,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>我个人感觉为什么要使用Tile，可能是因为移动端GPU规模太小，难以放下整张RT。毕竟理论上使用一张大RT的采样成本更低，比如将一组TextureArray转化为VSM，能很明显提高滤波速度</p>
 <p>我在实际测试中发现当你隐式使用TBR时也会自动切分Tile，手动指定Tile尺寸反而增大了带宽和GPU时间（我也不清楚为什么，希望有人能给我解释一些）</p>
 </blockquote>
-<h4 id="片上储存">片上储存</h4>
+<h3 id="On-Chip-Memory">On-Chip Memory</h3>
 <p>片上存储（on-chip memory），是集成在GPU上的存储空间</p>
 <p>GPU中有多种存储数据的结构，访问速度从快到慢排依次是</p>
 <ol>
@@ -2595,72 +2595,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ol>
 <p>其中<strong>RMEM与SMEM是集成在GPU芯片上的</strong>，其他的则是存储在显存中的（你可以类比寄存器，cache和内存）</p>
-<h3 id="Single-RednerPass">Single RednerPass</h3>
+<h4 id="Metal使用On-Chip-Mem">Metal使用On-Chip Mem</h4>
+<p>Metal使用On-Chip Mem最大的变化就是，你不再需要在RenderPass中读取上一个Pass的贴图，传递给下一个Pass，Shader的输入值可以直接替换为上一个Pass的输出结果，并直接使用</p>
 <blockquote>
-<p>类比Vulkan的SubPass</p>
+<p>上一个Pass的结果你也可以通过<code>imageblock&lt;GBufferOut&gt; img_blk_gBuffer</code>访问</p>
 </blockquote>
-<p>传统的延迟渲染，是一个多Pass渲染。GBufferPass生成MRT，传递给LightingPass着色输出，这个过程中会有大量的贴图IO带宽</p>
-<img src="/images/传统延迟.png" class="lazyload" data-srcset="/images/传统延迟.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="传统延迟" style="zoom:50%;" />
-<p>TBDR（Tile Base Deferred Rendering）利用了Metal图形库Single RenderPass的特性</p>
-<ul>
-<li>在一个Single Pass中有多个小Pass，小Pass共享一组片上存储</li>
-<li>一个Pass运行后，会在片上生成一些临时贴图，其他Pass可以直接访问这些贴图</li>
-</ul>
-<img src="/images/MetalTBDR.png" class="lazyload" data-srcset="/images/MetalTBDR.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="MetalTBDR" style="zoom:50%;" />
-<blockquote>
-<p>TBDR是Apple芯片的功能，对于安卓GPU</p>
-<p>Adreno：frameBuffer fetch deferred，提前绑定（开辟）好MRT，使用时RT不动，Pass动</p>
-<p>Mali：pixel loacl storage deferred，将GBuffer存在on-clip mem上，于是就减少了IO消耗</p>
-</blockquote>
-<h3 id="实现TBDR">实现TBDR</h3>
-<ol>
-<li>将GBuffer中Texture存储类型设为memoryless</li>
-</ol>
-<pre class="language-diff" data-language="diff"><code class="language-diff">albedoTexture = Self.makeTexture(
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">           size: size,
-</span><span class="token prefix unchanged"> </span><span class="token line">           pixelFormat: .bgra8Unorm,
-</span><span class="token prefix unchanged"> </span><span class="token line">           label: "Albedo Texture",
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">            storageMode: .private)
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">            storageMode: .memoryless)  </span></span></code></pre>
-<ol start="2">
-<li>将贴图存储操作设为dontcare</li>
-</ol>
-<pre class="language-diff" data-language="diff"><code class="language-diff">func draw(commandBuffer: MTLCommandBuffer, scene: GameScene, uniforms: Uniforms, params: Params) &#123;
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       ...
-</span><span class="token prefix unchanged"> </span><span class="token line">       //将贴图存储操作设为dontCare
-</span><span class="token prefix unchanged"> </span><span class="token line">       for (index, texture) in textures.enumerated() &#123;
-</span><span class="token prefix unchanged"> </span><span class="token line">           let attachment =
-</span><span class="token prefix unchanged"> </span><span class="token line">           descriptor.colorAttachments[RenderTargetAlbedo.index + index]
-</span><span class="token prefix unchanged"> </span><span class="token line">           attachment?.texture = texture
-</span><span class="token prefix unchanged"> </span><span class="token line">           attachment?.loadAction = .clear
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">            attachment?.storeAction = .store
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">            attachment?.storeAction = .dontCare
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">           attachment?.clearColor =
-</span><span class="token prefix unchanged"> </span><span class="token line">           MTLClearColor(red: 0.73, green: 0.92, blue: 1, alpha: 1)
-</span><span class="token prefix unchanged"> </span><span class="token line">       &#125;
-</span><span class="token prefix unchanged"> </span><span class="token line">       ...</span></span></code></pre>
-<ol start="3">
-<li>停止向LightPass的片元着色器传递贴图信息</li>
-</ol>
-<pre class="language-diff" data-language="diff"><code class="language-diff"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">func drawSunLight(
-</span><span class="token prefix unchanged"> </span><span class="token line">       renderEncoder: MTLRenderCommandEncoder,
-</span><span class="token prefix unchanged"> </span><span class="token line">       scene: GameScene,
-</span><span class="token prefix unchanged"> </span><span class="token line">       params: Params
-</span><span class="token prefix unchanged"> </span><span class="token line">   ) &#123;
-</span><span class="token prefix unchanged"> </span><span class="token line">       renderEncoder.pushDebugGroup("Sun Light")
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">        renderEncoder.setFragmentTexture(
-</span><span class="token prefix deleted">-</span><span class="token line">            albedoTexture,
-</span><span class="token prefix deleted">-</span><span class="token line">            index: BaseColor.index)
-</span><span class="token prefix deleted">-</span><span class="token line">        renderEncoder.setFragmentTexture(
-</span><span class="token prefix deleted">-</span><span class="token line">            normalTexture,
-</span><span class="token prefix deleted">-</span><span class="token line">            index: NormalTexture.index)
-</span><span class="token prefix deleted">-</span><span class="token line">        renderEncoder.setFragmentTexture(
-</span><span class="token prefix deleted">-</span><span class="token line">            positionTexture,
-</span><span class="token prefix deleted">-</span><span class="token line">            index: NormalTexture.index + 1)
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       ...</span></span></code></pre>
-<ol start="4">
-<li>修改LightPass的片元着色器，使其直接接收GBufferOut</li>
-</ol>
 <pre class="language-diff" data-language="diff"><code class="language-diff"><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">fragment float4 fragment_deferredSun(VertexOut in [[stage_in]],
 </span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">fragment float4 fragment_tiled_deferredSun(VertexOut in [[stage_in]],
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       constant Params &amp;params [[buffer(ParamsBuffer)]],
@@ -2690,63 +2629,88 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </span><span class="token prefix unchanged"> </span><span class="token line">   color *= albedo.a;
 </span><span class="token prefix unchanged"> </span><span class="token line">   return float4(color, 1);
 </span></span>&#125;</code></pre>
-<ol start="5">
-<li>
-<p>合并渲染命令提交，将drawGBufferRenderPass和drawLightingRenderPass放在同一个commandBuffer中</p>
-</li>
-<li>
-<p>配置Stencil测试</p>
-</li>
-</ol>
-<pre class="language-diff" data-language="diff"><code class="language-diff"><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">static func buildDepthStencilState() -> MTLDepthStencilState? &#123;
-</span><span class="token prefix inserted">+</span><span class="token line">        let descriptor = MTLDepthStencilDescriptor()
-</span><span class="token prefix inserted">+</span><span class="token line">        descriptor.depthCompareFunction = .less
-</span><span class="token prefix inserted">+</span><span class="token line">        descriptor.isDepthWriteEnabled = true
-</span><span class="token prefix inserted">+</span><span class="token line">        let frontFaceStencil = MTLStencilDescriptor()
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.stencilCompareFunction = .always
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.stencilFailureOperation = .keep
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.depthFailureOperation = .keep
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.depthStencilPassOperation = .incrementClamp
-</span><span class="token prefix inserted">+</span><span class="token line">        descriptor.frontFaceStencil = frontFaceStencil
-</span><span class="token prefix inserted">+</span><span class="token line">        return Renderer.device.makeDepthStencilState(descriptor: descriptor)
-</span><span class="token prefix inserted">+</span><span class="token line">      &#125;
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   
-</span><span class="token prefix unchanged"> </span><span class="token line">   static func buildLightingDepthStencilState() -> MTLDepthStencilState? &#123;
-</span><span class="token prefix unchanged"> </span><span class="token line">       let descriptor = MTLDepthStencilDescriptor()
-</span><span class="token prefix unchanged"> </span><span class="token line">       descriptor.isDepthWriteEnabled = false
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        let frontFaceStencil = MTLStencilDescriptor()
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.stencilCompareFunction = .notEqual
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.stencilFailureOperation = .keep
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.depthFailureOperation = .keep
-</span><span class="token prefix inserted">+</span><span class="token line">        frontFaceStencil.depthStencilPassOperation = .keep
-</span><span class="token prefix inserted">+</span><span class="token line">        descriptor.frontFaceStencil = frontFaceStencil
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       return Renderer.device.makeDepthStencilState(descriptor: descriptor)
-</span><span class="token prefix unchanged"> </span><span class="token line">   &#125;</span></span></code></pre>
-<pre class="language-diff" data-language="diff"><code class="language-diff">depthTexture = Self.makeTexture(
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">           size: size,
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">            pixelFormat: .depth32Float,
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">            pixelFormat: .depth32Float_stencil8,
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">           label: "Depth Texture",
-</span><span class="token prefix unchanged"> </span><span class="token line">           storageMode: .memoryless)</span></span></code></pre>
-<pre class="language-diff" data-language="diff"><code class="language-diff"><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">descriptor.depthAttachment.storeAction = .dontCare
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">descriptor.depthAttachment.texture = depthTexture
-</span><span class="token prefix inserted">+</span><span class="token line">descriptor.stencilAttachment.texture = depthTexture</span></span></code></pre>
-<pre class="language-diff" data-language="diff"><code class="language-diff">static func createGBufferPSO(colorPixelFormat: MTLPixelFormat, tiled: Bool = false) -> MTLRenderPipelineState &#123;
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       ...        
-</span><span class="token prefix unchanged"> </span><span class="token line">       if tiled &#123;
-</span><span class="token prefix unchanged"> </span><span class="token line">           pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-</span><span class="token prefix unchanged"> </span><span class="token line">       &#125;
-</span><span class="token prefix unchanged"> </span><span class="token line">       pipelineDescriptor.setGBufferPixelFormats()
-</span></span><span class="token deleted-sign deleted"><span class="token prefix deleted">-</span><span class="token line">        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-</span><span class="token prefix deleted">-</span><span class="token line">        if !tiled &#123;
-</span><span class="token prefix deleted">-</span><span class="token line">            pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
-</span><span class="token prefix deleted">-</span><span class="token line">            pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
-</span><span class="token prefix deleted">-</span><span class="token line">				 &#125;
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float_stencil8
-</span><span class="token prefix inserted">+</span><span class="token line">        pipelineDescriptor.stencilAttachmentPixelFormat = .depth32Float_stencil8
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
-</span><span class="token prefix unchanged"> </span><span class="token line">       return createPSO(descriptor: pipelineDescriptor)
-</span><span class="token prefix unchanged"> </span><span class="token line">   &#125;</span></span></code></pre>
+<h3 id="Single-RednerPass">Single RednerPass</h3>
+<blockquote>
+<p>类比Vulkan的SubPass</p>
+</blockquote>
+<p>传统的延迟渲染，是一个多Pass渲染。GBufferPass生成MRT，传递给LightingPass着色输出，这个过程中会有大量的贴图IO带宽</p>
+<img src="/images/传统延迟.png" class="lazyload" data-srcset="/images/传统延迟.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="传统延迟" style="zoom:50%;" />
+<p>TBDR（Tile Base Deferred Rendering）利用了Metal图形库Single RenderPass的特性</p>
+<ul>
+<li>在一个Single Pass中有多个小Pass，小Pass共享一组片上存储</li>
+<li>一个Pass运行后，会在片上生成一些临时贴图，其他Pass可以直接访问这些贴图</li>
+</ul>
+<img src="/images/MetalTBDR.png" class="lazyload" data-srcset="/images/MetalTBDR.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="MetalTBDR" style="zoom:50%;" />
+<blockquote>
+<p>TBDR是Apple芯片的功能，对于安卓GPU</p>
+<p>Adreno：frameBuffer fetch deferred，提前绑定（开辟）好MRT，使用时RT不动，Pass动</p>
+<p>Mali：pixel loacl storage deferred，将GBuffer存在on-clip mem上，于是就减少了IO消耗</p>
+</blockquote>
+<h3 id="drawable">drawable</h3>
+<p>当我们使用MTKView呈现渲染结果时，需要指定currentDrawable</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift">unc <span class="token function">draw</span><span class="token punctuation">(</span>cullingResult<span class="token punctuation">:</span> <span class="token class-name">CullingResult</span><span class="token punctuation">,</span> <span class="token keyword">in</span> view<span class="token punctuation">:</span> <span class="token class-name">MTKView</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">guard</span> <span class="token keyword">let</span> commandBuffer <span class="token operator">=</span> <span class="token constant">RHI</span><span class="token punctuation">.</span>commandQueue<span class="token punctuation">.</span><span class="token function">makeCommandBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              <span class="token keyword">let</span> descriptor <span class="token operator">=</span> view<span class="token punctuation">.</span>currentRenderPassDescriptor <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span>
+        <span class="token punctuation">&#125;</span>
+        
+        <span class="token function">updateUniforms</span><span class="token punctuation">(</span>cullingResult<span class="token punctuation">:</span> cullingResult<span class="token punctuation">)</span>
+        <span class="token function">updateParams</span><span class="token punctuation">(</span>cullingResult<span class="token punctuation">:</span> cullingResult<span class="token punctuation">,</span> options<span class="token punctuation">:</span> options<span class="token punctuation">)</span>
+        
+        
+        <span class="token comment">// 阴影投射</span>
+        shadowRenderPass<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>commandBuffer<span class="token punctuation">:</span> commandBuffer<span class="token punctuation">,</span>
+                              cullingResult<span class="token punctuation">:</span> cullingResult<span class="token punctuation">,</span>
+                              uniforms<span class="token punctuation">:</span> uniforms<span class="token punctuation">,</span>
+                              params<span class="token punctuation">:</span> params<span class="token punctuation">,</span>
+                              options<span class="token punctuation">:</span> options<span class="token punctuation">)</span>
+        <span class="token comment">// TBDR</span>
+        tiledDeferredRenderPass<span class="token punctuation">.</span>skyboxCube <span class="token operator">=</span> cullingResult<span class="token punctuation">.</span>skybox
+        tiledDeferredRenderPass<span class="token punctuation">.</span>shadowTexture <span class="token operator">=</span> shadowRenderPass<span class="token punctuation">.</span>shadowTexture
+        tiledDeferredRenderPass<span class="token punctuation">.</span>descriptor <span class="token operator">=</span> descriptor
+        tiledDeferredRenderPass<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>commandBuffer<span class="token punctuation">:</span> commandBuffer<span class="token punctuation">,</span>
+                                     cullingResult<span class="token punctuation">:</span> cullingResult<span class="token punctuation">,</span>
+                                     uniforms<span class="token punctuation">:</span> uniforms<span class="token punctuation">,</span>
+                                     params<span class="token punctuation">:</span> params<span class="token punctuation">,</span>
+                                     options<span class="token punctuation">:</span> options<span class="token punctuation">)</span>
+        <span class="token comment">// Post-Process</span>
+        postProcessRenderPass<span class="token punctuation">.</span>drawableTexture <span class="token operator">=</span> view<span class="token punctuation">.</span>currentDrawable<span class="token operator">?</span><span class="token punctuation">.</span>texture
+        postProcessRenderPass<span class="token punctuation">.</span>preTexture <span class="token operator">=</span> tiledDeferredRenderPass<span class="token punctuation">.</span>finalTexture
+        postProcessRenderPass<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span>commandBuffer<span class="token punctuation">:</span> commandBuffer<span class="token punctuation">,</span>
+                                   cullingResult<span class="token punctuation">:</span> cullingResult<span class="token punctuation">,</span>
+                                   uniforms<span class="token punctuation">:</span> uniforms<span class="token punctuation">,</span>
+                                   params<span class="token punctuation">:</span> params<span class="token punctuation">,</span>
+                                   options<span class="token punctuation">:</span> options<span class="token punctuation">)</span>
+        
+        <span class="token keyword">guard</span> <span class="token keyword">let</span> drawable <span class="token operator">=</span> view<span class="token punctuation">.</span>currentDrawable <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span>
+        <span class="token punctuation">&#125;</span>
+        commandBuffer<span class="token punctuation">.</span><span class="token function">present</span><span class="token punctuation">(</span>drawable<span class="token punctuation">)</span>
+        commandBuffer<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span></code></pre>
+<p>我们在TBDR时，将GBuffer和Depth设为<code>.messoryless</code>，并不保存，这些RT将放置在Color1～4中</p>
+<pre class="language-swift" data-language="swift"><code class="language-swift">albedoTexture <span class="token operator">=</span> <span class="token keyword">Self</span><span class="token punctuation">.</span><span class="token function">makeTexture</span><span class="token punctuation">(</span>
+            size<span class="token punctuation">:</span> size<span class="token punctuation">,</span>
+            pixelFormat<span class="token punctuation">:</span> <span class="token punctuation">.</span>bgra8Unorm<span class="token punctuation">,</span>
+            label<span class="token punctuation">:</span> <span class="token string-literal"><span class="token string">"Albedo Texture"</span></span><span class="token punctuation">,</span>
+            storageMode<span class="token punctuation">:</span> <span class="token punctuation">.</span>memoryless<span class="token punctuation">)</span>
+<span class="token operator">...</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>index<span class="token punctuation">,</span> texture<span class="token punctuation">)</span> <span class="token keyword">in</span> textures<span class="token punctuation">.</span><span class="token function">enumerated</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">let</span> attachment <span class="token operator">=</span>
+            descriptor<span class="token punctuation">.</span>colorAttachments<span class="token punctuation">[</span><span class="token class-name">RenderTarget0</span><span class="token punctuation">.</span>index <span class="token operator">+</span> index<span class="token punctuation">]</span>
+            attachment<span class="token operator">?</span><span class="token punctuation">.</span>texture <span class="token operator">=</span> texture
+            attachment<span class="token operator">?</span><span class="token punctuation">.</span>loadAction <span class="token operator">=</span> <span class="token punctuation">.</span>clear
+            attachment<span class="token operator">?</span><span class="token punctuation">.</span>storeAction <span class="token operator">=</span> <span class="token punctuation">.</span>dontCare
+            attachment<span class="token operator">?</span><span class="token punctuation">.</span>clearColor <span class="token operator">=</span>
+            <span class="token class-name">MTLClearColor</span><span class="token punctuation">(</span>red<span class="token punctuation">:</span> <span class="token number">0.73</span><span class="token punctuation">,</span> green<span class="token punctuation">:</span> <span class="token number">0.92</span><span class="token punctuation">,</span> blue<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> alpha<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span></code></pre>
+<p>GBuffer Pass不输出Color0，Light Pass输出Color0，保存后传递给Post-Process Pass</p>
+<p>其实你也可以直接将Light Pass的Color0设置为<code>view.currentDrawable?.texture</code>，这样Light Pass的结果会直接呈现在View上</p>
+<blockquote>
+<p>之前在这一步卡了很久，如果你不显式保存Color0，那么最后一个Pass的Color0就会成为drawable</p>
+<p>但如果你将Color0保存，你会发现屏幕变品红色，没有报错，截帧会崩溃，其实就是你保存Color0后没有显式指定view.currentDrawable?.texture = Color0，View没有东西可以显示</p>
+</blockquote>
+<img src="/images/IMRtoTBDR.png" class="lazyload" data-srcset="/images/IMRtoTBDR.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="IMRtoTBDR" style="zoom:50%;" />
 <h3 id="参考">参考</h3>
 <p><a target="_blank" rel="noopener" href="https://developer.apple.com/videos/play/wwdc2020/10632/">WWDC 2020</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/kodecocodes/met-materials">Metal by Tutorials</a></p>
@@ -2774,7 +2738,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-07T06:16:25+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-07T10:27:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年3月7日</p>
@@ -2935,7 +2899,7 @@ A parallel SPH implementation on multi-core CPUs
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AFGPU%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84"><span class="toc-text">移动端GPU渲染架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%87%E4%B8%8A%E5%82%A8%E5%AD%98"><span class="toc-text">片上储存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Single-RednerPass"><span class="toc-text">Single RednerPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0TBDR"><span class="toc-text">实现TBDR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AFGPU%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84"><span class="toc-text">移动端GPU渲染架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#On-Chip-Memory"><span class="toc-text">On-Chip Memory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Metal%E4%BD%BF%E7%94%A8On-Chip-Mem"><span class="toc-text">Metal使用On-Chip Mem</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Single-RednerPass"><span class="toc-text">Single RednerPass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#drawable"><span class="toc-text">drawable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3479,7 +3443,7 @@ A parallel SPH implementation on multi-core CPUs
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/TiledDeferred/","name":"Metal：TBDR"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Metal：TBDR","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/TiledDeferred/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/TiledDeferred/","wordCount":0,"datePublished":"2023-02-08T14:33:25.000Z","dateModified":"2023-03-07T06:16:25.860Z","articleSection":"graphics","keywords":"Metal,Deferred Render","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/TiledDeferred/","name":"Metal：TBDR"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Metal：TBDR","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/TiledDeferred/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/TiledDeferred/","wordCount":0,"datePublished":"2023-02-08T14:33:25.000Z","dateModified":"2023-03-07T10:27:25.145Z","articleSection":"graphics","keywords":"Metal,Deferred Render","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
