@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://reubensun.com/optics/光源/"/>
+  <link rel="canonical" href="https://reubensun.com/program/c++dll/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,21 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>光学：光源 - ReubenSun</title>
-  <meta name="keywords" content="光学,reubensun computer graphics engine Technical Artist">
+  <title>C与C++的DLL - ReubenSun</title>
+  <meta name="keywords" content="C++,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="光学：光源">
-<meta property="og:url" content="https://reubensun.com/optics/%E5%85%89%E6%BA%90/index.html">
+<meta property="og:title" content="C与C++的DLL">
+<meta property="og:url" content="https://reubensun.com/program/C++DLL/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="十一：光源 内容概述  黑体辐射 光电效应 波粒二象性  黑体辐射  室温下的铁是黑灰色，高温下是暗红色，极高温下是橙色  任何温度大于绝对零度的物体，都会发出热辐射（Thermal radiation），这是由带电粒子随机运动产生的 处于平衡状态的物体，能量吸收率等于释放率，高吸收伴随着高释放 基尔霍夫辐射定律 将一个物体置于一个等温真空室中，物体会吸收真空室中的热辐射，达到相同的温度（无论物体">
+<meta property="og:description" content="C与C++的DLL  今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括在C++风格的DLL，然后我才知道，DLL要写C风格的  ABI  ABI（Application binary interface） API（Application Programming Interface）  当你在写代码时，经常会通过API访问库中的函数、数据结构。代码被编译后，生成大量二进制数据，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-03-03T10:01:30.000Z">
-<meta property="article:modified_time" content="2023-03-08T09:29:00.977Z">
+<meta property="article:published_time" content="2023-03-08T15:01:25.000Z">
+<meta property="article:modified_time" content="2023-03-08T09:28:48.383Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="光学">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2452,7 +2452,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/optics/光源/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++DLL/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2473,7 +2473,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        光学：光源
+        C与C++的DLL
       </h1>
       <div class='new-meta-box'>
         
@@ -2495,10 +2495,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   <div class='new-meta-item category'>
     <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
-    <a class="category-link" href="/categories/optics/">optics</a>
+    <a class="category-link" href="/categories/program/">program</a>
     
       <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+        <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
       </span>
     
   </div>
@@ -2509,10 +2509,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-03-03T10:01:30+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-03-08T15:01:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年3月3日</p>
+    <p>发布于：2023年3月8日</p>
   </a>
 </div>
 
@@ -2535,56 +2535,66 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1>十一：光源</h1>
-<h2 id="内容概述">内容概述</h2>
-<ul>
-<li>黑体辐射</li>
-<li>光电效应</li>
-<li>波粒二象性</li>
-</ul>
-<h2 id="黑体辐射">黑体辐射</h2>
+    <h1>C与C++的DLL</h1>
 <blockquote>
-<p>室温下的铁是黑灰色，高温下是暗红色，极高温下是橙色</p>
+<p>今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括在C++风格的DLL，然后我才知道，DLL要写C风格的</p>
 </blockquote>
-<p>任何温度大于绝对零度的物体，都会发出热辐射（Thermal radiation），这是由带电粒子随机运动产生的</p>
-<p>处于平衡状态的物体，能量吸收率等于释放率，高吸收伴随着高释放</p>
-<h3 id="基尔霍夫辐射定律">基尔霍夫辐射定律</h3>
-<p>将一个物体置于一个等温真空室中，物体会吸收真空室中的热辐射，达到相同的温度（无论物体和环境的材质）</p>
-<p>处于热平衡的物体满足<br>
-$$<br>
-R/\alpha=I<br>
-$$</p>
-<ul>
-<li>$R$，Radiation，物体的辐射率</li>
-<li>$I$：Irradiance，真空室的辐照度</li>
-<li>$\alpha$：吸收率</li>
-</ul>
-<p>基尔霍夫辐射定律：在热平衡状态下，光谱辐照度和光谱吸收系数之间的比值仅与辐射波长和温度有关，与辐射物体本身的性质无关。<br>
-$$<br>
-f(\lambda, T)=\frac{r(\lambda, T)}{\alpha(\lambda, T)}<br>
-$$<br>
-联系两个方程可得：好的吸收器是好的发光器（A good absorber is a good emitter）</p>
-<h3 id="黑体">黑体</h3>
-<p>黑体：在任何温度和波长下，吸收率$\alpha$都为1的材质<br>
-$$<br>
-\alpha \equiv 1<br>
-$$<br>
-黑体辐射实验</p>
-<img src="/images/黑体辐射.png" class="lazyload" data-srcset="/images/黑体辐射.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="黑体辐射" style="zoom: 33%;" />
-<img src="/images/黑体辐射曲线.png" class="lazyload" data-srcset="/images/黑体辐射曲线.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="黑体辐射曲线" style="zoom:50%;" />
-<h2 id="光电效应">光电效应</h2>
-<h3 id="光量子假说">光量子假说</h3>
-<p>爱因斯坦提出光量子假说，成功解释了光电效应的实验现象</p>
-<img src="/images/光电效应.png" class="lazyload" data-srcset="/images/光电效应.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="光电效应" style="zoom:50%;" />
-<h3 id="康普顿散射">康普顿散射</h3>
+<h3 id="ABI">ABI</h3>
 <blockquote>
-<p>1923年，康普顿发现，当x射线穿过石墨和金属等材料时，除了波长不变的散射外，还存在散射光子，随着散射角的增大，其波长也会变大。</p>
+<p>ABI（Application binary interface）</p>
+<p>API（Application Programming Interface）</p>
 </blockquote>
-<img src="/images/康普孙散射.png" class="lazyload" data-srcset="/images/康普孙散射.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="康普孙散射" style="zoom:50%;" />
-<h2 id="波粒二象性">波粒二象性</h2>
-<h2 id="激光">激光</h2>
-<p>原子能级跃迁，从高能态到低能态，会发射激光</p>
-<p>激光（Laser，<strong>L</strong>ight <strong>A</strong>mplification by <strong>S</strong>timulated <strong>E</strong>mission of <strong>R</strong>adiation）</p>
+<p>当你在写代码时，经常会通过API访问库中的函数、数据结构。代码被编译后，生成大量二进制数据，ABI中包含了二进制的结构布局、访问方法，应用程序可以通过ABI访问库中的二进制数据</p>
+<p>ABI是一个格式，代码编译出的ABI与编程语言、操作系统、编译器有关，通常是不确定的</p>
+<h4 id="ELF格式">ELF格式</h4>
+<p>ELF（Executable and Linkable Format），可执行可链接格式，是Unix系统ABI的文件格式</p>
+<h3 id="Name-Mangling">Name Mangling</h3>
+<p>Name Mangling会对名字进行重新编码，以实现名字的唯一性</p>
+<p>C++支持函数重载、类、命名空间、模版，一个类中可以有多个重名函数、重名成员变量，这些名称编译后本质是不同的二进制，因此要做更复杂的Name Mangling</p>
+<p>很不幸的是，C++没有对Name Mangling做硬性规定，于是三大编译器g++、MSVC、clang的实现不同，相同的代码可能编出不同的ABI，当你使用跨编译器的dll时，很容易出现错误</p>
+<h3 id="C的DLL">C的DLL</h3>
+<p>和C++相比，C就简单得多</p>
+<p>大多数语言都提供了一些简单的方法调用C的DLL，而且C++编译器也支持导出C语言的DLL</p>
+<h3 id="生成DLL">生成DLL</h3>
+<p>CMakeList.txt</p>
+<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">SET</span><span class="token punctuation">(</span>LIB_SRC ./Math.h ./Math.cpp<span class="token punctuation">)</span>
+<span class="token function">SET</span><span class="token punctuation">(</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span> ../libMath<span class="token punctuation">)</span>
+
+<span class="token function">ADD_LIBRARY</span><span class="token punctuation">(</span>MathDLL <span class="token namespace">SHARED</span> <span class="token punctuation">$&#123;</span>LIB_SRC<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token function">INSTALL</span><span class="token punctuation">(</span>TARGETS MathDLL<span class="token punctuation">)</span>
+
+<span class="token function">SET_TARGET_PROPERTIES</span><span class="token punctuation">(</span>MathDLL <span class="token namespace">PROPERTIES</span> <span class="token property">LINKER_LANGUAGE</span> C
+        <span class="token property">RUNTIME_OUTPUT_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="token punctuation">&#125;</span>
+        <span class="token property">LIBRARY_OUTPUT_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="token punctuation">&#125;</span>
+        <span class="token property">OUTPUT_NAME</span> <span class="token string">"MathDLL"</span>
+        <span class="token property">PREFIX</span> <span class="token string">""</span><span class="token punctuation">)</span></code></pre>
+<p>Math.h</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">DLL_EXPORT</span> <span class="token expression"><span class="token keyword">extern</span> </span><span class="token string">"C"</span> <span class="token expression"><span class="token function">__declspec</span><span class="token punctuation">(</span>dllexport<span class="token punctuation">)</span></span></span>
+
+DLL_EXPORT <span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Math.cpp</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Math.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="动态加载DLL">动态加载DLL</h3>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>pfnAdd<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    HINSTANCE handle <span class="token operator">=</span> <span class="token function">LoadLibrary</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"../lib/libMath/MathDLL.dll"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pfnAdd pAdd <span class="token operator">=</span> <span class="token punctuation">(</span>pfnAdd<span class="token punctuation">)</span> <span class="token function">GetProcAddress</span><span class="token punctuation">(</span>handle<span class="token punctuation">,</span> <span class="token string">"MathAdd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">pAdd</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token function">FreeLibrary</span><span class="token punctuation">(</span>handle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16730284/dll-written-in-c-vs-the-same-written-in-c">DLL written in C vs the same written in C++</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2171177/what-is-an-application-binary-interface-abi">What is an application binary interface (ABI)?</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/JasonkayZK/cpp-learn/tree/dll">使用CMake生成动态链接库DLL</a></p>
 
   </div>
   
@@ -2609,7 +2619,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-08T09:29:00+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-08T09:28:48+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年3月8日</p>
@@ -2623,8 +2633,8 @@ $$<br>
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%85%89%E5%AD%A6/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>光学</p></a></div>
-  <span hidden itemprop="keywords">光学</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/C/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>C++</p></a></div>
+  <span hidden itemprop="keywords">C++</span>
   
 
 
@@ -2638,7 +2648,7 @@ $$<br>
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/optics/%E5%85%89%E6%BA%90/&title=光学：光源 - ReubenSun&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/C++DLL/&title=C与C++的DLL - ReubenSun&summary="
           
           >
           
@@ -2650,7 +2660,7 @@ $$<br>
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/optics/%E5%85%89%E6%BA%90/&title=光学：光源 - ReubenSun&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/C++DLL/&title=C与C++的DLL - ReubenSun&summary="
           
           >
           
@@ -2662,7 +2672,7 @@ $$<br>
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/optics/%E5%85%89%E6%BA%90/&title=光学：光源 - ReubenSun&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/C++DLL/&title=C与C++的DLL - ReubenSun&summary="
           
           >
           
@@ -2695,35 +2705,14 @@ $$<br>
   
     <div class="prev-next">
       
-        <a class='prev' href='/optics/%E5%85%89%E5%AD%A6%E5%A4%8D%E4%B9%A0/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>光学复习</p>
-          <p class='content'>光学复习
-复习重点
-
-[x] 相速度
-[x] 偏振态
-[x] 费马原理
-[x] 横向放大率
-[x] 薄透镜成像
-[ ] 透镜组成像（做图法）
-[ ] 反射过程中的相移
-[ ] 布鲁斯特角
-[ ]...</p>
-        </a>
       
-      
-        <a class='next' href='/optics/%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/'>
-          <p class='title'>光学：各项异性<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>十：各向异性
-内容概述
+        <a class='next' href='/program/%E5%89%8D%E7%BC%80%E5%92%8C/'>
+          <p class='title'>算法：前缀和<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>前缀和
 
-光在各向异性的介质中的传播
-偏振
+本人没有算法基础，以下均为春招刷Leetcode的笔记，仅用于记录，侵权勿喷
 
-双折射晶体
-透过双折射晶体（比如方解石晶体），在某些角度只有一个像，在某些角度会有两个像
-双折射
-现象：一束光经过晶体后被分为了两束...</p>
+前缀和本质是一种预积分手段，运行时只需要得到边界值，就能快速、无损地获得区间积分值，二维的前缀和SAT在...</p>
         </a>
       
     </div>
@@ -2742,7 +2731,7 @@ $$<br>
 
   <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="discussionUrl" content="/optics/%E5%85%89%E6%BA%90/index.html#comments">
+      <meta itemprop="discussionUrl" content="/program/C++DLL/index.html#comments">
     </span>
     <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
@@ -2784,7 +2773,7 @@ $$<br>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E4%BD%93%E8%BE%90%E5%B0%84"><span class="toc-text">黑体辐射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E8%BE%90%E5%B0%84%E5%AE%9A%E5%BE%8B"><span class="toc-text">基尔霍夫辐射定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%91%E4%BD%93"><span class="toc-text">黑体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%89%E7%94%B5%E6%95%88%E5%BA%94"><span class="toc-text">光电效应</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E9%87%8F%E5%AD%90%E5%81%87%E8%AF%B4"><span class="toc-text">光量子假说</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%B7%E6%99%AE%E9%A1%BF%E6%95%A3%E5%B0%84"><span class="toc-text">康普顿散射</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A2%E7%B2%92%E4%BA%8C%E8%B1%A1%E6%80%A7"><span class="toc-text">波粒二象性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BF%80%E5%85%89"><span class="toc-text">激光</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ELF%E6%A0%BC%E5%BC%8F"><span class="toc-text">ELF格式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E7%9A%84DLL"><span class="toc-text">C的DLL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90DLL"><span class="toc-text">生成DLL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDDLL"><span class="toc-text">动态加载DLL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3328,7 +3317,7 @@ $$<br>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/光源/","name":"光学：光源"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学：光源","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E5%85%89%E6%BA%90/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E5%85%89%E6%BA%90/","wordCount":0,"datePublished":"2023-03-03T10:01:30.000Z","dateModified":"2023-03-08T09:29:00.977Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++DLL/","name":"C与C++的DLL"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C与C++的DLL","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++DLL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++DLL/","wordCount":0,"datePublished":"2023-03-08T15:01:25.000Z","dateModified":"2023-03-08T09:28:48.383Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
