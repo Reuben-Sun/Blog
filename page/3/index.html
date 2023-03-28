@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1678855741729),
+    lastupdate: new Date(1679972182407),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2377,6 +2377,107 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <section class="post-list">
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/profile工具/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/graphics/profile%E5%B7%A5%E5%85%B7/"  itemprop="url">
+        profile工具
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Profile工具
+工具手册
+
+
+
+工具
+优点
+评价
+
+
+
+
+Unity profiler
+用起来最简单，可以网络远程测试
+功能不是很全
+
+
+Xcode
+功能全，而且使用简单
+只能iOS，而且iOS打包很折磨
+
+
+RenderDoc
+
+安卓利器
+
+
+snapdragon
+
+只能用于高通骁龙soc，使用时注意有无adb
+
+
+Nsight
+
+贼难用（可能是Unity图形API的锅）
+
+
+PIX
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-02-01T10:01:25+00:00">2023-02-01</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/graphics/">graphics</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/graphics/profile%E5%B7%A5%E5%85%B7/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3053,74 +3154,6 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3233,7 +3266,7 @@ $$
           <li><a class="flat-box"
             title="/categories/dcc/" href="/categories/dcc/"
             active-action="action-categoriesdcc"
-            ><div class='name'>dcc</div><div class='badge'>(1)</div></a></li>
+            ><div class='name'>dcc</div><div class='badge'>(2)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/engine/" href="/categories/engine/"
@@ -3283,7 +3316,7 @@ $$
 
 
     <div class='content'>
-      <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 21.5px; color: #666">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 14px; color: #999">Deferred Render</a> <a href="/tags/GC/" style="font-size: 16.5px; color: #888">GC</a> <a href="/tags/GI/" style="font-size: 19px; color: #777">GI</a> <a href="/tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="/tags/Metal/" style="font-size: 14px; color: #999">Metal</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Physics/" style="font-size: 14px; color: #999">Physics</a> <a href="/tags/Python/" style="font-size: 14px; color: #999">Python</a> <a href="/tags/SIGGRAPH/" style="font-size: 19px; color: #777">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/TA/" style="font-size: 19px; color: #777">TA</a> <a href="/tags/Unity/" style="font-size: 16.5px; color: #888">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/leetcode/" style="font-size: 16.5px; color: #888">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 24px; color: #555">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 21.5px; color: #666">高等数学</a>
+      <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 21.5px; color: #666">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 14px; color: #999">Deferred Render</a> <a href="/tags/GC/" style="font-size: 16.5px; color: #888">GC</a> <a href="/tags/GI/" style="font-size: 19px; color: #777">GI</a> <a href="/tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="/tags/Metal/" style="font-size: 14px; color: #999">Metal</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Physics/" style="font-size: 14px; color: #999">Physics</a> <a href="/tags/Python/" style="font-size: 16.5px; color: #888">Python</a> <a href="/tags/SIGGRAPH/" style="font-size: 19px; color: #777">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/TA/" style="font-size: 19px; color: #777">TA</a> <a href="/tags/Unity/" style="font-size: 16.5px; color: #888">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/leetcode/" style="font-size: 16.5px; color: #888">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 24px; color: #555">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 21.5px; color: #666">高等数学</a>
     </div>
   </section>
 
