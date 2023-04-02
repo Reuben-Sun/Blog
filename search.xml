@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Simplygon插件尝鲜</title>
+      <link href="/dcc/Simplygon/"/>
+      <url>/dcc/Simplygon/</url>
+      
+        <content type="html"><![CDATA[<h1>Simplygon插件尝鲜</h1><blockquote><p>出于性能等考虑，大型项目往往会使用LOD功能，根据相机距离切换模型精度。而海量的3D模型靠人力拆分LOD显然过于昂贵，因此非常有必要使用模型减面工具，所幸业界已经有非常成熟的商业插件，比如InstaLOD和Simplygon，对于个人开发者，Simplygon提供每日200次的免费使用次数，足够用了</p></blockquote><h2 id="安装">安装</h2><blockquote><p>环境为Windows系统+支持Vulkan的显卡</p></blockquote><ol><li>安装<a href="https://aka.ms/vs/17/release/vc_redist.x64.exe">VC Redist</a>，这个组件包含了Visual C++的运行时库，VC项目正常运行需要该组件</li><li>安装<a href="https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe">Vulkan SDK</a></li><li>下载<a href="https://downloads.simplygon.com/SimplygonSDK_10.1.8000.0.exe">Simplygon</a></li><li>选择Free License激活，每个微软账号能有一个Seat，每日200次使用次数</li></ol><h2 id="第一个项目">第一个项目</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> dcc </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C# </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Blender MMD Tools安装</title>
       <link href="/dcc/BlenderMMD/"/>
       <url>/dcc/BlenderMMD/</url>
@@ -17,12 +42,6 @@
           
       </categories>
       
-      
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
       
     </entry>
     
