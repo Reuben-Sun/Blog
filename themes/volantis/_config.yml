@@ -201,6 +201,9 @@ cover:
       icon: fa-solid fa-paint-brush
       img: #volantis-static/media/twemoji/assets/svg/1f9ec.svg #  https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg
       url: /categories/dcc
+    - name: 游戏
+      icon: fa-solid fa-gamepad
+      url: /categories/game
 ############################### Cover ############################### > end
 
 pages:
@@ -474,11 +477,11 @@ comments:
   # https://gitalk.github.io/
   gitalk:
     # 配置项按照yml格式继续填写即可 除了 [id distractionFreeMode] 选项
-    clientID: e0450f8d3d22d8388040
-    clientSecret: d729db3503c84371eddcccda1583f5ce60866317
-    repo: reuben-sun.github.io
-    owner: Reuben-Sun
-    admin: [Reuben-Sun]
+    clientID: 
+    clientSecret: 
+    repo: 
+    owner: 
+    admin: []
     path: # 全局评论地址
 
   # https://vssue.js.org/zh/
