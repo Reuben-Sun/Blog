@@ -573,7 +573,7 @@ sidebar:
       display: [desktop, mobile] # [desktop, mobile]
       avatar: /images/logo.png
       shape: rectangle # circle, rectangle
-      url: /about/
+      url: /我是谁
       title:
       subtitle:
       jinrishici: true # Poetry Today. You can set a string, and it will be displayed when loading fails.
