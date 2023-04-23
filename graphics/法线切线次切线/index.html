@@ -42,11 +42,11 @@
 <meta property="og:title" content="法线切线次切线的计算">
 <meta property="og:url" content="https://reubensun.com/graphics/%E6%B3%95%E7%BA%BF%E5%88%87%E7%BA%BF%E6%AC%A1%E5%88%87%E7%BA%BF/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="法线切线次切线的计算 顶点法线的计算 模型顶点构成了多个三角面，使用三角面的顶点坐标等得到两条边的向量，求两个向量的叉积能够得到（归一化的）面法线 $$ \mathbf{N}&#x3D;\frac{(\mathbf{P}_1-\mathbf{P}_0)\times(\mathbf{P}_2-\mathbf{P}_0)}{||(\mathbf{P}_1-\mathbf{P}_0)\times(\mathbf{">
+<meta property="og:description" content="法线切线次切线的计算 顶点法线的计算 模型顶点构成了多个三角面，使用三角面的顶点坐标等得到两条边的向量，求两个向量的叉积能够得到（归一化的）面法线。 $$ \mathbf{N}&#x3D;\frac{(\mathbf{P}_1-\mathbf{P}_0)\times(\mathbf{P}_2-\mathbf{P}_0)}{||(\mathbf{P}_1-\mathbf{P}_0)\times(\mathbf">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-04-23T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-04-23T02:40:37.118Z">
+<meta property="article:modified_time" content="2023-04-23T06:05:26.011Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Model">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1682217642990),
+    lastupdate: new Date(1682229932508),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2544,15 +2544,32 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <h1>法线切线次切线的计算</h1>
 <h3 id="顶点法线的计算">顶点法线的计算</h3>
-<p>模型顶点构成了多个三角面，使用三角面的顶点坐标等得到两条边的向量，求两个向量的叉积能够得到（归一化的）<strong>面法线</strong><br>
+<p>模型顶点构成了多个三角面，使用三角面的顶点坐标等得到两条边的向量，求两个向量的叉积能够得到（归一化的）<strong>面法线</strong>。<br>
 $$<br>
 \mathbf{N}=\frac{(\mathbf{P}_1-\mathbf{P}_0)\times(\mathbf{P}_2-\mathbf{P}_0)}{||(\mathbf{P}_1-\mathbf{P}_0)\times(\mathbf{P}_2-\mathbf{P}_0)||}<br>
 $$<br>
-点的顺序与法线方向满足右手螺旋定则，点呈顺逆时针时法线垂直直面向外</p>
+点的顺序与法线方向满足右手螺旋定则，点呈顺逆时针时法线垂直直面向外。</p>
 <img src="/images/triangle.png" class="lazyload" data-srcset="/images/triangle.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="triangle" style="zoom:50%;" />
-<p>对于某个顶点，找到其所在的所有三角面，对面法线做算术平均值，即可得到顶点法线</p>
-<p>如果对未经过归一化的面法线求均值，能实现含权重的顶点法线，三角面面积越大，影响越强</p>
-<h3 id="切线与次切线">切线与次切线</h3>
+<p>顶点法线可以在DCC中手动指定，也可以用面法线做平滑着色。一般来说某个顶点会参与构成多个三角面，选取这些三角面的面法线做算术平均值，这个过程被称为平滑着色。</p>
+<blockquote>
+<p>硬边上的点属于不同的平滑组，在计算法线时不能平均，在导出时会被拆分为互相重叠的点，各自拥有一个法线、纹理坐标。</p>
+</blockquote>
+<p>如果对未经过归一化的面法线求均值，能实现含权重的顶点法线，三角面面积越大，影响越强。</p>
+<h3 id="切线空间">切线空间</h3>
+<p>为了得到更高精度的法线，我们会使用切线空间的法线贴图，对顶点法线进行扰动。</p>
+<p>切线空间由三个基向量组成，分别为切线$X$、次切线$Y$、法线$Z$，这三个基向量不一定正交，但视为正交。</p>
+<p>在不进行扰动时，切线空间的法线为$(0,0,1)$，是顶点法线的方向。切线和次切线所形成的平面与物体表面相切，方向与UV有关，但存在偏差。</p>
+<img src="/images/切线空间.png" class="lazyload" data-srcset="/images/切线空间.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="切线空间" style="zoom:50%;" />
+<p>三个向量可以构成TBN矩阵，该矩阵能将切线空间法线转化为物体空间/世界空间<br>
+$$<br>
+\begin{bmatrix}T_{x}&amp;B_{x}&amp;N_{x}\ T_{y}&amp;B_{y}&amp;N_{y}\ T_{z}&amp;B_{z}&amp;N_{z}\end{bmatrix}<br>
+$$</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">float3 normalValue <span class="token operator">=</span> normalTexture<span class="token punctuation">.</span><span class="token function">sample</span><span class="token punctuation">(</span>textureSampler<span class="token punctuation">,</span> uv <span class="token operator">*</span> params<span class="token punctuation">.</span>tiling<span class="token punctuation">)</span><span class="token punctuation">.</span>xyz <span class="token operator">*</span> <span class="token number">2.0</span> <span class="token operator">-</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+        normal <span class="token operator">=</span> <span class="token function">float3x3</span><span class="token punctuation">(</span>tangentWS<span class="token punctuation">,</span> bitangentWS<span class="token punctuation">,</span> normalWS<span class="token punctuation">)</span> <span class="token operator">*</span> normalValue<span class="token punctuation">;</span></code></pre>
+<h3 id="计算切线和次切线">计算切线和次切线</h3>
+<h3 id="参考">参考</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/139593847">切线空间（Tangent Space）完全解析</a></p>
+<p>《3D游戏与计算机图形学中的数学方法》</p>
 
   </div>
   
@@ -2577,7 +2594,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-23T02:40:37+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-23T06:05:26+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年4月23日</p>
@@ -2729,7 +2746,7 @@ $$<br>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B6%E7%82%B9%E6%B3%95%E7%BA%BF%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-text">顶点法线的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%BA%BF%E4%B8%8E%E6%AC%A1%E5%88%87%E7%BA%BF"><span class="toc-text">切线与次切线</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B6%E7%82%B9%E6%B3%95%E7%BA%BF%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-text">顶点法线的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%BA%BF%E7%A9%BA%E9%97%B4"><span class="toc-text">切线空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%88%87%E7%BA%BF%E5%92%8C%E6%AC%A1%E5%88%87%E7%BA%BF"><span class="toc-text">计算切线和次切线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3273,7 +3290,7 @@ $$<br>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/法线切线次切线/","name":"法线切线次切线的计算"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"法线切线次切线的计算","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E6%B3%95%E7%BA%BF%E5%88%87%E7%BA%BF%E6%AC%A1%E5%88%87%E7%BA%BF/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E6%B3%95%E7%BA%BF%E5%88%87%E7%BA%BF%E6%AC%A1%E5%88%87%E7%BA%BF/","wordCount":0,"datePublished":"2023-04-23T10:01:25.000Z","dateModified":"2023-04-23T02:40:37.118Z","articleSection":"graphics","keywords":"Model","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/法线切线次切线/","name":"法线切线次切线的计算"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"法线切线次切线的计算","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E6%B3%95%E7%BA%BF%E5%88%87%E7%BA%BF%E6%AC%A1%E5%88%87%E7%BA%BF/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E6%B3%95%E7%BA%BF%E5%88%87%E7%BA%BF%E6%AC%A1%E5%88%87%E7%BA%BF/","wordCount":0,"datePublished":"2023-04-23T10:01:25.000Z","dateModified":"2023-04-23T06:05:26.011Z","articleSection":"graphics","keywords":"Model","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
