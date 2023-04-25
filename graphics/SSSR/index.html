@@ -42,11 +42,11 @@
 <meta property="og:title" content="SSSR">
 <meta property="og:url" content="https://reubensun.com/graphics/SSSR/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Stochastic Screen Space Reflections 2015年SIGRAPH，EA提出了SSSR，用于《镜之边缘》中镜面反射 需求有  支持清晰（sharp）和模糊（blurry）反射 邻接性，越近反射越清晰（contact hardening） 高光拉伸 逐像素的粗糙度和法线  相关工作 mirror-only SSR 我们先回顾传统的SSR  从屏幕像素开始RayMarch">
+<meta property="og:description" content="《Stochastic Screen Space Reflections》阅读笔记 2015年SIGRAPH，EA提出了SSSR，用于《镜之边缘》中镜面反射 需求有  支持清晰（sharp）和模糊（blurry）反射 邻接性，越近反射越清晰（contact hardening） 高光拉伸 逐像素的粗糙度和法线  相关工作 mirror-only SSR 我们先回顾传统的SSR  从屏幕像素开始Ra">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-10T01:16:25.000Z">
-<meta property="article:modified_time" content="2023-04-25T02:25:32.999Z">
+<meta property="article:modified_time" content="2023-04-25T02:31:50.840Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="GI">
 <meta property="article:tag" content="SIGGRAPH 2015">
@@ -2115,7 +2115,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1682389536336),
+    lastupdate: new Date(1682389917799),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2544,7 +2544,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1>Stochastic Screen Space Reflections</h1>
+    <h1>《Stochastic Screen Space Reflections》阅读笔记</h1>
 <p>2015年SIGRAPH，EA提出了SSSR，用于《镜之边缘》中镜面反射</p>
 <p>需求有</p>
 <ul>
@@ -2771,7 +2771,7 @@ result <span class="token operator">/=</span> weightSum<span class="token punctu
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-25T02:25:32+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-25T02:31:50+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年4月25日</p>
@@ -2859,17 +2859,17 @@ result <span class="token operator">/=</span> weightSum<span class="token punctu
       
         <a class='prev' href='/graphics/DOSDF/'>
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>Dynamic Occlusion with SDF</p>
-          <p class='content'>Dynamic Occlusion with SDF
+          <p class='content'>《Dynamic Occlusion with SDF》阅读笔记
 2015年SIGGRAPH，epic提出一种基于SDF的occlusion算法
 问题
-需要找到一种比较好的动态物体occlusion算法，应...</p>
+需要找到一种比较好的动态物体occlusi...</p>
         </a>
       
       
         <a class='next' href='/graphics/UnityEnemies/'>
           <p class='title'>Probe-based Lighting in Unity Enemies<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Probe-based Lighting in Unity Enemies
-2022年SIGGRAPH，Unity发布了一个数字人项目，在头发、眼球、GI方面效果非常好，我们来分析一下他的Pro...</p>
+          <p class='content'>《Probe-based Lighting in Unity Enemies》阅读笔记
+2022年SIGGRAPH，Unity发布了一个数字人项目，在头发、眼球、GI方面效果非常好，我们来分析一...</p>
         </a>
       
     </div>
@@ -3474,7 +3474,7 @@ result <span class="token operator">/=</span> weightSum<span class="token punctu
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/SSSR/","name":"SSSR"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"SSSR","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/SSSR/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/SSSR/","wordCount":0,"datePublished":"2023-02-10T01:16:25.000Z","dateModified":"2023-04-25T02:25:32.999Z","articleSection":"graphics","keywords":"GI,SIGGRAPH 2015,Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/SSSR/","name":"SSSR"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"SSSR","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/SSSR/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/SSSR/","wordCount":0,"datePublished":"2023-02-10T01:16:25.000Z","dateModified":"2023-04-25T02:31:50.840Z","articleSection":"graphics","keywords":"GI,SIGGRAPH 2015,Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
