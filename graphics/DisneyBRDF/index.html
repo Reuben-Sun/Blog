@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://reubensun.com/optics/电磁波/"/>
+  <link rel="canonical" href="https://reubensun.com/graphics/disneybrdf/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,21 +34,22 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>光学：电磁波 - ReubenSun</title>
-  <meta name="keywords" content="光学,reubensun computer graphics engine Technical Artist">
+  <title>Physically Based Shading at Disney - ReubenSun</title>
+  <meta name="keywords" content="PBR,SIGGRAPH 2012,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="光学：电磁波">
-<meta property="og:url" content="https://reubensun.com/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/index.html">
+<meta property="og:title" content="Physically Based Shading at Disney">
+<meta property="og:url" content="https://reubensun.com/graphics/DisneyBRDF/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="三：电磁波 内容概述  横波的性质（nature），强度（intensity），能量流动（energyflow） 偏振态（Polarization states），琼斯矩阵（Jones matrix&#x2F;vector） 吸收（Absorption），色散（dispersion），折射率（refractive index） 微小粒子导致的散射（Scattering）  波 构成波的条件：  波源 介质">
+<meta property="og:description" content="Physically Based Shading at Disney">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-04-25T02:25:33.008Z">
+<meta property="article:published_time" content="2023-04-25T10:01:25.000Z">
+<meta property="article:modified_time" content="2023-04-25T02:25:19.983Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="光学">
+<meta property="article:tag" content="PBR">
+<meta property="article:tag" content="SIGGRAPH 2012">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2459,7 +2460,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/optics/电磁波/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/DisneyBRDF/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2480,7 +2481,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        光学：电磁波
+        Physically Based Shading at Disney
       </h1>
       <div class='new-meta-box'>
         
@@ -2502,10 +2503,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   <div class='new-meta-item category'>
     <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
-    <a class="category-link" href="/categories/optics/">optics</a>
+    <a class="category-link" href="/categories/graphics/">graphics</a>
     
       <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+        <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
       </span>
     
   </div>
@@ -2516,10 +2517,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-04-25T10:01:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年1月31日</p>
+    <p>发布于：2023年4月25日</p>
   </a>
 </div>
 
@@ -2542,408 +2543,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1>三：电磁波</h1>
-<h2 id="内容概述">内容概述</h2>
-<ul>
-<li>横波的性质（nature），强度（intensity），能量流动（energyflow）</li>
-<li>偏振态（Polarization states），琼斯矩阵（Jones matrix/vector）</li>
-<li>吸收（Absorption），色散（dispersion），折射率（refractive index）</li>
-<li>微小粒子导致的散射（Scattering）</li>
-</ul>
-<h2 id="波">波</h2>
-<p>构成波的条件：</p>
-<ul>
-<li>波源</li>
-<li>介质</li>
-<li>能量来源</li>
-</ul>
-<p>波的性质：</p>
-<ul>
-<li>时间周期性</li>
-<li>空间周期性</li>
-<li>能量传播</li>
-</ul>
-<p>波的分类</p>
-<ul>
-<li>标量波</li>
-<li>矢量波</li>
-</ul>
-<h2 id="光的基本性质">光的基本性质</h2>
-<ul>
-<li>
-<p>光是电磁波</p>
-</li>
-<li>
-<p>可见光的波长在400nm~760nm</p>
-<ul>
-<li>在做干涉衍射计算时，经常去白光的平均波长550nm</li>
-</ul>
-</li>
-<li>
-<p>人眼对550nm的黄绿光最敏感</p>
-</li>
-<li>
-<p>单色光（Monochromatic light），指仅有一种波长的光，仅存在于理论中</p>
-</li>
-</ul>
-<h3 id="光速">光速</h3>
-<p>光在真空（vacuum）中的速度（简称光速，用c表示）为<br>
-$$<br>
-c=\frac{1}{\sqrt{\varepsilon_0 \mu_0}}=2.997 924 58 \times10^8 m/ s<br>
-$$<br>
-光在介质（medium）中的速度（也叫做相速度，用v表示）为<br>
-$$<br>
-v=\frac{1}{\sqrt{\varepsilon_0 \varepsilon_r\mu_0\mu_r}}=\frac{c}{\sqrt{\varepsilon_r \mu_r}}<br>
-$$<br>
-很显然光在介质中的速度比在真空中慢，我们用折射率（Refractive index，用n表示）来描述这一性质<br>
-$$<br>
-n=\frac{c}{v}<br>
-$$<br>
-光穿过线性介质（linear medium）时，其频率不会发生改变</p>
-<p>光的波长（用$\lambda$表示）<br>
-$$<br>
-\lambda=\frac{c}{v}<br>
-$$</p>
-<h3 id="波粒二象性">波粒二象性</h3>
-<h4 id="波-2">波</h4>
-<p>如果光是波，那么光应该有波的性质：<br>
-$$<br>
-\mathbf{k}=\frac{2\pi}{\lambda}\hat{\mathbf{k}}<br>
-$$</p>
-<p>$$<br>
-v=\frac{\lambda}{T}=\lambda \nu<br>
-$$</p>
-<p>$$<br>
-\omega=2\pi \nu =\frac{2\pi}{T}=\frac{2\pi}{\lambda}v=kv=k_0c<br>
-$$</p>
-<ul>
-<li>波长（wavelength，用$\lambda$表示）</li>
-<li>波向量（wave vector，用$\mathbf{k}$表示）</li>
-<li>频率（frequency，用$\nu$表示）</li>
-<li>周期（temporal period，用$T$表示）</li>
-<li>角频率（angular frequency，用$\omega$表示）</li>
-<li>速度（velocity，用$v$表示）</li>
-</ul>
-<p>光是电磁波，其电矢量和磁矢量在做简谐振动，一般情况下，我们只讨论电场强度的变化</p>
-<h4 id="粒">粒</h4>
-<p>如果光是粒子，那么光应该有粒子的性质：<br>
-$$<br>
-E=h\nu=\hbar \omega<br>
-$$</p>
-<p>$$<br>
-\mathbf{p}=\hbar \mathbf{k}=\frac{h}{\lambda}\hat{\mathbf{k}}<br>
-$$</p>
-<ul>
-<li>能量（Energy，用$E$表示）</li>
-<li>动量（Momentum，用$\mathbf{p}$表示）</li>
-<li>普朗克常量（Plank constant，用$h$表示，$h=6.626\times 10^{-34}\mathrm{J}\cdot\mathrm{s}$</li>
-<li>约化普朗克常量（用$\hbar$表示）</li>
-</ul>
-<h4 id="波粒二象性-2">波粒二象性</h4>
-<p>光具有波粒二象性（Wave-particle duality），光在传播过程中体现出明显的波性，在光与物质交互（light-matter interaction）中粒性更明显</p>
-<h4 id="光子与电子">光子与电子</h4>
-<p>不同之处</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>电子</th>
-<th>光子</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>静止质量（Rest mass）</td>
-<td>$m_0$</td>
-<td>0</td>
-</tr>
-<tr>
-<td>运动质量（Motion mass）</td>
-<td>$m$</td>
-<td>$hv/c^2$</td>
-</tr>
-<tr>
-<td>运动速度（Motion velocity）</td>
-<td>$&lt;c$</td>
-<td>$c$</td>
-</tr>
-<tr>
-<td>自旋（Spin）</td>
-<td>1/2</td>
-<td>1</td>
-</tr>
-<tr>
-<td>分布定律</td>
-<td>费力（Fermion）</td>
-<td>玻色（Boson）</td>
-</tr>
-</tbody>
-</table>
-<p>相同之处</p>
-<ul>
-<li>满足波粒二象性</li>
-</ul>
-<h4 id="向量波与标量波">向量波与标量波</h4>
-<p>向量波（Vector wave），波函数是向量的波，比如电磁波（EM wave）</p>
-<p>标量波（Scalar wave），波函数是标量的波，比如声波（Acoustic wave）</p>
-<p>光波（Lightwaves）是一种向量波，但为了方便，我们在讨论干涉衍射时，会认为光是标量波，仅仅在讨论偏振时，才认为光是向量波</p>
-<h3 id="电磁波">电磁波</h3>
-<h4 id="物理量">物理量</h4>
-<ul>
-<li>电场强度（用$\mathrm{E}$表示）：单位电荷在电场中受到的力</li>
-<li>磁场强度（用$\mathrm{H}$表示）：通电导线周围有磁场，其强度与电流大小、距离远近有强度（但实际被后世推翻，无实际意义）</li>
-<li>电场通量密度（用$\mathrm{D}$表示）：单位面积的电场通量</li>
-<li>磁场通量/感应密度（用$\mathrm{B}$表示）：经过一个曲面的磁力线的数量</li>
-</ul>
-<h4 id="电磁学三定律">电磁学三定律</h4>
-<p>库伦定律，真空中两个静止的点电荷间作用力满足<br>
-$$<br>
-F=k\frac{q_1q_2}{r^2}<br>
-$$</p>
-<ul>
-<li>静电力常量（$k=9.0\times 10^9 \mathrm{N} \cdot\mathrm{m^2}/\mathrm{C^2}$）</li>
-</ul>
-<p>安培环路定律（Ampère’s Circuital Law），也叫右手螺旋定则，载流导线能生磁</p>
-<p>法拉第电磁感应定律（Faraday’s Induction Law），磁场变化能产生电场，感应电动势大小与磁通量变化率成正比，电场方向符合楞次定律（由于磁通量的改变而产生的感应电流，其方向为抗拒磁通量改变的方向）</p>
-<h4 id="麦克斯韦方程">麦克斯韦方程</h4>
-<p>真空中麦克斯韦方程：</p>
-<p>法拉第<br>
-$$<br>
-\nabla \times \mathbf{E}=-\frac{\partial \mathbf{B}}{\partial t}<br>
-$$</p>
-<p>安培<br>
-$$<br>
-\nabla \times \mathbf{B}=\mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}<br>
-$$</p>
-<ul>
-<li>真空磁导率（也称为磁常数，用$\mu_0$表示，$\mu_0=4\pi \times 10^{-7}\mathrm{H}/\mathrm{m}$）</li>
-<li>真空电容率（也称为电常数，用$\varepsilon_0$表示，$\varepsilon_0=8.854…\times10^{-12}\mathrm{F}/\mathrm{m}$）</li>
-</ul>
-<p>高斯电场<br>
-$$<br>
-\nabla \cdot \mathbf{E}=0<br>
-$$</p>
-<p>高斯磁场<br>
-$$<br>
-\nabla \cdot \mathbf{B}=0<br>
-$$</p>
-<p>自由空间的波动方程（wave equations，由麦克斯韦方程推出）：<br>
-$$<br>
-\nabla^2\mathbf{E}=\mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2}<br>
-$$</p>
-<p>$$<br>
-\nabla^2\mathbf{B}=\mu_0 \varepsilon_0 \frac{\partial^2 \mathbf{B}}{\partial t^2}<br>
-$$</p>
-<h4 id="平面波">平面波</h4>
-<p>三维的电磁波很难分析，我们可以分解变量，将其转化为两个垂直的平面波</p>
-<p>平面波（Plane waves）：传播时波面在一个平面的电磁波</p>
-<p>平面波的电场方向和磁场方向，与波矢方向垂直，如图，$\mathbf{k}$为波矢方向（推导过程略），从这里也能看出，平面波是横波，方向满足右手定则</p>
-<p><img src="/images/%E5%B9%B3%E9%9D%A2%E6%B3%A2%E6%B3%A2%E7%9F%A2.png" class="lazyload" data-srcset="/images/%E5%B9%B3%E9%9D%A2%E6%B3%A2%E6%B3%A2%E7%9F%A2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="平面波波矢"></p>
-<p>平面波的磁感应强度B和电场强度E的比值等于波速<br>
-$$<br>
-\frac{|E|}{|B|}=\sqrt{\frac{1}{\mu \varepsilon}}=v<br>
-$$<br>
-电场强度和磁场强度的关系为（注意，这里不是磁感应强度）<br>
-$$<br>
-\sqrt{\varepsilon_0 \varepsilon_r}|\mathrm{E}|=\sqrt{\mu_0\mu_r}|\mathrm{H}|<br>
-$$<br>
-自由空间阻抗（单位和电阻相同，用$Z_0$表示）<br>
-$$<br>
-Z_0=\sqrt{\frac{\mu_0}{\varepsilon_0}}=376.73\Omega<br>
-$$<br>
-波能传递能量，我们引入坡印廷向量（Poynting vector，用$\mathrm{S}$来表示）来描述能量流动，其方向为电磁能传递方向，大小为能流密度（单位面积的能量传输速率）<br>
-$$<br>
-\mathrm{S}=\mathrm{E}\times \mathrm{H}<br>
-$$<br>
-平面波$\mathrm{E}\times \mathrm{H} // \mathrm{k}$</p>
-<h4 id="傍轴条件">傍轴条件</h4>
-<p>当$\rho \ll z，r \approx z$</p>
-<img src="../../images/傍轴条件.png" class="lazyload" data-srcset="../../images/傍轴条件.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="傍轴条件" style="zoom:50%;" />
-<h4 id="远场条件">远场条件</h4>
-<h4 id="辐照度">辐照度</h4>
-<p>电磁波的辐照度（Irradiance，用$\mathrm{I}$表示，也称为Intensity），是坡印廷向量在时间上的平均值<br>
-$$<br>
-\mathrm{I}=\left&lt; \mathrm{S} \right&gt;=\frac{nc\varepsilon_0}{2}\mathrm{E_0}^2<br>
-$$</p>
-<ul>
-<li>$c$是真空中光速</li>
-<li>$\mathrm{E_0}$是电磁波电场强度的振幅（电场强度是一个三角周期函数）</li>
-</ul>
-<p>从这里可以看出，辐照度与$\mathrm{E_0}$的平方成正比</p>
-<h2 id="偏振">偏振</h2>
-<p>偏振（Polarization）：光矢量在垂直于传播方向的平面上的震动状态，我们这里提的是电场强度$\mathrm{E}$的震动</p>
-<ul>
-<li>
-<p>根据是否发生偏振</p>
-<ul>
-<li>不偏振光（Unpolarizedlight）</li>
-<li>完全偏振光（Completely polarized light）</li>
-<li>部分偏振光（Partially polarized  light）</li>
-</ul>
-</li>
-<li>
-<p>根据向量$\mathrm{E}$的终点（endpoint）轨迹</p>
-<ul>
-<li>线偏振（Linearly polarized light）</li>
-<li>圆偏振（Circularly polarized light）</li>
-<li>椭圆偏振（Elliptically polarized light）</li>
-</ul>
-</li>
-</ul>
-<p>若光线沿着z轴传播，其方程满足<br>
-$$<br>
-(\frac{E_x}{E_{0x}})^2+(\frac{E_y}{E_{0y}})^2-2(\frac{E_x}{E_{0x}})(\frac{E_y}{E_{0y}})\cos \delta = \sin ^2 \delta<br>
-$$</p>
-<h3 id="线偏振">线偏振</h3>
-<p>当$\delta=2m\pi$时，方程变为<br>
-$$<br>
-(\frac{E_x}{E_{0x}})^2+(\frac{E_y}{E_{0y}})^2-2(\frac{E_x}{E_{0x}})(\frac{E_y}{E_{0y}}) = 0 \<br>
-(\frac{E_x}{E_{0x}}-\frac{E_y}{E_{0y}})^2=0<br>
-$$<br>
-于是得到线偏振的方程（一三象限）<br>
-$$<br>
-\frac{E_x}{E_{0x}}=\frac{E_y}{E_{0y}} \equiv \cot \alpha<br>
-$$<br>
-<img src="/images/线偏振.png" class="lazyload" data-srcset="/images/线偏振.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="线偏振" style="zoom: 67%;" /></p>
-<p>同理，当$\delta=2(m+1)\pi$时，方程等于（二四象限）<br>
-$$<br>
-\frac{E_x}{E_{0x}}=-\frac{E_y}{E_{0y}}<br>
-$$<br>
-用虚数将两个方程合并，得到<br>
-$$<br>
-\frac{E_x}{E_{y}}=\frac{E_{0x}}{E_{0y}}e^{\mathrm{i}m’\pi}<br>
-$$</p>
-<ul>
-<li>当$m’$为偶数（0 or even）时，一三象限</li>
-<li>当$m’$为奇数（odd）时，二四象限</li>
-</ul>
-<h3 id="椭圆偏振与圆偏振">椭圆偏振与圆偏振</h3>
-<p>当$\delta=(2m+1)\frac{\pi}{2}$时，方程变为<br>
-$$<br>
-(\frac{E_x}{E_{0x}})^2+(\frac{E_y}{E_{0y}})^2=1<br>
-$$<br>
-这是一个椭圆方程，我们称之为椭圆偏振</p>
-<p>倘若$E_{0x}=E_{0y}=E_{0}$，方程退化为<br>
-$$<br>
-E_x^2+E_y^2=E_0^2<br>
-$$<br>
-我们称之为圆偏振</p>
-<img src="/images/椭圆偏振.png" class="lazyload" data-srcset="/images/椭圆偏振.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="椭圆偏振" style="zoom:50%;" />
-<ul>
-<li>
-<p>当$\delta=\pi / 2$时，y轴驱动x轴移动，此时为顺时针，称为RCP</p>
-</li>
-<li>
-<p>当$\delta=-\pi / 2$时，x轴驱动y轴移动，此时为逆时针，称为LCP</p>
-</li>
-</ul>
-<p><img src="/images/RCP.png" class="lazyload" data-srcset="/images/RCP.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="RCP"></p>
-<h3 id="琼斯矢量">琼斯矢量</h3>
-<p>将偏振光的状态以向量的形式写出，方便运算（只适合完全极化光）<br>
-$$<br>
-\mathrm{E}=\left[<br>
-\begin{array}{c}<br>
-E_x(t)\<br>
-E_y(t)\<br>
-\end{array}<br>
-\right]<br>
-$$<br>
-琼斯向量左乘一个2x2矩阵，可以得到一个新的琼斯向量，这个矩阵被称为琼斯矩阵</p>
-<h3 id="偏振度">偏振度</h3>
-<p>偏振度（Degree of polarization，用$P$表示）：用来衡量偏振程度的物理量<br>
-$$<br>
-P=\frac{I_p}{I_t}=\frac{I_p}{I_p+I_n}<br>
-$$</p>
-<ul>
-<li>$I_p$：完全偏振光部分的辐照度</li>
-<li>$I_n$：不偏振光部分（自然光）的辐照度</li>
-</ul>
-<h2 id="吸收">吸收</h2>
-<h3 id="兰伯特定律">兰伯特定律</h3>
-<p>兰伯特定律（Lambert law）：光在气体介质中传播，光强（intensity）随着传播深度增加而递减，满足<br>
-$$<br>
-I=I_0 e^{-\alpha x}<br>
-$$</p>
-<ul>
-<li>吸收系数（用$\alpha$表示）</li>
-<li>传播深度（用$x$表示）</li>
-</ul>
-<h3 id="贝尔定律">贝尔定律</h3>
-<p>贝尔定律（Beer law）：光在溶剂中传播，光强满足<br>
-$$<br>
-I=I_0 e^{-ACL}<br>
-$$</p>
-<ul>
-<li>浓度（用$C$表示）</li>
-<li>常数$A$，与溶质性质有关，与浓度无关</li>
-</ul>
-<p>该公式满足有两个条件</p>
-<ul>
-<li>溶液浓度不能过高，以免出现分子间作用力（这也能解释为什么常数$A$为什么和浓度无关，因为浓度一高，公式就不成立了）</li>
-<li>光强不能过高</li>
-</ul>
-<h2 id="色散">色散</h2>
-<p>色散（Dispersion）：光波的相速度随着频率的改变而改变的现象</p>
-<p><img src="/images/%E8%89%B2%E6%95%A3.png" class="lazyload" data-srcset="/images/%E8%89%B2%E6%95%A3.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="色散"></p>
-<p>正常色散（Normal dispersion）：折射率随着波长的增加而减小</p>
-<p>柯西公式：<br>
-$$<br>
-n=A+B/\lambda^2+C/\lambda^4<br>
-$$<br>
-反常色散（Anomalous dispersion）：折射率随着波长的增加而增加</p>
-<p>反常色散通常发生在吸收带（absorption band）附近，反常色散并不是异常的，叫这个名字只是历史问题</p>
-<h3 id="洛伦兹震荡模型">洛伦兹震荡模型</h3>
-<p>洛伦兹震荡模型（Lorentz oscillator model）：在一个尺寸为$\Delta V$的空间内有一个电子（电荷量为$1.6\times10^{-19}C$），在光的电场作用下，让该电子相对于稳定位置偏离x</p>
-<p>偏振度（单位体积电偶极矩的振幅，用$P$表示）写作<br>
-$$<br>
-P=\frac{1}{\Delta V}ex=n_0ex<br>
-$$</p>
-<ul>
-<li>电荷密度（density of charge，用$n_0$表示）</li>
-<li>$x$是电子的运动方程，如下</li>
-</ul>
-<p>$$<br>
-x(\omega)=-\frac{eE(\omega)}{m_0}\frac{1}{\omega^2+\mathrm{i}\omega \gamma-\omega_0^2}<br>
-$$</p>
-<p>将$x$带入，得到<br>
-$$<br>
-P=-\frac{n_0e^2}{m_0}\frac{1}{\omega^2+\mathrm{i}\omega \gamma-\omega_0^2}E(\omega)<br>
-\equiv \varepsilon_0 \chi(\omega)E(\omega)<br>
-$$<br>
-根据定义<br>
-$$<br>
-\varepsilon=\varepsilon_0[1+\chi(\omega)]<br>
-$$<br>
-带入得<br>
-$$<br>
-n^2=\varepsilon/\varepsilon_0=1-\frac{n_0e^2}{m_0}\frac{1}{\omega^2+\mathrm{i}\omega \gamma-\omega_0^2}<br>
-$$<br>
-<img src="/images/洛伦兹模型.png" class="lazyload" data-srcset="/images/洛伦兹模型.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="洛伦兹模型" style="zoom:67%;" /></p>
-<p>如图，洛伦兹模型解释了为什么在靠近吸收带时，会发生反常色散</p>
-<h3 id="组速度">组速度</h3>
-<p>在介质中不同波长的光速度不同，红光波长大，跑的更快</p>
-<p>那么如果一个光，包含了多种波长的光，我们用组速度（Group velocity，用$v_g$表示）来描述其速度<br>
-$$<br>
-v_g=\frac{\mathrm{d}\omega}{\mathrm{d}k}<br>
-$$</p>
-<h2 id="散射">散射</h2>
-<p>一般我们在讨论光在介质中传播，认为是没有损失的，但实际上光在介质中传播是存在吸收的</p>
-<p>吸收：光强度随着穿进介质深度而减弱的现象</p>
-<p>原因：</p>
-<ul>
-<li>光能转化为其他能，比如热量、化学能、电能</li>
-<li>发生散射，光向四面八方传播（丁达尔效应）</li>
-</ul>
-<h3 id="瑞丽散射">瑞丽散射</h3>
-<p>瑞丽散射（Rayleigh scattering）：光在细小粒子间散射<br>
-$$<br>
-I_{scat}\propto 1/\lambda^4<br>
-$$</p>
-<p>$$<br>
-I_{\theta}\propto I_{\pi/2}(1+\cos^2 \theta)<br>
-$$</p>
-<h3 id="米氏散射">米氏散射</h3>
-<p>米氏散射（Mie scattering）：光在大型粒子内部散射</p>
+    <h1>Physically Based Shading at Disney</h1>
 
   </div>
   
@@ -2968,7 +2568,7 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-25T02:25:33+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-25T02:25:19+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年4月25日</p>
@@ -2982,8 +2582,8 @@ $$</p>
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E5%85%89%E5%AD%A6/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>光学</p></a></div>
-  <span hidden itemprop="keywords">光学</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/PBR/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>PBR</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/SIGGRAPH-2012/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>SIGGRAPH 2012</p></a></div>
+  <span hidden itemprop="keywords">PBR SIGGRAPH 2012</span>
   
 
 
@@ -2997,7 +2597,7 @@ $$</p>
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/&title=光学：电磁波 - ReubenSun&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/graphics/DisneyBRDF/&title=Physically Based Shading at Disney - ReubenSun&summary="
           
           >
           
@@ -3009,7 +2609,7 @@ $$</p>
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/&title=光学：电磁波 - ReubenSun&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/graphics/DisneyBRDF/&title=Physically Based Shading at Disney - ReubenSun&summary="
           
           >
           
@@ -3021,7 +2621,7 @@ $$</p>
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/&title=光学：电磁波 - ReubenSun&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/graphics/DisneyBRDF/&title=Physically Based Shading at Disney - ReubenSun&summary="
           
           >
           
@@ -3054,30 +2654,14 @@ $$</p>
   
     <div class="prev-next">
       
-        <a class='prev' href='/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>光学：波动光学</p>
-          <p class='content'>二：波动光学
-内容概述
-
-简谐波（simple harmonic waves）
-傅里叶变换（Fourier Transform）
-波的物理量
-
-数学基础
-常用函数
-三角函数
-欧拉公式
+      
+        <a class='next' href='/graphics/%E6%B3%95%E7%BA%BF%E5%88%87%E7%BA%BF%E6%AC%A1%E5%88%87%E7%BA%BF/'>
+          <p class='title'>法线切线次切线的计算<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>法线切线次切线的计算
+顶点法线的计算
+模型顶点构成了多个三角面，使用三角面的顶点坐标等得到两条边的向量，求两个向量的叉积能够得到（归一化的）面法线。
 $$
-e^...</p>
-        </a>
-      
-      
-        <a class='next' href='/program/Effective%20C++/'>
-          <p class='title'>Effective C++<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Effective C++
-一：C++基础
-C++很成熟，很NB
-C++支持面向过程（procedural）、面向对象（object-orientend）、函数形式（functional）、泛型...</p>
+\mathbf{N}=\frac{(\...</p>
         </a>
       
     </div>
@@ -3096,7 +2680,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 
   <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="discussionUrl" content="/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/index.html#comments">
+      <meta itemprop="discussionUrl" content="/graphics/DisneyBRDF/index.html#comments">
     </span>
     <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
@@ -3138,7 +2722,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%BF%B0"><span class="toc-text">内容概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A2"><span class="toc-text">波</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B4%A8"><span class="toc-text">光的基本性质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E9%80%9F"><span class="toc-text">光速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A2%E7%B2%92%E4%BA%8C%E8%B1%A1%E6%80%A7"><span class="toc-text">波粒二象性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A2-2"><span class="toc-text">波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B2%92"><span class="toc-text">粒</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A2%E7%B2%92%E4%BA%8C%E8%B1%A1%E6%80%A7-2"><span class="toc-text">波粒二象性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%89%E5%AD%90%E4%B8%8E%E7%94%B5%E5%AD%90"><span class="toc-text">光子与电子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E6%B3%A2%E4%B8%8E%E6%A0%87%E9%87%8F%E6%B3%A2"><span class="toc-text">向量波与标量波</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E7%A3%81%E6%B3%A2"><span class="toc-text">电磁波</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E9%87%8F"><span class="toc-text">物理量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%B5%E7%A3%81%E5%AD%A6%E4%B8%89%E5%AE%9A%E5%BE%8B"><span class="toc-text">电磁学三定律</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BA%A6%E5%85%8B%E6%96%AF%E9%9F%A6%E6%96%B9%E7%A8%8B"><span class="toc-text">麦克斯韦方程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B3%E9%9D%A2%E6%B3%A2"><span class="toc-text">平面波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%82%8D%E8%BD%B4%E6%9D%A1%E4%BB%B6"><span class="toc-text">傍轴条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9C%E5%9C%BA%E6%9D%A1%E4%BB%B6"><span class="toc-text">远场条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%90%E7%85%A7%E5%BA%A6"><span class="toc-text">辐照度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%8F%E6%8C%AF"><span class="toc-text">偏振</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E5%81%8F%E6%8C%AF"><span class="toc-text">线偏振</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A4%AD%E5%9C%86%E5%81%8F%E6%8C%AF%E4%B8%8E%E5%9C%86%E5%81%8F%E6%8C%AF"><span class="toc-text">椭圆偏振与圆偏振</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%BC%E6%96%AF%E7%9F%A2%E9%87%8F"><span class="toc-text">琼斯矢量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E6%8C%AF%E5%BA%A6"><span class="toc-text">偏振度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%B8%E6%94%B6"><span class="toc-text">吸收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B0%E4%BC%AF%E7%89%B9%E5%AE%9A%E5%BE%8B"><span class="toc-text">兰伯特定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%B0%94%E5%AE%9A%E5%BE%8B"><span class="toc-text">贝尔定律</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%89%B2%E6%95%A3"><span class="toc-text">色散</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B4%9B%E4%BC%A6%E5%85%B9%E9%9C%87%E8%8D%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">洛伦兹震荡模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E9%80%9F%E5%BA%A6"><span class="toc-text">组速度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%A3%E5%B0%84"><span class="toc-text">散射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%91%9E%E4%B8%BD%E6%95%A3%E5%B0%84"><span class="toc-text">瑞丽散射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%B3%E6%B0%8F%E6%95%A3%E5%B0%84"><span class="toc-text">米氏散射</span></a></li></ol></li></ol>
+      
   </div>
 </section>
 
@@ -3682,7 +3266,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/optics/","name":"optics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/optics/电磁波/","name":"光学：电磁波"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"光学：电磁波","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-04-25T02:25:33.008Z","articleSection":"optics","keywords":"光学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/DisneyBRDF/","name":"Physically Based Shading at Disney"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Physically Based Shading at Disney","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/DisneyBRDF/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/DisneyBRDF/","wordCount":0,"datePublished":"2023-04-25T10:01:25.000Z","dateModified":"2023-04-25T02:25:19.983Z","articleSection":"graphics","keywords":"PBR,SIGGRAPH 2012","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
