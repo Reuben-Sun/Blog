@@ -8,7 +8,7 @@
       <link href="/graphics/DisneyBRDF/"/>
       <url>/graphics/DisneyBRDF/</url>
       
-        <content type="html"><![CDATA[<h1>《Physically Based Shading at Disney》阅读笔记</h1><p>2012年SIGGRAPH，迪士尼提出了迪士尼规则的基于物理的渲染，立刻成为行业标准，被各大游戏厂商和游戏引擎所采用</p><h2 id="介绍">介绍</h2>]]></content>
+        <content type="html"><![CDATA[<h1>《Physically Based Shading at Disney》阅读笔记</h1><p>2012年SIGGRAPH，迪士尼提出了迪士尼规则的基于物理的渲染，立刻成为行业标准，被各大游戏厂商和游戏引擎所采用</p><blockquote><p>本文采用第一人称，我们是指迪士尼</p></blockquote><h2 id="介绍">介绍</h2><p>当时场景渲染还在使用ad-hoc着色模型和punctual灯光，我们渴望一套<strong>一致性</strong>的、美术友好的着色模型。受毛发渲染启发，我们推出了符合迪士尼规则的PBR模型。</p><p>迪士尼PBR模型提供了多种不同的渲染方程，但美术不需要关心渲染的底层逻辑，不需要针对不同的方程调整参数。</p><h2 id="微表面模型">微表面模型</h2><p>BRDF（双向反射分布函数）表示反射光与入射光的能量关系，是某方向出射光辐射率（Radiance）和入射光辐照度（Irradiance）的比值。</p><p>微表面模型认为材质表面由无数个理想镜面排列组成，如果某个观察方向上能观察到反射光，那么必然有一些微表面，他们的法线能平分入射光方向和观察方向（几何光学），我们将这些微表面的法线方向称为半向量（half vector）。顾名思义，半向量是入射光和观察方向的一半。<br>$$<br>\mathbf{h}=\frac{\mathbf{l}+\mathbf{v}}{|\mathbf{l}+\mathbf{v}|}<br>$$<br><img src="/images/microfacet.png" class="lazyload" data-srcset="/images/microfacet.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="microfacet" style="zoom:50%;" /></p><p>一个各向同性的BRDF模型如下，由菲涅尔项、微表面法线分布项、几何遮挡项组成<br>$$<br>\rho\left(\mathbf{l}, \mathbf{v} \right)= \mathrm{diffuse} +  \frac{F\left( \theta_d \right) D\left( \theta_h \right) G\left( \theta_l,\theta_v \right) }{ 4\cos\theta_l\cos\theta_v}<br>$$</p><ul><li>$\theta_d$是入射光和半向量的夹角，d是difference的意思</li><li>$\theta_h$是半向量和法线的夹角</li><li>$\theta_l$是入射光和法线的夹角</li><li>$\theta_v$是观察方向和法线的夹角</li></ul><h2 id="可视化">可视化</h2>]]></content>
       
       
       <categories>
