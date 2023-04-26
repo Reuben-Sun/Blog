@@ -8,7 +8,7 @@
       <link href="/graphics/ReSTIR/"/>
       <url>/graphics/ReSTIR/</url>
       
-        <content type="html"><![CDATA[<h1>《Spatiotemporal reservoir resampling for real-time ray tracing with dynamic direct lighting》阅读笔记</h1><p>有人曾说，当今GI唯Luman和ReSTIR尔</p>]]></content>
+        <content type="html"><![CDATA[<h1>《Spatiotemporal reservoir resampling for real-time ray tracing with dynamic direct lighting》阅读笔记</h1><p>有人曾说，当今GI唯Luman和ReSTIR尔</p><p>ReSTIR是一种基于光线追踪的无偏GI技术，比普通的蒙特卡洛要快几十倍，在非常复杂的场景也能实现每个像素8条光线</p>]]></content>
       
       
       <categories>
