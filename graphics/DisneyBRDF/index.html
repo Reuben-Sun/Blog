@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-04-25T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-04-26T15:41:10.077Z">
+<meta property="article:modified_time" content="2023-04-26T16:10:31.283Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="PBR">
 <meta property="article:tag" content="SIGGRAPH 2012">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1682523676297),
+    lastupdate: new Date(1682525436254),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2661,7 +2661,24 @@ $$</p>
 F_{D90}=0.5+2roughness\cos^2\theta_d<br>
 $$</p>
 <h3 id="高光D项">高光D项</h3>
-<p>我们的材质拥有两个高光lobe，用于表式双层材质。</p>
+<p>我们认为目前最流行的GGX拖尾仍不够长，最后选择了GTR<br>
+$$<br>
+D_{GTR}=c/(\alpha^2\cos^2\theta_h+\sin^2\theta_h)^{\gamma}<br>
+$$</p>
+<ul>
+<li>$c$：缩放常数</li>
+<li>$\alpha$：粗糙度参数，0为光滑，1为完全粗糙</li>
+</ul>
+<img src="/images/GTR.png" class="lazyload" data-srcset="/images/GTR.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="GTR" style="zoom:50%;" />
+<h3 id="高光F项">高光F项</h3>
+<p>$$<br>
+F_{\mathrm{Schlick}}=F_0+(1-F_0)(1-\cos\theta_d)^5<br>
+$$</p>
+<h3 id="高光G项">高光G项</h3>
+<p>使用GGX模型作为G项，但对粗糙度进行映射<br>
+$$<br>
+\alpha_g=(0.5+roughness/2)^2<br>
+$$</p>
 
   </div>
   
@@ -2686,7 +2703,7 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-26T15:41:10+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-04-26T16:10:31+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年4月26日</p>
@@ -2840,7 +2857,7 @@ $$
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E8%A1%A8%E9%9D%A2%E6%A8%A1%E5%9E%8B"><span class="toc-text">微表面模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BRDF%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-text">BRDF可视化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E6%9D%90%E8%B4%A8"><span class="toc-text">观察材质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%AB%E5%8F%8D%E5%B0%84%E9%A1%B9"><span class="toc-text">漫反射项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E8%A1%A8%E9%9D%A2%E6%B3%95%E7%BA%BF%E5%88%86%E5%B8%83%E9%A1%B9"><span class="toc-text">微表面法线分布项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89%E8%8F%B2%E6%B6%85%E5%B0%94%E9%A1%B9"><span class="toc-text">高光菲涅尔项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E9%81%AE%E6%8C%A1%E9%A1%B9"><span class="toc-text">几何遮挡项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AA%E5%A3%AB%E5%B0%BCBRDF"><span class="toc-text">迪士尼BRDF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0"><span class="toc-text">材质参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%AB%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B"><span class="toc-text">漫反射模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89D%E9%A1%B9"><span class="toc-text">高光D项</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E8%A1%A8%E9%9D%A2%E6%A8%A1%E5%9E%8B"><span class="toc-text">微表面模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BRDF%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-text">BRDF可视化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E6%9D%90%E8%B4%A8"><span class="toc-text">观察材质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%AB%E5%8F%8D%E5%B0%84%E9%A1%B9"><span class="toc-text">漫反射项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E8%A1%A8%E9%9D%A2%E6%B3%95%E7%BA%BF%E5%88%86%E5%B8%83%E9%A1%B9"><span class="toc-text">微表面法线分布项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89%E8%8F%B2%E6%B6%85%E5%B0%94%E9%A1%B9"><span class="toc-text">高光菲涅尔项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E9%81%AE%E6%8C%A1%E9%A1%B9"><span class="toc-text">几何遮挡项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AA%E5%A3%AB%E5%B0%BCBRDF"><span class="toc-text">迪士尼BRDF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0"><span class="toc-text">材质参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%AB%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B"><span class="toc-text">漫反射模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89D%E9%A1%B9"><span class="toc-text">高光D项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89F%E9%A1%B9"><span class="toc-text">高光F项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89G%E9%A1%B9"><span class="toc-text">高光G项</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3384,7 +3401,7 @@ $$
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/DisneyBRDF/","name":"Physically Based Shading at Disney"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Physically Based Shading at Disney","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/DisneyBRDF/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/DisneyBRDF/","wordCount":0,"datePublished":"2023-04-25T10:01:25.000Z","dateModified":"2023-04-26T15:41:10.077Z","articleSection":"graphics","keywords":"PBR,SIGGRAPH 2012","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/DisneyBRDF/","name":"Physically Based Shading at Disney"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Physically Based Shading at Disney","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/DisneyBRDF/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/DisneyBRDF/","wordCount":0,"datePublished":"2023-04-25T10:01:25.000Z","dateModified":"2023-04-26T16:10:31.283Z","articleSection":"graphics","keywords":"PBR,SIGGRAPH 2012","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
