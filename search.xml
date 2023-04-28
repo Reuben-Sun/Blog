@@ -8,7 +8,7 @@
       <link href="/graphics/ReSTIR/"/>
       <url>/graphics/ReSTIR/</url>
       
-        <content type="html"><![CDATA[<h1>《Spatiotemporal reservoir resampling for real-time ray tracing with dynamic direct lighting》阅读笔记</h1><p>有人曾说，当今GI唯Luman和ReSTIR尔</p><p>ReSTIR是一种基于光线追踪的无偏GI技术，比普通的蒙特卡洛要快几十倍，在非常复杂的场景也能实现每个像素8条光线</p>]]></content>
+        <content type="html"><![CDATA[<h1>ReSTIR GI</h1><blockquote><p>有人曾说，当今GI唯Luman和ReSTIR尔</p></blockquote><p>ReSTIR是一种基于光线追踪的无偏GI技术，无需预处理，无需构建复杂的加速结构，比普通的蒙特卡洛要快几十倍，在非常复杂的场景也能实现每个像素8条光线</p><h2 id="预备知识">预备知识</h2><h3 id="渲染方程">渲染方程</h3><p>$$<br>L(y,\omega)=\int_A \rho(y,\overrightarrow{yx}\leftrightarrow \overrightarrow{\omega}) L_e(x\rightarrow y) G(x\leftrightarrow y) V(x\leftrightarrow y)\mathrm{d}A_x<br>$$</p><ul><li>$x$：灯光位置</li><li>$y$：着色点</li><li>$\overrightarrow{\omega}$：视线方向</li><li>$\rho$：BSDF</li><li>$L_e$：自发光</li><li>$G$：包含距离平方反比和余弦项的几何衰减项</li><li>$V$：$xy$间的可见性</li></ul><h3 id="多重重要性采样">多重重要性采样</h3><p>分离渲染方程，对$f(x)$做重要性采样<br>$$<br>f(x)=\rho(x) L_e(x) G(x)V(x)<br>$$<br>重要性采样，随机采样，求<strong>采样结果/概率密度函数</strong>的平均值，以平均值作为采样期望</p><p>多重重要性采样（Resampled Importance Sampling，RIS），将采样空间分为多份，每份单独进行重要性采样，最后将采样结果进行加权平均</p><h3 id="加权水塘抽样">加权水塘抽样</h3><p>加权水塘抽样算法（Weighted reservoir sampling，WRS）是一种从原始数据流中得到一组具有代表性的子集的算法，子集中元素的权重反应了该元素被选择的概率。</p><ol><li>初始化一个大小为k的空蓄水池</li><li>对于数据集中每一个元素（数据以流的形式被处理，无需存储所有的数据）<ol><li>计算元素的权重，通常为该元素被选中概率的倒数</li><li>生成一个0～1的随机数，若随机数小于元素的权重，则使用该元素替代蓄水池中的某个元素</li></ol></li><li>返回蓄水池</li></ol><h2 id="参考">参考</h2><p>《Spatiotemporal reservoir resampling for real-time ray tracing with dynamic direct lighting》</p><p>《ReSTIR GI: Path Resampling for Real-Time Path Tracing》</p>]]></content>
       
       
       <categories>
