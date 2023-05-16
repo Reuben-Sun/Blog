@@ -5,8 +5,8 @@
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
-  <meta name="robots" content="noindex,follow">
-  <link rel="canonical" href="https://reubensun.com/tags/c/"/>
+  
+  <link rel="canonical" href="https://reubensun.com/program/python调用c++/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,19 +34,23 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>标签：C# - ReubenSun</title>
-  <meta name="keywords" content="reubensun computer graphics engine Technical Artist">
+  <title>SWIG实现Python调用C++ - ReubenSun</title>
+  <meta name="keywords" content="Python,C++,SWIG,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
-<meta property="og:type" content="website">
-<meta property="og:title" content="ReubenSun">
-<meta property="og:url" content="https://reubensun.com/tags/C/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SWIG实现Python调用C++">
+<meta property="og:url" content="https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Reuben的笔记博客">
+<meta property="og:description" content="SWIG实现Python调用C++ 在实际项目开发中，我们经常有跨语言交互的需求，比如使用Python&#x2F;Lua脚本调用引擎代码。常用的方案有很多，我们来介绍SWIG     语言 特点     C++&#x2F;CLI C++和C# 微软为.NET平台高度定制的拓展，允许C++调用托管代码   SWIG 多语言 跨平台多语言，需要写.i文件，有一定侵入性   Boost Python和C++    JNI">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+<meta property="article:published_time" content="2023-05-16T16:01:25.000Z">
+<meta property="article:modified_time" content="2023-05-16T15:58:13.357Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="reubensun computer graphics engine Technical Artist">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="SWIG">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2103,7 +2107,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
+  pdata.ispage=true;
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   pdata.commentConfig={};
@@ -2168,7 +2172,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <!-- Custom Files bodyBegin begin-->
     
     <!-- Custom Files bodyBegin end-->
-    <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur show" style='opacity: 0' >
+    <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -2367,32 +2371,97 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div id="l_body">
       <div id="l_cover">
   
+    
+      <div class="cover-wrapper post dock" id='half'>
+        
+  <div class='cover-bg lazyload placeholder' data-bg="/images/bg.png"></div>
+
+<div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Reuben Sun</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              active-action="action-home">
+              <i class='fa-solid fa-house fa-fw'></i><p>主页</p>
+            </a>
+          
+            <a href="/categories/graphics"
+              
+              
+              active-action="action-categoriesgraphics">
+              <i class='fa-solid fa-images fa-fw'></i><p>图形</p>
+            </a>
+          
+            <a href="/categories/engine"
+              
+              
+              active-action="action-categoriesengine">
+              <i class='fa-solid fa-gear fa-fw'></i><p>引擎</p>
+            </a>
+          
+            <a href="/categories/program"
+              
+              
+              active-action="action-categoriesprogram">
+              <i class='fa-solid fa-code fa-fw'></i><p>编程</p>
+            </a>
+          
+            <a href="/categories/math"
+              
+              
+              active-action="action-categoriesmath">
+              <i class='fa-solid fa-plus fa-fw'></i><p>数学</p>
+            </a>
+          
+            <a href="/categories/optics"
+              
+              
+              active-action="action-categoriesoptics">
+              <i class='fa-solid fa-eye fa-fw'></i><p>光学</p>
+            </a>
+          
+            <a href="/categories/dcc"
+              
+              
+              active-action="action-categoriesdcc">
+              <i class='fa-solid fa-paint-brush fa-fw'></i><p>DCC</p>
+            </a>
+          
+            <a href="/categories/game"
+              
+              
+              active-action="action-categoriesgame">
+              <i class='fa-solid fa-gamepad fa-fw'></i><p>游戏</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+    
+  
 </div>
 
       <div id="safearea">
         <div class="body-wrapper">
           
-
 <div id="l_main" class=''>
-  
-    
-      
-  <section class="post-list">
-    
-      
-        
-          
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/dcc/Simplygon/">
+  <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/python调用C++/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2401,146 +2470,345 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <meta itemprop="description" content="Reuben的笔记博客">
   </span>
   
-  
+
+
   
     <span hidden>
       <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
     </span>
   
-  
+  <div class="article-meta" id="top">
     
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/dcc/Simplygon/"  itemprop="url">
-        Simplygon插件尝鲜
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
     
-      
-        Simplygon插件尝鲜
+    
+      <h1 class="title" itemprop="name headline">
+        SWIG实现Python调用C++
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author' itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a itemprop="url" class='author' href="/" rel="nofollow">
+    <img itemprop="image" src="/images/logo.png" class="lazyload" data-srcset="/images/logo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <p itemprop="name">Reuben Sun</p>
+  </a>
+</div>
 
-出于性能等考虑，大型项目往往会使用LOD功能，根据相机距离切换模型精度。而海量的3D模型靠人力拆分LOD显然过于昂贵，因此非常有必要使用模型减面工具，所幸业界已经有非常成熟的商业插件，比如InstaLOD和Simplygon，对于个人开发者，Simplygon提供每日200次的免费使用次数，足够用了
-
-安装
-
-环境为Windows系统+支持Vulkan的显卡
-
-...
-      
+          
+        
+          
+            
+  
+  
+  
+  <div class='new-meta-item category'>
+    <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
+    <a class="category-link" href="/categories/program/">program</a>
+    
+      <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+      </span>
     
   </div>
   
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-03-31T10:01:25+00:00">2023-03-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/dcc/">dcc</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/dcc/" itemprop="url"><span itemprop="name">dcc</span></a>
-            </span>
+
+
+
           
         
+          
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-05-16T16:01:25+00:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2023年5月16日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+
+
+          
+        
+        <!-- Custom Files topMeta begin-->
+        
+        <!-- Custom Files topMeta end-->
       </div>
+    
+  </div>
+
+
+  <div id="layoutHelper-page-plugins"></div>
+  <div id="post-body" itemprop="articleBody">
+    <h1>SWIG实现Python调用C++</h1>
+<p>在实际项目开发中，我们经常有跨语言交互的需求，比如使用Python/Lua脚本调用引擎代码。常用的方案有很多，我们来介绍SWIG</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>语言</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C++/CLI</td>
+<td>C++和C#</td>
+<td>微软为.NET平台高度定制的拓展，允许C++调用托管代码</td>
+</tr>
+<tr>
+<td>SWIG</td>
+<td>多语言</td>
+<td>跨平台多语言，需要写<code>.i</code>文件，有一定侵入性</td>
+</tr>
+<tr>
+<td>Boost</td>
+<td>Python和C++</td>
+<td></td>
+</tr>
+<tr>
+<td>JNI</td>
+<td>Java和C++</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="环境安装">环境安装</h2>
+<blockquote>
+<p>我的环境是Mac M1，安装了brew和python3</p>
+</blockquote>
+<ol>
+<li>安装swig</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> swig</code></pre>
+<ol start="2">
+<li>检测是否安装成功</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash">swig <span class="token parameter variable">-version</span></code></pre>
+<h2 id="样例代码">样例代码</h2>
+<p>实现了在python中调用C++定义的<code>add</code>函数</p>
+<ol>
+<li>C++代码</li>
+</ol>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.h</span>
+<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> x<span class="token operator">+</span>y<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ol start="2">
+<li>SWIG代码</li>
+</ol>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.i</span>
+<span class="token operator">%</span><span class="token keyword">module</span> <span class="token module">example</span>	
+
+<span class="token operator">%</span><span class="token punctuation">&#123;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
+<span class="token operator">%</span><span class="token punctuation">&#125;</span>
+
+<span class="token operator">%</span>include <span class="token string">"example.h"</span></code></pre>
+<ol start="3">
+<li>执行命令，我们会生成一个<code>.py</code>文件和一个<code>.cxx</code>文件</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash">swig -c++ <span class="token parameter variable">-python</span> example.i</code></pre>
+<ol start="4">
+<li>为了方便使用，我们将生成的<code>.py</code>文件构建为<code>.so</code>文件，创建一个setup.py文件</li>
+</ol>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> distutils<span class="token punctuation">.</span>core <span class="token keyword">import</span> setup<span class="token punctuation">,</span> Extension
+ 
+ 
+example_module <span class="token operator">=</span> Extension<span class="token punctuation">(</span><span class="token string">'_example'</span><span class="token punctuation">,</span>
+                           sources<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'example_wrap.cxx'</span><span class="token punctuation">,</span> <span class="token string">'example.cpp'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                           <span class="token punctuation">)</span>
+ 
+setup <span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">'example'</span><span class="token punctuation">,</span>
+       version <span class="token operator">=</span> <span class="token string">'0.1'</span><span class="token punctuation">,</span>
+       author      <span class="token operator">=</span> <span class="token string">"beshar"</span><span class="token punctuation">,</span>
+       description <span class="token operator">=</span> <span class="token triple-quoted-string string">"""Simple swig example from docs"""</span><span class="token punctuation">,</span>
+       ext_modules <span class="token operator">=</span> <span class="token punctuation">[</span>example_module<span class="token punctuation">]</span><span class="token punctuation">,</span>
+       py_modules <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"example"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+       <span class="token punctuation">)</span></code></pre>
+<p>执行命令，即会生成一些文件，其中包含一个<code>.so</code>文件</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">python3 setup.py build_ext <span class="token parameter variable">--inplace</span></code></pre>
+<ol start="5">
+<li>将<code>.so</code>文件放入环境变量中（不推荐），或者放在python脚本同一个目录中（推荐），即可被调用</li>
+</ol>
+<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># example_test.py</span>
+
+<span class="token keyword">import</span> example
+
+<span class="token comment"># 调用C++函数</span>
+result <span class="token operator">=</span> example<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"3 + 4 ="</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span></code></pre>
+
+  </div>
+  
+  
+    
+    <div class='footer'>
+       <!-- 参考资料、相关资料等 -->
       
-        <div>
-          <a class='readmore' href='/dcc/Simplygon/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
+       <!-- 相关文章 -->
+      
+      <!-- 版权声明组件 -->
+      
+      <!-- 打赏组件 -->
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-16T15:58:13+00:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2023年5月16日</p>
+  </a>
 </div>
 
-          </div>
         
       
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/Csharpe/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
+          
   
   
   
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/C/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>C++</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/SWIG/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>SWIG</p></a></div>
+  <span hidden itemprop="keywords">Python C++ SWIG</span>
+  
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/&title=SWIG实现Python调用C++ - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qq.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qq.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/&title=SWIG实现Python调用C++ - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qzone.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qzone.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/&title=SWIG实现Python调用C++ - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/weibo.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/weibo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+    <!-- Custom Files bottomMeta begin -->
+    
+    <!-- Custom Files bottomMeta end -->
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/program/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84%E4%BB%A3%E7%A0%81/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>有意思的代码</p>
+          <p class='content'>有意思的代码
+记录一下平时遇到的有意思的代码，不定期更新
+在注释中的立方体
+   001------101
+   / |     / |
+  /  |    /  |
+011------111 ...</p>
+        </a>
+      
+      
+        <a class='next' href='/dcc/FbxSDK/'>
+          <p class='title'>FBX SDK入门<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>FBX SDK
+FBX是一种主流的三维模型格式，格式闭源，但可以通过免费的FBX SDK编辑模型
+开发环境
+
+Visual Studio 2019
+Cmake
+安装FBX SDK，我根据环境安装...</p>
+        </a>
+      
+    </div>
+  
+  <!-- 文章推荐 -->
+  
+  
+  <!-- Custom Files postEnd begin-->
+  
+  <!-- Custom Files postEnd end-->
+</article>
+
+
+  
+
+
+  <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+      <meta itemprop="discussionUrl" content="/program/python%E8%B0%83%E7%94%A8C++/index.html#comments">
     </span>
-  
-  
+    <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/Csharpe/"  itemprop="url">
-        WPF中的C#
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        WPF中的C#
-一、C#语法
-委托
-C#的委托类似于C++的函数指针，C#中，将参数a,b委托给了对象adder的Add方法，委托本质上是一种支持()运算符的对象。既然是对象，就可以有自己的成员和状态
-delegate int Fun(int a, int b);
 
-class Adder&#123;
-  private int c &#x3D; 0;
-  
-  public Adder(i...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-02-01T10:01:25+00:00">2023-02-01</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/program/Csharpe/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
+    <div id="layoutHelper-comments"></div>
 
-</div>
-
-          </div>
-        
-      
-    
-  </section>
-  
-    
-  
+  </article>
 
 
-    
-  
+
+
+
+
 </div>
 <aside id='l_side' itemscope itemtype="http://schema.org/WPSideBar">
   
@@ -2549,149 +2817,31 @@ class Adder&#123;
     
     
       
-<section class="widget blogger desktop mobile ">
-  <div class='content'>
     
-      
-        <a class='avatar flat-box rectangle' href='/%E6%88%91%E6%98%AF%E8%B0%81'>
-          <img no-lazy src='/images/logo.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p>渴望被认同的怪兽</p>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="https://github.com/Reuben-Sun"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:2824016820@qq.com"
-              class="social fa-solid fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://www.zhihu.com/people/reuben-72-27"
-              class="social fa-brands fa-zhihu flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget category desktop">
-    
-  <header>
-    
-      <a href='/blog/categories/'><i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/dcc/" href="/categories/dcc/"
-            active-action="action-categoriesdcc"
-            ><div class='name'>dcc</div><div class='badge'>(5)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/engine/" href="/categories/engine/"
-            active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(3)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/game/" href="/categories/game/"
-            active-action="action-categoriesgame"
-            ><div class='name'>game</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/graphics/" href="/categories/graphics/"
-            active-action="action-categoriesgraphics"
-            ><div class='name'>graphics</div><div class='badge'>(13)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/math/" href="/categories/math/"
-            active-action="action-categoriesmath"
-            ><div class='name'>math</div><div class='badge'>(6)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/optics/" href="/categories/optics/"
-            active-action="action-categoriesoptics"
-            ><div class='name'>optics</div><div class='badge'>(10)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/program/" href="/categories/program/"
-            active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(14)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget tagcloud desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/C/" style="font-size: 15.67px; color: #8e8e8e">C#</a> <a href="/tags/C/" style="font-size: 22.33px; color: #606060">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 14px; color: #999">Deferred Render</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 15.67px; color: #8e8e8e">GC</a> <a href="/tags/GI/" style="font-size: 19px; color: #777">GI</a> <a href="/tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="/tags/Metal/" style="font-size: 14px; color: #999">Metal</a> <a href="/tags/Model/" style="font-size: 14px; color: #999">Model</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Physics/" style="font-size: 14px; color: #999">Physics</a> <a href="/tags/Python/" style="font-size: 17.33px; color: #828282">Python</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 15.67px; color: #8e8e8e">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/TA/" style="font-size: 17.33px; color: #828282">TA</a> <a href="/tags/Unity/" style="font-size: 15.67px; color: #8e8e8e">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/leetcode/" style="font-size: 15.67px; color: #8e8e8e">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 24px; color: #555">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 20.67px; color: #6c6c6c">高等数学</a>
-    </div>
-  </section>
-
-
-    
-  
-
   
 
 
 <div class="widget-sticky">
+
+  
+  
+
+
+<section class="widget toc-wrapper desktop mobile" id="toc-div" >
+  
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+  <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="toc-text">环境安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-text">样例代码</span></a></li></ol>
+  </div>
+</section>
+
+  
 
 </div>
 
@@ -2699,6 +2849,7 @@ class Adder&#123;
   
   <!-- Custom Files side end -->
 </aside>
+
 
 
         </div>
@@ -3042,6 +3193,60 @@ class Adder&#123;
 
 
 
+        <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js";
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typesetPromise();
+  }
+</script>
+
+
+
 
 <script>
   function listenSidebarTOC() {
@@ -3176,7 +3381,7 @@ class Adder&#123;
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/tags/C#/","name":"C#"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"wordCount":0,"image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/python调用C++/","name":"SWIG实现Python调用C++"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"SWIG实现Python调用C++","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/","wordCount":0,"datePublished":"2023-05-16T16:01:25.000Z","dateModified":"2023-05-16T15:58:13.357Z","articleSection":"program","keywords":"Python,C++,SWIG","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
