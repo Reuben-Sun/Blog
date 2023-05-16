@@ -33,7 +33,7 @@
       <link href="/dcc/FbxSDK/"/>
       <url>/dcc/FbxSDK/</url>
       
-        <content type="html"><![CDATA[<h1>FBX SDK</h1>]]></content>
+        <content type="html"><![CDATA[<h1>FBX SDK</h1><p>FBX是一种主流的三维模型格式，格式闭源，但可以通过免费的FBX SDK编辑模型</p><h2 id="开发环境">开发环境</h2><ul><li>Visual Studio 2019</li><li>Cmake</li><li>安装<a href="https://www.autodesk.com/developer-network/platform-technologies/fbx-sdk-2020-3-4">FBX SDK</a>，我根据环境安装的是2020 VS2019</li></ul><h2 id="样例">样例</h2><p>VS项目中使用FBX SDK需要配置大量的头文件dll，比较复杂，可以参考<a href="https://help.autodesk.com/view/FBX/2020/ENU/?guid=FBX_Developer_Help_getting_started_installing_and_configuring_configuring_the_fbx_sdk_for_wind_html">配置FBX SDK</a></p><p>个人建议直接使用cmake构建官方样例，在官方代码上进行修改</p><img src="/images/FBX样例.PNG" class="lazyload" data-srcset="/images/FBX样例.PNG" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="FBX样例"  /><p>在FBX SDK的安装文件夹中找到samples文件夹，选择一个样例进入，在有CMakeLists.txt的路径打开cmd，输入</p><pre class="language-bash" data-language="bash"><code class="language-bash">cmake <span class="token parameter variable">-G</span> <span class="token string">"Visual Studio 16"</span></code></pre><p>即会生成一个VS2019项目，打开构建、运行即可</p><h2 id="资料">资料</h2><p><a href="https://help.autodesk.com/view/FBX/2020/ENU/?guid=FBX_Developer_Help_welcome_to_the_fbx_sdk_html">FBX SDK 2020 文档</a></p>]]></content>
       
       
       <categories>
