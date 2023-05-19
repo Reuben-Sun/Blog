@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>超采样抗锯齿</title>
+      <link href="/graphics/%E8%B6%85%E9%87%87%E6%A0%B7%E6%8A%97%E9%94%AF%E9%BD%BF/"/>
+      <url>/graphics/%E8%B6%85%E9%87%87%E6%A0%B7%E6%8A%97%E9%94%AF%E9%BD%BF/</url>
+      
+        <content type="html"><![CDATA[<h1>超采样抗锯齿</h1><p>提前占一个新坑，可能要未来几个月来填（八月前做完），学习一下英伟达的DLSS和苹果的MetalFX，这是两个黑盒的超采样抗锯齿技术，能以较低的渲染分辨率得到接近原生分辨率的渲染效果。如果时间充足还会看一下FSR。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> graphics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> DLSS </tag>
+            
+            <tag> MetalFX </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>银河战士like开发日志</title>
       <link href="/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"/>
       <url>/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/</url>
@@ -70,9 +97,9 @@
       
         <tags>
             
-            <tag> C++ </tag>
-            
             <tag> Python </tag>
+            
+            <tag> C++ </tag>
             
             <tag> SWIG </tag>
             
