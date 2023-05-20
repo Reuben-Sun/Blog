@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-05-17T23:01:25.000Z">
-<meta property="article:modified_time" content="2023-05-20T10:18:48.715Z">
+<meta property="article:modified_time" content="2023-05-20T17:08:29.585Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1684577932188),
+    lastupdate: new Date(1684602514260),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2690,7 +2690,7 @@ private Vector2 moveInput;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private bool jumpPressed = false;
 </span><span class="token prefix inserted">+</span><span class="token line">private bool jumpPressDown = false;
 </span><span class="token prefix inserted">+</span><span class="token line">private float verticalVelocity;
-</span><span class="token prefix inserted">+</span><span class="token line">private bool jumpAfterMove  = false;    // 移动中跳跃，还是跳跃后移动
+</span><span class="token prefix inserted">+</span><span class="token line">private bool moveAfterJump  = false;    // 移动中跳跃，还是跳跃后移动
 </span><span class="token prefix inserted">+</span><span class="token line">private float herizontalDirection = 1f;
 </span><span class="token prefix inserted">+</span><span class="token line">private bool keepJump = false;  // 保持滞空</span></span></code></pre>
 <p>跳跃，包含起跳、滞空、落地三个过程。</p>
@@ -2718,7 +2718,7 @@ private Vector2 moveInput;
 </span><span class="token prefix inserted">+</span><span class="token line">    if (jumpPressDown &amp;&amp; collisionState.nearGround)
 </span><span class="token prefix inserted">+</span><span class="token line">    &#123;
 </span><span class="token prefix inserted">+</span><span class="token line">        verticalVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * jumpHeight);
-</span><span class="token prefix inserted">+</span><span class="token line">        jumpAfterMove = Mathf.Abs(moveInput.normalized.x) &lt; 0.3f;   // 判断起跳时移动速度
+</span><span class="token prefix inserted">+</span><span class="token line">        moveAfterJump = Mathf.Abs(moveInput.normalized.x) &lt; 0.3f;   // 判断起跳时移动速度
 </span><span class="token prefix inserted">+</span><span class="token line">        keepJump = true;
 </span><span class="token prefix inserted">+</span><span class="token line">        herizontalDirection = moveInput.x > 0 ? 1 : -1;
 </span><span class="token prefix inserted">+</span><span class="token line">    &#125;
@@ -2728,7 +2728,7 @@ private Vector2 moveInput;
 </span><span class="token prefix inserted">+</span><span class="token line">    &#123;
 </span><span class="token prefix inserted">+</span><span class="token line">        verticalVelocity += gravity * Time.deltaTime;
 </span><span class="token prefix inserted">+</span><span class="token line">    &#125;
-</span><span class="token prefix inserted">+</span><span class="token line">    else
+</span><span class="token prefix inserted">+</span><span class="token line">    else if(!collisionState.onGround)
 </span><span class="token prefix inserted">+</span><span class="token line">    &#123;
 </span><span class="token prefix inserted">+</span><span class="token line">        verticalVelocity += 3 * gravity * Time.deltaTime;
 </span><span class="token prefix inserted">+</span><span class="token line">    &#125;
@@ -2742,7 +2742,7 @@ private Vector2 moveInput;
 </span><span class="token prefix inserted">+</span><span class="token line">    if (verticalVelocity &lt; 0 &amp;&amp; collisionState.onGround)
 </span><span class="token prefix inserted">+</span><span class="token line">    &#123;
 </span><span class="token prefix inserted">+</span><span class="token line">        verticalVelocity = 0;
-</span><span class="token prefix inserted">+</span><span class="token line">        jumpAfterMove = false;
+</span><span class="token prefix inserted">+</span><span class="token line">        moveAfterJump = false;
 </span><span class="token prefix inserted">+</span><span class="token line">        keepJump = false;
 </span><span class="token prefix inserted">+</span><span class="token line">    &#125;
 </span></span>
@@ -2762,7 +2762,7 @@ private Vector2 moveInput;
 </span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        float herizontalSpeed = Mathf.Abs(moveInput.normalized.x * movementSpeed);
 </span></span>
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       float hDir = moveInput.x > 0 ? 1 : -1;
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        if (jumpAfterMove)
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        if (moveAfterJump)
 </span><span class="token prefix inserted">+</span><span class="token line">        &#123;
 </span><span class="token prefix inserted">+</span><span class="token line">            herizontalSpeed /= 2;   // 原地起跳，在空中动能很少，按理说应该走不动
 </span><span class="token prefix inserted">+</span><span class="token line">        &#125;
@@ -2775,11 +2775,51 @@ private Vector2 moveInput;
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveInput.x != 0 ? Vector3.right * moveInput.normalized.x : Vector3.right * hDir), 0.1f);
 </span></span>
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &#125;
-</span></span>
+</span></span>	animator.SetFloat("MoveInput", Mathf.Abs(moveInput.normalized.x * movementSpeed), 0.2f, Time.deltaTime);
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    #endregion</span></span></code></pre>
 <p><img src="/images/%E8%B7%B3%E8%B7%83%E7%AC%AC%E4%B8%80%E7%89%88.gif" class="lazyload" data-srcset="/images/%E8%B7%B3%E8%B7%83%E7%AC%AC%E4%B8%80%E7%89%88.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="跳跃第一版"></p>
 <h3 id="6-跳跃动画">6.跳跃动画</h3>
-<p>上面的效果太惨不忍睹了，尤其是空中跑步的效果。。。</p>
+<blockquote>
+<p>动画状态机比我想象中要麻烦好多。。。我也不知道我这样做对不对。。。</p>
+<p>由于没找到合适的动画资源，这一节不少动画是我自己做的，花了相当长时间，结果效果也不太行</p>
+</blockquote>
+<p>按下图所示在Any State后连接跳跃状态，并添加Jump、FallLand、FastJump、FastFallLand四个动画Trigger</p>
+<p><img src="/images/Animator2.png" class="lazyload" data-srcset="/images/Animator2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Animator2"></p>
+<p>当开始跳跃时会进入JumpStart/RollStart（仅播放一次），播放完后进入滞空动画Jumping/Rolling（这段动画会循环播放），当落地时会进入JumpEnd/RollEnd动画</p>
+<pre class="language-diff" data-language="diff"><code class="language-diff">// 起跳
+if (jumpPressDown &amp;&amp; collisionState.nearGround)
+&#123;
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   verticalVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * jumpHeight);
+</span><span class="token prefix unchanged"> </span><span class="token line">   moveAfterJump = Mathf.Abs(moveInput.normalized.x) &lt; 0.3f;   // 判断起跳时移动速度
+</span><span class="token prefix unchanged"> </span><span class="token line">   keepJump = true;
+</span><span class="token prefix unchanged"> </span><span class="token line">   herizontalDirection = moveInput.x > 0 ? 1 : -1;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    if (moveAfterJump)
+</span><span class="token prefix inserted">+</span><span class="token line">    &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">        animator.SetTrigger("Jump");
+</span><span class="token prefix inserted">+</span><span class="token line">    &#125;
+</span><span class="token prefix inserted">+</span><span class="token line">    else
+</span><span class="token prefix inserted">+</span><span class="token line">    &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">        animator.SetTrigger("FastJump");
+</span><span class="token prefix inserted">+</span><span class="token line">    &#125;
+</span></span>
+&#125;
+...
+// 落地
+if (verticalVelocity &lt; 0 &amp;&amp; collisionState.onGround)
+&#123;
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    if (moveAfterJump)
+</span><span class="token prefix inserted">+</span><span class="token line">    &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">        animator.SetTrigger("FallLand");
+</span><span class="token prefix inserted">+</span><span class="token line">    &#125;
+</span><span class="token prefix inserted">+</span><span class="token line">    else
+</span><span class="token prefix inserted">+</span><span class="token line">    &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">        animator.SetTrigger("FastFallLand");
+</span><span class="token prefix inserted">+</span><span class="token line">    &#125;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   verticalVelocity = 0;
+</span><span class="token prefix unchanged"> </span><span class="token line">   moveAfterJump = false;
+</span><span class="token prefix unchanged"> </span><span class="token line">   keepJump = false;
+</span></span>&#125;</code></pre>
+<p><img src="/images/%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB.gif" class="lazyload" data-srcset="/images/%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="跳跃动画"></p>
 
   </div>
   
@@ -2804,7 +2844,7 @@ private Vector2 moveInput;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-20T10:18:48+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-20T17:08:29+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年5月20日</p>
@@ -3510,7 +3550,7 @@ private Vector2 moveInput;
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-20T10:18:48.715Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-20T17:08:29.585Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
