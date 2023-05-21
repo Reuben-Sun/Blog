@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-05-17T23:01:25.000Z">
-<meta property="article:modified_time" content="2023-05-21T09:35:08.520Z">
+<meta property="article:modified_time" content="2023-05-21T14:06:37.571Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1684661715566),
+    lastupdate: new Date(1684678004982),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2637,6 +2637,7 @@ private void Update()
 <p><img src="/images/%E5%B7%A6%E5%8F%B3%E7%A7%BB%E5%8A%A8.gif" class="lazyload" data-srcset="/images/%E5%B7%A6%E5%8F%B3%E7%A7%BB%E5%8A%A8.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="左右移动"></p>
 <h3 id="5-跳跃">5. 跳跃</h3>
 <p>跳跃是该游戏的核心，这只是我估摸着做的第一版，有一说一，手感稀烂</p>
+<h4 id="碰撞状态检测">碰撞状态检测</h4>
 <p>创建脚本<code>CollisionState.cs</code>，并绑定到角色身上。该脚本用于判断角色和场景的关系，目前只做了和水平地表的检测</p>
 <blockquote>
 <p>nearGround的作用是为了连跳</p>
@@ -2658,10 +2659,12 @@ private void Update()
         nearGround <span class="token operator">=</span> Physics<span class="token punctuation">.</span><span class="token function">Raycast</span><span class="token punctuation">(</span>transform<span class="token punctuation">.</span>position <span class="token operator">+</span> Vector3<span class="token punctuation">.</span>up <span class="token operator">*</span> offset<span class="token punctuation">,</span> Vector3<span class="token punctuation">.</span>down<span class="token punctuation">,</span> nearDistance <span class="token operator">+</span> offset<span class="token punctuation">,</span> groundLayer<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span></code></pre>
-<p>添加Ground碰撞层，并将场景物体设置为Ground</p>
+<h4 id="环境设置">环境设置</h4>
+<p>添加Ground碰撞层，并将场景物体设置为Ground（场景物体要有碰撞体）</p>
 <p><img src="/images/GroundLayer.gif" class="lazyload" data-srcset="/images/GroundLayer.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="GroundLayer"></p>
 <p>注意设置角色身上的Ground Layer类型</p>
 <p><img src="/images/GroundLayer2.png" class="lazyload" data-srcset="/images/GroundLayer2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="GroundLayer2"></p>
+<h4 id="角色跳跃">角色跳跃</h4>
 <p>下面修改<code>Player.cs</code>，添加跳跃逻辑</p>
 <p>首先获取CollisionState脚本，以判断是否能进行跳跃</p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">...
@@ -2899,6 +2902,69 @@ private void Update()&#123;
 </span></span>&#125;</code></pre>
 <p>效果如下（论动画的重要性）</p>
 <p><img src="/images/%E7%88%AC%E5%A2%99.gif" class="lazyload" data-srcset="/images/%E7%88%AC%E5%A2%99.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="爬墙"></p>
+<h3 id="9-抓墙动画">9. 抓墙动画</h3>
+<p>我继续沿用老办法做抓墙动画，结果却发现手很难抓住墙壁，于是我改用Animation Rigging的方式实现</p>
+<p><img src="/images/%E6%8A%93%E5%A2%99%E7%AC%AC%E4%B8%80%E7%89%88.gif" class="lazyload" data-srcset="/images/%E6%8A%93%E5%A2%99%E7%AC%AC%E4%B8%80%E7%89%88.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="抓墙第一版"></p>
+<blockquote>
+<p>骨骼的本质是矩阵树，关键帧动画的本质是插值出变化矩阵，变化矩阵由位移旋转缩放组成，Animation Rigging可以让部分骨骼不受动画影响，而通过反向动力学等方式被驱动</p>
+</blockquote>
+<h4 id="安装插件">安装插件</h4>
+<p>首先通过包管理器安装Animation Rigging，我们发现窗口上方出现了Animation Rigging栏</p>
+<h4 id="配置Rig">配置Rig</h4>
+<p>找到并选中角色后，点击Animation Rigging——Bone Renderer Setup，我们发现角色身上多了一个Bone Renderer组件，骨骼也被绘制出来</p>
+<img src="/images/boneRender.png" class="lazyload" data-srcset="/images/boneRender.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="boneRender" style="zoom:50%;" />
+<img src="/images/boneRender2.png" class="lazyload" data-srcset="/images/boneRender2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="boneRender2" style="zoom:50%;" />
+<p>选中角色后点击Animation Rigging——Rig Setup，发现角色出现了一个子物体：Rig1</p>
+<p>将Rig重命名为RigHand，并创建子节点RightHand，为RightHand添加组件Two Bone IK Constraint</p>
+<p>再RightHand下面创建空的子节点，名叫Target，为了容易观察，让其拥有球形Shape</p>
+<p><img src="/images/Target.gif" class="lazyload" data-srcset="/images/Target.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Target"></p>
+<p>找到骨骼树中想要被反向驱动的三根骨骼，拖至Two Bone IK Constraint组件上，并将Target也拖到该组件上。现在播放动画，我们发现右手不会被动画驱动，而是被Target反向驱动</p>
+<p><img src="/images/rig.gif" class="lazyload" data-srcset="/images/rig.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="rig"></p>
+<p>通常状态不需要Rig，于是我们将Rig的权重设为0</p>
+<h4 id="脚本设置手部落地">脚本设置手部落地</h4>
+<p>修改脚本<code>CollisionState.cs</code>，添加手与墙壁的相交位置</p>
+<pre class="language-diff" data-language="diff"><code class="language-diff">public bool GetPassable()
+&#123;
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   bool passable = !Physics.Raycast(passablePoint.position, Vector3.right * lookRight, passableTestDistance, groundLayer);
+</span><span class="token prefix unchanged"> </span><span class="token line">   return passable;
+</span></span>&#125;
+
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">public Vector3 GetClimbTouchPosition()
+</span><span class="token prefix inserted">+</span><span class="token line">&#123;
+</span><span class="token prefix inserted">+</span><span class="token line">    Ray ray = new Ray(climbWallPoint.position, Vector3.right * lookRight);
+</span><span class="token prefix inserted">+</span><span class="token line">    Physics.Raycast(ray, out RaycastHit hit);
+</span><span class="token prefix inserted">+</span><span class="token line">    return hit.point;
+</span><span class="token prefix inserted">+</span><span class="token line">&#125;</span></span></code></pre>
+<p>修改脚本<code>Player.cs</code>，实现贴墙时修改Target的位置和Rig权重</p>
+<pre class="language-diff" data-language="diff"><code class="language-diff">[SerializeField, Tooltip("开始加速下落时的速度")] 
+private float fallingSpeedup = 10f;
+
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">[SerializeField] private Transform rightHandPosition;
+</span><span class="token prefix inserted">+</span><span class="token line">[SerializeField] private Rig rightHandRig;
+</span></span>
+private Vector2 moveInput;
+...
+private void Update()
+&#123;
+	...
+	// 爬墙
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   if (jumping &amp;&amp; collisionState.climbWall &amp;&amp; collisionState.GetPassable() &amp;&amp; Mathf.Abs(moveInput.normalized.x) > 0.7)
+</span><span class="token prefix unchanged"> </span><span class="token line">   &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">       climbing = true;
+</span><span class="token prefix unchanged"> </span><span class="token line">       verticalVelocity = 0;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        rightHandPosition.position = collisionState.GetClimbTouchPosition();
+</span><span class="token prefix inserted">+</span><span class="token line">        rightHandPosition.rotation = Quaternion.LookRotation(moveInput.x > 0 ? Vector3.right : Vector3.left);
+</span><span class="token prefix inserted">+</span><span class="token line">        rightHandRig.weight = 1;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">   else
+</span><span class="token prefix unchanged"> </span><span class="token line">   &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">       climbing = false;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        rightHandRig.weight = 0;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">   ...
+</span></span>&#125;</code></pre>
+<p><img src="/images/%E6%8A%93%E5%A2%99%E7%AC%AC%E4%BA%8C%E7%89%88.gif" class="lazyload" data-srcset="/images/%E6%8A%93%E5%A2%99%E7%AC%AC%E4%BA%8C%E7%89%88.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="抓墙第二版"></p>
+<p>尽管还存在臂力惊人单手悬空的问题，但相比上一版已经好了不少</p>
 
   </div>
   
@@ -2923,7 +2989,7 @@ private void Update()&#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-21T09:35:08+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-21T14:06:37+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年5月21日</p>
@@ -3085,7 +3151,7 @@ private void Update()&#123;
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E7%89%A9"><span class="toc-text">人物</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 添加角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEInput-Action%E6%96%87%E4%BB%B6"><span class="toc-text">2. 配置Input Action文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-text">3. 编写移动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">4. 移动动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%B7%B3%E8%B7%83"><span class="toc-text">5. 跳跃</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB"><span class="toc-text">6. 跳跃动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%9B%B8%E6%9C%BA"><span class="toc-text">7. 相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E7%88%AC%E5%A2%99"><span class="toc-text">8. 爬墙</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E7%89%A9"><span class="toc-text">人物</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 添加角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEInput-Action%E6%96%87%E4%BB%B6"><span class="toc-text">2. 配置Input Action文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-text">3. 编写移动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">4. 移动动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%B7%B3%E8%B7%83"><span class="toc-text">5. 跳跃</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B"><span class="toc-text">碰撞状态检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%B7%B3%E8%B7%83"><span class="toc-text">角色跳跃</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB"><span class="toc-text">6. 跳跃动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%9B%B8%E6%9C%BA"><span class="toc-text">7. 相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E7%88%AC%E5%A2%99"><span class="toc-text">8. 爬墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%8A%93%E5%A2%99%E5%8A%A8%E7%94%BB"><span class="toc-text">9. 抓墙动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AERig"><span class="toc-text">配置Rig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E6%89%8B%E9%83%A8%E8%90%BD%E5%9C%B0"><span class="toc-text">脚本设置手部落地</span></a></li></ol></li></ol></li></ol>
   </div>
 </section>
 
@@ -3629,7 +3695,7 @@ private void Update()&#123;
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-21T09:35:08.520Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-21T14:06:37.571Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
