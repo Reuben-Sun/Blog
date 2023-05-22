@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-04-05T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-05-22T03:47:40.500Z">
+<meta property="article:modified_time" content="2023-05-22T04:18:12.930Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="reubensun computer graphics engine Technical Artist">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1684727283321),
+    lastupdate: new Date(1684729124206),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2580,6 +2580,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </li>
 </ul>
 <p>他们世界大部分设施被摧毁，没有能力关闭传送门，于是他们只能向我们世界发送消息，希望我们可以关闭或改善这个流程，拯救两个世界</p>
+<h3 id="设定">设定</h3>
+<p>电厂被魔化为活物，于是方块被破环后会修复</p>
+<p>电厂具有自我保护意识，当核心被抢夺/破环时会召唤boss杀死入侵者（角色拿到一个增强时会进入boss战）</p>
 <h2 id="开发计划">开发计划</h2>
 <h3 id="角色">角色</h3>
 <ul>
@@ -2598,6 +2601,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>瞄准射击（按做肩键开启瞄准设计模式，用红线瞄准）
 <ul>
 <li>射击为红色激光</li>
+<li>按右肩键开启畏缩射击模式，伤害能低，但小怪被击中后会畏缩</li>
 </ul>
 </li>
 <li>近战攻击（两段光剑挥砍，一次从下向上，一次从上向下，第二段后期可以解锁剑气）
@@ -2606,6 +2610,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 <li>跟随镜头</li>
+<li>无敌时间
+<ul>
+<li>被攻击时会触发，角色有菲涅尔描边，此时角色和敌人不会有碰撞</li>
+</ul>
+</li>
 </ul>
 <h3 id="场景物体">场景物体</h3>
 <ul>
@@ -2623,6 +2632,35 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>方块破环时播放破碎动画</li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h3 id="敌人">敌人</h3>
+<ul>
+<li>小怪
+<ul>
+<li>怪物与角色接触时会向后击飞角色，并给角色0.5秒的无敌时间</li>
+<li>飞行怪物
+<ul>
+<li>一次仅会有一个飞行怪物攻击角色，并有明显的攻击前摇</li>
+<li>前摇攻击时能被近战一击必杀</li>
+<li>被畏缩畏缩后会变成一个垫脚石，不再移动，可以被踩踏，20秒后复原</li>
+</ul>
+</li>
+<li>地面怪物
+<ul>
+<li>地面角色有一个出生点，平时在出生点左右移动，看到角色后会向角色方向追击</li>
+<li>当追击失去视线后，会回到出生点附近，并恢复所有生命</li>
+<li>当被畏缩射击后会停止移动一段时间，但角色踩上仍会扣血</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Boss
+<ul>
+<li>当角色每拿到一个强化，镜头、手柄开始震动，然后boss出现</li>
+<li>boss总是可以被刚刚拿到的强化克制</li>
+<li>击败boss后会增强角色的最大生命值</li>
 </ul>
 </li>
 </ul>
@@ -2652,6 +2690,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <ul>
 <li>
 <p>尽量使用URP内置的功能</p>
+</li>
+<li>
+<p>角色要单独写Shader，支持开关菲涅尔描边</p>
 </li>
 <li>
 <p>全局动态Light Probe，均匀摆放Probe，可以用odin写一个批量摆放插件，注意不要进墙</p>
@@ -2690,7 +2731,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-22T03:47:40+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-22T04:18:12+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年5月22日</p>
@@ -2842,7 +2883,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%AB"><span class="toc-text">银河战士</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%A7%E6%83%85"><span class="toc-text">剧情</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%89%A7%E6%83%85"><span class="toc-text">游戏剧情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%AE%A1%E5%88%92"><span class="toc-text">开发计划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2"><span class="toc-text">角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E7%89%A9%E4%BD%93"><span class="toc-text">场景物体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E7%AE%A1%E7%90%86"><span class="toc-text">场景管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E7%BC%96%E8%BE%91"><span class="toc-text">场景编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9B%BE"><span class="toc-text">地图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93"><span class="toc-text">渲染</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%AB"><span class="toc-text">银河战士</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%A7%E6%83%85"><span class="toc-text">剧情</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%89%A7%E6%83%85"><span class="toc-text">游戏剧情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%AE%9A"><span class="toc-text">设定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E8%AE%A1%E5%88%92"><span class="toc-text">开发计划</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2"><span class="toc-text">角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E7%89%A9%E4%BD%93"><span class="toc-text">场景物体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%8C%E4%BA%BA"><span class="toc-text">敌人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E7%AE%A1%E7%90%86"><span class="toc-text">场景管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E7%BC%96%E8%BE%91"><span class="toc-text">场景编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9B%BE"><span class="toc-text">地图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93"><span class="toc-text">渲染</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3386,7 +3427,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like/","name":"银河战士like"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike/","wordCount":0,"datePublished":"2023-04-05T10:01:25.000Z","dateModified":"2023-05-22T03:47:40.500Z","articleSection":"game","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like/","name":"银河战士like"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike/","wordCount":0,"datePublished":"2023-04-05T10:01:25.000Z","dateModified":"2023-05-22T04:18:12.930Z","articleSection":"game","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
