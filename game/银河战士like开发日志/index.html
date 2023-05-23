@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-05-17T23:01:25.000Z">
-<meta property="article:modified_time" content="2023-05-23T13:36:43.962Z">
+<meta property="article:modified_time" content="2023-05-23T15:13:20.372Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1684849014275),
+    lastupdate: new Date(1684854806954),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -3128,6 +3128,157 @@ private void Update()
 <p><img src="/images/%E7%9E%84%E5%87%86%E5%8A%A8%E7%94%BB.gif" class="lazyload" data-srcset="/images/%E7%9E%84%E5%87%86%E5%8A%A8%E7%94%BB.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="瞄准动画"></p>
 <p>稍微有些生硬，不过另一只手之后要拿近战武器，所以还好。</p>
 <h4 id="瞄准辅助线">瞄准辅助线</h4>
+<p>在角色身上添加LineRenderer组件，设置组件的线Width、材质</p>
+<img src="/images/线渲染器.png" class="lazyload" data-srcset="/images/线渲染器.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="线渲染器" style="zoom:50%;" />
+<p>修改脚本<code>Player.cs</code></p>
+<pre class="language-diff" data-language="diff"><code class="language-diff">private CollisionState collisionState;
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private LineRenderer lineRenderer;
+</span></span>...
+private void Start()
+&#123;
+	...
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   collisionState = GetComponent&lt;CollisionState>();
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    lineRenderer = GetComponent&lt;LineRenderer>();
+</span></span>&#125;
+private void Update()
+&#123;
+	if (aiming)
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">       Vector3 targetPos;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        Vector3 deltaPos;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       if (moveInput.magnitude &lt; 0.1f)
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">           float hDir = controller.transform.forward.x > 0 ? 1 : -1;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">            deltaPos = new Vector3(gunToShoulderDistance * hDir, 0, 0);
+</span><span class="token prefix inserted">+</span><span class="token line">            targetPos = gunAimCenter.position + deltaPos;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">           gunHandPosition.position = targetPos;
+</span><span class="token prefix unchanged"> </span><span class="token line">           gunHandPosition.rotation = Quaternion.LookRotation(new Vector3(1,-1,0));
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">       else
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">           float hDir = controller.transform.forward.x > 0 ? 1 : -1;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">            deltaPos = new Vector3(gunToShoulderDistance * moveInput.normalized.x, gunToShoulderDistance * moveInput.normalized.y, 0);
+</span><span class="token prefix inserted">+</span><span class="token line">            targetPos = gunAimCenter.position + deltaPos;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">           gunHandPosition.position = targetPos;
+</span><span class="token prefix unchanged"> </span><span class="token line">           gunHandPosition.rotation = Quaternion.LookRotation(targetPos - gunAimCenter.position);
+</span><span class="token prefix unchanged"> </span><span class="token line">           gunHandPosition.Rotate(90f, 0f, 0f);
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#125;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        lineRenderer.SetPositions(new []&#123;targetPos, targetPos + deltaPos * 12&#125;);
+</span><span class="token prefix inserted">+</span><span class="token line">        lineRenderer.enabled = true;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       animator.SetBool("Aiming", true);
+</span><span class="token prefix unchanged"> </span><span class="token line">       gunHandRig.weight = 1;
+</span><span class="token prefix unchanged"> </span><span class="token line">   &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">   else
+</span><span class="token prefix unchanged"> </span><span class="token line">   &#123;
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        lineRenderer.enabled = false;
+</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       gunHandRig.weight = 0;
+</span><span class="token prefix unchanged"> </span><span class="token line">       animator.SetBool("Aiming", false);
+</span><span class="token prefix unchanged"> </span><span class="token line">   &#125;
+</span></span>&#125;</code></pre>
+<img src="/images/激光.png" class="lazyload" data-srcset="/images/激光.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="激光" style="zoom:50%;" />
+<h4 id="发射子弹">发射子弹</h4>
+<ol>
+<li>Input System将手柄X键绑定为Fire开火键</li>
+<li>使用Sphere创建子弹预制体，注意关闭阴影、重力，材质我选用了一个自发光的半透明材质</li>
+</ol>
+<img src="/images/子弹.png" class="lazyload" data-srcset="/images/子弹.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="子弹" style="zoom:50%;" />
+<ol start="3">
+<li>编写子弹脚本<code>Bullet.cs</code>，子弹在碰撞到物体时会被销毁，超过一段时间后也会被销毁（具体的碰撞逻辑之后再写）</li>
+</ol>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Bullet</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span><span class="token punctuation">,</span> <span class="token class-name">Tooltip</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"子弹销毁时间"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span> <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> lifeTime <span class="token operator">=</span> <span class="token number">5f</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> remainingTime<span class="token punctuation">;</span>
+    <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        remainingTime <span class="token operator">=</span> lifeTime<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        remainingTime <span class="token operator">-=</span> Time<span class="token punctuation">.</span>deltaTime<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>remainingTime <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token function">Destroy</span><span class="token punctuation">(</span>gameObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnCollisionEnter</span><span class="token punctuation">(</span><span class="token class-name">Collision</span> collision<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">Destroy</span><span class="token punctuation">(</span>gameObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ol start="4">
+<li>编写子弹发射脚本<code>FireManager.cs</code></li>
+</ol>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FireManager</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span><span class="token punctuation">,</span> <span class="token class-name">Tooltip</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"子弹速度"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span> <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> bulletSpeed <span class="token operator">=</span> <span class="token number">10f</span><span class="token punctuation">;</span>
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span><span class="token punctuation">,</span> <span class="token class-name">Tooltip</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"普通子弹"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span> <span class="token keyword">private</span> <span class="token class-name">GameObject</span> commonBullet<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">FireCommonBullet</span><span class="token punctuation">(</span><span class="token class-name">Vector3</span> initPosition<span class="token punctuation">,</span> <span class="token class-name">Quaternion</span> initRotation<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name">GameObject</span> bullet <span class="token operator">=</span> <span class="token function">Instantiate</span><span class="token punctuation">(</span>commonBullet<span class="token punctuation">,</span> initPosition<span class="token punctuation">,</span> initRotation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bullet<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Rigidbody<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">AddForce</span><span class="token punctuation">(</span>bullet<span class="token punctuation">.</span>transform<span class="token punctuation">.</span>forward <span class="token operator">*</span> bulletSpeed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<ol start="5">
+<li>修改<code>Player.cs</code></li>
+</ol>
+<pre class="language-diff" data-language="diff"><code class="language-diff">private LineRenderer lineRenderer;
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private FireManager fireManager;
+</span></span>...
+private bool aiming = false;
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private bool firePressDown = false;
+</span></span>...
+private void Start()
+&#123;
+	...
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   lineRenderer = GetComponent&lt;LineRenderer>();
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    fireManager = GetComponent&lt;FireManager>();
+</span></span>&#125;
+
+private void Update()
+&#123;
+	...
+	aiming = input.actions["Aim"].IsPressed();
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    firePressDown = input.actions["Fire"].WasPressedThisFrame();
+</span></span>	if (aiming)
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">       #region 瞄准动作
+</span></span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       Vector3 targetPos;
+</span><span class="token prefix unchanged"> </span><span class="token line">       Vector3 deltaPos;
+</span><span class="token prefix unchanged"> </span><span class="token line">       if (moveInput.magnitude &lt; 0.1f)
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">           ...
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">       else
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">           ...
+</span><span class="token prefix unchanged"> </span><span class="token line">       &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">       ...
+</span></span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       #endregion
+</span></span>
+<span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        #region 射击
+</span><span class="token prefix inserted">+</span><span class="token line">        if (firePressDown)
+</span><span class="token prefix inserted">+</span><span class="token line">        &#123;
+</span><span class="token prefix inserted">+</span><span class="token line">            fireManager.FireCommonBullet(targetPos, Quaternion.LookRotation(targetPos - gunAimCenter.position));
+</span><span class="token prefix inserted">+</span><span class="token line">        &#125;
+</span><span class="token prefix inserted">+</span><span class="token line">        #endregion
+</span></span>
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">   else&#123;
+</span><span class="token prefix unchanged"> </span><span class="token line">   	...
+</span><span class="token prefix unchanged"> </span><span class="token line">   &#125;
+</span><span class="token prefix unchanged"> </span><span class="token line">   ...
+</span></span>&#125;</code></pre>
+<blockquote>
+<p>GIF的帧率太低了。。。</p>
+</blockquote>
+<p><img src="/images/%E5%8F%91%E5%B0%84%E5%AD%90%E5%BC%B9.gif" class="lazyload" data-srcset="/images/%E5%8F%91%E5%B0%84%E5%AD%90%E5%BC%B9.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="发射子弹"></p>
 
   </div>
   
@@ -3152,7 +3303,7 @@ private void Update()
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-23T13:36:43+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-23T15:13:20+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年5月23日</p>
@@ -3314,7 +3465,7 @@ private void Update()
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E7%89%A9"><span class="toc-text">人物</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 添加角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEInput-Action%E6%96%87%E4%BB%B6"><span class="toc-text">2. 配置Input Action文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-text">3. 编写移动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">4. 移动动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%B7%B3%E8%B7%83"><span class="toc-text">5. 跳跃</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B"><span class="toc-text">碰撞状态检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%B7%B3%E8%B7%83"><span class="toc-text">角色跳跃</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB"><span class="toc-text">6. 跳跃动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%9B%B8%E6%9C%BA"><span class="toc-text">7. 相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E7%88%AC%E5%A2%99"><span class="toc-text">8. 爬墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%8A%93%E5%A2%99%E5%8A%A8%E7%94%BB"><span class="toc-text">9. 抓墙动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AERig"><span class="toc-text">配置Rig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E6%89%8B%E9%83%A8%E8%90%BD%E5%9C%B0"><span class="toc-text">脚本设置手部落地</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E4%B8%8A%E5%B9%B3%E5%8F%B0"><span class="toc-text">10. 上平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E7%9E%84%E5%87%86%E5%B0%84%E5%87%BB"><span class="toc-text">11. 瞄准射击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1"><span class="toc-text">建模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E6%9E%AA"><span class="toc-text">持枪</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86"><span class="toc-text">瞄准</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86%E8%BE%85%E5%8A%A9%E7%BA%BF"><span class="toc-text">瞄准辅助线</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E7%89%A9"><span class="toc-text">人物</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 添加角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEInput-Action%E6%96%87%E4%BB%B6"><span class="toc-text">2. 配置Input Action文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-text">3. 编写移动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">4. 移动动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%B7%B3%E8%B7%83"><span class="toc-text">5. 跳跃</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B"><span class="toc-text">碰撞状态检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%B7%B3%E8%B7%83"><span class="toc-text">角色跳跃</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB"><span class="toc-text">6. 跳跃动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%9B%B8%E6%9C%BA"><span class="toc-text">7. 相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E7%88%AC%E5%A2%99"><span class="toc-text">8. 爬墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%8A%93%E5%A2%99%E5%8A%A8%E7%94%BB"><span class="toc-text">9. 抓墙动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AERig"><span class="toc-text">配置Rig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E6%89%8B%E9%83%A8%E8%90%BD%E5%9C%B0"><span class="toc-text">脚本设置手部落地</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E4%B8%8A%E5%B9%B3%E5%8F%B0"><span class="toc-text">10. 上平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E7%9E%84%E5%87%86%E5%B0%84%E5%87%BB"><span class="toc-text">11. 瞄准射击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1"><span class="toc-text">建模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E6%9E%AA"><span class="toc-text">持枪</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86"><span class="toc-text">瞄准</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86%E8%BE%85%E5%8A%A9%E7%BA%BF"><span class="toc-text">瞄准辅助线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E5%AD%90%E5%BC%B9"><span class="toc-text">发射子弹</span></a></li></ol></li></ol></li></ol>
   </div>
 </section>
 
@@ -3858,7 +4009,7 @@ private void Update()
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-23T13:36:43.962Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-23T15:13:20.372Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
