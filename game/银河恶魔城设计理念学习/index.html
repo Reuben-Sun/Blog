@@ -42,11 +42,11 @@
 <meta property="og:title" content="银河恶魔城设计理念学习">
 <meta property="og:url" content="https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="银河恶魔城设计理念学习">
+<meta property="og:description" content="银河恶魔城设计理念学习  昨天跟魔方的策划沟通了一下，发现我之前的设计很不成熟，我所认为的Hook（比如“玩家因为缺少一个能力卡关了，于是去岔路口寻找其他能力”）原来只是这类游戏的共性（Pillar），  银河恶魔城 能力锁 银河恶魔城大量使用了能力锁，使用低纬度的能力构成高纬度的钥匙，服务于后续游玩，能与关卡产生协同效应  道具锁（Item-Lock）：比如找到一把具体的钥匙道具开门开箱子，真实">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-05-25T01:18:25.000Z">
-<meta property="article:modified_time" content="2023-05-24T17:20:33.137Z">
+<meta property="article:modified_time" content="2023-05-25T03:51:04.291Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="reubensun computer graphics engine Technical Artist">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1684948851583),
+    lastupdate: new Date(1684986670308),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2543,6 +2543,48 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>银河恶魔城设计理念学习</h1>
+<blockquote>
+<p>昨天跟魔方的策划沟通了一下，发现我之前的设计很不成熟，我所认为的Hook（比如“玩家因为缺少一个能力卡关了，于是去岔路口寻找其他能力”）原来只是这类游戏的共性（Pillar），</p>
+</blockquote>
+<h2 id="银河恶魔城">银河恶魔城</h2>
+<h3 id="能力锁">能力锁</h3>
+<p>银河恶魔城大量使用了能力锁，使用低纬度的能力构成高纬度的钥匙，服务于后续游玩，能与关卡产生协同效应</p>
+<ul>
+<li>道具锁（Item-Lock）：比如找到一把具体的钥匙道具开门开箱子，真实但不好玩，只能提供很低的心智挑战，或者带来一些消耗资源管理</li>
+<li>谜题锁（Puzzle-Lock）：一段和游戏流程无关的解密，比如战神中敲钟、荒野之息中呀哈哈，能产生一次性的解密体验，常用于调整玩家游戏节奏</li>
+<li>挑战锁（Challenge-Lock）：一段结合游戏中战斗、行动技巧的挑战，比如GTA中骑摩托车跑酷，荒野之息限时射箭</li>
+<li>能力锁（Utility-Lock）：新能力解锁新区域，比如玩家得到了二段跳后，能跳到原来不能到达的平台，于是开放了更多的可探索内容</li>
+</ul>
+<img src="/images/目标挑战奖励.png" class="lazyload" data-srcset="/images/目标挑战奖励.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="目标挑战奖励" style="zoom:50%;" />
+<blockquote>
+<p>以打开桃色门为例：目标是打开桃色门，挑战锁得到开门的能力/钥匙，奖励是新区域。新区域中会有新的游玩内容，新的奖励/能力，于是形成了正反馈，形成扩张式探索</p>
+</blockquote>
+<h3 id="回路探索">回路探索</h3>
+<p>银河恶魔城一般关键能力的获取顺序、关键boss的击杀顺序是固定的，因此流程是线性的。同时该游戏存在破序玩法，可收集道具和某些能力不是必须的，流程又是开放的</p>
+<p>银河恶魔城中由于能力锁的存在，玩家无法通过某个房间后，会回到岔路探索其他房间，获得相关能力后再通过原本无法探索的房间，这个过程就是回路探索。一个探索过的房间，当玩家拥有更新的能力后，会有新的体验。（让我想到一些游戏，当你通关后来到新手村，很多人对你的称呼和态度发生变化，原本的困难的敌人也能做到一击必杀，故地重游也能有新的体验）</p>
+<blockquote>
+<p>他建议我在设计地图时，先设计大块的区域功能和区域间的联系，再设计每个房间的整体设计，画出角色第一次进入房间的行为热线。</p>
+<p>每个房间的作用围绕资源的布置、节奏的控制来分配；每个房间的内部结构结合这个区域的核心机制进行设计</p>
+</blockquote>
+<img src="/images/线性开发.jpg" class="lazyload" data-srcset="/images/线性开发.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="线性开发" style="zoom: 50%;" />
+<p>一张绘制区域内小房间的布局；玩家从首次进入、取得能力、击败boss、进入下一区域的一个动线</p>
+<img src="/images/热线.png" class="lazyload" data-srcset="/images/热线.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="热线" style="zoom:50%;" />
+<h2 id="游戏目标">游戏目标</h2>
+<h3 id="游戏目标-2">游戏目标</h3>
+<p>游戏中玩家目标和设计师的目标可能不一致，从用户出发设计师最先注意的是体验目标</p>
+<img src="/images/游戏目标.png" class="lazyload" data-srcset="/images/游戏目标.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="游戏目标" style="zoom:50%;" />
+<p>玩家目标：玩家在游戏设置的情景中被要求达到的结果（比如打到魔王、赚到一万个金币）</p>
+<p>体验目标：设计师希望玩家通过游戏体验到的内容（比如了解某个文明的文化，掌握超人力量的满足感，感到恐惧、好奇）</p>
+<p>设计目标：设计师希望通过具体的设计手法达到特定的产品效果（比如为长期运营创造空间，简洁扁平的交互设计）</p>
+<h3 id="GMT">GMT</h3>
+<p>G（Goal）：目标</p>
+<p>M（Means）：达成目标的高阶手段</p>
+<p>T（Tools）：将手段细分的具体可执行的低阶要素</p>
+<p>GMT分为玩家目标的GMT和体验目标的GMT</p>
+<h2 id="关卡设计">关卡设计</h2>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/515008876">银河恶魔城入门</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI3MTQzOTY3OQ==&amp;mid=2247494931&amp;idx=1&amp;sn=f1d6cde58404aee53598de4b7016630b&amp;chksm=eac36f43ddb4e6557c4c2d87e3ec93a049da01b15cbad57b86f913eda11987081f75a3c78280&amp;scene=21#wechat_redirect">游戏设计逻辑</a></p>
 
   </div>
   
@@ -2567,10 +2609,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-24T17:20:33+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-25T03:51:04+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年5月24日</p>
+    <p>更新于：2023年5月25日</p>
   </a>
 </div>
 
@@ -2711,7 +2753,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E"><span class="toc-text">银河恶魔城</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E5%8A%9B%E9%94%81"><span class="toc-text">能力锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%B7%AF%E6%8E%A2%E7%B4%A2"><span class="toc-text">回路探索</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E7%9B%AE%E6%A0%87"><span class="toc-text">游戏目标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E7%9B%AE%E6%A0%87-2"><span class="toc-text">游戏目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GMT"><span class="toc-text">GMT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1"><span class="toc-text">关卡设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3255,7 +3297,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河恶魔城设计理念学习/","name":"银河恶魔城设计理念学习"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河恶魔城设计理念学习","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-05-25T01:18:25.000Z","dateModified":"2023-05-24T17:20:33.137Z","articleSection":"game","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河恶魔城设计理念学习/","name":"银河恶魔城设计理念学习"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河恶魔城设计理念学习","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-05-25T01:18:25.000Z","dateModified":"2023-05-25T03:51:04.291Z","articleSection":"game","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
