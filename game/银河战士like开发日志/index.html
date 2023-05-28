@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-05-17T23:01:25.000Z">
-<meta property="article:modified_time" content="2023-05-27T09:26:46.130Z">
+<meta property="article:modified_time" content="2023-05-28T13:59:28.752Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1685179612074),
+    lastupdate: new Date(1685282374278),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2554,7 +2554,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>从<a href="%5BMixamo%5D(https://www.mixamo.com/#/)">Mixamo</a>找一个人物模型，放入场景中</p>
 <p>添加组件Character Controller（该组件会自带一个胶囊碰撞体，可以调整尺寸以适配角色）</p>
 <p>添加组件Player Input</p>
-<p>添加一个脚本<code>Player.cs</code></p>
+<p>添加一个脚本<code>PlayerController.cs</code></p>
 <p><img src="/images/mixamo.png" class="lazyload" data-srcset="/images/mixamo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="mixamo"></p>
 <img src="/images/characterController.png" class="lazyload" data-srcset="/images/characterController.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="characterController" style="zoom:50%;" />
 <h3 id="2-配置Input-Action文件">2. 配置Input Action文件</h3>
@@ -2604,7 +2604,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><img src="/images/blendtree.png" class="lazyload" data-srcset="/images/blendtree.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="blendtree"></p>
 <p>在角色上添加Animator组件，并将上面创建的Animation Controller拖到上面</p>
 <img src="/images/人物动画.png" class="lazyload" data-srcset="/images/人物动画.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="人物动画" style="zoom:50%;" />
-<p>修改<code>Player.cs</code>脚本，根据输入设置动画参数，并处理转向</p>
+<p>修改<code>PlayerController.cs</code>脚本，根据输入设置动画参数，并处理转向</p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">private PlayerInput input;
 private CharacterController controller;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private Animator animator;
@@ -2664,7 +2664,7 @@ private void Update()
 <p>注意设置角色身上的Ground Layer类型</p>
 <p><img src="/images/GroundLayer2.png" class="lazyload" data-srcset="/images/GroundLayer2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="GroundLayer2"></p>
 <h4 id="角色跳跃">角色跳跃</h4>
-<p>下面修改<code>Player.cs</code>，添加跳跃逻辑</p>
+<p>下面修改<code>PlayerController.cs</code>，添加跳跃逻辑</p>
 <p>首先获取CollisionState脚本，以判断是否能进行跳跃</p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">...
 private Animator animator;
@@ -2852,7 +2852,7 @@ private void Update()
 </span><span class="token prefix inserted">+</span><span class="token line">    bool passable = !Physics.Raycast(passablePoint.position, Vector3.right * lookRight, passableTestDistance, groundLayer);
 </span><span class="token prefix inserted">+</span><span class="token line">    return passable;
 </span><span class="token prefix inserted">+</span><span class="token line">&#125;</span></span></code></pre>
-<p>修改<code>Player.cs</code>脚本，感觉角色状态越来越复杂，有些难以管理了，之后要做一个角色状态机</p>
+<p>修改<code>PlayerController.cs</code>脚本，感觉角色状态越来越复杂，有些难以管理了，之后要做一个角色状态机</p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">private bool keepJump = false;  // 保持滞空
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private bool jumping = false;   // 处于跳跃状态
 </span><span class="token prefix inserted">+</span><span class="token line">private bool climbing = false;  // TODO: 角色状态机
@@ -2934,7 +2934,7 @@ private void Update()&#123;
 </span><span class="token prefix inserted">+</span><span class="token line">    Physics.Raycast(ray, out RaycastHit hit);
 </span><span class="token prefix inserted">+</span><span class="token line">    return hit.point;
 </span><span class="token prefix inserted">+</span><span class="token line">&#125;</span></span></code></pre>
-<p>修改脚本<code>Player.cs</code>，实现贴墙时修改Target的位置和Rig权重</p>
+<p>修改脚本<code>PlayerController.cs</code>，实现贴墙时修改Target的位置和Rig权重</p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">[SerializeField, Tooltip("开始加速下落时的速度")] 
 private float fallingSpeedup = 10f;
 
@@ -2965,7 +2965,7 @@ private void Update()
 <p><img src="/images/%E6%8A%93%E5%A2%99%E7%AC%AC%E4%BA%8C%E7%89%88.gif" class="lazyload" data-srcset="/images/%E6%8A%93%E5%A2%99%E7%AC%AC%E4%BA%8C%E7%89%88.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="抓墙第二版"></p>
 <p>尽管还存在臂力惊人单手悬空的问题，但相比上一版已经好了不少</p>
 <h3 id="10-上平台">10. 上平台</h3>
-<p>抓墙的目的自然是为了上平台，修改<code>Player.cs</code>脚本</p>
+<p>抓墙的目的自然是为了上平台，修改<code>PlayerController.cs</code>脚本</p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">[SerializeField, Tooltip("开始加速下落时的速度")] 
 private float fallingSpeedup = 10f;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">[SerializeField, Tooltip("爬墙时向上跳的初速度")]
@@ -3055,7 +3055,7 @@ private bool climbing = false;  // TODO: 角色状态机
 </ol>
 <img src="/images/枪rig.png" class="lazyload" data-srcset="/images/枪rig.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="枪rig" style="zoom:50%;" />
 <ol start="4">
-<li>修改脚本<code>Player.cs</code>，按下左肩键后手臂水平前举，根据左摇杆输入以角色左肩膀为圆心画圆，此外我希望瞄准时角色不要移动</li>
+<li>修改脚本<code>PlayerController.cs</code>，按下左肩键后手臂水平前举，根据左摇杆输入以角色左肩膀为圆心画圆，此外我希望瞄准时角色不要移动</li>
 </ol>
 <pre class="language-diff" data-language="diff"><code class="language-diff"><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">[SerializeField] private Transform gunHandPosition;
 </span><span class="token prefix inserted">+</span><span class="token line">[SerializeField] private Rig gunHandRig;
@@ -3129,7 +3129,7 @@ private void Update()
 <h4 id="瞄准辅助线">瞄准辅助线</h4>
 <p>在角色身上添加LineRenderer组件，设置组件的线Width、材质</p>
 <img src="/images/线渲染器.png" class="lazyload" data-srcset="/images/线渲染器.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="线渲染器" style="zoom:50%;" />
-<p>修改脚本<code>Player.cs</code></p>
+<p>修改脚本<code>PlayerController.cs</code></p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">private CollisionState collisionState;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private LineRenderer lineRenderer;
 </span></span>...
@@ -3177,12 +3177,15 @@ private void Update()
 <img src="/images/激光.png" class="lazyload" data-srcset="/images/激光.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="激光" style="zoom:50%;" />
 <h4 id="发射子弹">发射子弹</h4>
 <ol>
-<li>Input System将手柄X键绑定为Fire开火键</li>
-<li>使用Sphere创建子弹预制体，注意关闭阴影、重力，材质我选用了一个自发光的半透明材质，并为子弹添加了一个碰撞层Bullet</li>
-</ol>
-<img src="/images/子弹.png" class="lazyload" data-srcset="/images/子弹.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="子弹" style="zoom:50%;" />
-<ol start="3">
-<li>编写子弹脚本<code>Bullet.cs</code>，子弹在碰撞到物体时会被销毁，超过一段时间后也会被销毁（具体的碰撞逻辑之后再写）</li>
+<li>
+<p>Input System将手柄X键绑定为Fire开火键</p>
+</li>
+<li>
+<p>使用Sphere创建子弹预制体，注意关闭阴影、重力，材质我选用了一个自发光的半透明材质，并为子弹添加了一个碰撞层Bullet，同时设置其Tag为Bullet，碰撞体采用Trigger</p>
+</li>
+<li>
+<p>编写子弹脚本<code>Bullet.cs</code>，子弹在碰撞到物体时会被销毁，超过一段时间后也会被销毁（具体的碰撞逻辑之后再写）</p>
+</li>
 </ol>
 <pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Bullet</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
 <span class="token punctuation">&#123;</span>
@@ -3203,7 +3206,7 @@ private void Update()
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnCollisionEnter</span><span class="token punctuation">(</span><span class="token class-name">Collision</span> collision<span class="token punctuation">)</span>
+	<span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnTriggerEnter</span><span class="token punctuation">(</span><span class="token class-name">Collider</span> other<span class="token punctuation">)</span>
     <span class="token punctuation">&#123;</span>
         <span class="token function">Destroy</span><span class="token punctuation">(</span>gameObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
@@ -3223,7 +3226,7 @@ private void Update()
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span></code></pre>
 <ol start="5">
-<li>修改<code>Player.cs</code></li>
+<li>修改<code>PlayerController.cs</code></li>
 </ol>
 <pre class="language-diff" data-language="diff"><code class="language-diff">private LineRenderer lineRenderer;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private FireManager fireManager;
@@ -3305,9 +3308,9 @@ private void Update()
         visualEffect<span class="token punctuation">.</span><span class="token function">Stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnCollisionEnter</span><span class="token punctuation">(</span><span class="token class-name">Collision</span> collision<span class="token punctuation">)</span>
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnTriggerEnter</span><span class="token punctuation">(</span><span class="token class-name">Collision</span> other<span class="token punctuation">)</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>collision<span class="token punctuation">.</span>gameObject<span class="token punctuation">.</span><span class="token function">CompareTag</span><span class="token punctuation">(</span><span class="token string">"Bullet"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>other<span class="token punctuation">.</span>gameObject<span class="token punctuation">.</span><span class="token function">CompareTag</span><span class="token punctuation">(</span><span class="token string">"Bullet"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token punctuation">&#123;</span>
             meshRenderer<span class="token punctuation">.</span>enabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
             boxcollider<span class="token punctuation">.</span>enabled <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
@@ -3370,7 +3373,7 @@ private void Update()
 <p><img src="/images/timeline%E5%8A%A8%E4%BD%9C.png" class="lazyload" data-srcset="/images/timeline%E5%8A%A8%E4%BD%9C.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="timeline动作"></p>
 <p>点击播放键可以预览效果</p>
 <h4 id="控制">控制</h4>
-<p>修改脚本<code>Player.cs</code></p>
+<p>修改脚本<code>PlayerController.cs</code></p>
 <pre class="language-diff" data-language="diff"><code class="language-diff">private FireManager fireManager;
 <span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">private PlayableDirector director;
 </span></span>...
@@ -3415,9 +3418,9 @@ private void Update()
 </span><span class="token prefix inserted">+</span><span class="token line">        &#125;
 </span><span class="token prefix inserted">+</span><span class="token line">    &#125;
 </span></span>	...
-<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   private void OnCollisionEnter(Collision collision)
+<span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">   private void OnTriggerEnter(Collision other)
 </span><span class="token prefix unchanged"> </span><span class="token line">   &#123;
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        if (collision.gameObject.CompareTag(TagName))
+</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">        if (other.gameObject.CompareTag(TagName))
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       &#123;
 </span></span>			...
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line">       &#125;
@@ -3427,7 +3430,7 @@ private void Update()
 <p><img src="/images/%E8%BF%91%E6%88%98%E6%96%B9%E5%9D%97.gif" class="lazyload" data-srcset="/images/%E8%BF%91%E6%88%98%E6%96%B9%E5%9D%97.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="近战方块"></p>
 <h3 id="15-零美术成本更换角色模型">15. 零美术成本更换角色模型</h3>
 <blockquote>
-<p>适合完全不会绑骨刷权重K帧的非美术，mmd的模型骨骼一半都十分复杂，并且和mixamo不一致</p>
+<p>适合完全不会绑骨刷权重K帧的非美术，mmd的模型骨骼一般都十分复杂，并且和mixamo不一致</p>
 </blockquote>
 <p>去模之屋等网站获取mmd模型，导入blender中（详情可见blender mmd tools），个人建议选择短发角色</p>
 <p>将角色姿态设为T Pose（你可以进入姿态模式，用手掰，可以放一个水平盒子当辅助线），T Pose很重要！</p>
@@ -3443,9 +3446,327 @@ private void Update()
 <p><img src="/images/%E6%9B%B4%E6%8D%A2%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B.gif" class="lazyload" data-srcset="/images/%E6%9B%B4%E6%8D%A2%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="更换角色模型"></p>
 <h3 id="16-地面敌人AI">16. 地面敌人AI</h3>
 <blockquote>
-<p>使用插件Behavior Trees，Asset Store 45刀</p>
+<p>使用插件Behavior Trees，Asset Store 45刀，参考<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=X7VwAGvAOIw">空洞骑士BOSS战</a></p>
+<p>敌人移动混用了DoTween插件和Charactor Controller</p>
+<p>感觉这一节用文字讲好乏力。。。</p>
 </blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=X7VwAGvAOIw">https://www.youtube.com/watch?v=X7VwAGvAOIw</a></p>
+<h4 id="创建角色单例">创建角色单例</h4>
+<p>创建脚本<code>PlayerInfo.cs</code>，并将其绑定到Player上，该脚本控制了角色血量和是否处于无敌状态</p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PlayerInfo</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> 单例</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">PlayerInfo</span> instance<span class="token punctuation">;</span>
+    <span class="token comment">// 私有构造函数</span>
+    <span class="token keyword">private</span> <span class="token function">PlayerInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">float</span></span> Health <span class="token punctuation">&#123;</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token number">100f</span><span class="token punctuation">;</span>
+    
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> Prop</span>
+    
+    <span class="token punctuation">[</span>SerializeField<span class="token punctuation">,</span> <span class="token function">Tooltip</span><span class="token punctuation">(</span><span class="token string">"处于无敌状态"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> invincible <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span><span class="token punctuation">,</span> <span class="token class-name">Tooltip</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"无敌时间"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> invincibleTime <span class="token operator">=</span> <span class="token number">2f</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span><span class="token punctuation">,</span> <span class="token class-name">Tooltip</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"无敌时闪烁间隔时间"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span> 
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> blinkTime <span class="token operator">=</span> <span class="token number">0.1f</span><span class="token punctuation">;</span>
+    
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span><span class="token punctuation">,</span> <span class="token class-name">Tooltip</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">"角色渲染"</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
+    <span class="token keyword">private</span> <span class="token class-name">SkinnedMeshRenderer</span> playerRenderer<span class="token punctuation">;</span>
+    
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+    
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> Member</span>
+
+    <span class="token comment">// 无敌还剩多长时间</span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> currentInvincibleTime <span class="token operator">=</span> <span class="token number">0f</span><span class="token punctuation">;</span>
+    <span class="token comment">// 闪烁控制时间</span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> currentBlinkTime <span class="token operator">=</span> <span class="token number">0.1f</span><span class="token punctuation">;</span>
+    <span class="token comment">// 闪烁控制</span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> blinkVisible <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">PlayerInfo</span> Instance
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">get</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                instance <span class="token operator">=</span> <span class="token generic-method"><span class="token function">FindObjectOfType</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>PlayerInfo<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+
+            <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name">Vector3</span> PlayerPosition
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">get</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> transform<span class="token punctuation">.</span>position<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">HitPlayer</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">float</span></span> damage<span class="token punctuation">,</span> <span class="token class-name">Vector3</span> enemyPosition<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>invincible<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">Vector3</span> moveDirection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Vector3</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>enemyPosition<span class="token punctuation">.</span>x <span class="token operator">></span> transform<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            moveDirection<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">&#123;</span>
+            moveDirection<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        gameObject<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>CharacterController<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Move</span><span class="token punctuation">(</span>moveDirection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Health <span class="token operator">-=</span> damage<span class="token punctuation">;</span>
+        currentInvincibleTime <span class="token operator">=</span> invincibleTime<span class="token punctuation">;</span>
+        currentBlinkTime <span class="token operator">=</span> blinkTime<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>currentInvincibleTime <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            invincible <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            currentInvincibleTime <span class="token operator">-=</span> Time<span class="token punctuation">.</span>deltaTime<span class="token punctuation">;</span>
+            currentBlinkTime <span class="token operator">-=</span> Time<span class="token punctuation">.</span>deltaTime<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>currentBlinkTime <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                currentBlinkTime <span class="token operator">=</span> blinkTime<span class="token punctuation">;</span>
+                blinkVisible <span class="token operator">=</span> <span class="token operator">!</span>blinkVisible<span class="token punctuation">;</span>
+                playerRenderer<span class="token punctuation">.</span>enabled <span class="token operator">=</span> blinkVisible<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">&#123;</span>
+            invincible <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            playerRenderer<span class="token punctuation">.</span>enabled <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="创建敌人">创建敌人</h4>
+<p>创建脚本<code>EnemyInfo.cs</code>，并挂到敌人身上，此外敌人身上同时挂在Character Controller、Animator、Behaviour（这个稍后再讲）、BoxCollider（这个碰撞盒是用于被攻击的）</p>
+<p>添加碰撞层Enemy，并将敌人设为Enemy（在项目设置中，设置Enemy和玩家不发生碰撞）</p>
+<img src="/images/敌人信息2.png" class="lazyload" data-srcset="/images/敌人信息2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="敌人信息2" style="zoom:50%;" />
+<img src="/images/敌人信息.png" class="lazyload" data-srcset="/images/敌人信息.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="敌人信息" style="zoom:50%;" />
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyInfo</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> maxHealth <span class="token operator">=</span> <span class="token number">30.0f</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> currentHealth<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> findPlayerDistance <span class="token operator">=</span> <span class="token number">10.0f</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        currentHealth <span class="token operator">=</span> maxHealth<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnDrawGizmos</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        Gizmos<span class="token punctuation">.</span>color <span class="token operator">=</span> Color<span class="token punctuation">.</span>red<span class="token punctuation">;</span>
+        Gizmos<span class="token punctuation">.</span><span class="token function">DrawWireSphere</span><span class="token punctuation">(</span>transform<span class="token punctuation">.</span>position<span class="token punctuation">,</span> findPlayerDistance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnTriggerEnter</span><span class="token punctuation">(</span><span class="token class-name">Collider</span> other<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>other<span class="token punctuation">.</span>tag <span class="token operator">==</span> <span class="token string">"Bullet"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            currentHealth <span class="token operator">-=</span> other<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Bullet<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>damage<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="创建敌人攻击碰撞球">创建敌人攻击碰撞球</h4>
+<blockquote>
+<p>我们将敌人受攻击（Box）、敌人和场景的碰撞（CC）、敌人攻击玩家的碰撞（Sphere）分开了</p>
+</blockquote>
+<p>为敌人创建一个子物体叫HitSphere，拥有一个球形碰撞盒和一个碰撞处理脚本，该碰撞球用于攻击玩家</p>
+<p>添加碰撞层EnemyHit，该碰撞层仅和玩家碰撞</p>
+<img src="/images/HitSphere.png" class="lazyload" data-srcset="/images/HitSphere.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="HitSphere" style="zoom:50%;" />
+<p>创建脚本<code>EnemyHitCube.cs</code></p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyHitCube</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnTriggerEnter</span><span class="token punctuation">(</span><span class="token class-name">Collider</span> other<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> playerInfo <span class="token operator">=</span> other<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>PlayerInfo<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>playerInfo <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            playerInfo<span class="token punctuation">.</span><span class="token function">HitPlayer</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> transform<span class="token punctuation">.</span>position<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="创建行为树">创建行为树</h4>
+<p>寻找敌人后打开Behaviour Designer面板，添加任意行为后敌人身上会出现一个Behaviour Tree组件</p>
+<p><img src="/images/%E8%A1%8C%E4%B8%BA%E6%A0%91.png" class="lazyload" data-srcset="/images/%E8%A1%8C%E4%B8%BA%E6%A0%91.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="行为树"></p>
+<p>行为树是由一个个节点组成，当这些节点被执行时，会向其父节点返回执行成功、失败、正在执行等结果</p>
+<ul>
+<li>
+<p>Repeater表示循环执行（我开启了无限循环）</p>
+</li>
+<li>
+<p>Selector是一个或组件，其子节点从左向右开始执行，只要有一个为成功，则返回成功</p>
+</li>
+<li>
+<p>Sequence表示顺序执行，其子节点从左向右执行，直到一个节点返回失败</p>
+</li>
+</ul>
+<p>我为怪物添加了三个行为：</p>
+<ol>
+<li>血量小于0时<code>IsHealthUnder</code>，播放死亡动画，并销毁GameObject</li>
+<li>否则
+<ol>
+<li>若敌人周围有玩家<code>IsFindPlayer</code>，则追逐玩家<code>EnemyPursuit</code></li>
+<li>否则在周围徘徊<code>EnemyMove</code></li>
+</ol>
+</li>
+</ol>
+<h4 id="创建敌人行为和条件基类">创建敌人行为和条件基类</h4>
+<p>创建脚本<code>EnemyAction.cs</code></p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyAction</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Action</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">protected</span> <span class="token class-name">Animator</span> animator<span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> <span class="token class-name">EnemyInfo</span> info<span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> <span class="token class-name">CharacterController</span> controller<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnAwake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        animator <span class="token operator">=</span> <span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Animator<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        info <span class="token operator">=</span> <span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>EnemyInfo<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        controller <span class="token operator">=</span> <span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>CharacterController<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>创建脚本<code>EnemyConditional.cs</code></p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyConditional</span><span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Conditional</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">protected</span> <span class="token class-name">EnemyInfo</span> info<span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> <span class="token class-name">Animator</span> animator<span class="token punctuation">;</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnAwake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        info <span class="token operator">=</span> <span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>EnemyInfo<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        animator <span class="token operator">=</span> <span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Animator<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="创建角色移动、追击、死亡行为">创建角色移动、追击、死亡行为</h4>
+<p>创建脚本<code>EnemyMove.cs</code>，该脚本能使得敌人左右徘徊</p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyMove</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">EnemyAction</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name">SharedBool</span> lookRight<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">SharedFloat</span> currentMoveTime<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> moveSpeed <span class="token operator">=</span> <span class="token number">1.0f</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> moveUseTime <span class="token operator">=</span> <span class="token number">2.0f</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> rotateUseTime <span class="token operator">=</span> <span class="token number">0.5f</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">private</span> <span class="token class-name">Tween</span> rotateTween<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">TaskStatus</span> <span class="token function">OnUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name"><span class="token keyword">float</span></span> direction <span class="token operator">=</span> lookRight<span class="token punctuation">.</span>Value <span class="token punctuation">?</span> <span class="token number">1</span> <span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        currentMoveTime<span class="token punctuation">.</span>Value <span class="token operator">+=</span> Time<span class="token punctuation">.</span>deltaTime<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>currentMoveTime<span class="token punctuation">.</span>Value <span class="token operator">></span> moveUseTime<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            lookRight<span class="token punctuation">.</span>Value <span class="token operator">=</span> <span class="token operator">!</span>lookRight<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
+            currentMoveTime<span class="token punctuation">.</span>Value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            rotateTween <span class="token operator">=</span> DOVirtual<span class="token punctuation">.</span><span class="token function">DelayedCall</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> transform<span class="token punctuation">.</span><span class="token function">DORotateQuaternion</span><span class="token punctuation">(</span>Quaternion<span class="token punctuation">.</span><span class="token function">LookRotation</span><span class="token punctuation">(</span>Vector3<span class="token punctuation">.</span>right <span class="token operator">*</span> <span class="token operator">-</span>direction<span class="token punctuation">)</span><span class="token punctuation">,</span> rotateUseTime<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        
+        controller<span class="token punctuation">.</span><span class="token function">Move</span><span class="token punctuation">(</span>Vector3<span class="token punctuation">.</span>right <span class="token operator">*</span> direction <span class="token operator">*</span> moveSpeed <span class="token operator">*</span> Time<span class="token punctuation">.</span>deltaTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> TaskStatus<span class="token punctuation">.</span>Success<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>创建脚本<code>EnemyPursuit.cs</code>，该脚本能使得敌人向玩家追击</p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyPursuit</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">EnemyAction</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> moveSpeed <span class="token operator">=</span> <span class="token number">1.0f</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> rotateUseTime <span class="token operator">=</span> <span class="token number">0.5f</span><span class="token punctuation">;</span>
+    
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">TaskStatus</span> <span class="token function">OnUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name"><span class="token keyword">float</span></span> direction <span class="token operator">=</span> PlayerInfo<span class="token punctuation">.</span>Instance<span class="token punctuation">.</span>PlayerPosition<span class="token punctuation">.</span>x <span class="token operator">></span> transform<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x <span class="token punctuation">?</span> <span class="token number">1</span> <span class="token punctuation">:</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        DOVirtual<span class="token punctuation">.</span><span class="token function">DelayedCall</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> transform<span class="token punctuation">.</span><span class="token function">DORotateQuaternion</span><span class="token punctuation">(</span>Quaternion<span class="token punctuation">.</span><span class="token function">LookRotation</span><span class="token punctuation">(</span>Vector3<span class="token punctuation">.</span>right <span class="token operator">*</span> direction<span class="token punctuation">)</span><span class="token punctuation">,</span> rotateUseTime<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        controller<span class="token punctuation">.</span><span class="token function">Move</span><span class="token punctuation">(</span>Vector3<span class="token punctuation">.</span>right <span class="token operator">*</span> direction <span class="token operator">*</span> moveSpeed <span class="token operator">*</span> Time<span class="token punctuation">.</span>deltaTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> TaskStatus<span class="token punctuation">.</span>Success<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>创建脚本<code>EnemyDead.cs</code>，该脚本能使敌人死亡</p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnemyDead</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">EnemyAction</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> deadDelayTime <span class="token operator">=</span> <span class="token number">1.0f</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> isDeadFinish <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        DOVirtual<span class="token punctuation">.</span><span class="token function">DelayedCall</span><span class="token punctuation">(</span>deadDelayTime<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span>
+        <span class="token punctuation">&#123;</span>
+            Object<span class="token punctuation">.</span><span class="token function">Destroy</span><span class="token punctuation">(</span>gameObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            isDeadFinish <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">TaskStatus</span> <span class="token function">OnUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> isDeadFinish <span class="token punctuation">?</span> TaskStatus<span class="token punctuation">.</span>Success <span class="token punctuation">:</span> TaskStatus<span class="token punctuation">.</span>Running<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="创建敌人行为条件">创建敌人行为条件</h4>
+<p>创建脚本<code>IsFindPlayer.cs</code>，该脚本用于判断敌人周围是否有角色，如果是刚刚发现，会出发一段动画</p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">IsFindPlayer</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">EnemyConditional</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name">SharedBool</span> firstFindPlayer <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">TaskStatus</span> <span class="token function">OnUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>transform<span class="token punctuation">.</span>position <span class="token operator">-</span> PlayerInfo<span class="token punctuation">.</span>Instance<span class="token punctuation">.</span>PlayerPosition<span class="token punctuation">)</span><span class="token punctuation">.</span>magnitude <span class="token operator">&lt;</span> info<span class="token punctuation">.</span>findPlayerDistance<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>firstFindPlayer<span class="token punctuation">.</span>Value<span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                animator<span class="token punctuation">.</span><span class="token function">SetTrigger</span><span class="token punctuation">(</span><span class="token string">"FindPlayer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            firstFindPlayer<span class="token punctuation">.</span>Value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> TaskStatus<span class="token punctuation">.</span>Success<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">&#123;</span>
+            firstFindPlayer<span class="token punctuation">.</span>Value <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> TaskStatus<span class="token punctuation">.</span>Failure<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>创建脚本<code>IsHealthUnder.cs</code>，该脚本用于判断角色血量是否低于某个数值</p>
+<pre class="language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">IsHealthUnder</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">EnemyConditional</span></span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> underNumber <span class="token operator">=</span> <span class="token number">0f</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">TaskStatus</span> <span class="token function">OnUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>info<span class="token punctuation">.</span>currentHealth <span class="token operator">&lt;=</span> underNumber<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> TaskStatus<span class="token punctuation">.</span>Success<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> TaskStatus<span class="token punctuation">.</span>Failure<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h4 id="效果">效果</h4>
+<p><img src="/images/%E6%80%AA%E7%89%A9AI.gif" class="lazyload" data-srcset="/images/%E6%80%AA%E7%89%A9AI.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="怪物AI"></p>
 
   </div>
   
@@ -3470,10 +3791,10 @@ private void Update()
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-27T09:26:46+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-05-28T13:59:28+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年5月27日</p>
+    <p>更新于：2023年5月28日</p>
   </a>
 </div>
 
@@ -3632,7 +3953,7 @@ private void Update()
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 添加角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEInput-Action%E6%96%87%E4%BB%B6"><span class="toc-text">2. 配置Input Action文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-text">3. 编写移动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">4. 移动动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%B7%B3%E8%B7%83"><span class="toc-text">5. 跳跃</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B"><span class="toc-text">碰撞状态检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%B7%B3%E8%B7%83"><span class="toc-text">角色跳跃</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB"><span class="toc-text">6. 跳跃动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%9B%B8%E6%9C%BA"><span class="toc-text">7. 相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E7%88%AC%E5%A2%99"><span class="toc-text">8. 爬墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%8A%93%E5%A2%99%E5%8A%A8%E7%94%BB"><span class="toc-text">9. 抓墙动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AERig"><span class="toc-text">配置Rig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E6%89%8B%E9%83%A8%E8%90%BD%E5%9C%B0"><span class="toc-text">脚本设置手部落地</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E4%B8%8A%E5%B9%B3%E5%8F%B0"><span class="toc-text">10. 上平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E7%9E%84%E5%87%86%E5%B0%84%E5%87%BB"><span class="toc-text">11. 瞄准射击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1"><span class="toc-text">建模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E6%9E%AA"><span class="toc-text">持枪</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86"><span class="toc-text">瞄准</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86%E8%BE%85%E5%8A%A9%E7%BA%BF"><span class="toc-text">瞄准辅助线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E5%AD%90%E5%BC%B9"><span class="toc-text">发射子弹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%8F%AF%E8%A2%AB%E5%B0%84%E5%87%BB%E7%A0%B4%E7%8E%AF%E7%9A%84%E6%96%B9%E5%9D%97"><span class="toc-text">12. 可被射击破环的方块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%9D%97%E9%A2%84%E5%88%B6%E4%BD%93"><span class="toc-text">方块预制体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%95%88"><span class="toc-text">特效</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E8%BF%91%E6%88%98%E6%94%BB%E5%87%BB"><span class="toc-text">13. 近战攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Timeline"><span class="toc-text">Timeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6"><span class="toc-text">控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%8F%AF%E8%A2%AB%E8%BF%91%E6%88%98%E7%A0%B4%E5%9D%8F%E7%9A%84%E6%96%B9%E5%9D%97"><span class="toc-text">14. 可被近战破坏的方块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E9%9B%B6%E7%BE%8E%E6%9C%AF%E6%88%90%E6%9C%AC%E6%9B%B4%E6%8D%A2%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">15. 零美术成本更换角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-%E5%9C%B0%E9%9D%A2%E6%95%8C%E4%BA%BAAI"><span class="toc-text">16. 地面敌人AI</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">1. 添加角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AEInput-Action%E6%96%87%E4%BB%B6"><span class="toc-text">2. 配置Input Action文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99%E7%A7%BB%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-text">3. 编写移动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%BB%E5%8A%A8%E5%8A%A8%E7%94%BB"><span class="toc-text">4. 移动动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%B7%B3%E8%B7%83"><span class="toc-text">5. 跳跃</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A2%B0%E6%92%9E%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B"><span class="toc-text">碰撞状态检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%B7%B3%E8%B7%83"><span class="toc-text">角色跳跃</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%B7%B3%E8%B7%83%E5%8A%A8%E7%94%BB"><span class="toc-text">6. 跳跃动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E7%9B%B8%E6%9C%BA"><span class="toc-text">7. 相机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E7%88%AC%E5%A2%99"><span class="toc-text">8. 爬墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E6%8A%93%E5%A2%99%E5%8A%A8%E7%94%BB"><span class="toc-text">9. 抓墙动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">安装插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AERig"><span class="toc-text">配置Rig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E6%89%8B%E9%83%A8%E8%90%BD%E5%9C%B0"><span class="toc-text">脚本设置手部落地</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E4%B8%8A%E5%B9%B3%E5%8F%B0"><span class="toc-text">10. 上平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E7%9E%84%E5%87%86%E5%B0%84%E5%87%BB"><span class="toc-text">11. 瞄准射击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1"><span class="toc-text">建模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%81%E6%9E%AA"><span class="toc-text">持枪</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86"><span class="toc-text">瞄准</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9E%84%E5%87%86%E8%BE%85%E5%8A%A9%E7%BA%BF"><span class="toc-text">瞄准辅助线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E5%AD%90%E5%BC%B9"><span class="toc-text">发射子弹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%8F%AF%E8%A2%AB%E5%B0%84%E5%87%BB%E7%A0%B4%E7%8E%AF%E7%9A%84%E6%96%B9%E5%9D%97"><span class="toc-text">12. 可被射击破环的方块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%9D%97%E9%A2%84%E5%88%B6%E4%BD%93"><span class="toc-text">方块预制体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%95%88"><span class="toc-text">特效</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E8%BF%91%E6%88%98%E6%94%BB%E5%87%BB"><span class="toc-text">13. 近战攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Timeline"><span class="toc-text">Timeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6"><span class="toc-text">控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%8F%AF%E8%A2%AB%E8%BF%91%E6%88%98%E7%A0%B4%E5%9D%8F%E7%9A%84%E6%96%B9%E5%9D%97"><span class="toc-text">14. 可被近战破坏的方块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E9%9B%B6%E7%BE%8E%E6%9C%AF%E6%88%90%E6%9C%AC%E6%9B%B4%E6%8D%A2%E8%A7%92%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">15. 零美术成本更换角色模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-%E5%9C%B0%E9%9D%A2%E6%95%8C%E4%BA%BAAI"><span class="toc-text">16. 地面敌人AI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%92%E8%89%B2%E5%8D%95%E4%BE%8B"><span class="toc-text">创建角色单例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%8C%E4%BA%BA"><span class="toc-text">创建敌人</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%8C%E4%BA%BA%E6%94%BB%E5%87%BB%E7%A2%B0%E6%92%9E%E7%90%83"><span class="toc-text">创建敌人攻击碰撞球</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%8C%E4%B8%BA%E6%A0%91"><span class="toc-text">创建行为树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%8C%E4%BA%BA%E8%A1%8C%E4%B8%BA%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%9F%BA%E7%B1%BB"><span class="toc-text">创建敌人行为和条件基类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%92%E8%89%B2%E7%A7%BB%E5%8A%A8%E3%80%81%E8%BF%BD%E5%87%BB%E3%80%81%E6%AD%BB%E4%BA%A1%E8%A1%8C%E4%B8%BA"><span class="toc-text">创建角色移动、追击、死亡行为</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%8C%E4%BA%BA%E8%A1%8C%E4%B8%BA%E6%9D%A1%E4%BB%B6"><span class="toc-text">创建敌人行为条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C"><span class="toc-text">效果</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -4176,7 +4497,7 @@ private void Update()
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-27T09:26:46.130Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/game/","name":"game"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/game/银河战士like开发日志/","name":"银河战士like开发日志"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"银河战士like开发日志","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/","wordCount":0,"datePublished":"2023-05-17T23:01:25.000Z","dateModified":"2023-05-28T13:59:28.752Z","articleSection":"game","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
