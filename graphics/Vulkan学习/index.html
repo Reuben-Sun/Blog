@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-06-13T22:16:25.000Z">
-<meta property="article:modified_time" content="2023-06-13T03:33:28.077Z">
+<meta property="article:modified_time" content="2023-06-13T05:58:50.480Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Vulkan">
 <meta property="article:tag" content="Ray Tracing">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1686627221874),
+    lastupdate: new Date(1686635992337),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2591,6 +2591,75 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 </li>
 </ul>
+<h2 id="窗口与UI">窗口与UI</h2>
+<p>英伟达的教程使用GLFW创建窗口，使用IMGUI制作UI</p>
+<h3 id="GLFW">GLFW</h3>
+<p>一个开源的跨平台窗口库，支持OpenGL和Vulkan上下文，常用于开发图形密集型程序</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+  <span class="token comment">// 设置错误回调</span>
+  <span class="token function">glfwSetErrorCallback</span><span class="token punctuation">(</span>onErrorCallback<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// glfw初始化</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">glfwInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
+  <span class="token comment">// 设置窗口的客户端API，GLFW_NO_API表示不使用Vulkan/OpenGL（你可以自己创建Vulkan对象）</span>
+  <span class="token function">glfwWindowHint</span><span class="token punctuation">(</span>GLFW_CLIENT_API<span class="token punctuation">,</span> GLFW_NO_API<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 创建窗口，设置窗口大小、标题、不使用共享上下文和监视器</span>
+  GLFWwindow<span class="token operator">*</span> window <span class="token operator">=</span> <span class="token function">glfwCreateWindow</span><span class="token punctuation">(</span>SAMPLE_WIDTH<span class="token punctuation">,</span> SAMPLE_HEIGHT<span class="token punctuation">,</span> PROJECT_NAME<span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 主循环，直到窗口需要被关闭</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">glfwWindowShouldClose</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 处理窗口事件</span>
+    <span class="token function">glfwPollEvents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">// 销毁窗口</span>
+  <span class="token function">glfwDestroyWindow</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 释放glfw资源</span>
+  <span class="token function">glfwTerminate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h3 id="IMGUI">IMGUI</h3>
+<p>Dear IMGUI一个广泛用于游戏开发的轻量级UI库，可以与Vulkan和GLFW集成</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">HelloVulkan helloVk<span class="token punctuation">;</span>
+<span class="token function">ImGui_ImplGlfw_InitForVulkan</span><span class="token punctuation">(</span>window<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Main loop</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">glfwWindowShouldClose</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token comment">// Start the Dear ImGui frame</span>
+  <span class="token function">ImGui_ImplGlfw_NewFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">NewFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Show UI window.</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>helloVk<span class="token punctuation">.</span><span class="token function">showGui</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>
+    ImGuiH<span class="token double-colon punctuation">::</span><span class="token class-name">Panel</span><span class="token double-colon punctuation">::</span><span class="token function">Begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">ColorEdit3</span><span class="token punctuation">(</span><span class="token string">"Clear color"</span><span class="token punctuation">,</span> <span class="token generic-function"><span class="token function">reinterpret_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>clearColor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">renderUI</span><span class="token punctuation">(</span>helloVk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"Application average %.3f ms/frame (%.1f FPS)"</span><span class="token punctuation">,</span> <span class="token number">1000.0f</span> <span class="token operator">/</span> <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">GetIO</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Framerate<span class="token punctuation">,</span> <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">GetIO</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Framerate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ImGuiH<span class="token double-colon punctuation">::</span><span class="token class-name">Control</span><span class="token double-colon punctuation">::</span><span class="token function">Info</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"(F10) Toggle Pane"</span><span class="token punctuation">,</span> ImGuiH<span class="token double-colon punctuation">::</span>Control<span class="token double-colon punctuation">::</span>Flags<span class="token double-colon punctuation">::</span>Disabled<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ImGuiH<span class="token double-colon punctuation">::</span><span class="token class-name">Panel</span><span class="token double-colon punctuation">::</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// Start rendering the scene</span>
+  helloVk<span class="token punctuation">.</span><span class="token function">prepareFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Start command buffer of this frame</span>
+  <span class="token keyword">auto</span>                   curFrame <span class="token operator">=</span> helloVk<span class="token punctuation">.</span><span class="token function">getCurFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> VkCommandBuffer<span class="token operator">&amp;</span> cmdBuf   <span class="token operator">=</span> helloVk<span class="token punctuation">.</span><span class="token function">getCommandBuffers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span>curFrame<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  <span class="token comment">// Rendering UI</span>
+  <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">Render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">ImGui_ImplVulkan_RenderDrawData</span><span class="token punctuation">(</span><span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">GetDrawData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cmdBuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">vkCmdEndRenderPass</span><span class="token punctuation">(</span>cmdBuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Submit for display</span>
+  <span class="token function">vkEndCommandBuffer</span><span class="token punctuation">(</span>cmdBuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  helloVk<span class="token punctuation">.</span><span class="token function">submitFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="Vulkan">Vulkan</h2>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/nvpro-samples/build_all">英伟达 Vulkan Sample</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ocornut/imgui">IMGUI</a></p>
 
   </div>
   
@@ -2615,7 +2684,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-06-13T03:33:28+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-06-13T05:58:50+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年6月13日</p>
@@ -2767,7 +2836,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3%E4%B8%8EUI"><span class="toc-text">窗口与UI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GLFW"><span class="toc-text">GLFW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMGUI"><span class="toc-text">IMGUI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulkan"><span class="toc-text">Vulkan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3311,7 +3380,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2023-06-13T03:33:28.077Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2023-06-13T05:58:50.480Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
