@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Vulkan学习笔记</title>
+      <link href="/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"/>
+      <url>/graphics/Vulkan%E5%AD%A6%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<h1>Vulkan学习笔记</h1><blockquote><p>在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达的Vulakn Ray Tracing教程</p></blockquote><h2 id="Shader">Shader</h2><p>Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制语言，可以使用GLSL等语言编译出来</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> graphics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Vulkan </tag>
+            
+            <tag> Ray Tracing </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>银河恶魔城设计理念学习</title>
       <link href="/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/"/>
       <url>/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/</url>
