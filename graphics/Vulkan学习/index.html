@@ -42,11 +42,11 @@
 <meta property="og:title" content="Vulkan学习笔记">
 <meta property="og:url" content="https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Vulkan学习笔记  在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达的Vulakn Ray Tracing教程  Shader Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制语言，可以使用GLSL等语言编译出来">
+<meta property="og:description" content="Vulkan学习笔记  在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达的Vulakn Ray Tracing教程  Shader Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语言，可以使用glslang编译GLSL得到 # 将vert_shader.v">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-06-13T22:16:25.000Z">
-<meta property="article:modified_time" content="2023-06-13T02:54:41.914Z">
+<meta property="article:modified_time" content="2023-06-13T03:33:28.077Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Vulkan">
 <meta property="article:tag" content="Ray Tracing">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1686624896262),
+    lastupdate: new Date(1686627221874),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2548,7 +2548,49 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达的Vulakn Ray Tracing教程</p>
 </blockquote>
 <h2 id="Shader">Shader</h2>
-<p>Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制语言，可以使用GLSL等语言编译出来</p>
+<p>Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语言，可以使用glslang编译GLSL得到</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将vert_shader.vert编译为vert_spv</span>
+<span class="token variable">$glslangValidator</span> <span class="token parameter variable">-V</span> vert_shader.vert
+<span class="token comment"># 将vert_shader.vert编译为test.spv</span>
+<span class="token variable">$glslangValidator</span> <span class="token parameter variable">-V</span> vert_shader.vert <span class="token parameter variable">-o</span> test.spv</code></pre>
+<h3 id="cmake">cmake</h3>
+<p>cmake在项目构建时可以通过echo执行命令行命令，以实现shader编译</p>
+<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_custom_command</span><span class="token punctuation">(</span>
+         PRE_BUILD
+         OUTPUT <span class="token punctuation">$&#123;</span>GLSL_OUT<span class="token punctuation">&#125;</span>
+         COMMAND echo <span class="token punctuation">$&#123;</span>GLSLANGVALIDATOR<span class="token punctuation">&#125;</span> <span class="token punctuation">$&#123;</span>COMPILE_CMD<span class="token punctuation">&#125;</span>
+         COMMAND <span class="token punctuation">$&#123;</span>GLSLANGVALIDATOR<span class="token punctuation">&#125;</span> <span class="token punctuation">$&#123;</span>COMPILE_CMD<span class="token punctuation">&#125;</span>
+         MAIN_DEPENDENCY <span class="token punctuation">$&#123;</span>GLSL_SRC<span class="token punctuation">&#125;</span>
+         <span class="token property">WORKING_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">&#125;</span>
+         <span class="token property">DEPENDS</span> <span class="token punctuation">$&#123;</span>GLSL_DEPENDENCY<span class="token punctuation">&#125;</span>
+      <span class="token punctuation">)</span></code></pre>
+<h3 id="GLSL文件类型">GLSL文件类型</h3>
+<ul>
+<li>头文件（header）
+<ul>
+<li><code>.glsl</code></li>
+<li><code>.h</code></li>
+</ul>
+</li>
+<li>源文件（source）
+<ul>
+<li><code>.comp</code>：Compute</li>
+<li><code>.frag</code>：Fragment</li>
+<li><code>.geom</code>：Geometry</li>
+<li><code>.mesh</code>：Mesh</li>
+<li><code>.rahit</code>：Ray any hit</li>
+<li><code>.rcall</code>：Ray callable</li>
+<li><code>.rchit</code>：Ray closest hit</li>
+<li><code>.rgen</code>：Ray generation</li>
+<li><code>.rint</code>：Ray intersection</li>
+<li><code>.rmiss</code>：Ray miss</li>
+<li><code>.task</code>：Task</li>
+<li><code>.tesc</code>：Tessellation control</li>
+<li><code>.tese</code>：Tessellation evaluation</li>
+<li><code>.vert</code>：Vertex</li>
+</ul>
+</li>
+</ul>
 
   </div>
   
@@ -2573,7 +2615,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-06-13T02:54:41+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-06-13T03:33:28+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年6月13日</p>
@@ -2725,7 +2767,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake"><span class="toc-text">cmake</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3269,7 +3311,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2023-06-13T02:54:41.914Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2023-06-13T03:33:28.077Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
