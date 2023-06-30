@@ -42,11 +42,11 @@
 <meta property="og:title" content="C与C++的DLL">
 <meta property="og:url" content="https://reubensun.com/program/C++DLL/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="C与C++的DLL  今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括C++风格的DLL，我才知道，DLL建议写C风格的  根本原因是，C++功能复杂，更依赖Name Mangling，而三大编译器具体实现不尽相同，使得ABI不确定 ABI  ABI（Application binary interface） API（Application Programming Inter">
+<meta property="og:description" content="C与C++的DLL  今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括C++风格的DLL，我才知道，DLL建议写C风格的  根本原因是，C++功能复杂，更依赖Name Mangling，而三大编译器具体实现不尽相同，使得ABI不确定 DLL  我们都知道，代码到可执行文件，要先代码编译得到目标文件，目标文件链接得到可执行文件。但其实可执行文件在执行时，还会进行装载  DLL的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-03-08T15:01:25.000Z">
-<meta property="article:modified_time" content="2023-06-30T09:51:47.341Z">
+<meta property="article:modified_time" content="2023-06-30T10:40:16.992Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1688118734739),
+    lastupdate: new Date(1688121635573),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2547,15 +2547,33 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括C++风格的DLL，我才知道，DLL建议写C风格的</p>
 </blockquote>
 <p>根本原因是，C++功能复杂，更依赖Name Mangling，而三大编译器具体实现不尽相同，使得ABI不确定</p>
-<h3 id="ABI">ABI</h3>
+<h2 id="DLL">DLL</h2>
+<blockquote>
+<p>我们都知道，代码到可执行文件，要先代码<strong>编译</strong>得到目标文件，目标文件<strong>链接</strong>得到可执行文件。但其实可执行文件在执行时，还会进行<strong>装载</strong></p>
+</blockquote>
+<p>DLL的本质其实是<strong>目标文件</strong>的打包，由目标文件和三张表组成</p>
+<h3 id="编译">编译</h3>
+<p>代码会编译为目标文件<code>.obj</code>，目标文件中包含<strong>导出符号表</strong>，这些符号会有明确的地址</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// test1.cpp</span>
+<span class="token keyword">int</span> a<span class="token punctuation">;</span>		<span class="token comment">// 在test1.obj文件中a有明确的地址</span></code></pre>
+<p>有的文件中会有只声明，没有实现的符号，放在<strong>未解决符号表</strong>中。在这些符号没有明确的地址，需要去其他目标文件中寻找</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//test2.cpp</span>
+<span class="token keyword">extern</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span>		<span class="token comment">// 在test2.obj文件中a没有明确的地址</span></code></pre>
+<h3 id="链接与装载">链接与装载</h3>
+<p>若程序为<strong>静态链接</strong>，编译器会在链接阶段扫描导出符号表中的符号地址，将计算后的地址写给未解决符号表中的符号，这个过程被称为重定位</p>
+<p>也就是说，从<code>test1.obj</code>中得到<code>a</code>的地址，经过计算，写给<code>test2.obj</code>中的<code>a</code>，这个过程会记录在<strong>地址重定向表</strong>中</p>
+<p>若程序为<strong>动态链接</strong>，程序会在装载阶段做地址重定向</p>
+<h2 id="ABI">ABI</h2>
 <blockquote>
 <p>ABI（Application binary interface）</p>
 <p>API（Application Programming Interface）</p>
 </blockquote>
-<p>当你在写代码时，经常会通过API访问库中的函数、数据结构。代码被编译后，生成大量二进制数据，ABI中包含了二进制的结构布局、访问方法，应用程序可以通过ABI访问库中的二进制数据</p>
-<p>ABI是一个格式，代码编译出的ABI与编程语言、操作系统、编译器有关，通常是不确定的</p>
-<h4 id="ELF格式">ELF格式</h4>
-<p>ELF（Executable and Linkable Format），可执行可链接格式，是Unix系统ABI的文件格式</p>
+<p>为了保证动态库的版本兼容性，大部分平台会要与DLL函数编写时，要符合ABI</p>
+<p>ABI包含了二进制的结构布局、访问方法，应用程序可以通过ABI访问库中的二进制数据，代码编译出的ABI与编程语言、操作系统、编译器有关，通常是不确定的</p>
+<h3 id="二进制文件格式">二进制文件格式</h3>
+<p>不同操作系统的二进制可执行文件格式不同，因此无法兼容</p>
+<p>ELF（Executable and Linkable Format），可执行可链接格式，是Linux系统的二进制可执行文件格式</p>
+<p>PE（Portable Executable），可移植可执行格式，是Windows系统的二进制可执行文件格式</p>
 <h3 id="Name-Mangling">Name Mangling</h3>
 <p>Name Mangling会对名字进行重新编码，以实现名字的唯一性</p>
 <p>C++支持函数重载、类、命名空间、模版，一个类中可以有多个重名函数、重名成员变量，这些名称编译后本质是不同的二进制，因此要做更复杂的Name Mangling</p>
@@ -2563,7 +2581,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="C的DLL">C的DLL</h3>
 <p>和C++相比，C就简单得多</p>
 <p>大多数语言都提供了一些简单的方法调用C的DLL，而且C++编译器也支持导出C语言的DLL</p>
-<h3 id="生成DLL">生成DLL</h3>
+<h2 id="生成DLL">生成DLL</h2>
+<p>Windows下生成DLL会得到三个产物：include头文件，dll文件，import library文件</p>
+<blockquote>
+<p>注意import library文件的后缀是<code>.lib</code>，但这个文件只是存储了符号表，并不是其他平台的静态库</p>
+</blockquote>
+<h3 id="MT与MD">MT与MD</h3>
+<blockquote>
+<p>操作系统将一些高频使用的代码写成DLL，并永远加载在内存中，称为CRT库</p>
+</blockquote>
+<p>在VS生成DLL时，有MT和MD两个选项</p>
+<p>MD指动态C运行时，程序执行时依赖于操作系统提供的CRT</p>
+<p>MT指静态C运行时，程序会将操作系统的一些CRT静态链接到程序中，运行时就不需要从操作系统那里装载</p>
+<p>值得注意的是，如果一个程序混用MT和MD，很容易出现版本不兼容的错误（尤其是在使用编译好的第三方库时）</p>
+<h3 id="C-生成DLL">C++生成DLL</h3>
 <p>CMakeList.txt</p>
 <pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">SET</span><span class="token punctuation">(</span>LIB_SRC ./Math.h ./Math.cpp<span class="token punctuation">)</span>
 <span class="token function">SET</span><span class="token punctuation">(</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span> ../libMath<span class="token punctuation">)</span>
@@ -2586,7 +2617,13 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 <span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span></code></pre>
-<h3 id="动态加载DLL">动态加载DLL</h3>
+<h2 id="动态加载DLL">动态加载DLL</h2>
+<p>windows下DLL加载：</p>
+<ol>
+<li>分析可执行文件的导入符号表，查找所需要的dll文件</li>
+<li>为dll文件开辟虚拟地址空间</li>
+<li>当dll被真正调用时，将dll文件加载到内存中</li>
+</ol>
 <pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
 
@@ -2627,7 +2664,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-06-30T09:51:47+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-06-30T10:40:16+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年6月30日</p>
@@ -2788,7 +2825,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ELF%E6%A0%BC%E5%BC%8F"><span class="toc-text">ELF格式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E7%9A%84DLL"><span class="toc-text">C的DLL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90DLL"><span class="toc-text">生成DLL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDDLL"><span class="toc-text">动态加载DLL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DLL"><span class="toc-text">DLL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E4%B8%8E%E8%A3%85%E8%BD%BD"><span class="toc-text">链接与装载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">二进制文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E7%9A%84DLL"><span class="toc-text">C的DLL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90DLL"><span class="toc-text">生成DLL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MT%E4%B8%8EMD"><span class="toc-text">MT与MD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%94%9F%E6%88%90DLL"><span class="toc-text">C++生成DLL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDDLL"><span class="toc-text">动态加载DLL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3332,7 +3369,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++DLL/","name":"C与C++的DLL"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C与C++的DLL","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++DLL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++DLL/","wordCount":0,"datePublished":"2023-03-08T15:01:25.000Z","dateModified":"2023-06-30T09:51:47.341Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++DLL/","name":"C与C++的DLL"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C与C++的DLL","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++DLL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++DLL/","wordCount":0,"datePublished":"2023-03-08T15:01:25.000Z","dateModified":"2023-06-30T10:40:16.992Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
