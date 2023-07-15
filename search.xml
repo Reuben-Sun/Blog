@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>文明6like 塔防</title>
+      <link href="/game/%E6%96%87%E6%98%8E6like/"/>
+      <url>/game/%E6%96%87%E6%98%8E6like/</url>
+      
+        <content type="html"><![CDATA[<h1>文明6like塔防</h1><h2 id="文明6的体验">文明6的体验</h2><h3 id="游戏体验">游戏体验</h3><p>最近玩了几百小时的文明六，感觉意犹未尽，却又索然无味，想抽掉一些内容，自己做一个简易版的文明6，个人希望加强塔防、改良、贸易等元素，减少兵种操作、城市铺设。</p><p>我玩文明6，最让人兴奋的就是地块高额的产出（尤其是保护区单元格，太美丽了），我希望我的游戏也要着重地块产出和自肃</p><p>我玩文明6，最让人气愤的是AI起城墙，文明6的城墙等级几乎没用（历史上的城墙在不同时期有不同形态和意义），而城墙强度又过高（对远程和骑兵过于不友好），而且兵种和城墙间没有很好的联动，最近看了一些长城和棱堡的视频，感觉这谐内容很有意思</p><p>不过如果要做兵种和城墙这种微操，城市的数量不能太多，我打算将视角转化到城市，你拥有一个首都和少量卫星城市，从刀耕火种的营地，最后到世界级的城市</p><h3 id="感受文化">感受文化</h3><blockquote><p>参考<a href="https://www.bilibili.com/video/BV1Yr4y1G788/?spm_id_from=333.788&amp;vd_source=7cf90c391cc9c5398532df5ea93ccded">棱堡为什么消失</a>、</p></blockquote><p>文明6有一个目的是让玩家体验各个文明的特色和历史进程。通过玩文明6，我知道了蒙古除了擅长骑射外，还拥有一支庞大的重骑兵“怯薛歹”；我知道了长城除了据马、传信等功能外，还能掌控海关，在互市中实现剪刀差；我知道了马镫的出现使得骑兵成为战场上的大杀器，铁才是重骑兵生产需要的战略资源；我知道了火枪时代曾经有着排队枪毙的线列步兵，这个兵种让战争彻底平民化、综合国力化；诸如此类，数不胜数</p><p>我想让玩家体验的，其实是城墙的发展史</p><ol><li>远古城墙，是低矮的土墙，这些墙可以被人轻易翻过，但是无法让马越过，于是实现了拒马的作用</li><li>古典时期城墙变高，城墙上设有射击点，以增大攻城成本<ol><li>尤其是长城这类城墙，在军事上可以限制骑兵，可以逼迫攻城方带大型器械（对于游牧民族是很困难的），可以给中央反应时间，可以限制敌人行军路径（一般从哪里破城，劫掠后就从哪里出去，毕竟劫掠时不可能带着攻城器械），可以作为高速公路实现运兵（不用爬山了）；在经济上可以避免游牧劫掠，互市实现剪刀差，</li></ol></li><li>奥斯曼帝国时期，火药开始用于攻城，大炮对城墙的破坏力大大提高，此时（中世纪）城墙开始变矮变厚，此时城墙的拐角处往往会呈圆形突出，各个突出可以实现互相掩护，以降低射击死角</li></ol><p><img src="/images/%E4%B8%AD%E4%B8%96%E7%BA%AA%E5%9F%8E%E5%A2%99.png" class="lazyload" data-srcset="/images/%E4%B8%AD%E4%B8%96%E7%BA%AA%E5%9F%8E%E5%A2%99.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="中世纪城墙"></p><ol start="4"><li>文艺复兴时期，弹道学被发明，为了减少守军的射击死角，射击坡和棱堡出现了，拥有更大的控制区和更小的射击死角（但棱堡有些贵了）</li></ol><p><img src="/images/%E6%A3%B1%E5%A0%A1.png" class="lazyload" data-srcset="/images/%E6%A3%B1%E5%A0%A1.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="棱堡"></p><p><img src="/images/%E6%A3%B1%E5%A0%A12.png" class="lazyload" data-srcset="/images/%E6%A3%B1%E5%A0%A12.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="棱堡2"></p><ol start="6"><li>拿破仑时期发现城墙完全没有意义，因为法军会绕开坚城，直取首都，然后围点打援，于是在一战前，往往城市外面的山坡上设立一个个小的孤立要塞，敌人在攻城时这些要塞的大炮可以提供火力掩护，敌人在移动时也可以进行敌人探测和阻击，而且更<strong>便宜</strong></li></ol><p><img src="/images/%E8%A6%81%E5%A1%9E.png" class="lazyload" data-srcset="/images/%E8%A6%81%E5%A1%9E.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="要塞"></p><ol start="7"><li>南北战争时期，多边形城堡出现，除了射击坡外，一大特点是有地下隐藏火力点，敌人攻城时，除了受到正面的射击外，还会收到背后两侧的射击</li></ol><p><img src="/images/%E5%A4%9A%E8%BE%B9%E5%BD%A2%E8%A6%81%E5%A1%9E.png" class="lazyload" data-srcset="/images/%E5%A4%9A%E8%BE%B9%E5%BD%A2%E8%A6%81%E5%A1%9E.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="多边形要塞"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> game </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Git使用记录</title>
       <link href="/program/Git%E5%85%A5%E9%97%A8/"/>
       <url>/program/Git%E5%85%A5%E9%97%A8/</url>
