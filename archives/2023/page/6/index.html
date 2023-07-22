@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1689501953502),
+    lastupdate: new Date(1690013245285),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2461,313 +2461,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <section class="post-list">
     
     
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/TA面试题/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"  itemprop="url">
-        TA面试题
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        TA面试题
-这里面不少答案都是我自己凭感觉答的，不保真
-什么是渲染管线
-渲染管线是通过安排CPU发出Draw Call的内容以及顺序，指导GPU进行一系列操作，并协同将开发者期待的图像渲染在屏幕上
-
-剔除
-渲染
-后处理
-
-什么是Draw Call
-Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操作，是重量级的
-什么是Batching
-将多个简单、使用同一材质的物体...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/Nabla算子/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/Nabla%E7%AE%97%E5%AD%90/"  itemprop="url">
-        Nabla算子
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Nabla算子
-参考
-$\nabla$：Nabla算子，将数量场变成向量场
-
-
-当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
-
-
-当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
-
-
-当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
-
-
-函数可视化
-对于函数$f(x,y)=x^2+y^2$，我们有两种可视化...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/复变函数/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
-        复变函数
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        复变函数
-复变函数
-复数
-复数可以表示为实数和纯虚数的和
-代数式：
-$$
-z=x+\mathrm{i}y
-$$
-
-x：实部，记为Re z
-y：虚部，记为Im z
-
-复平面：
-
-极坐标下
-$$
-\begin{cases}
-\rho=\sqrt{x^2+y^2} \
-\varphi=\arctan (y/x)
-\end{cases}
-$$
-$$
-\begin{cases}
-x=\rho \cos...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
       
         
           <div class='post-wrapper'>
@@ -3251,6 +2944,312 @@ x_1-2x_2+x_3=0 \\
           </div>
         
       
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/optics/波动光学/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/"  itemprop="url">
+        光学：波动光学
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        二：波动光学
+内容概述
+
+简谐波（simple harmonic waves）
+傅里叶变换（Fourier Transform）
+波的物理量
+
+数学基础
+常用函数
+三角函数
+欧拉公式
+$$
+e^{\mathrm{i}x}=\cos x + \mathrm{i}\sin x
+$$
+三角函数的复数表示
+$$
+\sin z=\frac{e^{\mathrm{i}z}-e^{-\mathrm{i}z...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/optics/">optics</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/optics/电磁波/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/"  itemprop="url">
+        光学：电磁波
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        三：电磁波
+内容概述
+
+横波的性质（nature），强度（intensity），能量流动（energyflow）
+偏振态（Polarization states），琼斯矩阵（Jones matrix/vector）
+吸收（Absorption），色散（dispersion），折射率（refractive index）
+微小粒子导致的散射（Scattering）
+
+波
+构成波的条件：
+
+波源
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/optics/">optics</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/Effective C++/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/Effective%20C++/"  itemprop="url">
+        Effective C++
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Effective C++
+一：C++基础
+C++很成熟，很NB
+C++支持面向过程（procedural）、面向对象（object-orientend）、函数形式（functional）、泛型形式（generic）、元编程形式（metaprogramming）
+其核心是四个部分
+
+C
+
+区块block
+语句statements
+预处理器preprocessor
+内置数据类型
+数组array...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/Effective%20C++/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/Ubuntu入门/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/Ubuntu%E5%85%A5%E9%97%A8/"  itemprop="url">
+        Ubuntu入门
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Ubuntu入门
+虽说是Ubuntu，实际上是WSL2
+你可以使用neofetch查看系统信息
+
+环境搭建
+VS Code
+
+在Windows系统中安装VS Code，并选择添加PATH
+在WSL中如果要打开当前目录，直接输入
+
+$code .
+推荐安装VS Code的WSL插件
+使用快捷键CTRL+SHIFT+P，打开命令面板，键入WSL，进行一些设置
+Git
+使用Git前需要先配置git...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/Ubuntu%E5%85%A5%E9%97%A8/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
     
   </section>
   
@@ -3265,14 +3264,8 @@ x_1-2x_2+x_3=0 \\
           </a>
         
         <p class="current">
-          6 / 7
+          6 / 6
         </p>
-        
-          <a class="next" rel="next" href="/archives/2023/page/7/">
-            <section class="post next white-box shadow floatable blur">
-              &nbsp;下一页&nbsp;<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-            </section>
-          </a>
         
       </div>
     
@@ -3369,7 +3362,7 @@ x_1-2x_2+x_3=0 \\
           <li><a class="flat-box"
             title="/categories/engine/" href="/categories/engine/"
             active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(4)</div></a></li>
+            ><div class='name'>engine</div><div class='badge'>(3)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/game/" href="/categories/game/"
@@ -3379,7 +3372,7 @@ x_1-2x_2+x_3=0 \\
           <li><a class="flat-box"
             title="/categories/graphics/" href="/categories/graphics/"
             active-action="action-categoriesgraphics"
-            ><div class='name'>graphics</div><div class='badge'>(15)</div></a></li>
+            ><div class='name'>graphics</div><div class='badge'>(12)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/math/" href="/categories/math/"
@@ -3419,7 +3412,7 @@ x_1-2x_2+x_3=0 \\
 
 
     <div class='content'>
-      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/C/" style="font-size: 15.67px; color: #8e8e8e">C#</a> <a href="/tags/C/" style="font-size: 24px; color: #555">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DLSS/" style="font-size: 14px; color: #999">DLSS</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 14px; color: #999">Deferred Render</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 15.67px; color: #8e8e8e">GC</a> <a href="/tags/GI/" style="font-size: 19px; color: #777">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="/tags/Metal/" style="font-size: 14px; color: #999">Metal</a> <a href="/tags/MetalFX/" style="font-size: 14px; color: #999">MetalFX</a> <a href="/tags/Model/" style="font-size: 14px; color: #999">Model</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Physics/" style="font-size: 14px; color: #999">Physics</a> <a href="/tags/Python/" style="font-size: 17.33px; color: #828282">Python</a> <a href="/tags/Ray-Tracing/" style="font-size: 14px; color: #999">Ray Tracing</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 15.67px; color: #8e8e8e">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/TA/" style="font-size: 17.33px; color: #828282">TA</a> <a href="/tags/Unity/" style="font-size: 20.67px; color: #6c6c6c">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/blender/" style="font-size: 14px; color: #999">blender</a> <a href="/tags/leetcode/" style="font-size: 15.67px; color: #8e8e8e">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 24px; color: #555">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 22.33px; color: #606060">高等数学</a>
+      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/C/" style="font-size: 16px; color: #8b8b8b">C#</a> <a href="/tags/C/" style="font-size: 24px; color: #555">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 14px; color: #999">Deferred Render</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 16px; color: #8b8b8b">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="/tags/Metal/" style="font-size: 14px; color: #999">Metal</a> <a href="/tags/Model/" style="font-size: 14px; color: #999">Model</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Physics/" style="font-size: 14px; color: #999">Physics</a> <a href="/tags/Python/" style="font-size: 18px; color: #7e7e7e">Python</a> <a href="/tags/Ray-Tracing/" style="font-size: 14px; color: #999">Ray Tracing</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/TA/" style="font-size: 18px; color: #7e7e7e">TA</a> <a href="/tags/Unity/" style="font-size: 20px; color: #707070">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/blender/" style="font-size: 14px; color: #999">blender</a> <a href="/tags/leetcode/" style="font-size: 16px; color: #8b8b8b">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 24px; color: #555">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 22px; color: #636363">高等数学</a>
     </div>
   </section>
 
