@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>六边形地图</title>
+      <link href="/game/%E5%85%AD%E8%BE%B9%E5%BD%A2%E5%9C%B0%E5%9B%BE/"/>
+      <url>/game/%E5%85%AD%E8%BE%B9%E5%BD%A2%E5%9C%B0%E5%9B%BE/</url>
+      
+        <content type="html"><![CDATA[<h1>六边形地图</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> game </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Unity </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>文明6like</title>
       <link href="/game/%E6%96%87%E6%98%8E6like/"/>
       <url>/game/%E6%96%87%E6%98%8E6like/</url>
