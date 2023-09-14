@@ -5,8 +5,8 @@
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://reubensun.com/"/>
+  
+  <link rel="canonical" href="https://reubensun.com/program/内存分配/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,19 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>ReubenSun</title>
-  <meta name="keywords" content="reubensun computer graphics engine Technical Artist">
+  <title>算法：前缀和 - ReubenSun</title>
+  <meta name="keywords" content="leetcode,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
-<meta property="og:type" content="website">
-<meta property="og:title" content="ReubenSun">
-<meta property="og:url" content="https://reubensun.com/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法：前缀和">
+<meta property="og:url" content="https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Reuben的笔记博客">
+<meta property="og:description" content="内存分配  最近看了一些关于内存分配的分享，发现操作系统相关的知识都忘光了，于是打算借助Linux内核的内存分配机制，简单复习一下内存分配相关的理论知识  程序运行时不断进行内存的申请与释放，高效的分配方式不仅能提高内存的利用率，还能提高性能。 Linux内存分配原理 地址 程序需要装入内存才能运行，程序开始的位置相较于内存0地址会有一段偏移，这个偏移被称为物理地址。 在程序内部，以程序开头为0地">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+<meta property="article:published_time" content="2023-03-07T22:01:25.000Z">
+<meta property="article:modified_time" content="2023-09-14T06:35:10.513Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="reubensun computer graphics engine Technical Artist">
+<meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2103,7 +2105,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
+  pdata.ispage=true;
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   pdata.commentConfig={};
@@ -2368,7 +2370,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-      <div class="cover-wrapper  dock" id='full'>
+      <div class="cover-wrapper post dock" id='half'>
         
   <div class='cover-bg lazyload placeholder' data-bg="/images/bg.png"></div>
 
@@ -2447,7 +2449,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   </div>
 </div>
 
-        <div id="scroll-down"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
       </div>
     
   
@@ -2457,948 +2458,314 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper">
           
 <div id="l_main" class=''>
+  <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/内存分配/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
   
-  <section class="post-list">
+
+
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  <div class="article-meta" id="top">
     
-      
+    
+    
+      <h1 class="title" itemprop="name headline">
+        算法：前缀和
+      </h1>
+      <div class='new-meta-box'>
         
           
-        
-          
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
+            
+<div class='new-meta-item author' itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a itemprop="url" class='author' href="/" rel="nofollow">
+    <img itemprop="image" src="/images/logo.png" class="lazyload" data-srcset="/images/logo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <p itemprop="name">Reuben Sun</p>
+  </a>
+</div>
+
           
         
           
             
-              <div class='post-wrapper'>
-                <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/我是谁/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
   
   
-    <div class='pin'>
-      <img alt="我是谁" src='https://unpkg.com/volantis-static@0.0.1660614606622/media/twemoji/assets/svg/1f4cc.svg'/>
-    </div>
   
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
+  <div class='new-meta-item category'>
+    <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
+    <a class="category-link" href="/categories/program/">program</a>
     
-    <h2 class="article-title" pin itemprop="name headline">
-      <a href="/%E6%88%91%E6%98%AF%E8%B0%81/"  itemprop="url">
-        我是谁
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        一个渴望得到认同的怪兽
-过去
-感觉我做啥都三分钟热度，换了好多次道路
-我从小就喜欢游戏，在小学的时候就在班级“发售”了一款桌游，赚了5块钱，最后被班主任没收了😂
-初高中时特别喜欢科幻和物理，当时想着去做可控核聚变，认为这才是有意义有价值的工作，那时候我的梦想就是做一名学者
-在高三时期学校给我们开大会，在讲华为被制裁、卡脖子，然后我就被忽悠着去报考计算机
-刚上大学时想做嵌入式和芯片，但在一次...
-      
+      <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+      </span>
     
   </div>
   
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-02-02T09:50:25+00:00">2023-02-02</time>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/%E6%88%91%E6%98%AF%E8%B0%81/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
 
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-03-07T22:01:25+00:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2023年3月7日</p>
+  </a>
 </div>
 
-              </div>
+          
+        
+          
             
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++函数调用/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/"  itemprop="url">
-        C++函数调用
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        C++函数调用
-C++支持两种函数调用方式，__stdcall和__cdecl，两者对栈帧（stack frame）的处理方式不同，__stdcall是由被调用函数来清理栈帧，__cdecl是由调用函数来清理栈帧。一旦混用，容易引发错误
 
-两者混用可能会导致栈帧没有被释放或者被连续释放两次
 
-stack frame
-栈帧用于维护函数调用的上下文信息，在函数调用时，会在栈上分配一块内存，用于存...
-      
+
+          
+        
+        <!-- Custom Files topMeta begin-->
+        
+        <!-- Custom Files topMeta end-->
+      </div>
     
   </div>
+
+
+  <div id="layoutHelper-page-plugins"></div>
+  <div id="post-body" itemprop="articleBody">
+    <h1>内存分配</h1>
+<blockquote>
+<p>最近看了一些关于内存分配的分享，发现操作系统相关的知识都忘光了，于是打算借助Linux内核的内存分配机制，简单复习一下内存分配相关的理论知识</p>
+</blockquote>
+<p>程序运行时不断进行内存的申请与释放，高效的分配方式不仅能提高内存的利用率，还能提高性能。</p>
+<h2 id="Linux内存分配原理">Linux内存分配原理</h2>
+<h3 id="地址">地址</h3>
+<p>程序需要装入内存才能运行，程序开始的位置相较于内存0地址会有一段偏移，这个偏移被称为物理地址。</p>
+<p>在程序内部，以程序开头为0地址，向后偏移得到的地址称为逻辑地址。</p>
+<h3 id="分配">分配</h3>
+<p>内存分配最大的问题是内存碎片问题，大的数据间总是残余一些小的空间，这些空间整体数量较多，但是单个空间较小，无法满足存入新的大数据，于是尽管我们还有大量空间没有被使用，但是无法分配给新的数据。</p>
+<ul>
+<li>连续分配（将程序放在一起）
+<ul>
+<li>单一连续分配
+<ul>
+<li>系统区</li>
+<li>用户区</li>
+</ul>
+</li>
+<li>固定分区分配</li>
+<li>可变分区分配
+<ul>
+<li>首次适应</li>
+<li>最后适应</li>
+<li>最佳适应</li>
+<li>最坏适应</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不连续分配（将程序分散放置）
+<ul>
+<li>页式管理</li>
+<li>段式管理</li>
+</ul>
+</li>
+</ul>
+<p>Intel CPU硬件支持段式管理和二层页式管理，Liunx主要使用二层页式管理。</p>
+<h3 id="页式管理">页式管理</h3>
+<blockquote>
+<p>一本书有很多页，每一页都有页码，页码可以唯一标识一本书中的某一页，页式管理就是将数据分成一个个大小相等的页，每一页都有一个唯一的页码，通过页码可以找到对应的数据</p>
+</blockquote>
+<p>页式管理是一种不连续分配技术，将数据的逻辑地址拆成一个个大小相等的<strong>页面</strong>。将内存也拆成一个个大小相等的<strong>页框（物理块）</strong>，并为每个页框分配一个唯一的<strong>页框号</strong>。</p>
+<p>程序被装入内存时，被拆成多个页，这些页会被放入内存中不连续的位置，通常只有最后一页会写不满，因此只会产生一个页内碎片。</p>
+<p><img src="/images/%E9%A1%B5%E8%A1%A8%E6%9C%BA%E5%88%B6.png" class="lazyload" data-srcset="/images/%E9%A1%B5%E8%A1%A8%E6%9C%BA%E5%88%B6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="页表机制"></p>
+<p>上图中间的是<strong>页表</strong>，存储着页号和物理块的对应关系，以实现页间寻址。<br>
+页内的数据通过虚地址（页号+页内偏移量）来实现页内寻址。</p>
+<p>为了提速，页表含有一个缓存机制。</p>
+<p>我们上面的页表是连续分配的，而对于一个32位系统，他拥有一个大小为$2^{32}$的逻辑空间，会形成一个巨大的页表。为此我们将页表也进行拆分，离散存储在内存中，使用一个外层目录表来存储页表的地址。当我们需要某一个页数据时，通过外层目录找到对应页表的地址，将该部分页表装入内存，再通过页表找到对应的页数据。这个方案叫做二级页表。</p>
+<h2 id="常见内存分配器">常见内存分配器</h2>
+<h3 id="Slab">Slab</h3>
+<blockquote>
+<p>小于512b的数据</p>
+</blockquote>
+<h3 id="TLSF">TLSF</h3>
+<blockquote>
+<p>介于512b和512kb的数据</p>
+</blockquote>
+<h3 id="Linear">Linear</h3>
+<h3 id="Buddy">Buddy</h3>
+<h3 id="Stack">Stack</h3>
+<h3 id="Job">Job</h3>
+<h3 id="Frame">Frame</h3>
+<h2 id="参考">参考</h2>
+<p>《操作系统原理及应用（Linux）》王红</p>
+<p><a target="_blank" rel="noopener" href="https://www.gdcvault.com/play/1028734/Building-Night-City-The-Technology">Building Night City: The Technology of ‘Cyberpunk 2077’ - GDC 2021</a></p>
+
+  </div>
   
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-08-14T10:32:25+00:00">2023-08-14</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
+  
+    
+    <div class='footer'>
+       <!-- 参考资料、相关资料等 -->
       
-        <div>
-          <a class='readmore' href='/program/C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
+       <!-- 相关文章 -->
+      
+      <!-- 版权声明组件 -->
+      
+      <!-- 打赏组件 -->
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-09-14T06:35:10+00:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2023年9月14日</p>
+  </a>
 </div>
 
-          </div>
         
       
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/文明6like/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
+          
   
   
   
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/leetcode/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>leetcode</p></a></div>
+  <span hidden itemprop="keywords">leetcode</span>
   
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/game/%E6%96%87%E6%98%8E6like/"  itemprop="url">
-        文明6like
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
       
-        文明6like
-4X游戏
-文明6是一个经典的历史类4x游戏
-
-explore（探索）
-expand（扩张）
-exploit（开发）
-exterminate（消灭）
-
-文明6的体验
-游戏体验
-最近玩了几百小时的文明六，感觉意犹未尽，却又索然无味，想抽掉一些内容，自己做一个简易版的文明6，个人希望加强塔防、改良、贸易等元素，减少兵种操作、城市铺设。
-我玩文明6，最让人兴奋的就是地块高额的产出（尤...
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/&title=算法：前缀和 - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qq.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qq.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/&title=算法：前缀和 - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qzone.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qzone.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/&title=算法：前缀和 - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/weibo.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/weibo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+    
       
     
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-07-16T10:01:25+00:00">2023-07-16</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/game/">game</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/game/%E6%96%87%E6%98%8E6like/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
 </div>
 
-          </div>
+
+
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/Git入门/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
+    </div>
+    <!-- Custom Files bottomMeta begin -->
     
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/Git%E5%85%A5%E9%97%A8/"  itemprop="url">
-        Git使用记录
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Git 使用记录
-
-记录一下平时使用Git的记录
-
-为什么使用Git
-程序开发的第一步，就是做版本管理。频繁提交，可以便于环境恢复和Bug查找。分支开发，也能便于合作与多设备协同。配置Review规范，你还可以知道你的合作者在干什么，有效避免了因为开发者习惯能力差异导致的项目丑陋。配合CI的编译预检查，还能提高代码的稳健性。总之版本管理十分重要。
-版本管理工具有很多，游戏开发由于拥有大量会频...
-      
-    
+    <!-- Custom Files bottomMeta end -->
   </div>
+
+
   
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-07-04T10:01:25+00:00">2023-07-04</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
+  
+
+  
+    <div class="prev-next">
       
-        <div>
-          <a class='readmore' href='/program/Git%E5%85%A5%E9%97%A8/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
+        <a class='prev' href='/program/C++DLL/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>C与C++的DLL</p>
+          <p class='content'>C与C++的DLL
+
+今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括C++风格的DLL，我才知道，DLL建议写C风格的
+
+根本原因是，C++功能复杂，更依赖Name Ma...</p>
+        </a>
+      
+      
+        <a class='next' href='/program/%E5%89%8D%E7%BC%80%E5%92%8C/'>
+          <p class='title'>算法：前缀和<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>前缀和
+
+本人没有算法基础，以下均为春招刷Leetcode的笔记，仅用于记录，侵权勿喷
+
+前缀和本质是一种预积分手段，运行时只需要得到边界值，就能快速、无损地获得区间积分值，二维的前缀和SAT在...</p>
+        </a>
       
     </div>
   
+  <!-- 文章推荐 -->
+  
+  
+  <!-- Custom Files postEnd begin-->
+  
+  <!-- Custom Files postEnd end-->
+</article>
 
-</div>
 
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityECS/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
   
-  
-  
+
+
+  <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+      <meta itemprop="discussionUrl" content="/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/index.html#comments">
     </span>
-  
-  
+    <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/engine/UnityECS/"  itemprop="url">
-        Unity ECS 入门
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity ECS 入门
-曾经待的项目使用了Unity ECS 0.5，那时候功能很不完善，几乎所有功能都从头写了一遍。现在Unity ECS 1.0发布了，有点失望。看了一圈感觉系统复杂性提高了很多，而且不能保证系统的稳定性（尤其是有错的代码编译），非常不适合独立游戏制作
-数据驱动
 
-ECS的本质就是数据驱动的编程，随着守望先锋的爆火进入大家视野，结果现在守望2都凉了，Unity才把ECS...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-07-03T23:01:25+00:00">2023-07-03</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/engine/">engine</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/engine/UnityECS/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
+    <div id="layoutHelper-comments"></div>
 
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/Catlike小球移动/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/game/Catlike%E5%B0%8F%E7%90%83%E7%A7%BB%E5%8A%A8/"  itemprop="url">
-        Unity小球移动
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity小球移动
-
-摘自Catlike的Movement Tutorial
-
-小球移动
-创建小球
-
-使用Input System包，在Package Manager中Unity包搜索即可
-
-创建Input Action资产
-
-创建小球，包含拖尾渲染器、Player Input组件、脚本SphereMovement.cs
-
-移动脚本
-public class SphereMovement :...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-07-01T17:01:25+00:00">2023-07-01</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/game/">game</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/game/Catlike%E5%B0%8F%E7%90%83%E7%A7%BB%E5%8A%A8/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/dcc/blender使用笔记/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"  itemprop="url">
-        blender使用笔记
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Blender使用笔记
-网格合并
-选中模型，按快捷键ctrl+J
-布尔建模
-
-创建一个圆柱1，按tab进入编辑模式，选中上表面，按s将上表面进行缩放，变成一个类似“圆锥”的东西
-在圆锥上侧创建一个球，下侧创建一个圆柱2
-使用布尔操作，球布尔Difference，圆柱2布尔Union（注意操作后隐藏球和圆柱）
+  </article>
 
 
-于是得到了枪的建模（相当粗糙）
-
-模型添加材质
 
 
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-06-30T10:01:25+00:00">2023-06-30</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/dcc/">dcc</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/dcc/" itemprop="url"><span itemprop="name">dcc</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/dcc/Max使用笔记/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/dcc/Max%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"  itemprop="url">
-        3dmax使用笔记
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        3dmax使用笔记
-3dmax是一个被广泛使用的DCC工具，我之前对这个软件不是很熟悉，于是记录一些平时遇到的常用操作
-材质编辑
-选中模型，按键盘m，打开材质界面。点击吸管后再点击模型，即可得到该网格所使用的材质列表
-
-点击Modes——Slate Material Editor，即可打开材质连连看
-
-网格塌缩
-我们预览模型动画时，想要导出某一帧的网格，而且希望这个网格位置本身被修改，而非运...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-06-28T10:01:25+00:00">2023-06-28</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/dcc/">dcc</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/dcc/" itemprop="url"><span itemprop="name">dcc</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/dcc/Max%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++template/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/C++template/"  itemprop="url">
-        C++模版
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        C++模版
-
-《C++ Templates: The Complete Guide》笔记
-
-为什么使用模版
-为了实现泛型
-如果不使用泛型，对于一些通用的函数或容器，比如print、vector，我们可能需要逐个实现他们的函数，尽管这些函数的功能十分类似（可能相同），低效复杂而且难以维护
-在C++标准库中使用了大量模版
-函数模版
-模版定义
-template&lt;typename T>
-T g...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-06-28T10:01:25+00:00">2023-06-28</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/program/C++template/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/Vulkan学习/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"  itemprop="url">
-        Vulkan学习笔记
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Vulkan学习笔记
-
-在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达nvpro和Vulkan官方教程，打算自己敲一个小demo
-
-Shader
-Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语言，可以使用glslang编译GLSL得到
-# 将ve...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-06-13T22:16:25+00:00">2023-06-13</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/graphics/Vulkan%E5%AD%A6%E4%B9%A0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/银河恶魔城设计理念学习/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/"  itemprop="url">
-        银河恶魔城设计理念学习
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        银河恶魔城设计理念学习
-
-昨天跟魔方的策划沟通了一下，发现我之前的设计很不成熟，我所认为的Hook（比如“玩家因为缺少一个能力卡关了，于是去岔路口寻找其他能力”）原来只是这类游戏的共性（Pillar），
-
-银河恶魔城
-能力锁
-银河恶魔城大量使用了能力锁，使用低纬度的能力构成高纬度的钥匙，服务于后续游玩，能与关卡产生协同效应
-
-道具锁（Item-Lock）：比如找到一把具体的钥匙道具开门开箱子...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-05-25T01:18:25+00:00">2023-05-25</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/game/">game</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-    
-  </section>
-  
-    
-      <br>
-      <div class="prev-next">
-        
-        <p class="current">
-          1 / 7
-        </p>
-        
-          <a class="next" rel="next" href="/page/2/">
-            <section class="post next white-box shadow floatable blur">
-              &nbsp;下一页&nbsp;<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-            </section>
-          </a>
-        
-      </div>
-    
-  
 
 
 </div>
@@ -3409,149 +2776,31 @@ Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语�
     
     
       
-<section class="widget blogger desktop mobile ">
-  <div class='content'>
     
-      
-        <a class='avatar flat-box rectangle' href='/%E6%88%91%E6%98%AF%E8%B0%81'>
-          <img no-lazy src='/images/logo.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p>渴望被认同的怪兽</p>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="https://github.com/Reuben-Sun"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:2824016820@qq.com"
-              class="social fa-solid fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://www.zhihu.com/people/reuben-72-27"
-              class="social fa-brands fa-zhihu flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget category desktop">
-    
-  <header>
-    
-      <a href='/blog/categories/'><i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/dcc/" href="/categories/dcc/"
-            active-action="action-categoriesdcc"
-            ><div class='name'>dcc</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/engine/" href="/categories/engine/"
-            active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(3)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/game/" href="/categories/game/"
-            active-action="action-categoriesgame"
-            ><div class='name'>game</div><div class='badge'>(5)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/graphics/" href="/categories/graphics/"
-            active-action="action-categoriesgraphics"
-            ><div class='name'>graphics</div><div class='badge'>(12)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/math/" href="/categories/math/"
-            active-action="action-categoriesmath"
-            ><div class='name'>math</div><div class='badge'>(6)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/optics/" href="/categories/optics/"
-            active-action="action-categoriesoptics"
-            ><div class='name'>optics</div><div class='badge'>(10)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/program/" href="/categories/program/"
-            active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(18)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget tagcloud desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/C/" style="font-size: 15.67px; color: #8e8e8e">C#</a> <a href="/tags/C/" style="font-size: 24px; color: #555">C++</a> <a href="/tags/CMake/" style="font-size: 14px; color: #999">CMake</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Deferred-Render/" style="font-size: 14px; color: #999">Deferred Render</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.67px; color: #8e8e8e">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="/tags/Metal/" style="font-size: 14px; color: #999">Metal</a> <a href="/tags/Model/" style="font-size: 14px; color: #999">Model</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Physics/" style="font-size: 14px; color: #999">Physics</a> <a href="/tags/Python/" style="font-size: 17.33px; color: #828282">Python</a> <a href="/tags/Ray-Tracing/" style="font-size: 14px; color: #999">Ray Tracing</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/TA/" style="font-size: 17.33px; color: #828282">TA</a> <a href="/tags/Unity/" style="font-size: 19px; color: #777">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/blender/" style="font-size: 14px; color: #999">blender</a> <a href="/tags/leetcode/" style="font-size: 17.33px; color: #828282">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 22.33px; color: #606060">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 20.67px; color: #6c6c6c">高等数学</a>
-    </div>
-  </section>
-
-
-    
-  
-
   
 
 
 <div class="widget-sticky">
+
+  
+  
+
+
+<section class="widget toc-wrapper desktop mobile" id="toc-div" >
+  
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+  <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%8E%9F%E7%90%86"><span class="toc-text">Linux内存分配原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80"><span class="toc-text">地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D"><span class="toc-text">分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E7%AE%A1%E7%90%86"><span class="toc-text">页式管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-text">常见内存分配器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Slab"><span class="toc-text">Slab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLSF"><span class="toc-text">TLSF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear"><span class="toc-text">Linear</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buddy"><span class="toc-text">Buddy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stack"><span class="toc-text">Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Job"><span class="toc-text">Job</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Frame"><span class="toc-text">Frame</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+  </div>
+</section>
+
+  
 
 </div>
 
@@ -3903,6 +3152,60 @@ Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语�
 
 
 
+        <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js";
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typesetPromise();
+  }
+</script>
+
+
+
 
 <script>
   function listenSidebarTOC() {
@@ -4037,7 +3340,7 @@ Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"wordCount":0,"image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/内存分配/","name":"算法：前缀和"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"算法：前缀和","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/","wordCount":0,"datePublished":"2023-03-07T22:01:25.000Z","dateModified":"2023-09-14T06:35:10.513Z","articleSection":"program","keywords":"leetcode","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
