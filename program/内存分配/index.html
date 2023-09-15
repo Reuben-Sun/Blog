@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-09-14T14:36:25.000Z">
-<meta property="article:modified_time" content="2023-09-14T08:37:12.429Z">
+<meta property="article:modified_time" content="2023-09-15T07:01:42.368Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1694680638047),
+    lastupdate: new Date(1694761310113),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2593,25 +2593,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>为了提速，页表含有一个缓存机制。</p>
 <p>我们上面的页表是连续分配的，而对于一个32位系统，他拥有一个大小为$2^{32}$的逻辑空间，会形成一个巨大的页表。为此我们将页表也进行拆分，离散存储在内存中，使用一个外层目录表来存储页表的地址。当我们需要某一个页数据时，通过外层目录找到对应页表的地址，将该部分页表装入内存，再通过页表找到对应的页数据。这个方案叫做二级页表。</p>
 <h2 id="常见内存分配器">常见内存分配器</h2>
-<p>Linux内核为不同场景设计了不同的分配器，比如Slab、TLSF、Buddy</p>
+<p>Linux内核为不同场景设计了不同的分配器，比如Slab、TLSF、Buddy，内存分配器需要在分配性能和空间利用率间做出权衡。</p>
 <h3 id="Buddy">Buddy</h3>
 <blockquote>
 <p>以内存页（4kb）为单位分配内存，本质还是一种空闲链表法</p>
 </blockquote>
 <p>Buddy系统将内存拆分为多个物理块，这些块的大小均为2的幂次方</p>
-<p>Buddy分配器维护了一个空闲位图，这个位图是一个数组，数组的每个元素是一个链表。链表中每一个元素均为$2^n$大小的空闲物理块，其中$n$为order的值。</p>
+<p>Buddy分配器维护了一个空闲位图（也有用二叉树维护的），这个位图是一个数组，数组的每个元素是一个链表。链表中每一个元素均为$2^n$大小的空闲物理块，其中$n$为order的值。</p>
 <p><img src="/images/buddy%E8%A1%A8.png" class="lazyload" data-srcset="/images/buddy%E8%A1%A8.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Buddy位图"></p>
 <p>当分配一个大小为k的内存时，分配器会找到比k大且order值最小的空闲块，如果这个最小的空闲块比k的两倍还大，那么将这个空闲块拆分为二，再次进行分配。</p>
 <p>当释放一块内存时，将新的内存块放入对应链表中，若该链表中内存块过多，会进行合并操作</p>
 <h3 id="TLSF">TLSF</h3>
 <blockquote>
-<p>介于512b和512kb的数据，原理跟Buddy类似</p>
+<p>用于分配介于512b和512kb的数据，实现可以参考<a target="_blank" rel="noopener" href="https://github.com/mattconte/tlsf">tlsf</a></p>
 </blockquote>
-<p>TLSF（Two-Level Segregated Fit）将内存分为多个大小相等的内存块。第二级位图记录了每个内存块的状态，便于快速定位空闲内存块。第一级位图表示内存卡的粗粒度范围（其实就是Buddy的order）。</p>
+<p>TLSF（Two-Level Segregated Fit）的核心是使用两级链表。</p>
+<p>第一级链表（下图f1）将空闲内存块大小根据二的幂次方进行分类（注意，这里表示的是内存的粗细粒度，而非要求内存块大小必须为二的幂次方），该行的内存块大小范围为$[2^i, 2^{i+1})$</p>
+<p>第二级链表（下图s1）按照间隔，将索引$[2^i, 2^{i+1})$进行分段，以加速查找。二级链表的值是一个链表，链表中的每个元素是一个空闲内存块，大小和索引值相同。</p>
+<p>FL_bitmap和SL_bitmaps[]的每一个bit表示是否被使用。</p>
+<p>当我们需要分配一个大小为89Bytes的内存时，这个数据范围在$[64, 128)$，我们通过FL_bitmap判断出第6行是有空闲块的。然后通过SL_bitmaps[6]判断出$[88, 96)$这个范围中有空闲块，最后分配出89Bytes大小的内存块</p>
+<p><img src="/images/TLSF%E4%B8%A4%E7%BA%A7%20%E7%B4%A2%E5%BC%95.jpg" class="lazyload" data-srcset="/images/TLSF%E4%B8%A4%E7%BA%A7%20%E7%B4%A2%E5%BC%95.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="TLSF两级索引"></p>
 <p><img src="/images/TLSF.png" class="lazyload" data-srcset="/images/TLSF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="TLSF结构"></p>
-<p>当分配一个大小为k的内存时，先决定k所在的粗粒度范围，从第一级位图找到对应的第二级位图，再从第二级位图找到对应的空闲内存块。</p>
-<p>当释放一块内存时，将所需要释放的内存标记为空闲块，将与该空闲块物理上相邻的空闲块合并，计算合并后空闲块的大小，将该空闲块添加到位图中</p>
-<p>TLSF分配时间为稳定的O(1)，且适用于高负载和多线程环境。</p>
+<p>TLSF分配、释放、再分配复杂度均为稳定的O(1)，且适用于高负载和多线程环境。不过尽管操作复杂度都是常数级，但位图操作比较复杂，速度并不一定快</p>
 <h3 id="Slab">Slab</h3>
 <blockquote>
 <p>小于512b的数据</p>
@@ -2621,6 +2624,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>《操作系统原理及应用（Linux）》王红</p>
 <p><a target="_blank" rel="noopener" href="https://www.gdcvault.com/play/1028734/Building-Night-City-The-Technology">Building Night City: The Technology of ‘Cyberpunk 2077’ - GDC 2021</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/565768503">TLSF内存分配器</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pwl999/article/details/118253758">TLSF内存分配原理</a></p>
 
   </div>
   
@@ -2645,10 +2649,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-09-14T08:37:12+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-09-15T07:01:42+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年9月14日</p>
+    <p>更新于：2023年9月15日</p>
   </a>
 </div>
 
@@ -3340,7 +3344,7 @@ C++支持两种函数调用方式，__stdcall和__cdecl，两者对栈帧（stac
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/内存分配/","name":"内存分配"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"内存分配","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/","wordCount":0,"datePublished":"2023-09-14T14:36:25.000Z","dateModified":"2023-09-14T08:37:12.429Z","articleSection":"program","keywords":"Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/内存分配/","name":"内存分配"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"内存分配","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/","wordCount":0,"datePublished":"2023-09-14T14:36:25.000Z","dateModified":"2023-09-15T07:01:42.368Z","articleSection":"program","keywords":"Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
