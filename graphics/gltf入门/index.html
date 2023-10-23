@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://reubensun.com/program/c++dll/"/>
+  <link rel="canonical" href="https://reubensun.com/graphics/gltf入门/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,21 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>C与C++的DLL - ReubenSun</title>
-  <meta name="keywords" content="C++,reubensun computer graphics engine Technical Artist">
+  <title>glTF入门 - ReubenSun</title>
+  <meta name="keywords" content="glTF,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="C与C++的DLL">
-<meta property="og:url" content="https://reubensun.com/program/C++DLL/index.html">
+<meta property="og:title" content="glTF入门">
+<meta property="og:url" content="https://reubensun.com/graphics/gltf%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="C与C++的DLL  今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括C++风格的DLL，我才知道，DLL建议写C风格的  根本原因是，C++功能复杂，更依赖Name Mangling，而三大编译器具体实现不尽相同，使得ABI不确定 DLL  我们都知道，代码到可执行文件，要先代码编译得到目标文件，目标文件链接得到可执行文件。但其实可执行文件在执行时，还会进行装载  DLL的">
+<meta property="og:description" content="glTF入门 glTF介绍 DCC生成的模型往往不能直接被渲染引擎使用，比如包含冗余数据、缺失场景数据、缺少动画状态机、压缩率不足等。许多引擎拥有一个Asset Pipeline，负责将不同DCC导出的各类数据转化为引擎可以直接使用的资源文件，比如UE的Cooking操作 glTF是一种表示3D场景的模型格式，它的目标就是尽可能保留3D场景相关的数据（使用json描述场景），为渲染引擎提供无需解码">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-03-08T15:01:25.000Z">
-<meta property="article:modified_time" content="2023-10-23T16:05:01.717Z">
+<meta property="article:published_time" content="2023-10-23T22:46:25.000Z">
+<meta property="article:modified_time" content="2023-10-23T16:05:11.462Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="C++">
+<meta property="article:tag" content="glTF">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2459,7 +2459,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++DLL/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/gltf入门/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2480,7 +2480,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        C与C++的DLL
+        glTF入门
       </h1>
       <div class='new-meta-box'>
         
@@ -2502,10 +2502,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   <div class='new-meta-item category'>
     <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
-    <a class="category-link" href="/categories/program/">program</a>
+    <a class="category-link" href="/categories/graphics/">graphics</a>
     
       <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+        <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
       </span>
     
   </div>
@@ -2516,10 +2516,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-03-08T15:01:25+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-10-23T22:46:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年3月8日</p>
+    <p>发布于：2023年10月23日</p>
   </a>
 </div>
 
@@ -2542,104 +2542,210 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1>C与C++的DLL</h1>
-<blockquote>
-<p>今天中午跟同事吃饭时，有人分享他在清理项目中的Warming，其中包括C++风格的DLL，我才知道，DLL建议写C风格的</p>
-</blockquote>
-<p>根本原因是，C++功能复杂，更依赖Name Mangling，而三大编译器具体实现不尽相同，使得ABI不确定</p>
-<h2 id="DLL">DLL</h2>
-<blockquote>
-<p>我们都知道，代码到可执行文件，要先代码<strong>编译</strong>得到目标文件，目标文件<strong>链接</strong>得到可执行文件。但其实可执行文件在执行时，还会进行<strong>装载</strong></p>
-</blockquote>
-<p>DLL的本质其实是<strong>目标文件</strong>的打包，由目标文件和三张表组成</p>
-<h3 id="编译">编译</h3>
-<p>代码会编译为目标文件<code>.obj</code>，目标文件中包含<strong>导出符号表</strong>，这些符号会有明确的地址</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// test1.cpp</span>
-<span class="token keyword">int</span> a<span class="token punctuation">;</span>		<span class="token comment">// 在test1.obj文件中a有明确的地址</span></code></pre>
-<p>有的文件中会有只声明，没有实现的符号，放在<strong>未解决符号表</strong>中。在这些符号没有明确的地址，需要去其他目标文件中寻找</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//test2.cpp</span>
-<span class="token keyword">extern</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span>		<span class="token comment">// 在test2.obj文件中a没有明确的地址</span></code></pre>
-<h3 id="链接与装载">链接与装载</h3>
-<p>若程序为<strong>静态链接</strong>，编译器会在链接阶段扫描导出符号表中的符号地址，将计算后的地址写给未解决符号表中的符号，这个过程被称为重定位</p>
-<p>也就是说，从<code>test1.obj</code>中得到<code>a</code>的地址，经过计算，写给<code>test2.obj</code>中的<code>a</code>，这个过程会记录在<strong>地址重定向表</strong>中</p>
-<p>若程序为<strong>动态链接</strong>，程序会在装载阶段做地址重定向</p>
-<h2 id="ABI">ABI</h2>
-<blockquote>
-<p>ABI（Application binary interface）</p>
-<p>API（Application Programming Interface）</p>
-</blockquote>
-<p>为了保证动态库的版本兼容性，大部分平台会要与DLL函数编写时，要符合ABI</p>
-<p>ABI包含了二进制的结构布局、访问方法，应用程序可以通过ABI访问库中的二进制数据，代码编译出的ABI与编程语言、操作系统、编译器有关，通常是不确定的</p>
-<h3 id="二进制文件格式">二进制文件格式</h3>
-<p>不同操作系统的二进制可执行文件格式不同，因此无法兼容</p>
-<p>ELF（Executable and Linkable Format），可执行可链接格式，是Linux系统的二进制可执行文件格式</p>
-<p>PE（Portable Executable），可移植可执行格式，是Windows系统的二进制可执行文件格式</p>
-<h3 id="Name-Mangling">Name Mangling</h3>
-<p>Name Mangling会对名字进行重新编码，以实现名字的唯一性</p>
-<p>C++支持函数重载、类、命名空间、模版，一个类中可以有多个重名函数、重名成员变量，这些名称编译后本质是不同的二进制，因此要做更复杂的Name Mangling</p>
-<p>很不幸的是，C++没有对Name Mangling做硬性规定，于是三大编译器g++、MSVC、clang的实现不同，相同的代码可能编出不同的ABI，当你使用跨编译器的dll时，很容易出现错误</p>
-<h3 id="C的DLL">C的DLL</h3>
-<p>和C++相比，C就简单得多</p>
-<p>大多数语言都提供了一些简单的方法调用C的DLL，而且C++编译器也支持导出C语言的DLL</p>
-<h2 id="生成DLL">生成DLL</h2>
-<p>Windows下生成DLL会得到三个产物：include头文件，dll文件，import library文件</p>
-<blockquote>
-<p>注意import library文件的后缀是<code>.lib</code>，但这个文件只是存储了符号表，并不是其他平台的静态库</p>
-</blockquote>
-<h3 id="MT与MD">MT与MD</h3>
-<blockquote>
-<p>操作系统将一些高频使用的代码写成DLL，并永远加载在内存中，称为CRT库</p>
-</blockquote>
-<p>在VS生成DLL时，有MT和MD两个选项</p>
-<p>MD指动态C运行时，程序执行时依赖于操作系统提供的CRT</p>
-<p>MT指静态C运行时，程序会将操作系统的一些CRT静态链接到程序中，运行时就不需要从操作系统那里装载</p>
-<p>值得注意的是，如果一个程序混用MT和MD，很容易出现版本不兼容的错误（尤其是在使用编译好的第三方库时）</p>
-<h3 id="C-生成DLL">C++生成DLL</h3>
-<p>CMakeList.txt</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">SET</span><span class="token punctuation">(</span>LIB_SRC ./Math.h ./Math.cpp<span class="token punctuation">)</span>
-<span class="token function">SET</span><span class="token punctuation">(</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span> ../libMath<span class="token punctuation">)</span>
-
-<span class="token function">ADD_LIBRARY</span><span class="token punctuation">(</span>MathDLL <span class="token namespace">SHARED</span> <span class="token punctuation">$&#123;</span>LIB_SRC<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token function">INSTALL</span><span class="token punctuation">(</span>TARGETS MathDLL<span class="token punctuation">)</span>
-
-<span class="token function">SET_TARGET_PROPERTIES</span><span class="token punctuation">(</span>MathDLL <span class="token namespace">PROPERTIES</span> <span class="token property">LINKER_LANGUAGE</span> C
-        <span class="token property">RUNTIME_OUTPUT_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="token punctuation">&#125;</span>
-        <span class="token property">LIBRARY_OUTPUT_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="token punctuation">&#125;</span>
-        <span class="token property">OUTPUT_NAME</span> <span class="token string">"MathDLL"</span>
-        <span class="token property">PREFIX</span> <span class="token string">""</span><span class="token punctuation">)</span></code></pre>
-<p>Math.h</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">DLL_EXPORT</span> <span class="token expression"><span class="token keyword">extern</span> </span><span class="token string">"C"</span> <span class="token expression"><span class="token function">__declspec</span><span class="token punctuation">(</span>dllexport<span class="token punctuation">)</span></span></span>
-
-DLL_EXPORT <span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Math.cpp</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Math.h"</span></span>
-
-<span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
+    <h1>glTF入门</h1>
+<h2 id="glTF介绍">glTF介绍</h2>
+<p>DCC生成的模型往往不能直接被渲染引擎使用，比如包含冗余数据、缺失场景数据、缺少动画状态机、压缩率不足等。许多引擎拥有一个Asset Pipeline，负责将不同DCC导出的各类数据转化为引擎可以直接使用的资源文件，比如UE的<a target="_blank" rel="noopener" href="https://docs.unrealengine.com/4.26/zh-CN/SharingAndReleasing/Deployment/Cooking/">Cooking</a>操作</p>
+<p>glTF是一种表示3D场景的模型格式，它的目标就是尽可能保留3D场景相关的数据（使用json描述场景），为渲染引擎提供无需解码的模型数据（使用二进制存储buffer和image）</p>
+<h3 id="文本类型">文本类型</h3>
+<p>glTF有二进制（.glb）和ASCII文本格式（.gltf）</p>
+<p>一般而言，文本格式的glTF并不包含二进制内容（buffer和image），而是仅有一个uri链接，指向真正存储这些二进制数据的文件，这些数据已经被处理成GPU便于访问的格式</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"buffer01"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"byteLength"</span><span class="token operator">:</span> <span class="token number">12352</span><span class="token punctuation">,</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"arraybuffer"</span><span class="token punctuation">,</span>
+    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"buffer01.bin"</span>
 <span class="token punctuation">&#125;</span></code></pre>
-<h2 id="动态加载DLL">动态加载DLL</h2>
-<p>windows下DLL加载：</p>
-<ol>
-<li>分析可执行文件的导入符号表，查找所需要的dll文件</li>
-<li>为dll文件开辟虚拟地址空间</li>
-<li>当dll被真正调用时，将dll文件加载到内存中</li>
-</ol>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
-
-<span class="token keyword">typedef</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>pfnAdd<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    HINSTANCE handle <span class="token operator">=</span> <span class="token function">LoadLibrary</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"../lib/libMath/MathDLL.dll"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    pfnAdd pAdd <span class="token operator">=</span> <span class="token punctuation">(</span>pfnAdd<span class="token punctuation">)</span> <span class="token function">GetProcAddress</span><span class="token punctuation">(</span>handle<span class="token punctuation">,</span> <span class="token string">"MathAdd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">pAdd</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-    <span class="token function">FreeLibrary</span><span class="token punctuation">(</span>handle<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"image01"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"uri"</span><span class="token operator">:</span> <span class="token string">"image01.png"</span>
 <span class="token punctuation">&#125;</span></code></pre>
-<h3 id="参考">参考</h3>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16730284/dll-written-in-c-vs-the-same-written-in-c">DLL written in C vs the same written in C++</a></p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2171177/what-is-an-application-binary-interface-abi">What is an application binary interface (ABI)?</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/JasonkayZK/cpp-learn/tree/dll">使用CMake生成动态链接库DLL</a></p>
+<p>正是因为glTF这种描述和存储分离的特点，我们可以用很小的文件就能得到场景的描述，当我们需要使用到某个buffer或image时再懒加载这个资源，于是很适合Web项目。现在很多基于WebGL的渲染器都使用glTF格式</p>
+<p>值得注意的是，对于一些小模型，我们也可以将这些二进制嵌入到json中</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"buffers"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token property">"uri"</span> <span class="token operator">:</span> <span class="token string">"data:application/octet-stream;base64,AAABAAIAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAA="</span><span class="token punctuation">,</span>
+      <span class="token property">"byteLength"</span> <span class="token operator">:</span> <span class="token number">44</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span></code></pre>
+<h3 id="json结构">json结构</h3>
+<p><img src="/images/gltfJsonStructure.png" class="lazyload" data-srcset="/images/gltfJsonStructure.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="gltfJsonStructure"></p>
+<h4 id="scene">scene</h4>
+<p>scene是解析一个glTF的入口，一个glTF可以包含多个scene</p>
+<p>一个scene中会有一个nodes，nodes是一个数组，指向多个node</p>
+<p>一个node中会有mesh等元素</p>
+<h4 id="mesh">mesh</h4>
+<p>一个meshes包含多个primitives（图元），每个图元中有一个attributes（属性）和indices</p>
+<p>attributes中包含着模型的顶点数据（vertices），比如POSITION、NORMAL、TEXCOORD_0</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"meshes"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token property">"primitives"</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"attributes"</span> <span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"POSITION"</span> <span class="token operator">:</span> <span class="token number">1</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token property">"indices"</span> <span class="token operator">:</span> <span class="token number">0</span>
+      <span class="token punctuation">&#125;</span> <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span></code></pre>
+<h4 id="accessor">accessor</h4>
+<p>accessor（访问器），这是对资源的一种抽象封装，它存储了bufferView的结构，以及访问方法</p>
+<p>对于mesh、skin、animation等数据，我们要通过accessor来访问。accessor中有一个bufferView，bufferView又指向存储真正二进制数据的buffer</p>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token property">"accessors"</span> <span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token property">"bufferView"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"byteOffset"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"componentType"</span> <span class="token operator">:</span> <span class="token number">5123</span><span class="token punctuation">,</span>
+      <span class="token property">"count"</span> <span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+      <span class="token property">"type"</span> <span class="token operator">:</span> <span class="token string">"SCALAR"</span><span class="token punctuation">,</span>
+      <span class="token property">"max"</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token number">2</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"min"</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token number">0</span> <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token property">"bufferView"</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"byteOffset"</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"componentType"</span> <span class="token operator">:</span> <span class="token number">5126</span><span class="token punctuation">,</span>
+      <span class="token property">"count"</span> <span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+      <span class="token property">"type"</span> <span class="token operator">:</span> <span class="token string">"VEC3"</span><span class="token punctuation">,</span>
+      <span class="token property">"max"</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"min"</span> <span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span> <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span></code></pre>
+<h4 id="buffer">buffer</h4>
+<blockquote>
+<p>A buffer defines a block of raw, unstructured data with no inherent meaning</p>
+</blockquote>
+<p>为了便于渲染API的使用，glTF里的buffer是单纯的二进制，因此在解析时一定要明确读取的步长、类型</p>
+<h4 id="bufferView">bufferView</h4>
+<blockquote>
+<p>A bufferView describes a “chunk” or a “slice” of the whole, raw buffer data</p>
+</blockquote>
+<p>bufferView将一个完整的巨大的二进制内容切割为一个个小片，可以实现一个buffer存储多种类型的数据，还可以实现字节对齐等功能</p>
+<h2 id="一个简单的读mesh示例">一个简单的读mesh示例</h2>
+<blockquote>
+<p>这里我使用<a target="_blank" rel="noopener" href="https://github.com/syoyo/tinygltf">tinygltf</a>库来加载glTF，这是一个基于cmake的纯头文件库</p>
+</blockquote>
+<p>举一个简单的glTF读取mesh的例子，仅读取index buffer和vertex buffer（只有POSITION和TEXCOORD_0）</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">GltfLoader</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">GltfLoader</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>string model_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">GltfLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Index<span class="token operator">></span> loaded_index_buffer<span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Vertex<span class="token operator">></span> loaded_vertex_buffer<span class="token punctuation">;</span>
+
+<span class="token keyword">private</span><span class="token operator">:</span>
+    tinygltf<span class="token double-colon punctuation">::</span>Model m_gltf_model<span class="token punctuation">;</span>
+    tinygltf<span class="token double-colon punctuation">::</span>TinyGLTF m_loader_context<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token class-name">GltfLoader</span><span class="token double-colon punctuation">::</span><span class="token function">GltfLoader</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>string model_path<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    std<span class="token double-colon punctuation">::</span>string gltf_load_error<span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>string gltf_load_warning<span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> gltf_load_result <span class="token operator">=</span> m_loader_context<span class="token punctuation">.</span><span class="token function">LoadASCIIFromFile</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>m_gltf_model<span class="token punctuation">,</span> <span class="token operator">&amp;</span>gltf_load_error<span class="token punctuation">,</span> <span class="token operator">&amp;</span>gltf_load_warning<span class="token punctuation">,</span> model_path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>gltf_load_result<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">// load mesh</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token operator">&amp;</span> mesh <span class="token operator">:</span> m_gltf_model<span class="token punctuation">.</span>meshes<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token operator">&amp;</span> primitive <span class="token operator">:</span> mesh<span class="token punctuation">.</span>primitives<span class="token punctuation">)</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token comment">// vertex</span>
+                <span class="token keyword">int</span> vertex_count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Vertex<span class="token operator">></span> local_vertex_buffer<span class="token punctuation">;</span>
+                <span class="token comment">// position</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>primitive<span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token string">"POSITION"</span><span class="token punctuation">)</span> <span class="token operator">!=</span> primitive<span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+                <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">int</span> accessor_index <span class="token operator">=</span> primitive<span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span><span class="token string">"POSITION"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>Accessor<span class="token operator">&amp;</span> accessor <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>accessors<span class="token punctuation">[</span>accessor_index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>BufferView<span class="token operator">&amp;</span> buffer_view <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>bufferViews<span class="token punctuation">[</span>accessor<span class="token punctuation">.</span>bufferView<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>Buffer<span class="token operator">&amp;</span> buffer <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>buffers<span class="token punctuation">[</span>buffer_view<span class="token punctuation">.</span>buffer<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">float</span><span class="token operator">*</span> data_ptr <span class="token operator">=</span> <span class="token generic-function"><span class="token function">reinterpret_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">const</span> <span class="token keyword">float</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>buffer<span class="token punctuation">.</span>data<span class="token punctuation">[</span>buffer_view<span class="token punctuation">.</span>byteOffset <span class="token operator">+</span> accessor<span class="token punctuation">.</span>byteOffset<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">int</span> position_byte_stride <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+                    vertex_count <span class="token operator">=</span> accessor<span class="token punctuation">.</span>count<span class="token punctuation">;</span>
+
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> vertex_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#123;</span>
+                        Vertex local_vertex<span class="token punctuation">;</span>
+                        local_vertex<span class="token punctuation">.</span>pos <span class="token operator">=</span> glm<span class="token double-colon punctuation">::</span><span class="token function">vec3</span><span class="token punctuation">(</span>data_ptr<span class="token punctuation">[</span>i <span class="token operator">*</span> position_byte_stride<span class="token punctuation">]</span><span class="token punctuation">,</span> data_ptr<span class="token punctuation">[</span>i <span class="token operator">*</span> position_byte_stride <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data_ptr<span class="token punctuation">[</span>i <span class="token operator">*</span> position_byte_stride <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        local_vertex_buffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>local_vertex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token comment">// uv</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>primitive<span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token string">"TEXCOORD_0"</span><span class="token punctuation">)</span> <span class="token operator">!=</span> primitive<span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+                <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">int</span> accessor_index <span class="token operator">=</span> primitive<span class="token punctuation">.</span>attributes<span class="token punctuation">.</span><span class="token function">at</span><span class="token punctuation">(</span><span class="token string">"TEXCOORD_0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>Accessor<span class="token operator">&amp;</span> accessor <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>accessors<span class="token punctuation">[</span>accessor_index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>BufferView<span class="token operator">&amp;</span> buffer_view <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>bufferViews<span class="token punctuation">[</span>accessor<span class="token punctuation">.</span>bufferView<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>Buffer<span class="token operator">&amp;</span> buffer <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>buffers<span class="token punctuation">[</span>buffer_view<span class="token punctuation">.</span>buffer<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">float</span><span class="token operator">*</span> data_ptr <span class="token operator">=</span> <span class="token generic-function"><span class="token function">reinterpret_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">const</span> <span class="token keyword">float</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>buffer<span class="token punctuation">.</span>data<span class="token punctuation">[</span>buffer_view<span class="token punctuation">.</span>byteOffset <span class="token operator">+</span> accessor<span class="token punctuation">.</span>byteOffset<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">int</span> uv_byte_stride <span class="token operator">=</span> accessor<span class="token punctuation">.</span><span class="token function">ByteStride</span><span class="token punctuation">(</span>buffer_view<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>accessor<span class="token punctuation">.</span><span class="token function">ByteStride</span><span class="token punctuation">(</span>buffer_view<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> tinygltf<span class="token double-colon punctuation">::</span><span class="token function">GetNumComponentsInType</span><span class="token punctuation">(</span>TINYGLTF_TYPE_VEC2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> vertex_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">&#123;</span>
+                        local_vertex_buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>texture_coord <span class="token operator">=</span> glm<span class="token double-colon punctuation">::</span><span class="token function">vec2</span><span class="token punctuation">(</span>data_ptr<span class="token punctuation">[</span>i <span class="token operator">*</span> uv_byte_stride<span class="token punctuation">]</span><span class="token punctuation">,</span> data_ptr<span class="token punctuation">[</span>i <span class="token operator">*</span> uv_byte_stride <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token comment">// append local vertex buffer to loaded vertex buffer</span>
+                <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> vertex_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                <span class="token punctuation">&#123;</span>
+                    loaded_vertex_buffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>local_vertex_buffer<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token comment">// index</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>primitive<span class="token punctuation">.</span>indices <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> 
+                <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>Accessor<span class="token operator">&amp;</span> accessor <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>accessors<span class="token punctuation">[</span>primitive<span class="token punctuation">.</span>indices<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>BufferView<span class="token operator">&amp;</span> buffer_view <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>bufferViews<span class="token punctuation">[</span>accessor<span class="token punctuation">.</span>bufferView<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> tinygltf<span class="token double-colon punctuation">::</span>Buffer<span class="token operator">&amp;</span> buffer <span class="token operator">=</span> m_gltf_model<span class="token punctuation">.</span>buffers<span class="token punctuation">[</span>buffer_view<span class="token punctuation">.</span>buffer<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+                    <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> dataPtr <span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token punctuation">(</span>buffer<span class="token punctuation">.</span>data<span class="token punctuation">[</span>buffer_view<span class="token punctuation">.</span>byteOffset <span class="token operator">+</span> accessor<span class="token punctuation">.</span>byteOffset<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">const</span> <span class="token keyword">int</span> elements_count <span class="token operator">=</span> accessor<span class="token punctuation">.</span>count<span class="token punctuation">;</span>
+
+                    <span class="token comment">// MARK: the component type is very important, common is TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT</span>
+                    <span class="token keyword">switch</span> <span class="token punctuation">(</span>accessor<span class="token punctuation">.</span>componentType<span class="token punctuation">)</span> 
+                    <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">case</span> TINYGLTF_PARAMETER_TYPE_UNSIGNED_INT<span class="token operator">:</span>
+                        <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">const</span> <span class="token keyword">uint32_t</span><span class="token operator">*</span> buf <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">const</span> <span class="token keyword">uint32_t</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>dataPtr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> elements_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">&#123;</span>
+                                Index local_index<span class="token punctuation">;</span>
+                                local_index<span class="token punctuation">.</span>index <span class="token operator">=</span> buf<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                                loaded_index_buffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>local_index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token punctuation">&#125;</span>
+                            <span class="token keyword">break</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token keyword">case</span> TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">const</span> <span class="token keyword">uint16_t</span><span class="token operator">*</span> buf <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">const</span> <span class="token keyword">uint16_t</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>dataPtr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> elements_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">&#123;</span>
+                                Index local_index<span class="token punctuation">;</span>
+                                local_index<span class="token punctuation">.</span>index <span class="token operator">=</span> buf<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                                loaded_index_buffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>local_index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token punctuation">&#125;</span>
+                            <span class="token keyword">break</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token keyword">case</span> TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">const</span> <span class="token keyword">uint8_t</span><span class="token operator">*</span> buf <span class="token operator">=</span> <span class="token generic-function"><span class="token function">static_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">const</span> <span class="token keyword">uint8_t</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>dataPtr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> elements_count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">&#123;</span>
+                                Index local_index<span class="token punctuation">;</span>
+                                local_index<span class="token punctuation">.</span>index <span class="token operator">=</span> buf<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                                loaded_index_buffer<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>local_index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token punctuation">&#125;</span>
+                            <span class="token keyword">break</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token keyword">default</span><span class="token operator">:</span>
+                        std<span class="token double-colon punctuation">::</span>cerr <span class="token operator">&lt;&lt;</span> <span class="token string">"Index component type "</span> <span class="token operator">&lt;&lt;</span> accessor<span class="token punctuation">.</span>componentType <span class="token operator">&lt;&lt;</span> <span class="token string">" not supported!"</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+                        <span class="token keyword">return</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// TODO: load children</span>
+        <span class="token comment">// TODO: load transform, material, texture, skin, skeleton, animtion, blendshape</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://github.khronos.org/glTF-Tutorials/gltfTutorial/">glTF Tutorials</a></p>
 
   </div>
   
@@ -2664,7 +2770,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-23T16:05:01+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-10-23T16:05:11+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年10月23日</p>
@@ -2678,8 +2784,8 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/C/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>C++</p></a></div>
-  <span hidden itemprop="keywords">C++</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/glTF/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>glTF</p></a></div>
+  <span hidden itemprop="keywords">glTF</span>
   
 
 
@@ -2693,7 +2799,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/C++DLL/&title=C与C++的DLL - ReubenSun&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/graphics/gltf%E5%85%A5%E9%97%A8/&title=glTF入门 - ReubenSun&summary="
           
           >
           
@@ -2705,7 +2811,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/C++DLL/&title=C与C++的DLL - ReubenSun&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/graphics/gltf%E5%85%A5%E9%97%A8/&title=glTF入门 - ReubenSun&summary="
           
           >
           
@@ -2717,7 +2823,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/C++DLL/&title=C与C++的DLL - ReubenSun&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/graphics/gltf%E5%85%A5%E9%97%A8/&title=glTF入门 - ReubenSun&summary="
           
           >
           
@@ -2750,21 +2856,13 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
   
     <div class="prev-next">
       
-        <a class='prev' href='/dcc/BlenderMMD/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>Blender MMD Tools安装</p>
-          <p class='content'>Blender MMD Tools
-
-尽管实际工作中不会使用MMD，甚至也很少使用Blender，但对于自学的同学来说，MMD可能是网上资源最丰富的模型资源，尤其是国内二次元手游厂商，十分乐于分...</p>
-        </a>
       
-      
-        <a class='next' href='/program/%E5%89%8D%E7%BC%80%E5%92%8C/'>
-          <p class='title'>算法：前缀和<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>前缀和
-
-本人没有算法基础，以下均为春招刷Leetcode的笔记，仅用于记录，侵权勿喷
-
-前缀和本质是一种预积分手段，运行时只需要得到边界值，就能快速、无损地获得区间积分值，二维的前缀和SAT在...</p>
+        <a class='next' href='/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/'>
+          <p class='title'>无状态方法<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>无状态方法
+线程安全
+同事经常跟我强调线程安全的重要性，比如下面这段代码，id是一个静态成员变量，被所有Student类的对象共享，在多线程环境下可能会造成不确定行为
+class Student...</p>
         </a>
       
     </div>
@@ -2783,7 +2881,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 
   <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="discussionUrl" content="/program/C++DLL/index.html#comments">
+      <meta itemprop="discussionUrl" content="/graphics/gltf%E5%85%A5%E9%97%A8/index.html#comments">
     </span>
     <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
@@ -2825,7 +2923,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DLL"><span class="toc-text">DLL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E4%B8%8E%E8%A3%85%E8%BD%BD"><span class="toc-text">链接与装载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">二进制文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E7%9A%84DLL"><span class="toc-text">C的DLL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90DLL"><span class="toc-text">生成DLL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MT%E4%B8%8EMD"><span class="toc-text">MT与MD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E7%94%9F%E6%88%90DLL"><span class="toc-text">C++生成DLL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDDLL"><span class="toc-text">动态加载DLL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#glTF%E4%BB%8B%E7%BB%8D"><span class="toc-text">glTF介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="toc-text">文本类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#json%E7%BB%93%E6%9E%84"><span class="toc-text">json结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#scene"><span class="toc-text">scene</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mesh"><span class="toc-text">mesh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#accessor"><span class="toc-text">accessor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#buffer"><span class="toc-text">buffer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bufferView"><span class="toc-text">bufferView</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AF%BBmesh%E7%A4%BA%E4%BE%8B"><span class="toc-text">一个简单的读mesh示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3369,7 +3467,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++DLL/","name":"C与C++的DLL"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C与C++的DLL","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++DLL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++DLL/","wordCount":0,"datePublished":"2023-03-08T15:01:25.000Z","dateModified":"2023-10-23T16:05:01.717Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/gltf入门/","name":"glTF入门"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"glTF入门","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/gltf%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/gltf%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-10-23T22:46:25.000Z","dateModified":"2023-10-23T16:05:11.462Z","articleSection":"graphics","keywords":"glTF","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
