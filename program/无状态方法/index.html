@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://reubensun.com/program/python调用c++/"/>
+  <link rel="canonical" href="https://reubensun.com/program/无状态方法/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,23 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>SWIG实现Python调用C++ - ReubenSun</title>
-  <meta name="keywords" content="Python,C++,SWIG,reubensun computer graphics engine Technical Artist">
+  <title>无状态方法 - ReubenSun</title>
+  <meta name="keywords" content="C++,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="SWIG实现Python调用C++">
-<meta property="og:url" content="https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/index.html">
+<meta property="og:title" content="无状态方法">
+<meta property="og:url" content="https://reubensun.com/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="SWIG实现Python调用C++ 在实际项目开发中，我们经常有跨语言交互的需求，比如使用Python&#x2F;Lua脚本调用引擎代码。常用的方案有很多，我们来介绍SWIG     语言 特点     C++&#x2F;CLI C++和C# 微软为.NET平台高度定制的拓展，允许C++调用托管代码   SWIG 多语言 跨平台多语言，需要写.i文件，有一定侵入性   Boost Python和C++    JNI">
+<meta property="og:description" content="无状态方法 线程安全 同事经常跟我强调线程安全的重要性，比如下面这段代码，id是一个静态成员变量，被所有Student类的对象共享，在多线程环境下可能会造成不确定行为 class Student &amp;#123; private:  	static int id &#x3D; 0; public:	 	int getId() 	&amp;#123; 		return id; 	&amp;#125; &amp;#125; int Stu">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-05-16T16:01:25.000Z">
+<meta property="article:published_time" content="2023-10-23T17:01:25.000Z">
 <meta property="article:modified_time" content="2023-10-23T10:02:52.078Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="Python">
 <meta property="article:tag" content="C++">
-<meta property="article:tag" content="SWIG">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2461,7 +2459,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/python调用C++/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/无状态方法/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2482,7 +2480,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        SWIG实现Python调用C++
+        无状态方法
       </h1>
       <div class='new-meta-box'>
         
@@ -2518,10 +2516,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-05-16T16:01:25+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-10-23T17:01:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年5月16日</p>
+    <p>发布于：2023年10月23日</p>
   </a>
 </div>
 
@@ -2544,203 +2542,84 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1>SWIG实现Python调用C++</h1>
-<p>在实际项目开发中，我们经常有跨语言交互的需求，比如使用Python/Lua脚本调用引擎代码。常用的方案有很多，我们来介绍SWIG</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>语言</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C++/CLI</td>
-<td>C++和C#</td>
-<td>微软为.NET平台高度定制的拓展，允许C++调用托管代码</td>
-</tr>
-<tr>
-<td>SWIG</td>
-<td>多语言</td>
-<td>跨平台多语言，需要写<code>.i</code>文件，有一定侵入性</td>
-</tr>
-<tr>
-<td>Boost</td>
-<td>Python和C++</td>
-<td></td>
-</tr>
-<tr>
-<td>JNI</td>
-<td>Java和C++</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="SWIG">SWIG</h2>
-<h3 id="简介">简介</h3>
-<p>SWIG（Simplified Wrapper and Interface Generato）是一种包装器，通过配置<code>.i</code>文件，自动生成Wrapper文件，以实现其他语言调用C++代码</p>
-<h3 id="Interface-file">Interface file</h3>
-<p><code>.i</code>文件格式如下</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 1. 模块名</span>
-<span class="token operator">%</span><span class="token keyword">module</span> <span class="token module">example</span>	
-  
-<span class="token comment">// 2. 头文件和声明</span>
-<span class="token operator">%</span><span class="token punctuation">&#123;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example_controller.h"</span></span>
-<span class="token keyword">extern</span> <span class="token keyword">int</span> <span class="token function">fact</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">%</span><span class="token punctuation">&#125;</span>
-<span class="token comment">// 引用其他.i文件</span>
-<span class="token operator">%</span>include <span class="token operator">&lt;</span>windows<span class="token punctuation">.</span>i<span class="token operator">></span>
-  
-<span class="token comment">// 3. swig特性</span>
-  
-<span class="token comment">// 4. 代码拓展</span>
-<span class="token comment">// 将C++中的bool数组封装为BoolArray类</span>
-<span class="token operator">%</span><span class="token function">array_class</span><span class="token punctuation">(</span><span class="token keyword">bool</span><span class="token punctuation">,</span> BoolArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 将C++中的std::vector&lt;std::string>封装为StringVector类，所有vector向量都应该像这样封装</span>
-<span class="token operator">%</span><span class="token keyword">template</span><span class="token punctuation">(</span>StringVector<span class="token punctuation">)</span> std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span><span class="token punctuation">;</span>
-
-<span class="token comment">// 5. 要包装的内容，可以用头文件全部包装</span>
-<span class="token comment">// 特别注意，.h文件要按依赖顺序从上到下排布！</span>
-<span class="token operator">%</span>include <span class="token string">"example.h"</span>
-<span class="token operator">%</span>include <span class="token string">"example_controller.h"</span></code></pre>
-<h3 id="环境安装">环境安装</h3>
-<blockquote>
-<p>我的环境是Mac M1，安装了brew和python3</p>
-</blockquote>
-<ol>
-<li>安装swig</li>
-</ol>
-<pre class="language-bash" data-language="bash"><code class="language-bash">brew <span class="token function">install</span> swig</code></pre>
-<ol start="2">
-<li>检测是否安装成功</li>
-</ol>
-<pre class="language-bash" data-language="bash"><code class="language-bash">swig <span class="token parameter variable">-version</span></code></pre>
-<h2 id="样例代码">样例代码</h2>
-<p>实现了在python中调用C++定义的<code>add</code>函数</p>
-<ol>
-<li>C++代码</li>
-</ol>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.h</span>
-<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.cpp</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
-
-<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> x<span class="token operator">+</span>y<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
-<ol start="2">
-<li>SWIG代码</li>
-</ol>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.i</span>
-<span class="token operator">%</span><span class="token keyword">module</span> <span class="token module">example</span>	
-
-<span class="token operator">%</span><span class="token punctuation">&#123;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
-<span class="token operator">%</span><span class="token punctuation">&#125;</span>
-
-<span class="token operator">%</span>include <span class="token string">"example.h"</span></code></pre>
-<ol start="3">
-<li>执行命令，我们会生成一个<code>.py</code>文件和一个<code>.cxx</code>文件</li>
-</ol>
-<pre class="language-bash" data-language="bash"><code class="language-bash">swig -c++ <span class="token parameter variable">-python</span> example.i</code></pre>
-<ol start="4">
-<li>为了方便使用，我们将生成的<code>.py</code>文件构建为<code>.so</code>文件，创建一个setup.py文件，使用<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/distutils.html">distutils</a>进行编译</li>
-</ol>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># setup.py</span>
-<span class="token keyword">from</span> distutils<span class="token punctuation">.</span>core <span class="token keyword">import</span> setup<span class="token punctuation">,</span> Extension
- 
- 
-example_module <span class="token operator">=</span> Extension<span class="token punctuation">(</span><span class="token string">'_example'</span><span class="token punctuation">,</span>
-                           sources<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'example_wrap.cxx'</span><span class="token punctuation">,</span> <span class="token string">'example.cpp'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                           <span class="token punctuation">)</span>
- 
-setup <span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">'example'</span><span class="token punctuation">,</span>
-       version <span class="token operator">=</span> <span class="token string">'0.1'</span><span class="token punctuation">,</span>
-       author      <span class="token operator">=</span> <span class="token string">"SWIG Docs"</span><span class="token punctuation">,</span>
-       description <span class="token operator">=</span> <span class="token triple-quoted-string string">"""Simple swig example from docs"""</span><span class="token punctuation">,</span>
-       ext_modules <span class="token operator">=</span> <span class="token punctuation">[</span>example_module<span class="token punctuation">]</span><span class="token punctuation">,</span>
-       py_modules <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"example"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       <span class="token punctuation">)</span></code></pre>
-<p>执行命令，即会生成一些文件，其中包含一个<code>.so</code>文件</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">python3 setup.py build_ext <span class="token parameter variable">--inplace</span></code></pre>
-<ol start="5">
-<li>将<code>.so</code>文件放入环境变量中（不推荐），或者放在python脚本同一个目录中（推荐），即可被调用</li>
-</ol>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># example_test.py</span>
-<span class="token keyword">import</span> example
-
-<span class="token comment"># 调用C++函数</span>
-result <span class="token operator">=</span> example<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"3 + 4 ="</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span></code></pre>
-<h2 id="C-包装">C++包装</h2>
-<h3 id="函数">函数</h3>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.h</span>
-<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.cpp</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
-<span class="token keyword">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> x<span class="token operator">+</span>y<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.i</span>
-<span class="token operator">%</span><span class="token keyword">module</span> <span class="token module">example</span>	
-<span class="token operator">%</span><span class="token punctuation">&#123;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
-<span class="token operator">%</span><span class="token punctuation">&#125;</span>
-<span class="token operator">%</span>include <span class="token string">"example.h"</span></code></pre>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># example_test.py</span>
-<span class="token keyword">import</span> example
-<span class="token comment"># 调用C++函数</span>
-result <span class="token operator">=</span> example<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"3 + 4 ="</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span></code></pre>
-<h3 id="常量">常量</h3>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.i</span>
-<span class="token operator">%</span><span class="token keyword">module</span> <span class="token module">example</span>
-<span class="token operator">%</span><span class="token punctuation">&#123;</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"example.h"</span></span>
-<span class="token operator">%</span><span class="token punctuation">&#125;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PI</span> <span class="token expression"><span class="token number">3.14159265358979323846</span></span></span>
-<span class="token operator">%</span>constant <span class="token keyword">int</span> Foo <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span>
-<span class="token operator">%</span>constant <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>path <span class="token operator">=</span> <span class="token string">"/usr/local/include"</span><span class="token punctuation">;</span>
-
-<span class="token operator">%</span>include <span class="token string">"example.h"</span></code></pre>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># example_test.py</span>
-<span class="token keyword">import</span> example
-<span class="token keyword">print</span><span class="token punctuation">(</span>example<span class="token punctuation">.</span>PI<span class="token punctuation">)</span>			<span class="token comment"># 3.141592653589793</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>example<span class="token punctuation">.</span>path<span class="token punctuation">)</span>		<span class="token comment"># /usr/local/include</span></code></pre>
-<h3 id="结构体">结构体</h3>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.h</span>
-<span class="token keyword">struct</span> <span class="token class-name">Point</span>
+    <h1>无状态方法</h1>
+<h2 id="线程安全">线程安全</h2>
+<p>同事经常跟我强调线程安全的重要性，比如下面这段代码，id是一个静态成员变量，被所有Student类的对象共享，在多线程环境下可能会造成不确定行为</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Student</span>
 <span class="token punctuation">&#123;</span>
-    <span class="token keyword">double</span> x<span class="token punctuation">,</span>y<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># example_test.py</span>
-<span class="token keyword">import</span> example
-
-p <span class="token operator">=</span> example<span class="token punctuation">.</span>Point<span class="token punctuation">(</span><span class="token punctuation">)</span>
-p<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">1</span>
-p<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token number">2</span></code></pre>
-<h3 id="类">类</h3>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// example.h</span>
-<span class="token keyword">class</span> <span class="token class-name">Shape</span>
+<span class="token keyword">private</span><span class="token operator">:</span> 
+	<span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>	
+	<span class="token keyword">int</span> <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> Student<span class="token double-colon punctuation">::</span>id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></code></pre>
+<p>我们可以加入一个锁以实现线程安全，std::lock_guard会通过其生命周期创建销毁锁</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Student</span>
 <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">double</span> size<span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span> 
+	<span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>mutex id_mutex<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>	
+	<span class="token keyword">int</span> <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#123;</span>
+        std<span class="token double-colon punctuation">::</span>lock_guard<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>id_mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> Student<span class="token double-colon punctuation">::</span>id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span></code></pre>
+<h2 id="无状态方法">无状态方法</h2>
+<p>然后同事又跟我介绍了<strong>无状态方法</strong>（Stateless），即计算中不依赖先前的状态或上下文的方法。比如stl中大量的非成员函数，他们大多都是无状态方法</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 这种非成员函数是无状态的</span>
+<span class="token keyword">int</span> <span class="token function">adder</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">adder</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 通过重载()运算符来实现adder</span>
+<span class="token keyword">class</span> <span class="token class-name">Adder</span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">setSize</span><span class="token punctuation">(</span><span class="token keyword">double</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> size <span class="token operator">=</span> s<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-    <span class="token keyword">double</span> <span class="token function">getSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> size<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># example_test.py</span>
-<span class="token keyword">import</span> example
+    <span class="token function">Adder</span><span class="token punctuation">(</span><span class="token keyword">int</span> c<span class="token punctuation">)</span><span class="token punctuation">&#123;</span> <span class="token keyword">this</span><span class="token operator">-></span>c <span class="token operator">=</span> c<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> <span class="token keyword">operator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token operator">+</span>c<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> c<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-s <span class="token operator">=</span> example<span class="token punctuation">.</span>Shape<span class="token punctuation">(</span><span class="token punctuation">)</span>
-s<span class="token punctuation">.</span>setSize<span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>getSize<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
-<h2 id="资料">资料</h2>
-<p><a target="_blank" rel="noopener" href="https://www.swig.org/Doc4.1/SWIGDocumentation.html#Python">SWIG 4.1 Doc</a></p>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    Adder <span class="token function">adder</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">adder</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>一般而言，无状态方法只要输入是确定的，输出一般是可预料的（内部使用random相关函数的输出总体也是有期望的）</p>
+<p>与无状态方法对应的是<strong>有状态方法</strong>（Stateful），比如一些读资源函数，我传入一个指针、Handle、索引，返回的结果取决于资源状态，输出的结果是不确定的。有状态方法一般要注意线程安全问题、空指针、索引越界等问题</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">// 不好的设计，因为getCurrentDateText的结果与format的状态有关</span>
+<span class="token comment">// 尽管这样设计性能更好（不频繁创建新对象），一般也没人改format</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Sample</span> 
+<span class="token punctuation">&#123;</span>
+ <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">DateFormat</span> format <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"yyyy.MM.dd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+ <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCurrentDateText</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+ <span class="token punctuation">&#123;</span>
+   <span class="token keyword">return</span> format<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 无状态方法，线程安全</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Sample</span> 
+<span class="token punctuation">&#123;</span>
+   <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getCurrentDateText</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+       <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"yyyy.MM.dd"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://www.infoq.cn/news/2012/06/ugly-code-12">无状态方法</a></p>
 
   </div>
   
@@ -2779,8 +2658,8 @@ s<span class="token punctuation">.</span>setSize<span class="token punctuation">
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/C/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>C++</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/SWIG/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>SWIG</p></a></div>
-  <span hidden itemprop="keywords">Python C++ SWIG</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/C/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>C++</p></a></div>
+  <span hidden itemprop="keywords">C++</span>
   
 
 
@@ -2794,7 +2673,7 @@ s<span class="token punctuation">.</span>setSize<span class="token punctuation">
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/&title=SWIG实现Python调用C++ - ReubenSun&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/&title=无状态方法 - ReubenSun&summary="
           
           >
           
@@ -2806,7 +2685,7 @@ s<span class="token punctuation">.</span>setSize<span class="token punctuation">
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/&title=SWIG实现Python调用C++ - ReubenSun&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/&title=无状态方法 - ReubenSun&summary="
           
           >
           
@@ -2818,7 +2697,7 @@ s<span class="token punctuation">.</span>setSize<span class="token punctuation">
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/&title=SWIG实现Python调用C++ - ReubenSun&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/&title=无状态方法 - ReubenSun&summary="
           
           >
           
@@ -2851,27 +2730,14 @@ s<span class="token punctuation">.</span>setSize<span class="token punctuation">
   
     <div class="prev-next">
       
-        <a class='prev' href='/program/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84%E4%BB%A3%E7%A0%81/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>有意思的代码</p>
-          <p class='content'>有意思的代码
-记录一下平时遇到的有意思的代码，不定期更新
-在注释中的立方体
-   001------101
-   / |     / |
-  /  |    /  |
-011------111 ...</p>
-        </a>
       
-      
-        <a class='next' href='/dcc/FbxSDK/'>
-          <p class='title'>FBX SDK入门<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>FBX SDK
-FBX是一种主流的三维模型格式，格式闭源，但可以通过免费的FBX SDK编辑模型
-开发环境
+        <a class='next' href='/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/'>
+          <p class='title'>内存分配<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>内存分配
 
-Visual Studio 2019
-Cmake
-安装FBX SDK，我根据环境安装...</p>
+最近看了一些关于内存分配的分享，发现操作系统相关的知识都忘光了，于是打算借助Linux内核的内存分配机制，简单复习一下内存分配相关的理论知识
+
+程序运行时不断进行内存的申请与释放，高...</p>
         </a>
       
     </div>
@@ -2890,7 +2756,7 @@ Cmake
 
   <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="discussionUrl" content="/program/python%E8%B0%83%E7%94%A8C++/index.html#comments">
+      <meta itemprop="discussionUrl" content="/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/index.html#comments">
     </span>
     <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
@@ -2932,7 +2798,7 @@ Cmake
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SWIG"><span class="toc-text">SWIG</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interface-file"><span class="toc-text">Interface file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="toc-text">环境安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-text">样例代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E5%8C%85%E8%A3%85"><span class="toc-text">C++包装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-text">类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-text">资料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95"><span class="toc-text">无状态方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3476,7 +3342,7 @@ Cmake
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/python调用C++/","name":"SWIG实现Python调用C++"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"SWIG实现Python调用C++","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/python%E8%B0%83%E7%94%A8C++/","wordCount":0,"datePublished":"2023-05-16T16:01:25.000Z","dateModified":"2023-10-23T10:02:52.078Z","articleSection":"program","keywords":"Python,C++,SWIG","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/无状态方法/","name":"无状态方法"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"无状态方法","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E6%97%A0%E7%8A%B6%E6%80%81%E6%96%B9%E6%B3%95/","wordCount":0,"datePublished":"2023-10-23T17:01:25.000Z","dateModified":"2023-10-23T10:02:52.078Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

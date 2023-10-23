@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1694774727578),
+    lastupdate: new Date(1698055384143),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2377,6 +2377,107 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <section class="post-list">
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/profile工具/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/graphics/profile%E5%B7%A5%E5%85%B7/"  itemprop="url">
+        profile工具
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Profile工具
+工具手册
+
+
+
+工具
+优点
+评价
+
+
+
+
+Unity profiler
+用起来最简单，可以网络远程测试
+功能不是很全
+
+
+Xcode
+功能全，而且使用简单
+只能iOS，而且iOS打包很折磨
+
+
+RenderDoc
+
+安卓利器
+
+
+snapdragon
+
+只能用于高通骁龙soc，使用时注意有无adb
+
+
+Nsight
+
+贼难用（可能是Unity图形API的锅）
+
+
+PIX
+...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-02-01T10:01:25+00:00">2023-02-01</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/graphics/">graphics</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/graphics/profile%E5%B7%A5%E5%85%B7/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3053,74 +3154,6 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3263,7 +3296,7 @@ $$
           <li><a class="flat-box"
             title="/categories/program/" href="/categories/program/"
             active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(18)</div></a></li>
+            ><div class='name'>program</div><div class='badge'>(19)</div></a></li>
         
       </ul>
     </div>
