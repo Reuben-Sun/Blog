@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698598442241),
+    lastupdate: new Date(1698601795114),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2703,12 +2703,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 现在是2023年，C++23都出来很久了（尽管很多编译器没有实现全功能），但还是有着大量C++11/17的老项目，出于人力和风险的考虑并没有上新标准，我作为一个C++菜鸡，也没想着去了解C++20都更新了什么，直到最近遇到了很多语言层面的问题，于是想着学习一下C++20特性
 
-Modules
-
-模块
-
-
-没有头文件，编译速度更快（C++引用头文件会巨幅降低编译速度，于是很多...
+指定初始化
+可以只初始化一部分，可以指定想要初始化的部分
+struct Student
+&#123...
       
     
   </div>
@@ -2773,8 +2771,8 @@ Modules
       
         C++20下spdlog使用踩坑
 spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo引擎写了一个Log系统，结果由于C++20的std::format和更强的编译器断言，使得spdlog的log函数无法正确推断匹配Args...，在公司C++高手的帮助下成功解决了问题，于是在此记录一下踩坑历程
-最初的版本
-我参考开源项目的实现，使用spdlog写了一个简易的Log...
+// C++20以前
+auto func = [](auto&amp;...
       
     
   </div>
