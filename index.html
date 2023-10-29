@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698288898262),
+    lastupdate: new Date(1698598442241),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2548,6 +2548,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
+        
+          
+        
+          
             
               <div class='post-wrapper'>
                 <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
@@ -2665,6 +2669,144 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++20/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/C++20/"  itemprop="url">
+        C++20特性
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        C++20特性
+
+现在是2023年，C++23都出来很久了（尽管很多编译器没有实现全功能），但还是有着大量C++11/17的老项目，出于人力和风险的考虑并没有上新标准，我作为一个C++菜鸡，也没想着去了解C++20都更新了什么，直到最近遇到了很多语言层面的问题，于是想着学习一下C++20特性
+
+Modules
+
+模块
+
+
+没有头文件，编译速度更快（C++引用头文件会巨幅降低编译速度，于是很多...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-10-30T00:10:25+00:00">2023-10-30</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/C++20/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/LogSystem/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/LogSystem/"  itemprop="url">
+        C++20下spdlog使用踩坑
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        C++20下spdlog使用踩坑
+spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo引擎写了一个Log系统，结果由于C++20的std::format和更强的编译器断言，使得spdlog的log函数无法正确推断匹配Args...，在公司C++高手的帮助下成功解决了问题，于是在此记录一下踩坑历程
+最初的版本
+我参考开源项目的实现，使用spdlog写了一个简易的Log...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-10-29T23:25:25+00:00">2023-10-29</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/LogSystem/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3228,160 +3370,6 @@ ECS的本质就是数据驱动的编程，随着守望先锋的爆火进入大�
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/Catlike小球移动/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/game/Catlike%E5%B0%8F%E7%90%83%E7%A7%BB%E5%8A%A8/"  itemprop="url">
-        Unity小球移动
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity小球移动
-
-摘自Catlike的Movement Tutorial
-
-小球移动
-创建小球
-
-使用Input System包，在Package Manager中Unity包搜索即可
-
-创建Input Action资产
-
-创建小球，包含拖尾渲染器、Player Input组件、脚本SphereMovement.cs
-
-移动脚本
-public class SphereMovement :...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-07-01T17:01:25+00:00">2023-07-01</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/game/">game</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/game/Catlike%E5%B0%8F%E7%90%83%E7%A7%BB%E5%8A%A8/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/dcc/blender使用笔记/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"  itemprop="url">
-        blender使用笔记
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Blender使用笔记
-网格合并
-选中模型，按快捷键ctrl+J
-布尔建模
-
-创建一个圆柱1，按tab进入编辑模式，选中上表面，按s将上表面进行缩放，变成一个类似“圆锥”的东西
-在圆锥上侧创建一个球，下侧创建一个圆柱2
-使用布尔操作，球布尔Difference，圆柱2布尔Union（注意操作后隐藏球和圆柱）
-
-
-于是得到了枪的建模（相当粗糙）
-
-模型添加材质
-
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-06-30T10:01:25+00:00">2023-06-30</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/dcc/">dcc</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/dcc/" itemprop="url"><span itemprop="name">dcc</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3518,7 +3506,7 @@ public class SphereMovement :...
           <li><a class="flat-box"
             title="/categories/program/" href="/categories/program/"
             active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(20)</div></a></li>
+            ><div class='name'>program</div><div class='badge'>(22)</div></a></li>
         
       </ul>
     </div>
