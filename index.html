@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698658150857),
+    lastupdate: new Date(1698852020797),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2770,7 +2770,7 @@ struct Student
     
       
         C++20下spdlog使用踩坑
-spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo引擎写了一个Log系统，结果由于C++不运行连续进行两次及以上的用户自定义的隐式构造，使得spdlog的log函数无法正确推断匹配Args...，最后在公司C++高手的帮助下成功解决了问题，于是在此记录一下踩坑历程
+spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo引擎写了一个Log系统，结果由于C++不允许连续进行两次及以上的用户自定义的隐式构造，使得spdlog的log函数无法正确推断匹配Args...，最后在公司C++高手的帮助下成功解决了问题，于是在此记录一下踩坑历程
 最初的版本
 我参考开源项目的实现，使用spdlog写了一个简易的L...
       
