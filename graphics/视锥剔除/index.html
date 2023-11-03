@@ -42,11 +42,11 @@
 <meta property="og:title" content="视锥剔除">
 <meta property="og:url" content="https://reubensun.com/graphics/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="视锥剔除 剔除的目的是减少要绘制不可见的物体，视锥剔除（View Frustum Culling，VFC）是使用一个平头四棱锥和场景中物体做可见性测试，实现快速剔除  为了加速视锥和场景物体的相交测试速度，我们会使用AABB、OBB、Sphere来代替物体进行测试 视锥剔除可以并行计算，也可以使用BSP-trees加速 基础数学知识 点与面 已知一个面的法线（已经归一化）为$\mathbf{n}$">
+<meta property="og:description" content="视锥剔除  《Optimized View Frustum Culling Algorithms for Bounding Boxes》阅读笔记  剔除的目的是减少要绘制不可见的物体，视锥剔除（View Frustum Culling，VFC）是使用一个平头四棱锥和场景中物体做可见性测试，实现快速剔除  为了加速视锥和场景物体的相交测试速度，我们会使用Bounding Volume（比如AABB、">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-11-03T10:46:25.000Z">
-<meta property="article:modified_time" content="2023-11-03T06:55:10.944Z">
+<meta property="article:modified_time" content="2023-11-03T10:18:38.724Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Culling">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1698994514394),
+    lastupdate: new Date(1699006721064),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2543,9 +2543,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>视锥剔除</h1>
+<blockquote>
+<p>《Optimized View Frustum Culling Algorithms for Bounding Boxes》阅读笔记</p>
+</blockquote>
 <p>剔除的目的是减少要绘制不可见的物体，视锥剔除（View Frustum Culling，VFC）是使用一个平头四棱锥和场景中物体做可见性测试，实现快速剔除</p>
 <p><img src="/images/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4ue.png" class="lazyload" data-srcset="/images/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4ue.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="视锥剔除ue"></p>
-<p>为了加速视锥和场景物体的相交测试速度，我们会使用AABB、OBB、Sphere来代替物体进行测试</p>
+<p>为了加速视锥和场景物体的相交测试速度，我们会使用Bounding Volume（比如AABB、OBB、Sphere）来代替物体进行测试</p>
 <p>视锥剔除可以并行计算，也可以使用BSP-trees加速</p>
 <h2 id="基础数学知识">基础数学知识</h2>
 <h3 id="点与面">点与面</h3>
@@ -2560,7 +2563,9 @@ $$<br>
 <p>一条线是两个点，如果两个点带入$\mathbf{n}\cdot\mathbf{x}+d$的符号是相反的，说明两个点在面的两侧，说明线与面相交</p>
 <h3 id="AABB与面">AABB与面</h3>
 <p>AABB是轴向包围盒，根据面的法线方向，就能知道AABB哪一个对角线轴最垂直于这个面，判读那这个对角线和面的关系，就能得到AABB和面的关系</p>
-<h3 id="AABB与立方体">AABB与立方体</h3>
+<p>我们还可以将这个对角线放在LUT里，加速之后几帧的相交检测（毕竟帧是连续的，我们可能会高频做相同面和对角线的相交检测）</p>
+<h2 id="AABB视锥剔除">AABB视锥剔除</h2>
+<h3 id="投影空间简单比较">投影空间简单比较</h3>
 <p>还有一种和上述不同的方案，即将视锥和AABB转化到相机的透视投影空间，此时视锥变成一个立方体，于是就可以判断投影后的AABB和一个长方形视锥的相交关系，这个计算十分简单只需要算6次比较</p>
 <pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>cube1_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> cube2_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">or</span> cube1_min<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">></span> cube2_max<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">or</span>
     cube1_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> cube2_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">or</span> cube1_min<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">></span> cube2_max<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">or</span>
@@ -2570,9 +2575,51 @@ $$<br>
     <span class="token keyword">return</span> True</code></pre>
 <p>但这个方法缺点也很明显：需要做一个投影计算（很费）</p>
 <p><img src="/images/AABB%E8%A7%86%E9%94%A5%E6%B5%8B%E8%AF%95.png" class="lazyload" data-srcset="/images/AABB%E8%A7%86%E9%94%A5%E6%B5%8B%E8%AF%95.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="AABB视锥测试"></p>
+<h3 id="世界空间六个面替代视锥">世界空间六个面替代视锥</h3>
+<p>我们可以将视锥是为六个平面，做六个平面和AABB的相交测试，若发现在AABB在视锥平面外，说明未相交，不可见</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">testVisible</span><span class="token punctuation">(</span>AABB aabb<span class="token punctuation">,</span> Camera camera<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    vec3 center <span class="token operator">=</span> aabb<span class="token punctuation">.</span>bound<span class="token punctuation">.</span>center<span class="token punctuation">;</span>
+    vec3 halfSize <span class="token operator">=</span> <span class="token function">abs</span><span class="token punctuation">(</span>aabb<span class="token punctuation">.</span>bound<span class="token punctuation">.</span>max <span class="token operator">-</span> aabb<span class="token punctuation">.</span>bound<span class="token punctuation">.</span>min<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.5</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token operator">&amp;</span> plane <span class="token operator">:</span> camera<span class="token punctuation">.</span>frustumPlanes<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        SideResult side <span class="token operator">=</span> <span class="token function">testSide</span><span class="token punctuation">(</span>plane<span class="token punctuation">,</span> center<span class="token punctuation">,</span> halfSize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>side <span class="token operator">==</span> SideResult<span class="token double-colon punctuation">::</span>OutSide<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ture<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<h2 id="作者的方案">作者的方案</h2>
+<h3 id="八分检测">八分检测</h3>
+<p>如图，我们使用轴将视锥切成八份，每一份是一个octant，每个octant都分到了三个外平面（图中加粗部分），若一个物体在视锥内，则必须在每一个octant的三个外平面的内侧</p>
+<p><img src="/images/OctantTest.png" class="lazyload" data-srcset="/images/OctantTest.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="OctantTest"></p>
+<p>对于一个AABB，他的中心点到corner的距离（其实就是半个主对角线长度）必须要小于视锥中心点到视锥平面的距离，也就是下图$d_2 \le d_1$。</p>
+<p>这个检测的消耗特别小，不过不够准（必要不充分）</p>
+<p>视锥中心点到六个平面的距离可以在每一帧计算前全局做一次</p>
+<img src="/images/octantTest2.png" class="lazyload" data-srcset="/images/octantTest2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="octantTest2" style="zoom: 50%;" />
+<h3 id="标记视锥平面">标记视锥平面</h3>
+<p>如果一个物体在一个视锥平面内侧，说明这个物体的所有子物体都在这个视锥平面内侧，那么我后面对子物体进行视锥剔除时不需要再用这个平面进行计算了</p>
+<p>在AABB上维护一个bitfield，记录这个物体是被六个平面中哪些平面裁掉的</p>
+<h3 id="连续性">连续性</h3>
+<blockquote>
+<p>TR：Translation and Rotation</p>
+</blockquote>
+<p>帧是连续的</p>
+<ul>
+<li>
+<p>如果一个物体在上一帧不可见，且视锥只移动了非常小的距离，那么这一帧这个物体大概率还是不可见</p>
+</li>
+<li>
+<p>如果一个物体被视锥左平面剔除（可以复用“标记视锥平面”里的bitfield），那么视线向右转（不超过$180^{\circ}$）时，这个物体依然会不可见</p>
+</li>
+<li>
+<p>如果</p>
+</li>
+</ul>
 <h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="https://docs.unrealengine.com/5.3/en-US/visibility-and-occlusion-culling-in-unreal-engine/#viewfrustum">UE5 View Frustum Document</a></p>
-<p>《Optimized View Frustum Culling Algorithms for Bounding Boxes》</p>
 
   </div>
   
@@ -2597,7 +2644,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-03T06:55:10+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-03T10:18:38+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年11月3日</p>
@@ -2749,7 +2796,7 @@ $$<br>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86"><span class="toc-text">基础数学知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E4%B8%8E%E9%9D%A2"><span class="toc-text">点与面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E4%B8%8E%E9%9D%A2"><span class="toc-text">线与面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AABB%E4%B8%8E%E9%9D%A2"><span class="toc-text">AABB与面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AABB%E4%B8%8E%E7%AB%8B%E6%96%B9%E4%BD%93"><span class="toc-text">AABB与立方体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86"><span class="toc-text">基础数学知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E4%B8%8E%E9%9D%A2"><span class="toc-text">点与面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E4%B8%8E%E9%9D%A2"><span class="toc-text">线与面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AABB%E4%B8%8E%E9%9D%A2"><span class="toc-text">AABB与面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AABB%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4"><span class="toc-text">AABB视锥剔除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%95%E5%BD%B1%E7%A9%BA%E9%97%B4%E7%AE%80%E5%8D%95%E6%AF%94%E8%BE%83"><span class="toc-text">投影空间简单比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%96%E7%95%8C%E7%A9%BA%E9%97%B4%E5%85%AD%E4%B8%AA%E9%9D%A2%E6%9B%BF%E4%BB%A3%E8%A7%86%E9%94%A5"><span class="toc-text">世界空间六个面替代视锥</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E8%80%85%E7%9A%84%E6%96%B9%E6%A1%88"><span class="toc-text">作者的方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E5%88%86%E6%A3%80%E6%B5%8B"><span class="toc-text">八分检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E8%A7%86%E9%94%A5%E5%B9%B3%E9%9D%A2"><span class="toc-text">标记视锥平面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E6%80%A7"><span class="toc-text">连续性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3293,7 +3340,7 @@ $$<br>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/视锥剔除/","name":"视锥剔除"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"视锥剔除","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4/","wordCount":0,"datePublished":"2023-11-03T10:46:25.000Z","dateModified":"2023-11-03T06:55:10.944Z","articleSection":"graphics","keywords":"Culling","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/视锥剔除/","name":"视锥剔除"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"视锥剔除","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E8%A7%86%E9%94%A5%E5%89%94%E9%99%A4/","wordCount":0,"datePublished":"2023-11-03T10:46:25.000Z","dateModified":"2023-11-03T10:18:38.724Z","articleSection":"graphics","keywords":"Culling","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
