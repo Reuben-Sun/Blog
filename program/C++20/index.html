@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-10-30T00:10:25.000Z">
-<meta property="article:modified_time" content="2023-11-05T13:56:21.894Z">
+<meta property="article:modified_time" content="2023-11-05T14:19:30.560Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1699192598470),
+    lastupdate: new Date(1699193983939),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2556,11 +2556,66 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 Student s <span class="token punctuation">&#123;</span> <span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Jack"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <h2 id="Modules-模块">Modules 模块</h2>
+<blockquote>
+<p>更高级的PCH，现阶段这东西大项目完全没法用</p>
+</blockquote>
+<h3 id="优点">优点</h3>
 <ul>
-<li>没有头文件，编译速度更快（C++引用头文件会巨幅降低编译速度，于是很多人喜欢在头文件中只放一个类指针，到用到里面内容的时候在引用头文件，这样会大幅提高编译速度）</li>
-<li>显示指定导出（话说这套是不是Java、Python早就有了？）</li>
-<li>模块引入顺序无关（循环依赖、前向声明之类不好的记忆出现了）</li>
+<li>没有头文件，以及相关的依赖问题</li>
+<li>引入模块时不需要像头文件那样指定路径</li>
+<li>编译速度非常快（C++引用头文件会巨幅降低编译速度，于是很多人喜欢在头文件中只放一个类指针，到用到里面内容的时候在引用头文件，这样会大幅提高编译速度）</li>
+<li>显示指定导入导出</li>
+<li>模块引入顺序无关</li>
+<li>与现有的头文件兼容</li>
+<li>未来也许会像Python那样提供pip和包管理器？</li>
 </ul>
+<h3 id="缺点">缺点</h3>
+<ul>
+<li>除了最新的MSVC，其他编译器都没怎么实现这个功能</li>
+<li>MSVC自己擅自主张，不按C++标准改了很多东西</li>
+<li>IDE不支持全局modules的提示和跳转（VS2022在2023年10月支持了，clion至今还是垃圾）</li>
+<li>需要反复引入std头文件（在C++23有快捷引入方式，但MSVC实现的很阴间）</li>
+<li>对第三方库极度不友好</li>
+<li>没有保存修改，IDE几乎没法解析，大多数情况IDE不给智能提示</li>
+<li>和头文件、宏混用时容易报错</li>
+<li>缺少std头文件时报错几乎无法阅读，大量匹配问题</li>
+<li>cmake对其支持相当差</li>
+<li>有的编译器无法将<code>.cpp</code>识别为modules？？？</li>
+<li>import是局部的，每一个文件都需要反复import modules</li>
+<li>一些静态变量、函数要到被用到时才会报错，build通过的代码不能保证能运行</li>
+</ul>
+<h3 id="用例">用例</h3>
+<p>以MSVC的写法为例</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// student.ixx</span>
+<span class="token keyword">export</span> <span class="token keyword">module</span> <span class="token module">Student</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token module"><span class="token string">&lt;string></span></span><span class="token punctuation">;</span>
+<span class="token keyword">namespace</span> Demo
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Student</span>
+    <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span><span class="token operator">:</span>
+        <span class="token function">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">~</span><span class="token function">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span><span class="token operator">:</span>
+        std<span class="token double-colon punctuation">::</span>string m_name<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// student.cppm</span>
+<span class="token keyword">import</span> <span class="token module">Student</span><span class="token punctuation">;</span>	<span class="token comment">// MSVC擅自废弃了module Student的写法，很离谱</span>
+<span class="token keyword">import</span> <span class="token module"><span class="token string">&lt;string></span></span><span class="token punctuation">;</span>	<span class="token comment">// 反复import std也阴间了，C++23赶快端上来吧</span>
+<span class="token keyword">import</span> <span class="token module"><span class="token string">&lt;iostream></span></span><span class="token punctuation">;</span>	
+<span class="token keyword">namespace</span> Demo
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">Student</span><span class="token double-colon punctuation">::</span><span class="token function">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        m_name <span class="token operator">=</span> <span class="token string">"Hello world"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">Student</span><span class="token double-colon punctuation">::</span><span class="token operator">~</span><span class="token function">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token class-name">Student</span><span class="token double-colon punctuation">::</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> m_name <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <h2 id="Ranges-范围">Ranges 范围</h2>
 <blockquote>
 <p>感觉不同编译器对这个功能的支持差异好大</p>
@@ -2654,7 +2709,7 @@ std<span class="token double-colon punctuation">::</span>vector<span class="toke
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-05T13:56:21+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-05T14:19:30+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年11月5日</p>
@@ -2814,7 +2869,7 @@ spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo�
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">指定初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modules-%E6%A8%A1%E5%9D%97"><span class="toc-text">Modules 模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ranges-%E8%8C%83%E5%9B%B4"><span class="toc-text">Ranges 范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coroutines-%E5%8D%8F%E7%A8%8B"><span class="toc-text">Coroutines 协程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concepts"><span class="toc-text">Concepts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lambda"><span class="toc-text">Lambda</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr"><span class="toc-text">constexpr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#consteval"><span class="toc-text">consteval</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C"><span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for%E5%BE%AA%E7%8E%AF%E6%94%AF%E6%8C%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">for循环支持初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%BC%95switch%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96"><span class="toc-text">指引switch编译优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">指定初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modules-%E6%A8%A1%E5%9D%97"><span class="toc-text">Modules 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BE%8B"><span class="toc-text">用例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ranges-%E8%8C%83%E5%9B%B4"><span class="toc-text">Ranges 范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coroutines-%E5%8D%8F%E7%A8%8B"><span class="toc-text">Coroutines 协程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concepts"><span class="toc-text">Concepts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lambda"><span class="toc-text">Lambda</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#constexpr"><span class="toc-text">constexpr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#consteval"><span class="toc-text">consteval</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C"><span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for%E5%BE%AA%E7%8E%AF%E6%94%AF%E6%8C%81%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">for循环支持初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%BC%95switch%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96"><span class="toc-text">指引switch编译优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3358,7 +3413,7 @@ spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++20/","name":"C++20特性"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C++20特性","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++20/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++20/","wordCount":0,"datePublished":"2023-10-30T00:10:25.000Z","dateModified":"2023-11-05T13:56:21.894Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++20/","name":"C++20特性"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C++20特性","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++20/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++20/","wordCount":0,"datePublished":"2023-10-30T00:10:25.000Z","dateModified":"2023-11-05T14:19:30.560Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
