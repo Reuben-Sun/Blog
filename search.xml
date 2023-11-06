@@ -29,31 +29,6 @@
     
     
     <entry>
-      <title>海量光源的阴影绘制</title>
-      <link href="/graphics/VirtualShadowMap/"/>
-      <url>/graphics/VirtualShadowMap/</url>
-      
-        <content type="html"><![CDATA[<h1>海量光源的阴影绘制</h1><blockquote><p>《More Efficient Virtual Shadow Maps forMany Lights》阅读笔记，这篇文章是《Clustered Deferred and Forward Shading》的续作</p></blockquote><p>当场景中光源很多时，过去很多阴影算法往往倾向于让一些光不绘制阴影，这实际造成了效果损失，还有可能引发漏光的bug</p><p>作者使用基于Cluster Shading、Virtual Shadow CubeMap等技术，实现了海量作用距离有限的点光光源的高效阴影绘制</p><p>作者的方案（在Cluster Shading基础上添加了阴影）</p><ol><li><em>使用传统算法绘制GBuffer</em></li><li><em>分配Cluster（求切分后每一个Cluster的坐标）</em></li><li><em>找到唯一Cluster</em></li><li><em>分配灯光</em></li><li>为每一个灯光选择合适的阴影贴图精度</li><li>在VSMs中分配阴影贴图</li><li>对每一个灯光进行几何体剔除</li><li>绘制阴影贴图</li><li><em>着色，采样阴影贴图</em></li></ol><h2 id="相关算法">相关算法</h2><h3 id="获取Shadow-Map精度">获取Shadow Map精度</h3><p>常见的方法为计算灯光的BV在屏幕空间的覆盖范围，然而当相机在靠近、或者在灯光的Volume里面时，会过度高估精度</p><p>作者的方法是考虑屏幕像素数量$S$和Cluster与相机形成的立体角$\alpha$<br>$$<br>R=\sqrt{\frac{S/(\alpha / 4\pi)}{6}}<br>$$<br><img src="/images/阴影贴图分辨率.png" class="lazyload" data-srcset="/images/阴影贴图分辨率.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="阴影贴图分辨率" style="zoom:50%;" /></p><h3 id="几何体剔除">几何体剔除</h3><p>与视锥体（frustum）相比，灯光的Sphere BV更小，于是需要更精细的剔除</p><h2 id="参考">参考</h2><p><a href="https://docs.unrealengine.com/5.3/en-US/virtual-shadow-maps-in-unreal-engine/">UE5 Virtual Shadow Maps Document</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> graphics </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Shadow </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Clustered Shading</title>
       <link href="/graphics/ClusteredShading/"/>
       <url>/graphics/ClusteredShading/</url>
