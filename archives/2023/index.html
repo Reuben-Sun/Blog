@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1699197618405),
+    lastupdate: new Date(1699243641051),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2485,6 +2485,77 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/获取CPU型号/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/%E8%8E%B7%E5%8F%96CPU%E5%9E%8B%E5%8F%B7/"  itemprop="url">
+        C++获取CPU型号
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        C++获取CPU型号
+
+不同CPU的指令集有所差异，尤其是在使用SIMD之类的feature时要十分注意，以MSVC获取CPU型号为例
+
+核心是使用指令__cpuid，其实你也可以__asm &#123;&#125;自己写汇编
+#include &lt;iostream>
+#include &lt;string>
+#include &lt;intrin.h>
+#include &lt;arr...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-11-06T12:01:25+00:00">2023-11-06</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/%E8%8E%B7%E5%8F%96CPU%E5%9E%8B%E5%8F%B7/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3110,75 +3181,6 @@ Linux内存分配原理
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++函数调用/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/"  itemprop="url">
-        C++函数调用
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        C++函数调用
-C++支持两种函数调用方式，__stdcall和__cdecl，两者对栈帧（stack frame）的处理方式不同，__stdcall是由被调用函数来清理栈帧，__cdecl是由调用函数来清理栈帧。一旦混用，容易引发错误
-
-两者混用可能会导致栈帧没有被释放或者被连续释放两次
-
-stack frame
-栈帧用于维护函数调用的上下文信息，在函数调用时，会在栈上分配一块内存，用于存...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-08-14T10:32:25+00:00">2023-08-14</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/program/C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3187,7 +3189,7 @@ stack frame
       <div class="prev-next">
         
         <p class="current">
-          1 / 7
+          1 / 8
         </p>
         
           <a class="next" rel="next" href="/archives/2023/page/2/">
@@ -3316,7 +3318,7 @@ stack frame
           <li><a class="flat-box"
             title="/categories/program/" href="/categories/program/"
             active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(22)</div></a></li>
+            ><div class='name'>program</div><div class='badge'>(23)</div></a></li>
         
       </ul>
     </div>
