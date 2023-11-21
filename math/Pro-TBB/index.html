@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-01T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.102Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.289Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="并行计算">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2581,36 +2581,22 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <ol>
 <li>安装tbb</li>
 </ol>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$brew</span> <span class="token function">install</span> tbb</code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="variable">$brew</span> install tbb</span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>链接tbb</li>
 </ol>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#寻找tbb包</span>
-<span class="token keyword">find_package</span><span class="token punctuation">(</span>TBB REQUIRED<span class="token punctuation">)</span>
-...
-<span class="token comment">#链接</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>TimeStudy <span class="token inserted class-name">TBB::tbb</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#寻找tbb包</span></span><br><span class="line"><span class="keyword">find_package</span>(TBB REQUIRED)</span><br><span class="line">...</span><br><span class="line"><span class="comment">#链接</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(TimeStudy TBB::tbb)</span><br></pre></td></tr></table></figure>
 <ol start="3">
 <li>引用头文件</li>
 </ol>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include&lt;tbb&#x2F;tbb.h&gt;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;tbb/tbb.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 <h3 id="在Ubuntu上安装TBB">在Ubuntu上安装TBB</h3>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libtbb-dev</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get install libtbb-dev</span><br></pre></td></tr></table></figure>
 <h3 id="调用函数">调用函数</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template&lt;typename Func0, [...,] typename FuncN&gt;
-void parallel_invoke(const Func0&amp; f0, [...,] const FuncN&amp; fN);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Func0, [...,] <span class="keyword">typename</span> FuncN&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">parallel_invoke</span><span class="params">(<span class="type">const</span> Func0&amp; f0, [...,] <span class="type">const</span> FuncN&amp; fN)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>一个简单的TBB示例，并行输出两行字符串</p>
 <p>通过<code>tbb::parallel_invoke</code>实现任务、函数粒度的并行</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;tbb&#x2F;tbb.h&gt;
-
-int main() &#123;
-    tbb::parallel_invoke(
-            []()&#123;std::cout &lt;&lt; &quot;TBB!&quot; &lt;&lt; std::endl;&#125;,
-            []()&#123;std::cout &lt;&lt; &quot;Hello&quot; &lt;&lt; std::endl;&#125;
-            );
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tbb/tbb.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    tbb::<span class="built_in">parallel_invoke</span>(</span><br><span class="line">            []()&#123;std::cout &lt;&lt; <span class="string">&quot;TBB!&quot;</span> &lt;&lt; std::endl;&#125;,</span><br><span class="line">            []()&#123;std::cout &lt;&lt; <span class="string">&quot;Hello&quot;</span> &lt;&lt; std::endl;&#125;</span><br><span class="line">            );</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们这里使用lambda表达式创建了匿名（anonymous）函数，可以大幅简化TBB编写</p>
 <h4 id="快排示例">快排示例</h4>
 <p>传统快排算法（升序）</p>
@@ -2620,323 +2606,55 @@ int main() &#123;
 <li>对左右两边分别快排，直到只剩一个数（左右重合）</li>
 </ol>
 <p>能看出，这个算法采用了分治的思想，很适合并行</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;tbb&#x2F;tbb.h&gt;
-
-using QV &#x3D; std::vector&lt;int&gt;;
-&#x2F;&#x2F;传统快排
-void quickSort(QV::iterator left, QV::iterator right)&#123;
-    if(left &gt;&#x3D; right)&#123; return; &#125;
-    int pivot_value &#x3D; *left;
-    QV::iterator i &#x3D; left, j &#x3D; right - 1;
-    while(i !&#x3D; j)&#123;
-        while(i !&#x3D; j &amp;&amp; pivot_value &lt; *j) --j;    &#x2F;&#x2F;从右向左找，直到找到一个比基准小的
-        while(i !&#x3D; j &amp;&amp; pivot_value &gt;&#x3D; *i) ++i;   &#x2F;&#x2F;从左往右找，直到找到一个比基准大的
-        std::iter_swap(i, j);
-    &#125;
-    std::iter_swap(left, i);
-    quickSort(left, i);
-    quickSort(j+1, right);
-&#125;
-&#x2F;&#x2F;并行快排
-void parallelQuicksort(QV::iterator left, QV::iterator right)&#123;
-    if(left &gt;&#x3D; right)&#123; return; &#125;
-    int pivot_value &#x3D;  *left;
-    QV::iterator i &#x3D; left, j &#x3D; right - 1;
-    while (i !&#x3D; j) &#123;
-        while (i !&#x3D; j &amp;&amp; pivot_value &lt; *j) --j;
-        while (i !&#x3D; j &amp;&amp; pivot_value &gt;&#x3D; *i) ++i;
-        std::iter_swap(i, j);
-    &#125;
-    std::iter_swap(left, i);
-
-    &#x2F;&#x2F; recursive call
-    tbb::parallel_invoke(
-      			&#x2F;&#x2F;lambda表达式[&#x3D;]表示传入当前函数所有的成员
-            [&#x3D;]() &#123; parallelQuicksort(left, i); &#125;,
-            [&#x3D;]() &#123; parallelQuicksort(i + 1, right); &#125;
-    );
-
-&#125;
-&#x2F;&#x2F;使用cutoff
-void parallelCutoffQuicksort(QV::iterator left, QV::iterator right)&#123;
-    const int cutoff &#x3D; 100;
-
-    if (right - left &lt; cutoff) &#123;
-        quickSort(right, left);
-    &#125;
-    else &#123;
-        int pivot_value &#x3D;  *left;
-        QV::iterator i &#x3D; left, j &#x3D; right - 1;
-        while (i !&#x3D; j) &#123;
-            while (i !&#x3D; j &amp;&amp; pivot_value &lt; *j) --j;
-            while (i !&#x3D; j &amp;&amp; pivot_value &gt;&#x3D; *i) ++i;
-            std::iter_swap(i, j);
-        &#125;
-        std::iter_swap(left, i);
-
-        &#x2F;&#x2F; recursive call
-        tbb::parallel_invoke(
-                [&#x3D;]() &#123; parallelQuicksort(left, i); &#125;,
-                [&#x3D;]() &#123; parallelQuicksort(i + 1, right); &#125;
-        );
-    &#125;
-&#125;
-
-int main() &#123;
-    std::vector&lt;int&gt; nums;
-    for(int i &#x3D; 0; i &lt; 5000; ++i)&#123;
-        nums.push_back(rand() % 5000);
-    &#125;
-  	&#x2F;&#x2F;warmup
-    tbb::parallel_for(0, 10, [](int) &#123;
-        tbb::tick_count t0 &#x3D; tbb::tick_count::now();
-        while ((tbb::tick_count::now() - t0).seconds() &lt; 0.01);
-    &#125;);
-
-    std::vector&lt;int&gt; nums2 &#x3D; nums;
-    tbb::tick_count t0 &#x3D; tbb::tick_count::now();
-    quickSort(nums.begin(), nums.end());
-    std::cout &lt;&lt; &quot;Normal Time&#x3D;&quot; &lt;&lt; (tbb::tick_count::now() - t0).seconds() &lt;&lt; std::endl;
-
-    tbb::tick_count t1 &#x3D; tbb::tick_count::now();
-    parallelQuicksort(nums2.begin(), nums2.end());
-    std::cout &lt;&lt; &quot;Parallel Time&#x3D;&quot; &lt;&lt; (tbb::tick_count::now() - t1).seconds() &lt;&lt; std::endl;
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tbb/tbb.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> QV = std::vector&lt;<span class="type">int</span>&gt;;</span><br><span class="line"><span class="comment">//传统快排</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">quickSort</span><span class="params">(QV::iterator left, QV::iterator right)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= right)&#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">    <span class="type">int</span> pivot_value = *left;</span><br><span class="line">    QV::iterator i = left, j = right - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(i != j)&#123;</span><br><span class="line">        <span class="keyword">while</span>(i != j &amp;&amp; pivot_value &lt; *j) --j;    <span class="comment">//从右向左找，直到找到一个比基准小的</span></span><br><span class="line">        <span class="keyword">while</span>(i != j &amp;&amp; pivot_value &gt;= *i) ++i;   <span class="comment">//从左往右找，直到找到一个比基准大的</span></span><br><span class="line">        std::<span class="built_in">iter_swap</span>(i, j);</span><br><span class="line">    &#125;</span><br><span class="line">    std::<span class="built_in">iter_swap</span>(left, i);</span><br><span class="line">    <span class="built_in">quickSort</span>(left, i);</span><br><span class="line">    <span class="built_in">quickSort</span>(j+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//并行快排</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">parallelQuicksort</span><span class="params">(QV::iterator left, QV::iterator right)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= right)&#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">    <span class="type">int</span> pivot_value =  *left;</span><br><span class="line">    QV::iterator i = left, j = right - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i != j) &#123;</span><br><span class="line">        <span class="keyword">while</span> (i != j &amp;&amp; pivot_value &lt; *j) --j;</span><br><span class="line">        <span class="keyword">while</span> (i != j &amp;&amp; pivot_value &gt;= *i) ++i;</span><br><span class="line">        std::<span class="built_in">iter_swap</span>(i, j);</span><br><span class="line">    &#125;</span><br><span class="line">    std::<span class="built_in">iter_swap</span>(left, i);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// recursive call</span></span><br><span class="line">    tbb::<span class="built_in">parallel_invoke</span>(</span><br><span class="line">      			<span class="comment">//lambda表达式[=]表示传入当前函数所有的成员</span></span><br><span class="line">            [=]() &#123; <span class="built_in">parallelQuicksort</span>(left, i); &#125;,</span><br><span class="line">            [=]() &#123; <span class="built_in">parallelQuicksort</span>(i + <span class="number">1</span>, right); &#125;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用cutoff</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">parallelCutoffQuicksort</span><span class="params">(QV::iterator left, QV::iterator right)</span></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> cutoff = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (right - left &lt; cutoff) &#123;</span><br><span class="line">        <span class="built_in">quickSort</span>(right, left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> pivot_value =  *left;</span><br><span class="line">        QV::iterator i = left, j = right - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i != j) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i != j &amp;&amp; pivot_value &lt; *j) --j;</span><br><span class="line">            <span class="keyword">while</span> (i != j &amp;&amp; pivot_value &gt;= *i) ++i;</span><br><span class="line">            std::<span class="built_in">iter_swap</span>(i, j);</span><br><span class="line">        &#125;</span><br><span class="line">        std::<span class="built_in">iter_swap</span>(left, i);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// recursive call</span></span><br><span class="line">        tbb::<span class="built_in">parallel_invoke</span>(</span><br><span class="line">                [=]() &#123; <span class="built_in">parallelQuicksort</span>(left, i); &#125;,</span><br><span class="line">                [=]() &#123; <span class="built_in">parallelQuicksort</span>(i + <span class="number">1</span>, right); &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; nums;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; ++i)&#123;</span><br><span class="line">        nums.<span class="built_in">push_back</span>(<span class="built_in">rand</span>() % <span class="number">5000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="comment">//warmup</span></span><br><span class="line">    tbb::<span class="built_in">parallel_for</span>(<span class="number">0</span>, <span class="number">10</span>, [](<span class="type">int</span>) &#123;</span><br><span class="line">        tbb::tick_count t0 = tbb::tick_count::<span class="built_in">now</span>();</span><br><span class="line">        <span class="keyword">while</span> ((tbb::tick_count::<span class="built_in">now</span>() - t0).<span class="built_in">seconds</span>() &lt; <span class="number">0.01</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; nums2 = nums;</span><br><span class="line">    tbb::tick_count t0 = tbb::tick_count::<span class="built_in">now</span>();</span><br><span class="line">    <span class="built_in">quickSort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Normal Time=&quot;</span> &lt;&lt; (tbb::tick_count::<span class="built_in">now</span>() - t0).<span class="built_in">seconds</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    tbb::tick_count t1 = tbb::tick_count::<span class="built_in">now</span>();</span><br><span class="line">    <span class="built_in">parallelQuicksort</span>(nums2.<span class="built_in">begin</span>(), nums2.<span class="built_in">end</span>());</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Parallel Time=&quot;</span> &lt;&lt; (tbb::tick_count::<span class="built_in">now</span>() - t1).<span class="built_in">seconds</span>() &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后结果，当数组比较大的时候，并行快排速度会更快一点</p>
-<pre class="language-none"><code class="language-none">Normal Time&#x3D;0.0023285
-Parallel Time&#x3D;0.00110846</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Normal Time=0.0023285</span><br><span class="line">Parallel Time=0.00110846</span><br></pre></td></tr></table></figure>
 <p>此外tbb进行任务分配也会有开销，因此我们往往将大任务分成若干个小任务后，让小任务串型执行，上文中的cutoff就是起到这个作用，这样往往能得到更高的性能</p>
 <h3 id="时刻查询">时刻查询</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;t0时刻
-tbb::tick_count t0 &#x3D; tbb::tick_count::now();	
-...
-&#x2F;&#x2F;当前时刻-t0时刻&#x3D;经过了多长时间段（并转化为秒）
-std::cout &lt;&lt; &quot;Time: &quot; &lt;&lt; (tbb::tick_count::now() - t0).seconds() &lt;&lt; &quot; seconds&quot; &lt;&lt; std::endl;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//t0时刻</span></span><br><span class="line">tbb::tick_count t0 = tbb::tick_count::<span class="built_in">now</span>();	</span><br><span class="line">...</span><br><span class="line"><span class="comment">//当前时刻-t0时刻=经过了多长时间段（并转化为秒）</span></span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;Time: &quot;</span> &lt;&lt; (tbb::tick_count::<span class="built_in">now</span>() - t0).<span class="built_in">seconds</span>() &lt;&lt; <span class="string">&quot; seconds&quot;</span> &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
 <p>并行开发中动态内存管理十分复杂、危险（内存泄漏），这里推荐使用C++11的智能指针（自带GC）</p>
 <h3 id="Flow-Graph">Flow Graph</h3>
 <p>将函数执行制作成Graph，实现消息驱动的并行（有些类似FrameGraph）</p>
 <p><img src="Image/FlowGraph.jpeg" class="lazyload" data-srcset="Image/FlowGraph.jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="FlowGraph"></p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void fig1_10(const std::vector&lt;ImagePtr&gt;&amp; image_vector)&#123;
-    const double tint_array[] &#x3D; &#123;0.75, 0, 0&#125;;
-
-    tbb::flow::graph g;
-    int i &#x3D; 0;
-    &#x2F;&#x2F;注意，source_node已经失效
-    tbb::flow::input_node&lt;ImagePtr&gt; src(g,
-        [&amp;i, &amp;image_vector](tbb::flow_control &amp;fc) -&gt; ImagePtr &#123;
-            if(i &lt; image_vector.size())&#123;
-                return image_vector[i++];
-            &#125;
-            else&#123;
-                fc.stop();
-                return &#123;&#125;;
-            &#125;
-    &#125;);
-    tbb::flow::function_node&lt;ImagePtr, ImagePtr&gt; gamma(g,
-        tbb::flow::unlimited, [] (ImagePtr img) -&gt; ImagePtr&#123;
-                return applyGamma(img, 1.4);
-        &#125;
-    );
-    tbb::flow::function_node&lt;ImagePtr, ImagePtr&gt; tint(g,
-        tbb::flow::unlimited, [tint_array] (ImagePtr img) -&gt; ImagePtr&#123;
-                return applyTint(img, tint_array);
-        &#125;
-    );
-    tbb::flow::function_node&lt;ImagePtr&gt; write(g,
-         tbb::flow::unlimited, [] (ImagePtr img)&#123;
-                writeImage(img);
-        &#125;
-    );
-
-    tbb::flow::make_edge(src, gamma);
-    tbb::flow::make_edge(gamma, tint);
-    tbb::flow::make_edge(tint, write);
-    src.activate();
-    g.wait_for_all();
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fig1_10</span><span class="params">(<span class="type">const</span> std::vector&lt;ImagePtr&gt;&amp; image_vector)</span></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">double</span> tint_array[] = &#123;<span class="number">0.75</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    tbb::flow::graph g;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//注意，source_node已经失效</span></span><br><span class="line">    tbb::<span class="function">flow::input_node&lt;ImagePtr&gt; <span class="title">src</span><span class="params">(g,</span></span></span><br><span class="line"><span class="params"><span class="function">        [&amp;i, &amp;image_vector](tbb::flow_control &amp;fc) -&gt; ImagePtr &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="keyword">if</span>(i &lt; image_vector.size())&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">return</span> image_vector[i++];</span></span></span><br><span class="line"><span class="params"><span class="function">            &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="keyword">else</span>&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                fc.stop();</span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">return</span> &#123;&#125;;</span></span></span><br><span class="line"><span class="params"><span class="function">            &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">    &#125;)</span></span>;</span><br><span class="line">    tbb::<span class="function">flow::function_node&lt;ImagePtr, ImagePtr&gt; <span class="title">gamma</span><span class="params">(g,</span></span></span><br><span class="line"><span class="params"><span class="function">        tbb::flow::unlimited, [] (ImagePtr img) -&gt; ImagePtr&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">return</span> applyGamma(img, <span class="number">1.4</span>);</span></span></span><br><span class="line"><span class="params"><span class="function">        &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br><span class="line">    tbb::<span class="function">flow::function_node&lt;ImagePtr, ImagePtr&gt; <span class="title">tint</span><span class="params">(g,</span></span></span><br><span class="line"><span class="params"><span class="function">        tbb::flow::unlimited, [tint_array] (ImagePtr img) -&gt; ImagePtr&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">return</span> applyTint(img, tint_array);</span></span></span><br><span class="line"><span class="params"><span class="function">        &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br><span class="line">    tbb::<span class="function">flow::function_node&lt;ImagePtr&gt; <span class="title">write</span><span class="params">(g,</span></span></span><br><span class="line"><span class="params"><span class="function">         tbb::flow::unlimited, [] (ImagePtr img)&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                writeImage(img);</span></span></span><br><span class="line"><span class="params"><span class="function">        &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br><span class="line"></span><br><span class="line">    tbb::flow::<span class="built_in">make_edge</span>(src, gamma);</span><br><span class="line">    tbb::flow::<span class="built_in">make_edge</span>(gamma, tint);</span><br><span class="line">    tbb::flow::<span class="built_in">make_edge</span>(tint, write);</span><br><span class="line">    src.<span class="built_in">activate</span>();</span><br><span class="line">    g.<span class="built_in">wait_for_all</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后该程序会以<strong>流水线</strong>的形式执行，当第一张图片完成gamma矫正，去执行tint着色时，第二张图片开始执行gamma矫正（每张图片间互不影响）</p>
 <p>相比于TimeStudy的串型执行，流水线执行效率会更快</p>
 <h3 id="循环">循环</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template&lt;typename Index, typename Func&gt;
-Func parallel_for(Index frist, Index last, [Index step,] const Func&amp; f);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index, <span class="keyword">typename</span> Func&gt;</span></span><br><span class="line"><span class="function">Func <span class="title">parallel_for</span><span class="params">(Index frist, Index last, [Index step,] <span class="type">const</span> Func&amp; f)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>上面的代码，我们将图片处理切分为几个小块，但小块内部仍然是单线程</p>
 <p>我们注意到，在图片处理时，有一个很大的循环在遍历图片上的像素点，那么能不能并行做这件事？</p>
 <p>我们并行处理每一行</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">tbb::parallel_for(0, height,
-                  [&amp;in_rows, &amp;out_rows, width, gamma](int i)&#123;
-                    for(int j &#x3D; 0; j &lt; width; ++j)&#123;
-                      const ImageLib::Image::Pixel&amp; p &#x3D; in_rows[i][j];
-                      double v &#x3D; 0.3 * p.bgra[2] + 0.59 * p.bgra[1] + 0.11 * p.bgra[0];
-                      double res &#x3D; pow(v, gamma);
-                      if(res &gt; ImageLib::MAX_BGR_VALUE)&#123;
-                        res &#x3D; ImageLib::MAX_BGR_VALUE;
-                      &#125;
-                      out_rows[i][j] &#x3D; ImageLib::Image::Pixel(res, res, res);
-                    &#125;
-                  &#125;
-                 );</code></pre>
-<pre class="language-c++" data-language="c++"><code class="language-c++">tbb::parallel_for(0, height,
-                  [&amp;in_rows, &amp;out_rows, width, tints](int i)&#123;
-                    for(int j &#x3D; 0; j &lt; width; ++j)&#123;
-                      const ImageLib::Image::Pixel&amp; p &#x3D; in_rows[i][j];
-                      std::uint8_t b &#x3D; (double)p.bgra[0] + (ImageLib::MAX_BGR_VALUE - p.bgra[0]) * tints[0];
-                      std::uint8_t g &#x3D; (double)p.bgra[0] + (ImageLib::MAX_BGR_VALUE - p.bgra[1]) * tints[1];
-                      std::uint8_t r &#x3D; (double)p.bgra[0] + (ImageLib::MAX_BGR_VALUE - p.bgra[2]) * tints[2];
-                      out_rows[i][j] &#x3D; ImageLib::Image::Pixel(
-                        (b &gt; ImageLib::MAX_BGR_VALUE) ? ImageLib::MAX_BGR_VALUE : b,
-                        (g &gt; ImageLib::MAX_BGR_VALUE) ? ImageLib::MAX_BGR_VALUE : g,
-                        (r &gt; ImageLib::MAX_BGR_VALUE) ? ImageLib::MAX_BGR_VALUE : r
-                      );
-                    &#125;
-                  &#125;
-                 );</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">tbb::<span class="built_in">parallel_for</span>(<span class="number">0</span>, height,</span><br><span class="line">                  [&amp;in_rows, &amp;out_rows, width, gamma](<span class="type">int</span> i)&#123;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; width; ++j)&#123;</span><br><span class="line">                      <span class="type">const</span> ImageLib::Image::Pixel&amp; p = in_rows[i][j];</span><br><span class="line">                      <span class="type">double</span> v = <span class="number">0.3</span> * p.bgra[<span class="number">2</span>] + <span class="number">0.59</span> * p.bgra[<span class="number">1</span>] + <span class="number">0.11</span> * p.bgra[<span class="number">0</span>];</span><br><span class="line">                      <span class="type">double</span> res = <span class="built_in">pow</span>(v, gamma);</span><br><span class="line">                      <span class="keyword">if</span>(res &gt; ImageLib::MAX_BGR_VALUE)&#123;</span><br><span class="line">                        res = ImageLib::MAX_BGR_VALUE;</span><br><span class="line">                      &#125;</span><br><span class="line">                      out_rows[i][j] = ImageLib::Image::<span class="built_in">Pixel</span>(res, res, res);</span><br><span class="line">                    &#125;</span><br><span class="line">                  &#125;</span><br><span class="line">                 );</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">tbb::<span class="built_in">parallel_for</span>(<span class="number">0</span>, height,</span><br><span class="line">                  [&amp;in_rows, &amp;out_rows, width, tints](<span class="type">int</span> i)&#123;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; width; ++j)&#123;</span><br><span class="line">                      <span class="type">const</span> ImageLib::Image::Pixel&amp; p = in_rows[i][j];</span><br><span class="line">                      std::<span class="type">uint8_t</span> b = (<span class="type">double</span>)p.bgra[<span class="number">0</span>] + (ImageLib::MAX_BGR_VALUE - p.bgra[<span class="number">0</span>]) * tints[<span class="number">0</span>];</span><br><span class="line">                      std::<span class="type">uint8_t</span> g = (<span class="type">double</span>)p.bgra[<span class="number">0</span>] + (ImageLib::MAX_BGR_VALUE - p.bgra[<span class="number">1</span>]) * tints[<span class="number">1</span>];</span><br><span class="line">                      std::<span class="type">uint8_t</span> r = (<span class="type">double</span>)p.bgra[<span class="number">0</span>] + (ImageLib::MAX_BGR_VALUE - p.bgra[<span class="number">2</span>]) * tints[<span class="number">2</span>];</span><br><span class="line">                      out_rows[i][j] = ImageLib::Image::<span class="built_in">Pixel</span>(</span><br><span class="line">                        (b &gt; ImageLib::MAX_BGR_VALUE) ? ImageLib::MAX_BGR_VALUE : b,</span><br><span class="line">                        (g &gt; ImageLib::MAX_BGR_VALUE) ? ImageLib::MAX_BGR_VALUE : g,</span><br><span class="line">                        (r &gt; ImageLib::MAX_BGR_VALUE) ? ImageLib::MAX_BGR_VALUE : r</span><br><span class="line">                      );</span><br><span class="line">                    &#125;</span><br><span class="line">                  &#125;</span><br><span class="line">                 );</span><br></pre></td></tr></table></figure>
 <p>M1 Mac Xcode Clang至今不支持C++17的std::execution，对OpenMP的支持也相当差</p>
 <h3 id="归约">归约</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template&lt;typename Range, typename Value, typename Func, typename Reduction&gt;
-Value parallel_reduce(const Range&amp; range, const Value&amp; identity, const Func&amp; func, const Reduction&amp; reduction);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Range, <span class="keyword">typename</span> Value, <span class="keyword">typename</span> Func, <span class="keyword">typename</span> Reduction&gt;</span></span><br><span class="line"><span class="function">Value <span class="title">parallel_reduce</span><span class="params">(<span class="type">const</span> Range&amp; range, <span class="type">const</span> Value&amp; identity, <span class="type">const</span> Func&amp; func, <span class="type">const</span> Reduction&amp; reduction)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>树形规约</p>
 <img src="Image/树形归并.png" class="lazyload" data-srcset="Image/树形归并.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="树形归并" style="zoom:50%;" />
 <p><img src="Image/reduce.png" class="lazyload" data-srcset="Image/reduce.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="reduce"></p>
 <h4 id="求最大值">求最大值</h4>
 <p>下面是一个vector求最大值的示例，实现机制就是将整个数组分成一个个小块（chunks），分别对小块求最值，然后将小块归约（reduce），最后求得最值（形成了一个树型结构）</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int pmax(const std::vector&lt;int&gt; &amp;arr)&#123;
-    int max_value &#x3D; tbb::parallel_reduce(
-      			&#x2F;&#x2F;range，扫描范围
-            tbb::blocked_range&lt;int&gt;(0, arr.size()),	
-      			&#x2F;&#x2F;identity，小块数据的初始值，这里赋值为int类型的最小值-2147483648
-            std::numeric_limits&lt;int&gt;::min(),	
-      			&#x2F;&#x2F;func，每个小块的处理方式
-            [&amp;](const tbb::blocked_range&lt;int&gt; &amp;r, int init) -&gt; int&#123;	
-                for(int i &#x3D; r.begin(); i !&#x3D; r.end(); ++i)&#123;
-                    init &#x3D; std::max(init, arr[i]);
-                &#125;
-                return init;
-            &#125;,
-      			&#x2F;&#x2F;reduction，小块间合并的处理方式
-            [](int x, int y) -&gt; int&#123;
-                return std::max(x, y);
-            &#125;
-    );
-    return max_value;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">pmax</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt; &amp;arr)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> max_value = tbb::<span class="built_in">parallel_reduce</span>(</span><br><span class="line">      			<span class="comment">//range，扫描范围</span></span><br><span class="line">            tbb::<span class="built_in">blocked_range</span>&lt;<span class="type">int</span>&gt;(<span class="number">0</span>, arr.<span class="built_in">size</span>()),	</span><br><span class="line">      			<span class="comment">//identity，小块数据的初始值，这里赋值为int类型的最小值-2147483648</span></span><br><span class="line">            std::numeric_limits&lt;<span class="type">int</span>&gt;::<span class="built_in">min</span>(),	</span><br><span class="line">      			<span class="comment">//func，每个小块的处理方式</span></span><br><span class="line">            [&amp;](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">int</span>&gt; &amp;r, <span class="type">int</span> init) -&gt; <span class="type">int</span>&#123;	</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i = r.<span class="built_in">begin</span>(); i != r.<span class="built_in">end</span>(); ++i)&#123;</span><br><span class="line">                    init = std::<span class="built_in">max</span>(init, arr[i]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> init;</span><br><span class="line">            &#125;,</span><br><span class="line">      			<span class="comment">//reduction，小块间合并的处理方式</span></span><br><span class="line">            [](<span class="type">int</span> x, <span class="type">int</span> y) -&gt; <span class="type">int</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> std::<span class="built_in">max</span>(x, y);</span><br><span class="line">            &#125;</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> max_value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>下面这是一个求PI的示例</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">double calcPI(int degree)&#123;
-    double dx &#x3D; 1.0 &#x2F; degree;
-    double sum &#x3D; tbb::parallel_reduce(
-      			&#x2F;&#x2F;range，扫描范围
-            tbb::blocked_range&lt;int&gt;(0, degree),
-      			&#x2F;&#x2F;identity，小块数据的初始值，这里赋值为0
-            0.0,
-      			&#x2F;&#x2F;func，每个小块的处理方式
-            [&#x3D;](const tbb::blocked_range&lt;int&gt; &amp;r, double init) -&gt; double&#123;
-                for(int i &#x3D; r.begin(); i !&#x3D; r.end(); ++i)&#123;
-                    double x &#x3D; (i + 0.5)*dx;
-                    double h &#x3D; std::sqrt(1 - x*x);  &#x2F;&#x2F;勾股定理
-                    init +&#x3D; h * dx;
-                &#125;
-                return init;
-            &#125;,
-      			&#x2F;&#x2F;reduction，小块间合并的处理方式
-            [](double x, double y) -&gt; double&#123;
-                return x+y;
-            &#125;
-        );
-    return 4 * sum;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">calcPI</span><span class="params">(<span class="type">int</span> degree)</span></span>&#123;</span><br><span class="line">    <span class="type">double</span> dx = <span class="number">1.0</span> / degree;</span><br><span class="line">    <span class="type">double</span> sum = tbb::<span class="built_in">parallel_reduce</span>(</span><br><span class="line">      			<span class="comment">//range，扫描范围</span></span><br><span class="line">            tbb::<span class="built_in">blocked_range</span>&lt;<span class="type">int</span>&gt;(<span class="number">0</span>, degree),</span><br><span class="line">      			<span class="comment">//identity，小块数据的初始值，这里赋值为0</span></span><br><span class="line">            <span class="number">0.0</span>,</span><br><span class="line">      			<span class="comment">//func，每个小块的处理方式</span></span><br><span class="line">            [=](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">int</span>&gt; &amp;r, <span class="type">double</span> init) -&gt; <span class="type">double</span>&#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i = r.<span class="built_in">begin</span>(); i != r.<span class="built_in">end</span>(); ++i)&#123;</span><br><span class="line">                    <span class="type">double</span> x = (i + <span class="number">0.5</span>)*dx;</span><br><span class="line">                    <span class="type">double</span> h = std::<span class="built_in">sqrt</span>(<span class="number">1</span> - x*x);  <span class="comment">//勾股定理</span></span><br><span class="line">                    init += h * dx;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> init;</span><br><span class="line">            &#125;,</span><br><span class="line">      			<span class="comment">//reduction，小块间合并的处理方式</span></span><br><span class="line">            [](<span class="type">double</span> x, <span class="type">double</span> y) -&gt; <span class="type">double</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> x+y;</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    <span class="keyword">return</span> <span class="number">4</span> * sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="扫描">扫描</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template&lt;typename Range, typename Value, typename Scan, typename Combine&gt;
-Value parallel_scan(const Range&amp; range, const Value&amp; identity, const Scan&amp; scan, const Combine&amp; combine);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Range, <span class="keyword">typename</span> Value, <span class="keyword">typename</span> Scan, <span class="keyword">typename</span> Combine&gt;</span></span><br><span class="line"><span class="function">Value <span class="title">parallel_scan</span><span class="params">(<span class="type">const</span> Range&amp; range, <span class="type">const</span> Value&amp; identity, <span class="type">const</span> Scan&amp; scan, <span class="type">const</span> Combine&amp; combine)</span></span>;</span><br></pre></td></tr></table></figure>
 <h4 id="前缀和">前缀和</h4>
 <p><em>前缀和在图形领域也有很大的用处</em></p>
 <p>对于一个数组，我们将其分为三个小块ABC</p>
-<pre class="language-none"><code class="language-none">A.init&#x3D;0, B.init&#x3D;0
-scan(A), scan(B)
-
-B.init &#x3D; A.ans
-C.init &#x3D; A.ans + B.ans
-scan(B), scan(C)</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A.init=0, B.init=0</span><br><span class="line">scan(A), scan(B)</span><br><span class="line"></span><br><span class="line">B.init = A.ans</span><br><span class="line">C.init = A.ans + B.ans</span><br><span class="line">scan(B), scan(C)</span><br></pre></td></tr></table></figure>
 <p>最后我们只用了串行2/3的扫描时间，但是多做了1/3的扫描工作，时间减少了，但是工作量变大了</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int parallelPrefix(const std::vector&lt;int&gt; &amp;v, std::vector&lt;int&gt; &amp;psum)&#123;
-    int N &#x3D; v.size();
-    psum[0] &#x3D; v[0];
-    int final_sum &#x3D; tbb::parallel_scan(
-      			&#x2F;&#x2F;range
-            tbb::blocked_range&lt;int&gt;(1, N),
-      			&#x2F;&#x2F;identity
-            (int)0,
-      			&#x2F;&#x2F;scan body
-            [&amp;v, &amp;psum](const tbb::blocked_range&lt;int&gt; &amp;r, int sum, bool is_final_scan) -&gt; int&#123;
-                for(int i &#x3D; r.begin(); i &lt; r.end(); ++i)&#123;
-                    sum +&#x3D; v[i];
-                    if(is_final_scan)&#123;
-                        psum[i] &#x3D; sum;
-                    &#125;
-                &#125;
-                return sum;
-            &#125;,
-      			&#x2F;&#x2F;combine body
-            [](int x, int y)&#123;
-                return x+y;
-            &#125;
-        );
-    return final_sum;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">parallelPrefix</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt; &amp;v, std::vector&lt;<span class="type">int</span>&gt; &amp;psum)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> N = v.<span class="built_in">size</span>();</span><br><span class="line">    psum[<span class="number">0</span>] = v[<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> final_sum = tbb::<span class="built_in">parallel_scan</span>(</span><br><span class="line">      			<span class="comment">//range</span></span><br><span class="line">            tbb::<span class="built_in">blocked_range</span>&lt;<span class="type">int</span>&gt;(<span class="number">1</span>, N),</span><br><span class="line">      			<span class="comment">//identity</span></span><br><span class="line">            (<span class="type">int</span>)<span class="number">0</span>,</span><br><span class="line">      			<span class="comment">//scan body</span></span><br><span class="line">            [&amp;v, &amp;psum](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">int</span>&gt; &amp;r, <span class="type">int</span> sum, <span class="type">bool</span> is_final_scan) -&gt; <span class="type">int</span>&#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i = r.<span class="built_in">begin</span>(); i &lt; r.<span class="built_in">end</span>(); ++i)&#123;</span><br><span class="line">                    sum += v[i];</span><br><span class="line">                    <span class="keyword">if</span>(is_final_scan)&#123;</span><br><span class="line">                        psum[i] = sum;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> sum;</span><br><span class="line">            &#125;,</span><br><span class="line">      			<span class="comment">//combine body</span></span><br><span class="line">            [](<span class="type">int</span> x, <span class="type">int</span> y)&#123;</span><br><span class="line">                <span class="keyword">return</span> x+y;</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    <span class="keyword">return</span> final_sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="可见性">可见性</h4>
 <p>如图，等间距摆放一个个薄板（厚度忽略不计），从最右上角向左看，能看到哪些薄板？</p>
 <img src="Image/sight.png" class="lazyload" data-srcset="Image/sight.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="sight" style="zoom:50%;" />
 <p>解题的本质就是比较夹角大小，只要夹角一直递增，就能看到</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void visibility(const std::vector&lt;double&gt; &amp;heights, std::vector&lt;bool&gt; &amp; visible, double dx)&#123;
-    const int N &#x3D; heights.size();
-    double max_angle &#x3D; std::atan2(dx, heights[0] - heights[1]);
-
-    double final_max_angle &#x3D; tbb::parallel_scan(
-      			&#x2F;&#x2F;range
-            tbb::blocked_range&lt;int&gt;(1, N),
-      			&#x2F;&#x2F;identity
-            0.0,
-      			&#x2F;&#x2F;scan body
-            [&amp;heights, &amp;visible, dx](const tbb::blocked_range&lt;int&gt; &amp;r, double max_angle, bool is_final_scan) -&gt; double &#123;
-                for(int i &#x3D; r.begin(); i !&#x3D; r.end(); ++i)&#123;
-                    double my_angle &#x3D; atan2(i * dx, heights[0] - heights[i]);
-                    if(my_angle &gt;&#x3D; max_angle)&#123;
-                        max_angle &#x3D; my_angle;
-                    &#125;
-                    else if(is_final_scan)&#123;
-                        visible[i] &#x3D; false;
-                    &#125;
-                &#125;
-                return max_angle;
-            &#125;,
-      			&#x2F;&#x2F;combine body
-            [](double a, double b)&#123;
-                return std::max(a, b);
-            &#125;
-        );
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">visibility</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt; &amp;heights, std::vector&lt;<span class="type">bool</span>&gt; &amp; visible, <span class="type">double</span> dx)</span></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> N = heights.<span class="built_in">size</span>();</span><br><span class="line">    <span class="type">double</span> max_angle = std::<span class="built_in">atan2</span>(dx, heights[<span class="number">0</span>] - heights[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="type">double</span> final_max_angle = tbb::<span class="built_in">parallel_scan</span>(</span><br><span class="line">      			<span class="comment">//range</span></span><br><span class="line">            tbb::<span class="built_in">blocked_range</span>&lt;<span class="type">int</span>&gt;(<span class="number">1</span>, N),</span><br><span class="line">      			<span class="comment">//identity</span></span><br><span class="line">            <span class="number">0.0</span>,</span><br><span class="line">      			<span class="comment">//scan body</span></span><br><span class="line">            [&amp;heights, &amp;visible, dx](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">int</span>&gt; &amp;r, <span class="type">double</span> max_angle, <span class="type">bool</span> is_final_scan) -&gt; <span class="type">double</span> &#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i = r.<span class="built_in">begin</span>(); i != r.<span class="built_in">end</span>(); ++i)&#123;</span><br><span class="line">                    <span class="type">double</span> my_angle = <span class="built_in">atan2</span>(i * dx, heights[<span class="number">0</span>] - heights[i]);</span><br><span class="line">                    <span class="keyword">if</span>(my_angle &gt;= max_angle)&#123;</span><br><span class="line">                        max_angle = my_angle;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(is_final_scan)&#123;</span><br><span class="line">                        visible[i] = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> max_angle;</span><br><span class="line">            &#125;,</span><br><span class="line">      			<span class="comment">//combine body</span></span><br><span class="line">            [](<span class="type">double</span> a, <span class="type">double</span> b)&#123;</span><br><span class="line">                <span class="keyword">return</span> std::<span class="built_in">max</span>(a, b);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="parallel-for-each">parallel_for_each</h3>
 <p>parallel_for在使用时必须指定range，但如果要处理的item数量不确定（比如在执行过程中修改itemList），那么就不能使用，这个时候我们可以使用parallel_for_each</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template &lt;typaname InputIterator, typename Body&gt;
-void parallel_for_each( InputIterator first, InputIterator last, Body body );</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;typaname InputIterator, <span class="keyword">typename</span> Body&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">parallel_for_each</span><span class="params">( InputIterator first, InputIterator last, Body body )</span></span>;</span><br></pre></td></tr></table></figure>
 <p>下面是一个遍历树的示例，若一个节点的<code>v.first</code>为prime，将其<code>v.second</code>修改为true。我们不知道树有多大，于是采用递归遍历</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void f(PrimesTreeElement::Ptr root)&#123;
-  PrimesTreeElement::Ptr tree_arry[] &#x3D; &#123;root&#125;;
-  &#x2F;&#x2F;tbb::parallel_do已经废弃
-  tbb::parallel_for_each(
-        tree_array,
-        [](PrimesTreeElement::Ptr e, 
-        &#x2F;&#x2F;tbb::parallel_do_feeder已被废弃
-        tbb::feeder&lt;PrimesTreeElement::Ptr&gt;&amp; feeder)&#123;
-        if(e)&#123;
-          if(isPrime(e-&gt;v.first)) e-&gt;v.second &#x3D; true;
-          if(e-&gt;left) feeder.add(e-&gt;left);
-          if(e-&gt;right) feeder.add(e-&gt;right);
-        &#125;
-      &#125;                 
-  );
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(PrimesTreeElement::Ptr root)</span></span>&#123;</span><br><span class="line">  PrimesTreeElement::Ptr tree_arry[] = &#123;root&#125;;</span><br><span class="line">  <span class="comment">//tbb::parallel_do已经废弃</span></span><br><span class="line">  tbb::<span class="built_in">parallel_for_each</span>(</span><br><span class="line">        tree_array,</span><br><span class="line">        [](PrimesTreeElement::Ptr e, </span><br><span class="line">        <span class="comment">//tbb::parallel_do_feeder已被废弃</span></span><br><span class="line">        tbb::feeder&lt;PrimesTreeElement::Ptr&gt;&amp; feeder)&#123;</span><br><span class="line">        <span class="keyword">if</span>(e)&#123;</span><br><span class="line">          <span class="keyword">if</span>(<span class="built_in">isPrime</span>(e-&gt;v.first)) e-&gt;v.second = <span class="literal">true</span>;</span><br><span class="line">          <span class="keyword">if</span>(e-&gt;left) feeder.<span class="built_in">add</span>(e-&gt;left);</span><br><span class="line">          <span class="keyword">if</span>(e-&gt;right) feeder.<span class="built_in">add</span>(e-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;                 </span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="前向替换">前向替换</h4>
 <p>前向替换（Forward Substitution）是线性代数中一种求解线性方程组的方法</p>
 <p>一般解线性方程组有两种方法：</p>
@@ -2988,119 +2706,13 @@ x_n = (b_n -a_{n1}x_1-a_{n2}x_2 - \cdots -a_{nn-1}x_{n-1})/a_{nm}<br>
 $$</p>
 <p>于是我们只需要从第一个式子开始，逐步向下替换，就能求出方程的解</p>
 <p><em>如果是下三角矩阵，那就是后向替换</em></p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;a是一个下三角矩阵，x、b是向量
-void serialFS(std::vector&lt;double&gt;&amp; x, const std::vector&lt;double&gt;&amp; a, std::vector&lt;double&gt;&amp; b) &#123;
-    const int N &#x3D; x.size();
-    for (int i &#x3D; 0; i &lt; N; ++i) &#123;
-        for (int j &#x3D; 0; j &lt; i; ++j) &#123;
-            b[i] -&#x3D; a[j + i*N] * x[j];
-        &#125;
-        x[i] &#x3D; b[i] &#x2F; a[i + i*N];
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//a是一个下三角矩阵，x、b是向量</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">serialFS</span><span class="params">(std::vector&lt;<span class="type">double</span>&gt;&amp; x, <span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; a, std::vector&lt;<span class="type">double</span>&gt;&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> N = x.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; i; ++j) &#123;</span><br><span class="line">            b[i] -= a[j + i*N] * x[j];</span><br><span class="line">        &#125;</span><br><span class="line">        x[i] = b[i] / a[i + i*N];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>加入分块和并行后：</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void parallelFS(std::vector&lt;double&gt; &amp;x, const std::vector&lt;double&gt; &amp;a,
-                std::vector&lt;double&gt; &amp;b) &#123;
-  const int N &#x3D; x.size();
-  const int block_size &#x3D; 512;
-  const int num_blocks &#x3D; N &#x2F; block_size;
-  &#x2F;&#x2F;tbb::atomic已经废弃
-  std::vector&lt;std::atomic&lt;char&gt;&gt; ref_count(num_blocks * num_blocks);
-  for (int r &#x3D; 0; r &lt; num_blocks; ++r) &#123;
-    for (int c &#x3D; 0; c &lt;&#x3D; r; ++c) &#123;
-      if (r &#x3D;&#x3D; 0 &amp;&amp; c &#x3D;&#x3D; 0)
-        ref_count[r * num_blocks + c] &#x3D; 0;
-      else if (c &#x3D;&#x3D; 0 || r &#x3D;&#x3D; c)
-        ref_count[r * num_blocks + c] &#x3D; 1;
-      else
-        ref_count[r * num_blocks + c] &#x3D; 2;
-    &#125;
-  &#125;
-
-  using BlockIndex &#x3D; std::pair&lt;size_t, size_t&gt;;
-  BlockIndex top_left(0, 0);
-  &#x2F;&#x2F;tbb::parallel_do已经废弃
-  tbb::parallel_for_each(&amp;top_left, &amp;top_left + 1,
-                         [&amp;](const BlockIndex &amp;bi, tbb::feeder&lt;BlockIndex&gt; &amp;feeder) &#123;
-                           size_t r &#x3D; bi.first;
-                           size_t c &#x3D; bi.second;
-                           int i_start &#x3D; r * block_size, i_end &#x3D; i_start + block_size;
-                           int j_start &#x3D; c * block_size, j_max &#x3D; j_start + block_size - 1;
-                           for (int i &#x3D; i_start; i &lt; i_end; ++i) &#123;
-                             int j_end &#x3D; (i &lt;&#x3D; j_max) ? i : j_max + 1;
-                             for (int j &#x3D; j_start; j &lt; j_end; ++j) &#123;
-                               b[i] -&#x3D; a[j + i * N] * x[j];
-                             &#125;
-                             if (j_end &#x3D;&#x3D; i) &#123;
-                               x[i] &#x3D; b[i] &#x2F; a[i + i * N];
-                             &#125;
-                           &#125;
-                           &#x2F;&#x2F; add successor to right if ready
-                           if (c + 1 &lt;&#x3D; r &amp;&amp; --ref_count[r * num_blocks + c + 1] &#x3D;&#x3D; 0) &#123;
-                             feeder.add(BlockIndex(r, c + 1));
-                           &#125;
-                           &#x2F;&#x2F; add succesor below if ready
-                           if (r + 1 &lt; (size_t) num_blocks &amp;&amp; --ref_count[(r + 1) * num_blocks + c] &#x3D;&#x3D; 0) &#123;
-                             feeder.add(BlockIndex(r + 1, c));
-                           &#125;
-                         &#125;
-                        );
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">parallelFS</span><span class="params">(std::vector&lt;<span class="type">double</span>&gt; &amp;x, <span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt; &amp;a,</span></span></span><br><span class="line"><span class="params"><span class="function">                std::vector&lt;<span class="type">double</span>&gt; &amp;b)</span> </span>&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> N = x.<span class="built_in">size</span>();</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> block_size = <span class="number">512</span>;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> num_blocks = N / block_size;</span><br><span class="line">  <span class="comment">//tbb::atomic已经废弃</span></span><br><span class="line">  std::vector&lt;std::atomic&lt;<span class="type">char</span>&gt;&gt; <span class="built_in">ref_count</span>(num_blocks * num_blocks);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> r = <span class="number">0</span>; r &lt; num_blocks; ++r) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> c = <span class="number">0</span>; c &lt;= r; ++c) &#123;</span><br><span class="line">      <span class="keyword">if</span> (r == <span class="number">0</span> &amp;&amp; c == <span class="number">0</span>)</span><br><span class="line">        ref_count[r * num_blocks + c] = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="number">0</span> || r == c)</span><br><span class="line">        ref_count[r * num_blocks + c] = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        ref_count[r * num_blocks + c] = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">using</span> BlockIndex = std::pair&lt;<span class="type">size_t</span>, <span class="type">size_t</span>&gt;;</span><br><span class="line">  <span class="function">BlockIndex <span class="title">top_left</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="comment">//tbb::parallel_do已经废弃</span></span><br><span class="line">  tbb::<span class="built_in">parallel_for_each</span>(&amp;top_left, &amp;top_left + <span class="number">1</span>,</span><br><span class="line">                         [&amp;](<span class="type">const</span> BlockIndex &amp;bi, tbb::feeder&lt;BlockIndex&gt; &amp;feeder) &#123;</span><br><span class="line">                           <span class="type">size_t</span> r = bi.first;</span><br><span class="line">                           <span class="type">size_t</span> c = bi.second;</span><br><span class="line">                           <span class="type">int</span> i_start = r * block_size, i_end = i_start + block_size;</span><br><span class="line">                           <span class="type">int</span> j_start = c * block_size, j_max = j_start + block_size - <span class="number">1</span>;</span><br><span class="line">                           <span class="keyword">for</span> (<span class="type">int</span> i = i_start; i &lt; i_end; ++i) &#123;</span><br><span class="line">                             <span class="type">int</span> j_end = (i &lt;= j_max) ? i : j_max + <span class="number">1</span>;</span><br><span class="line">                             <span class="keyword">for</span> (<span class="type">int</span> j = j_start; j &lt; j_end; ++j) &#123;</span><br><span class="line">                               b[i] -= a[j + i * N] * x[j];</span><br><span class="line">                             &#125;</span><br><span class="line">                             <span class="keyword">if</span> (j_end == i) &#123;</span><br><span class="line">                               x[i] = b[i] / a[i + i * N];</span><br><span class="line">                             &#125;</span><br><span class="line">                           &#125;</span><br><span class="line">                           <span class="comment">// add successor to right if ready</span></span><br><span class="line">                           <span class="keyword">if</span> (c + <span class="number">1</span> &lt;= r &amp;&amp; --ref_count[r * num_blocks + c + <span class="number">1</span>] == <span class="number">0</span>) &#123;</span><br><span class="line">                             feeder.<span class="built_in">add</span>(<span class="built_in">BlockIndex</span>(r, c + <span class="number">1</span>));</span><br><span class="line">                           &#125;</span><br><span class="line">                           <span class="comment">// add succesor below if ready</span></span><br><span class="line">                           <span class="keyword">if</span> (r + <span class="number">1</span> &lt; (<span class="type">size_t</span>) num_blocks &amp;&amp; --ref_count[(r + <span class="number">1</span>) * num_blocks + c] == <span class="number">0</span>) &#123;</span><br><span class="line">                             feeder.<span class="built_in">add</span>(<span class="built_in">BlockIndex</span>(r + <span class="number">1</span>, c));</span><br><span class="line">                           &#125;</span><br><span class="line">                         &#125;</span><br><span class="line">                        );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="流水线">流水线</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void parallel_pipeline( size_t max_number_of_live_tokens, const filter&lt;void,void&gt;&amp; filter_chain );
-
-template&lt;typename T, typename U, typename Func&gt;
-filter_t&lt;T, U&gt; make_filter(filter::mode mode, const Func&amp; f);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">parallel_pipeline</span><span class="params">( <span class="type">size_t</span> max_number_of_live_tokens, <span class="type">const</span> filter&lt;<span class="type">void</span>,<span class="type">void</span>&gt;&amp; filter_chain )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U, <span class="keyword">typename</span> Func&gt;</span></span><br><span class="line"><span class="function"><span class="type">filter_t</span>&lt;T, U&gt; <span class="title">make_filter</span><span class="params">(filter::mode mode, <span class="type">const</span> Func&amp; f)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>管线（pipeline）是过滤器（filters）的线性序列，物体（items）在通过过滤器时，会被处理</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;并行 将字符串中大写变小写
-void fig_2_27(int num_tokens, std::ofstream &amp;caseBeforeFile, std::ofstream &amp;caseAfterFile) &#123;
-  tbb::parallel_pipeline(
-    &#x2F;&#x2F;tokens
-    num_tokens,
-    &#x2F;&#x2F;第一个filter，负责创建字符串
-    tbb::make_filter&lt;void, CaseStringPtr&gt;(
-        &#x2F;&#x2F;tbb::filter::serial_in_order已经废弃
-        tbb::filter_mode::serial_in_order,
-        &#x2F;&#x2F;filter body
-        [&amp;](tbb::flow_control &amp;fc) -&gt; CaseStringPtr &#123;
-            CaseStringPtr s_ptr &#x3D; getCaseString(caseBeforeFile);
-            if (!s_ptr)
-              fc.stop();
-            return s_ptr;
-        &#125;) 
-    
-    &amp; &#x2F;&#x2F; 链接
-    
-    &#x2F;&#x2F;第二个filter，负责修改字符串
-    tbb::make_filter&lt;CaseStringPtr, CaseStringPtr&gt;(
-        &#x2F;&#x2F;filter node
-        tbb::filter_mode::parallel,
-        &#x2F;&#x2F;filter body
-        [](CaseStringPtr s_ptr) -&gt; CaseStringPtr &#123;
-        		std::transform(s_ptr-&gt;begin(), s_ptr-&gt;end(), s_ptr-&gt;begin(),
-                       [](char c) -&gt; char &#123;
-                         if (std::islower(c))
-                           return std::toupper(c);
-                         else if (std::isupper(c))
-                           return std::tolower(c);
-                         else
-                           return c;
-                       &#125;);
-        		return s_ptr;
-      &#125;) 
-    
-      &amp; &#x2F;&#x2F;链接
-    
-      &#x2F;&#x2F;第三个filter，负责写字符串
-    	tbb::make_filter&lt;CaseStringPtr, void&gt;(
-          &#x2F;&#x2F;filter node
-          tbb::filter_mode::serial_in_order,
-          &#x2F;&#x2F;filter body
-          [&amp;](CaseStringPtr s_ptr) -&gt; void &#123;
-            	writeCaseString(caseAfterFile, s_ptr);
-          &#125;)
-      );
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//并行 将字符串中大写变小写</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fig_2_27</span><span class="params">(<span class="type">int</span> num_tokens, std::ofstream &amp;caseBeforeFile, std::ofstream &amp;caseAfterFile)</span> </span>&#123;</span><br><span class="line">  tbb::<span class="built_in">parallel_pipeline</span>(</span><br><span class="line">    <span class="comment">//tokens</span></span><br><span class="line">    num_tokens,</span><br><span class="line">    <span class="comment">//第一个filter，负责创建字符串</span></span><br><span class="line">    tbb::<span class="built_in">make_filter</span>&lt;<span class="type">void</span>, CaseStringPtr&gt;(</span><br><span class="line">        <span class="comment">//tbb::filter::serial_in_order已经废弃</span></span><br><span class="line">        tbb::filter_mode::serial_in_order,</span><br><span class="line">        <span class="comment">//filter body</span></span><br><span class="line">        [&amp;](tbb::flow_control &amp;fc) -&gt; CaseStringPtr &#123;</span><br><span class="line">            CaseStringPtr s_ptr = <span class="built_in">getCaseString</span>(caseBeforeFile);</span><br><span class="line">            <span class="keyword">if</span> (!s_ptr)</span><br><span class="line">              fc.<span class="built_in">stop</span>();</span><br><span class="line">            <span class="keyword">return</span> s_ptr;</span><br><span class="line">        &#125;) </span><br><span class="line">    </span><br><span class="line">    &amp; <span class="comment">// 链接</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第二个filter，负责修改字符串</span></span><br><span class="line">    tbb::<span class="built_in">make_filter</span>&lt;CaseStringPtr, CaseStringPtr&gt;(</span><br><span class="line">        <span class="comment">//filter node</span></span><br><span class="line">        tbb::filter_mode::parallel,</span><br><span class="line">        <span class="comment">//filter body</span></span><br><span class="line">        [](CaseStringPtr s_ptr) -&gt; CaseStringPtr &#123;</span><br><span class="line">        		std::<span class="built_in">transform</span>(s_ptr-&gt;<span class="built_in">begin</span>(), s_ptr-&gt;<span class="built_in">end</span>(), s_ptr-&gt;<span class="built_in">begin</span>(),</span><br><span class="line">                       [](<span class="type">char</span> c) -&gt; <span class="type">char</span> &#123;</span><br><span class="line">                         <span class="keyword">if</span> (std::<span class="built_in">islower</span>(c))</span><br><span class="line">                           <span class="keyword">return</span> std::<span class="built_in">toupper</span>(c);</span><br><span class="line">                         <span class="keyword">else</span> <span class="keyword">if</span> (std::<span class="built_in">isupper</span>(c))</span><br><span class="line">                           <span class="keyword">return</span> std::<span class="built_in">tolower</span>(c);</span><br><span class="line">                         <span class="keyword">else</span></span><br><span class="line">                           <span class="keyword">return</span> c;</span><br><span class="line">                       &#125;);</span><br><span class="line">        		<span class="keyword">return</span> s_ptr;</span><br><span class="line">      &#125;) </span><br><span class="line">    </span><br><span class="line">      &amp; <span class="comment">//链接</span></span><br><span class="line">    </span><br><span class="line">      <span class="comment">//第三个filter，负责写字符串</span></span><br><span class="line">    	tbb::<span class="built_in">make_filter</span>&lt;CaseStringPtr, <span class="type">void</span>&gt;(</span><br><span class="line">          <span class="comment">//filter node</span></span><br><span class="line">          tbb::filter_mode::serial_in_order,</span><br><span class="line">          <span class="comment">//filter body</span></span><br><span class="line">          [&amp;](CaseStringPtr s_ptr) -&gt; <span class="type">void</span> &#123;</span><br><span class="line">            	<span class="built_in">writeCaseString</span>(caseAfterFile, s_ptr);</span><br><span class="line">          &#125;)</span><br><span class="line">      );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Flow-Graphs">Flow Graphs</h2>
 <p>并行编程另一个问题是混乱，传统并行编程为了避免程序混乱（messy），我们需要事无巨细地管理每一件事。但在上一节简单提到的Flow Graphs，提供了一个简单的管理方法</p>
 <p>Flow Graphs允许我们用图（DAG）来描述程序，相比于<code>parallel_do</code>和<code>parallel_pipeline</code>，FlowGraphs自由度更高，推荐使用。</p>
@@ -3109,13 +2721,7 @@ void fig_2_27(int num_tokens, std::ofstream &amp;caseBeforeFile, std::ofstream &
 <li>图也可以描述操作的前后顺序，进而可以构建一些传统方法难以表示的独立结构体，这种图被称为依赖图（dependency graphs）</li>
 </ul>
 <h3 id="预热">预热</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">static void warmupTBB() &#123;
-    &#x2F;&#x2F;tbb::task_scheduler_init::default_num_threads()已经弃用
-    tbb::parallel_for(0, tbb::this_task_arena::max_concurrency(), [](int) &#123;
-        tbb::tick_count t0 &#x3D; tbb::tick_count::now();
-        while ((tbb::tick_count::now() - t0).seconds() &lt; 0.01);
-    &#125;);
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">warmupTBB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//tbb::task_scheduler_init::default_num_threads()已经弃用</span></span><br><span class="line">    tbb::<span class="built_in">parallel_for</span>(<span class="number">0</span>, tbb::this_task_arena::<span class="built_in">max_concurrency</span>(), [](<span class="type">int</span>) &#123;</span><br><span class="line">        tbb::tick_count t0 = tbb::tick_count::<span class="built_in">now</span>();</span><br><span class="line">        <span class="keyword">while</span> ((tbb::tick_count::<span class="built_in">now</span>() - t0).<span class="built_in">seconds</span>() &lt; <span class="number">0.01</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>无论是web服务器、CPU/GPU并行计算，深度学习，都有warmup的概念</p>
 <p>对于一个项目，如果采用冷启动的方式，从零瞬间增加计算量，可能会把系统压垮，于是我们可以使用warmup，逐步提高项目负荷。</p>
 <h3 id="数据流图">数据流图</h3>
@@ -3126,30 +2732,7 @@ void fig_2_27(int num_tokens, std::ofstream &amp;caseBeforeFile, std::ofstream &
 <li>发送消息</li>
 <li>等待图完成</li>
 </ol>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void graphSample()&#123;
-    &#x2F;&#x2F;创建图对象
-    tbb::flow::graph g;
-    &#x2F;&#x2F;创建节点
-    tbb::flow::function_node&lt;int, std::string&gt; my_first_node(
-            g, tbb::flow::unlimited,
-            [](const int &amp;in) -&gt; std::string&#123;
-                std::cout &lt;&lt; &quot;first node received: &quot; &lt;&lt; in &lt;&lt; std::endl;
-                return std::to_string(in);
-            &#125;
-        );
-    tbb::flow::function_node&lt;std::string&gt; my_second_node(
-            g, tbb::flow::unlimited,
-            [](const std::string &amp;in)&#123;
-                std::cout &lt;&lt; &quot;second node received: &quot; &lt;&lt; in &lt;&lt; std::endl;
-            &#125;
-        );
-    &#x2F;&#x2F;链接
-    tbb::flow::make_edge(my_first_node, my_second_node);
-    &#x2F;&#x2F;发送消息
-    my_first_node.try_put(10);
-    &#x2F;&#x2F;等待图完成
-    g.wait_for_all();
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">graphSample</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//创建图对象</span></span><br><span class="line">    tbb::flow::graph g;</span><br><span class="line">    <span class="comment">//创建节点</span></span><br><span class="line">    tbb::<span class="function">flow::function_node&lt;<span class="type">int</span>, std::string&gt; <span class="title">my_first_node</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">            g, tbb::flow::unlimited,</span></span></span><br><span class="line"><span class="params"><span class="function">            [](<span class="type">const</span> <span class="type">int</span> &amp;in) -&gt; std::string&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                std::cout &lt;&lt; <span class="string">&quot;first node received: &quot;</span> &lt;&lt; in &lt;&lt; std::endl;</span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">return</span> std::to_string(in);</span></span></span><br><span class="line"><span class="params"><span class="function">            &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">        )</span></span>;</span><br><span class="line">    tbb::<span class="function">flow::function_node&lt;std::string&gt; <span class="title">my_second_node</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">            g, tbb::flow::unlimited,</span></span></span><br><span class="line"><span class="params"><span class="function">            [](<span class="type">const</span> std::string &amp;in)&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                std::cout &lt;&lt; <span class="string">&quot;second node received: &quot;</span> &lt;&lt; in &lt;&lt; std::endl;</span></span></span><br><span class="line"><span class="params"><span class="function">            &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">        )</span></span>;</span><br><span class="line">    <span class="comment">//链接</span></span><br><span class="line">    tbb::flow::<span class="built_in">make_edge</span>(my_first_node, my_second_node);</span><br><span class="line">    <span class="comment">//发送消息</span></span><br><span class="line">    my_first_node.<span class="built_in">try_put</span>(<span class="number">10</span>);</span><br><span class="line">    <span class="comment">//等待图完成</span></span><br><span class="line">    g.<span class="built_in">wait_for_all</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="节点">节点</h4>
 <p>Flow Graphs有三种节点</p>
 <ul>
@@ -3158,68 +2741,26 @@ void fig_2_27(int num_tokens, std::ofstream &amp;caseBeforeFile, std::ofstream &
 <li>buffering</li>
 </ul>
 <h5 id="function-node">function_node</h5>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template&lt;typename Body&gt;
-function_node(graph&amp; g, size_t concurrency, Body body);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Body&gt;</span></span><br><span class="line"><span class="function"><span class="title">function_node</span><span class="params">(graph&amp; g, <span class="type">size_t</span> concurrency, Body body)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>函数节点，当消息传递到该节点，会被函数处理，并将输出值传递给后继者</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;输入一个int类型，输出一个std::string类型
-tbb::flow::function_node&lt;int, std::string&gt; my_first_node(
-  					&#x2F;&#x2F;图对象
-            g, 	
-  					&#x2F;&#x2F;节点的并发限制，0是无限制(unlimited)，1是串行(serial)
-  					tbb::flow::unlimited,	
-  					&#x2F;&#x2F;body
-            [](const int &amp;in) -&gt; std::string&#123;
-                std::cout &lt;&lt; &quot;first node received: &quot; &lt;&lt; in &lt;&lt; std::endl;
-                return std::to_string(in);
-            &#125;
-        );</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//输入一个int类型，输出一个std::string类型</span></span><br><span class="line">tbb::<span class="function">flow::function_node&lt;<span class="type">int</span>, std::string&gt; <span class="title">my_first_node</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">  					<span class="comment">//图对象</span></span></span></span><br><span class="line"><span class="params"><span class="function">            g, 	</span></span></span><br><span class="line"><span class="params"><span class="function">  					<span class="comment">//节点的并发限制，0是无限制(unlimited)，1是串行(serial)</span></span></span></span><br><span class="line"><span class="params"><span class="function">  					tbb::flow::unlimited,	</span></span></span><br><span class="line"><span class="params"><span class="function">  					<span class="comment">//body</span></span></span></span><br><span class="line"><span class="params"><span class="function">            [](<span class="type">const</span> <span class="type">int</span> &amp;in) -&gt; std::string&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                std::cout &lt;&lt; <span class="string">&quot;first node received: &quot;</span> &lt;&lt; in &lt;&lt; std::endl;</span></span></span><br><span class="line"><span class="params"><span class="function">                <span class="keyword">return</span> std::to_string(in);</span></span></span><br><span class="line"><span class="params"><span class="function">            &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">        )</span></span>;</span><br></pre></td></tr></table></figure>
 <p>函数节点可以从他所连接（edges）其他节点获取消息，也可以使用<code>try_put</code>手动向其传递消息</p>
 <h5 id="join-node">join_node</h5>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template &lt;typename Body, typename... Bodies&gt;
-join_node(graph&amp;, Body, Bodies...)-&gt;join_node&lt;std::tuple&lt;std::decay_t&lt;input_t&lt;Body&gt;&gt;, std::decay_t&lt;input_t&lt;Bodies&gt;&gt;...&gt;, key_matching&lt;output_t&lt;Body&gt;&gt;&gt;;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Body, <span class="keyword">typename</span>... Bodies&gt;</span><br><span class="line"><span class="built_in">join_node</span>(graph&amp;, Body, Bodies...)-&gt;join_node&lt;std::tuple&lt;std::<span class="type">decay_t</span>&lt;<span class="type">input_t</span>&lt;Body&gt;&gt;, std::<span class="type">decay_t</span>&lt;<span class="type">input_t</span>&lt;Bodies&gt;&gt;...&gt;, key_matching&lt;<span class="type">output_t</span>&lt;Body&gt;&gt;&gt;;</span><br></pre></td></tr></table></figure>
 <p>流控制节点，当消息传递到该节点，会创建一个消息元组（tuple），然后将元组广播给所有后继者</p>
 <p><img src="Image/join.jpg" class="lazyload" data-srcset="Image/join.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="join"></p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;my_node，输入int，输出std::string
-tbb::flow::function_node&lt;int, std::string&gt; my_node&#123;...&#125;;
-&#x2F;&#x2F;my_other_node，输入int，输出double
-tbb::flow::function_node&lt;int, double&gt; my_other_node&#123;...&#125;;
-&#x2F;&#x2F;join节点，这里的作用是将两个节点的输出整合，传递给my_final_node
-tbb::flow::join_node&lt;std::tuple&lt;std::string, double&gt;,
-            tbb::flow::queueing&gt; my_join_node&#123;g&#125;;
-&#x2F;&#x2F;my_final_node，输入一个元组
-tbb::flow::function_node&lt;std::tuple&lt;std::string, double&gt;, int&gt; my_final_node&#123;g,
-                   tbb::flow::unlimited,
-                   [](const std::tuple&lt;std::string, double&gt;&amp; in) -&gt; int &#123;
-                     std::cout &lt;&lt; &quot;final: &quot; &lt;&lt; std::get&lt;0&gt;(in)
-                       &lt;&lt; &quot; and &quot; &lt;&lt; std::get&lt;1&gt;(in) &lt;&lt; std::endl;
-                     return 0;
-                   &#125;
-                  &#125;;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//my_node，输入int，输出std::string</span></span><br><span class="line">tbb::flow::function_node&lt;<span class="type">int</span>, std::string&gt; my_node&#123;...&#125;;</span><br><span class="line"><span class="comment">//my_other_node，输入int，输出double</span></span><br><span class="line">tbb::flow::function_node&lt;<span class="type">int</span>, <span class="type">double</span>&gt; my_other_node&#123;...&#125;;</span><br><span class="line"><span class="comment">//join节点，这里的作用是将两个节点的输出整合，传递给my_final_node</span></span><br><span class="line">tbb::flow::join_node&lt;std::tuple&lt;std::string, <span class="type">double</span>&gt;,</span><br><span class="line">            tbb::flow::queueing&gt; my_join_node&#123;g&#125;;</span><br><span class="line"><span class="comment">//my_final_node，输入一个元组</span></span><br><span class="line">tbb::flow::function_node&lt;std::tuple&lt;std::string, <span class="type">double</span>&gt;, <span class="type">int</span>&gt; my_final_node&#123;g,</span><br><span class="line">                   tbb::flow::unlimited,</span><br><span class="line">                   [](<span class="type">const</span> std::tuple&lt;std::string, <span class="type">double</span>&gt;&amp; in) -&gt; <span class="type">int</span> &#123;</span><br><span class="line">                     std::cout &lt;&lt; <span class="string">&quot;final: &quot;</span> &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(in)</span><br><span class="line">                       &lt;&lt; <span class="string">&quot; and &quot;</span> &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(in) &lt;&lt; std::endl;</span><br><span class="line">                     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">                   &#125;</span><br><span class="line">                  &#125;;</span><br></pre></td></tr></table></figure>
 <p>有的时候，我们需要保证<code>join_node</code>的输入的对应的。比如我想将两张照片拼成一张，我开两个节点并行读项目，再用<code>join_node</code>整合后传入merge函数节点，然而在这个过程中，我必须保证传入的两个像素点在同一位置，为此，我们可以添加一个frameNumber做标记（tags）</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;使用函数对象作为tags，可以用input_port&lt;i&gt;读出来
-tbb::flow::join_node&lt;std::tuple&lt;Image, Image&gt;, tbb::flow::tag_matching &gt;
-    join_images_node(g, [] (Image left) &#123; return left.frameNumber; &#125;,
-                        [] (Image right) &#123; return right.frameNumber; &#125; );
-...
-tbb::flow::make_edge(increase_left_node, tbb::flow::input_port&lt;0&gt;(join_images_node));
-tbb::flow::make_edge(increase_right_node, tbb::flow::input_port&lt;1&gt;(join_images_node));
-tbb::flow::make_edge(join_images_node, merge_images_node);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用函数对象作为tags，可以用input_port&lt;i&gt;读出来</span></span><br><span class="line">tbb::flow::join_node&lt;std::tuple&lt;Image, Image&gt;, tbb::flow::tag_matching &gt;</span><br><span class="line">    <span class="built_in">join_images_node</span>(g, [] (Image left) &#123; <span class="keyword">return</span> left.frameNumber; &#125;,</span><br><span class="line">                        [] (Image right) &#123; <span class="keyword">return</span> right.frameNumber; &#125; );</span><br><span class="line">...</span><br><span class="line">tbb::flow::<span class="built_in">make_edge</span>(increase_left_node, tbb::flow::<span class="built_in">input_port</span>&lt;<span class="number">0</span>&gt;(join_images_node));</span><br><span class="line">tbb::flow::<span class="built_in">make_edge</span>(increase_right_node, tbb::flow::<span class="built_in">input_port</span>&lt;<span class="number">1</span>&gt;(join_images_node));</span><br><span class="line">tbb::flow::<span class="built_in">make_edge</span>(join_images_node, merge_images_node);</span><br></pre></td></tr></table></figure>
 <h4 id="链接">链接</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template&lt;typename Message&gt;
-    inline void make_edge( sender&lt;Message&gt; &amp;p, receiver&lt;Message&gt; &amp;s );
-template&lt; typename MultiOutputNode, typename MultiInputNode &gt;
-    inline void make_edge( MultiOutputNode&amp; output, MultiInputNode&amp; input );</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Message&gt;</span></span><br><span class="line"><span class="function">    <span class="keyword">inline</span> <span class="type">void</span> <span class="title">make_edge</span><span class="params">( sender&lt;Message&gt; &amp;p, receiver&lt;Message&gt; &amp;s )</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt; <span class="keyword">typename</span> MultiOutputNode, <span class="keyword">typename</span> MultiInputNode &gt;</span></span><br><span class="line"><span class="function">    <span class="keyword">inline</span> <span class="type">void</span> <span class="title">make_edge</span><span class="params">( MultiOutputNode&amp; output, MultiInputNode&amp; input )</span></span>;</span><br></pre></td></tr></table></figure>
 <p>我们可以使用<code>make_edge</code>链接两个节点</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;这里的input_port是一种sender，跟节点差不多，都能互相链接
-make_edge(my_node, tbb::flow::input_port&lt;0&gt;(my_join_node));
-make_edge(my_other_node, tbb::flow::input_port&lt;1&gt;(my_join_node));
-make_edge(my_join_node, my_final_node);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//这里的input_port是一种sender，跟节点差不多，都能互相链接</span></span><br><span class="line"><span class="built_in">make_edge</span>(my_node, tbb::flow::<span class="built_in">input_port</span>&lt;<span class="number">0</span>&gt;(my_join_node));</span><br><span class="line"><span class="built_in">make_edge</span>(my_other_node, tbb::flow::<span class="built_in">input_port</span>&lt;<span class="number">1</span>&gt;(my_join_node));</span><br><span class="line"><span class="built_in">make_edge</span>(my_join_node, my_final_node);</span><br></pre></td></tr></table></figure>
 <h4 id="激活">激活</h4>
 <p>为了激活图，我们需要向图中传递消息，除了前文的<code>try_put</code>，我们也可以使用<code>input_port</code></p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;my_node是一个input_node
-my_node.activate();	&#x2F;&#x2F;将其设为活动状态，启用消息生成</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//my_node是一个input_node</span></span><br><span class="line">my_node.<span class="built_in">activate</span>();	<span class="comment">//将其设为活动状态，启用消息生成</span></span><br></pre></td></tr></table></figure>
 <h4 id="等待">等待</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">g.wait_for_all();</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">g.<span class="built_in">wait_for_all</span>();</span><br></pre></td></tr></table></figure>
 <h3 id="性能限制">性能限制</h3>
 <p>Flow Graphs是一个基于Task的并行框架，当消息到达一个节点时，根据节点的并发限制，创建Task。生成的Task会进一步映射为线程（跟上一节讲的循环、算法的机制一样）</p>
 <p>真正限制Flow Graphs性能的有</p>
@@ -3281,67 +2822,7 @@ my_node.activate();	&#x2F;&#x2F;将其设为活动状态，启用消息生成</c
 <p>经观察，我们发现辅对角线的块/迭代器是相互独立的，他们之间没有依赖关系（上图(b)，块BC间没有依赖，他们只需要在A之后执行就可以正确运算）</p>
 <p>经观察，同时并行计算的最大块数为辅对角线的长度，也就是图中标注的 a set of independent blocks</p>
 <p>经观察，上图(b)中每一个块需要接受两个msg，正好与block_sizes大小相等</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">using Node &#x3D; tbb::flow::continue_node&lt;tbb::flow::continue_msg&gt;;
-using NodePtr &#x3D; std::shared_ptr&lt;Node&gt;;
-NodePtr createNode(tbb::flow::graph &amp;g, int r, int c, int block_size,
-                   std::vector&lt;double&gt; &amp;x, const std::vector&lt;double&gt; &amp;a, std::vector&lt;double&gt; &amp;b);
-void addEdges(std::vector&lt;NodePtr&gt; &amp;nodes, int r, int c, int block_size, int num_blocks);
-void dependencyGraphFS(std::vector&lt;double&gt; &amp;x, const std::vector&lt;double&gt; &amp;a, std::vector&lt;double&gt; &amp;b)&#123;
-    const int N &#x3D; x.size();
-    const int block_size &#x3D; 1024;
-    const int num_blocks &#x3D; N &#x2F; block_size;
-		&#x2F;&#x2F;创建num_blocks * num_blocks个节点，只不过我们只会用到下半部分
-    std::vector&lt;NodePtr&gt; nodes(num_blocks * num_blocks);
-    &#x2F;&#x2F;创建图对象
-    tbb::flow::graph g;
-  	&#x2F;&#x2F;我们从最下面一行开始向上构建
-    for(int r &#x3D; num_blocks-1; r &gt;&#x3D; 0; --r)&#123;
-        for(int c &#x3D; r; c &gt;&#x3D; 0; --c)&#123;
-            &#x2F;&#x2F;创建图节点
-            nodes[r * num_blocks + c] &#x3D; createNode(g, r, c, block_size, x, a, b);
-            &#x2F;&#x2F;链接
-            addEdges(nodes, r, c, block_size, num_blocks);
-        &#125;
-    &#125;
-    &#x2F;&#x2F;传入消息
-    nodes[0]-&gt;try_put(tbb::flow::continue_msg());
-    &#x2F;&#x2F;等待完成
-    g.wait_for_all();
-&#125;
-
-NodePtr createNode(tbb::flow::graph &amp;g, int r, int c, int block_size,
-                   std::vector&lt;double&gt; &amp;x, const std::vector&lt;double&gt; &amp;a, std::vector&lt;double&gt; &amp;b)&#123;
-    const int N &#x3D; x.size();
-    return std::make_shared&lt;Node&gt;(
-            g,
-            [r, c, block_size, N, &amp;x, &amp;a, &amp;b](const tbb::flow::continue_msg &amp; msg)&#123;
-                int i_start &#x3D; r * block_size, i_end &#x3D; i_start + block_size;
-                int j_start &#x3D; c * block_size, j_max &#x3D; j_start + block_size -1;
-                &#x2F;&#x2F;对于每个块，串行进行正向替换计算
-                for(int i &#x3D; i_start; i &lt; i_end; ++i)&#123;
-                    int j_end &#x3D; (i &lt;&#x3D; j_max) ? i : j_max+1;
-                    for(int j &#x3D; j_start; j &lt; j_end; ++j)&#123;
-                        b[i] -&#x3D; a[j + i*N] * x[j];
-                    &#125;
-                    if(j_end &#x3D;&#x3D; i)&#123;
-                        x[i] &#x3D; b[i] &#x2F; a[i + i*N];
-                    &#125;
-                &#125;
-                return msg;
-            &#125;
-        );
-&#125;
-
-void addEdges(std::vector&lt;NodePtr&gt; &amp;nodes, int r, int c, int block_size, int num_blocks)&#123;
-    NodePtr np &#x3D; nodes[r * num_blocks + c];
-  	&#x2F;&#x2F;每个块链接自己的下面和右边，最下面和最右边不链接
-    if(c + 1 &lt; num_blocks &amp;&amp; r !&#x3D; c)&#123;
-        tbb::flow::make_edge(*np, *nodes[r * num_blocks + c + 1]);
-    &#125;
-    if(r + 1 &lt; num_blocks)&#123;
-        tbb::flow::make_edge(*np, *nodes[(r+1) * num_blocks + c]);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Node = tbb::flow::continue_node&lt;tbb::flow::continue_msg&gt;;</span><br><span class="line"><span class="keyword">using</span> NodePtr = std::shared_ptr&lt;Node&gt;;</span><br><span class="line"><span class="function">NodePtr <span class="title">createNode</span><span class="params">(tbb::flow::graph &amp;g, <span class="type">int</span> r, <span class="type">int</span> c, <span class="type">int</span> block_size,</span></span></span><br><span class="line"><span class="params"><span class="function">                   std::vector&lt;<span class="type">double</span>&gt; &amp;x, <span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt; &amp;a, std::vector&lt;<span class="type">double</span>&gt; &amp;b)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addEdges</span><span class="params">(std::vector&lt;NodePtr&gt; &amp;nodes, <span class="type">int</span> r, <span class="type">int</span> c, <span class="type">int</span> block_size, <span class="type">int</span> num_blocks)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dependencyGraphFS</span><span class="params">(std::vector&lt;<span class="type">double</span>&gt; &amp;x, <span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt; &amp;a, std::vector&lt;<span class="type">double</span>&gt; &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> N = x.<span class="built_in">size</span>();</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> block_size = <span class="number">1024</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> num_blocks = N / block_size;</span><br><span class="line">		<span class="comment">//创建num_blocks * num_blocks个节点，只不过我们只会用到下半部分</span></span><br><span class="line">    <span class="function">std::vector&lt;NodePtr&gt; <span class="title">nodes</span><span class="params">(num_blocks * num_blocks)</span></span>;</span><br><span class="line">    <span class="comment">//创建图对象</span></span><br><span class="line">    tbb::flow::graph g;</span><br><span class="line">  	<span class="comment">//我们从最下面一行开始向上构建</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> r = num_blocks<span class="number">-1</span>; r &gt;= <span class="number">0</span>; --r)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> c = r; c &gt;= <span class="number">0</span>; --c)&#123;</span><br><span class="line">            <span class="comment">//创建图节点</span></span><br><span class="line">            nodes[r * num_blocks + c] = <span class="built_in">createNode</span>(g, r, c, block_size, x, a, b);</span><br><span class="line">            <span class="comment">//链接</span></span><br><span class="line">            <span class="built_in">addEdges</span>(nodes, r, c, block_size, num_blocks);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//传入消息</span></span><br><span class="line">    nodes[<span class="number">0</span>]-&gt;<span class="built_in">try_put</span>(tbb::flow::<span class="built_in">continue_msg</span>());</span><br><span class="line">    <span class="comment">//等待完成</span></span><br><span class="line">    g.<span class="built_in">wait_for_all</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">NodePtr <span class="title">createNode</span><span class="params">(tbb::flow::graph &amp;g, <span class="type">int</span> r, <span class="type">int</span> c, <span class="type">int</span> block_size,</span></span></span><br><span class="line"><span class="params"><span class="function">                   std::vector&lt;<span class="type">double</span>&gt; &amp;x, <span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt; &amp;a, std::vector&lt;<span class="type">double</span>&gt; &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> N = x.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">make_shared</span>&lt;Node&gt;(</span><br><span class="line">            g,</span><br><span class="line">            [r, c, block_size, N, &amp;x, &amp;a, &amp;b](<span class="type">const</span> tbb::flow::continue_msg &amp; msg)&#123;</span><br><span class="line">                <span class="type">int</span> i_start = r * block_size, i_end = i_start + block_size;</span><br><span class="line">                <span class="type">int</span> j_start = c * block_size, j_max = j_start + block_size <span class="number">-1</span>;</span><br><span class="line">                <span class="comment">//对于每个块，串行进行正向替换计算</span></span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> i = i_start; i &lt; i_end; ++i)&#123;</span><br><span class="line">                    <span class="type">int</span> j_end = (i &lt;= j_max) ? i : j_max+<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="type">int</span> j = j_start; j &lt; j_end; ++j)&#123;</span><br><span class="line">                        b[i] -= a[j + i*N] * x[j];</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(j_end == i)&#123;</span><br><span class="line">                        x[i] = b[i] / a[i + i*N];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> msg;</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addEdges</span><span class="params">(std::vector&lt;NodePtr&gt; &amp;nodes, <span class="type">int</span> r, <span class="type">int</span> c, <span class="type">int</span> block_size, <span class="type">int</span> num_blocks)</span></span>&#123;</span><br><span class="line">    NodePtr np = nodes[r * num_blocks + c];</span><br><span class="line">  	<span class="comment">//每个块链接自己的下面和右边，最下面和最右边不链接</span></span><br><span class="line">    <span class="keyword">if</span>(c + <span class="number">1</span> &lt; num_blocks &amp;&amp; r != c)&#123;</span><br><span class="line">        tbb::flow::<span class="built_in">make_edge</span>(*np, *nodes[r * num_blocks + c + <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(r + <span class="number">1</span> &lt; num_blocks)&#123;</span><br><span class="line">        tbb::flow::<span class="built_in">make_edge</span>(*np, *nodes[(r+<span class="number">1</span>) * num_blocks + c]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="PSTL">PSTL</h2>
 <p>parallel_sort</p>
 <h2 id="同步">同步</h2>
@@ -3349,9 +2830,7 @@ void addEdges(std::vector&lt;NodePtr&gt; &amp;nodes, int r, int c, int block_siz
 <p>但是很多情况下，我们不得不同步，书中称其为“必要之恶”（necessary evil）</p>
 <h3 id="写冲突">写冲突</h3>
 <p>比如我们想要统计一张图中各种颜色出现的次数，如果是串行处理，我们就遍历每一个像素，用一个数组存储统计值</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">for(int i &#x3D; 0; i &lt; N; ++i)&#123;
-  hist[image[i]]++;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; ++i)&#123;</span><br><span class="line">  hist[image[i]]++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但当我们想要并行处理遍历像素时，就会出现问题。如果两个线程同时读到了同一种颜色，于是都想执行<code>hist[p]++</code>，而如果该操作不支持原子（atomic）操作，就会出现写冲突</p>
 <h4 id="RMW">RMW</h4>
 <p>现代操作系统将很多操作设置为原子操作，该操作被视为一个完成的操作，不可分割，因此是线程安全的。比如对齐读（Aligned Read），对齐写（Aligned Write）</p>
@@ -3370,20 +2849,7 @@ void addEdges(std::vector&lt;NodePtr&gt; &amp;nodes, int r, int c, int block_siz
 <h4 id="锁">锁</h4>
 <p>解决并行写冲突最简单的方法就是加锁，我们给对象加一个互斥锁（mutex），写之前上锁，写完解锁，其他线程无法操作锁住的对象。而上锁解锁操作中间的代码被称为临界区（critical section），是被锁保护的部分。</p>
 <p>锁会影响性能</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;tbb::task_scheduler_init init&#123;nth&#125;已经弃用，用于设置最大线程数
-tbb::global_control global_limit(tbb::global_control::max_allowed_parallelism, nth);
-
-using my_mutex_t&#x3D;tbb::spin_mutex;
-my_mutex_t my_mutex;
-std::vector&lt;int&gt; hist_p(num_bins);
-parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
-             [&amp;](const tbb::blocked_range&lt;size_t&gt;&amp; r)
-             &#123;
-                 &#x2F;&#x2F;这种写法比my_lock.acquire(my_mutex)、my_lock.release()好
-                 my_mutex_t::scoped_lock my_lock&#123;my_mutex&#125;;
-                 for (size_t i &#x3D; r.begin(); i &lt; r.end(); ++i)
-                   	hist_p[image[i]]++;
-             &#125;);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//tbb::task_scheduler_init init&#123;nth&#125;已经弃用，用于设置最大线程数</span></span><br><span class="line"><span class="function">tbb::global_control <span class="title">global_limit</span><span class="params">(tbb::global_control::max_allowed_parallelism, nth)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="type">my_mutex_t</span>=tbb::spin_mutex;</span><br><span class="line"><span class="type">my_mutex_t</span> my_mutex;</span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">hist_p</span><span class="params">(num_bins)</span></span>;</span><br><span class="line"><span class="built_in">parallel_for</span>(tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&#123;<span class="number">0</span>, image.<span class="built_in">size</span>()&#125;,</span><br><span class="line">             [&amp;](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&amp; r)</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="comment">//这种写法比my_lock.acquire(my_mutex)、my_lock.release()好</span></span><br><span class="line">                 <span class="type">my_mutex_t</span>::scoped_lock my_lock&#123;my_mutex&#125;;</span><br><span class="line">                 <span class="keyword">for</span> (<span class="type">size_t</span> i = r.<span class="built_in">begin</span>(); i &lt; r.<span class="built_in">end</span>(); ++i)</span><br><span class="line">                   	hist_p[image[i]]++;</span><br><span class="line">             &#125;);</span><br></pre></td></tr></table></figure>
 <h4 id="原子操作">原子操作</h4>
 <p>锁过于消耗性能，原子操作效果会好一些，只不过这样还是比线性慢，而且不是真共享（Sharing）</p>
 <p>什么是原子？原子的原意就是不可分割的基本粒子，我们在实现<code>a++</code>时，本质是分了三步</p>
@@ -3393,16 +2859,7 @@ parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
 <li>写a</li>
 </ol>
 <p>由于并行计算，其他线程可能在你完整完成这三步期间进行操作，于是就会出现冲突。而原子操作就是将这三步视为一步，不可分割，在完整完成这三部之前，其他线程无权访问，等到操作结束</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">std::vector&lt;std::atomic&lt;int&gt;&gt; hist_p2(num_bins);
-parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;, 
-             [&amp;](const tbb::blocked_range&lt;size_t&gt;&amp; r)
-             &#123;
-                 for(size_t i &#x3D; r.begin(); i &lt; r.end(); ++i)
-                 &#123;
-                     hist_p2[image[i]]++;
-                 &#125;
-             &#125;
-            );</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;std::atomic&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">hist_p2</span>(num_bins);</span><br><span class="line"><span class="built_in">parallel_for</span>(tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&#123;<span class="number">0</span>, image.<span class="built_in">size</span>()&#125;, </span><br><span class="line">             [&amp;](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&amp; r)</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="keyword">for</span>(<span class="type">size_t</span> i = r.<span class="built_in">begin</span>(); i &lt; r.<span class="built_in">end</span>(); ++i)</span><br><span class="line">                 &#123;</span><br><span class="line">                     hist_p2[image[i]]++;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">            );</span><br></pre></td></tr></table></figure>
 <h3 id="Thread-Local-Storage">Thread Local Storage</h3>
 <p>一个较好的解决方案是私有化（Privatization）和归并（Reduction）</p>
 <p>我感觉这个的设计理念就是：如果不得不同步，那就尽可能让更多更复杂的计算并行执行，最后对统一、规范、简单的数据进行同步</p>
@@ -3419,104 +2876,20 @@ parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
 </ul>
 <h4 id="ETS">ETS</h4>
 <p><code>tbb::enumerable_thread_specific&lt;T&gt;</code>对象是一个大容器，容器内包含者每一个线程所对应的副本，我们可以使用迭代器进行访问</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">using vector_t &#x3D; std::vector&lt;int&gt;;
-using priv_h_t &#x3D; tbb::enumerable_thread_specific&lt;vector_t&gt;;
-priv_h_t priv_h&#123;num_bins&#125;;
-&#x2F;&#x2F;私有化
-parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
-             [&amp;](const tbb::blocked_range&lt;size_t&gt;&amp; r)
-             &#123;
-                 &#x2F;&#x2F;若该线程第一次使用local，那么会创建一个新的vector&lt;int&gt;，初始值为0
-                 priv_h_t::reference my_hist &#x3D; priv_h.local();
-                 for (size_t i &#x3D; r.begin(); i &lt; r.end(); ++i)&#123;
-                     &#x2F;&#x2F;my_hist是引用，实际上是在修改priv_h[xxx]，以此将数据传递到线程外
-                     my_hist[image[i]]++;
-                 &#125;     
-             &#125;);
-&#x2F;&#x2F;归并
-vector_t hist_p3(num_bins);
-for(auto i&#x3D;priv_h.begin(); i!&#x3D;priv_h.end(); ++i)&#123;
-    for (int j&#x3D;0; j&lt;num_bins; ++j) &#123;
-    	hist_p3[j]+&#x3D;(*i)[j];
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="type">vector_t</span> = std::vector&lt;<span class="type">int</span>&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="type">priv_h_t</span> = tbb::enumerable_thread_specific&lt;<span class="type">vector_t</span>&gt;;</span><br><span class="line"><span class="type">priv_h_t</span> priv_h&#123;num_bins&#125;;</span><br><span class="line"><span class="comment">//私有化</span></span><br><span class="line"><span class="built_in">parallel_for</span>(tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&#123;<span class="number">0</span>, image.<span class="built_in">size</span>()&#125;,</span><br><span class="line">             [&amp;](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&amp; r)</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="comment">//若该线程第一次使用local，那么会创建一个新的vector&lt;int&gt;，初始值为0</span></span><br><span class="line">                 <span class="type">priv_h_t</span>::reference my_hist = priv_h.<span class="built_in">local</span>();</span><br><span class="line">                 <span class="keyword">for</span> (<span class="type">size_t</span> i = r.<span class="built_in">begin</span>(); i &lt; r.<span class="built_in">end</span>(); ++i)&#123;</span><br><span class="line">                     <span class="comment">//my_hist是引用，实际上是在修改priv_h[xxx]，以此将数据传递到线程外</span></span><br><span class="line">                     my_hist[image[i]]++;</span><br><span class="line">                 &#125;     </span><br><span class="line">             &#125;);</span><br><span class="line"><span class="comment">//归并</span></span><br><span class="line"><span class="function"><span class="type">vector_t</span> <span class="title">hist_p3</span><span class="params">(num_bins)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i=priv_h.<span class="built_in">begin</span>(); i!=priv_h.<span class="built_in">end</span>(); ++i)&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j=<span class="number">0</span>; j&lt;num_bins; ++j) &#123;</span><br><span class="line">    	hist_p3[j]+=(*i)[j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用STL算法替代循环，进行归并</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;我们可以使用transform替代循环遍历
-for (auto&amp; i: priv_h) &#123; &#x2F;&#x2F; i traverses all private vectors
-    std::transform(hist_p3.begin(),    &#x2F;&#x2F; source 1 begin
-                   hist_p3.end(),      &#x2F;&#x2F; source 1 end
-                   i.begin(),          &#x2F;&#x2F; source 2 begin
-                   hist_p3.begin(),    &#x2F;&#x2F; destination begin
-                   std::plus&lt;int&gt;() ); &#x2F;&#x2F; binary operation
-	&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//我们可以使用transform替代循环遍历</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; i: priv_h) &#123; <span class="comment">// i traverses all private vectors</span></span><br><span class="line">    std::<span class="built_in">transform</span>(hist_p3.<span class="built_in">begin</span>(),    <span class="comment">// source 1 begin</span></span><br><span class="line">                   hist_p3.<span class="built_in">end</span>(),      <span class="comment">// source 1 end</span></span><br><span class="line">                   i.<span class="built_in">begin</span>(),          <span class="comment">// source 2 begin</span></span><br><span class="line">                   hist_p3.<span class="built_in">begin</span>(),    <span class="comment">// destination begin</span></span><br><span class="line">                   std::<span class="built_in">plus</span>&lt;<span class="type">int</span>&gt;() ); <span class="comment">// binary operation</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p>由于归并过于常用，TBB也对归并做了封装</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;使用combine_each
-priv_h.combine_each([&amp;](vector_t i)&#123;
-        std::transform(hist_p3.begin(),   	&#x2F;&#x2F; source 1 begin
-                   hist_p3.end(),      		&#x2F;&#x2F; source 1 end
-                   i.begin(),         		&#x2F;&#x2F; source 2 begin
-                   hist_p3.begin(),    		&#x2F;&#x2F; destination begin
-                   std::plus&lt;int&gt;() );		&#x2F;&#x2F; binary operation
-    &#125;);
-&#x2F;&#x2F;或者使用combine
-vector_t hist_p &#x3D; priv_h.combine([](vector_t a, vector_t b) -&gt; vector_t &#123;
-      std::transform(a.begin(),         &#x2F;&#x2F; source 1 begin
-                     a.end(),           &#x2F;&#x2F; source 1 end
-                     b.begin(),         &#x2F;&#x2F; source 2 begin
-                     a.begin(),         &#x2F;&#x2F; destination begin
-                     std::plus&lt;int&gt;() );&#x2F;&#x2F; binary operation
-       return a;
-    &#125;);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用combine_each</span></span><br><span class="line">priv_h.<span class="built_in">combine_each</span>([&amp;](<span class="type">vector_t</span> i)&#123;</span><br><span class="line">        std::<span class="built_in">transform</span>(hist_p3.<span class="built_in">begin</span>(),   	<span class="comment">// source 1 begin</span></span><br><span class="line">                   hist_p3.<span class="built_in">end</span>(),      		<span class="comment">// source 1 end</span></span><br><span class="line">                   i.<span class="built_in">begin</span>(),         		<span class="comment">// source 2 begin</span></span><br><span class="line">                   hist_p3.<span class="built_in">begin</span>(),    		<span class="comment">// destination begin</span></span><br><span class="line">                   std::<span class="built_in">plus</span>&lt;<span class="type">int</span>&gt;() );		<span class="comment">// binary operation</span></span><br><span class="line">    &#125;);</span><br><span class="line"><span class="comment">//或者使用combine</span></span><br><span class="line"><span class="type">vector_t</span> hist_p = priv_h.<span class="built_in">combine</span>([](<span class="type">vector_t</span> a, <span class="type">vector_t</span> b) -&gt; <span class="type">vector_t</span> &#123;</span><br><span class="line">      std::<span class="built_in">transform</span>(a.<span class="built_in">begin</span>(),         <span class="comment">// source 1 begin</span></span><br><span class="line">                     a.<span class="built_in">end</span>(),           <span class="comment">// source 1 end</span></span><br><span class="line">                     b.<span class="built_in">begin</span>(),         <span class="comment">// source 2 begin</span></span><br><span class="line">                     a.<span class="built_in">begin</span>(),         <span class="comment">// destination begin</span></span><br><span class="line">                     std::<span class="built_in">plus</span>&lt;<span class="type">int</span>&gt;() );<span class="comment">// binary operation</span></span><br><span class="line">       <span class="keyword">return</span> a;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
 <h4 id="combinable">combinable</h4>
 <p><code>combinable&lt;T&gt;</code>对象也是一个容器，每一个线程对应一个instance</p>
 <p>但是与ETS不同，<code>combinable&lt;T&gt;</code>并不能使用迭代器访问，这样设计的目的是不向外暴露对象，这样归并结束后大容器和其中的数据都释放了，以此节省局部空间</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;combinable
-tbb::combinable&lt;vector_t&gt; priv_h2&#123;[num_bins]()&#123;return vector_t(num_bins);&#125;&#125;;
-&#x2F;&#x2F;私有化
-parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
-             [&amp;](const tbb::blocked_range&lt;size_t&gt;&amp; r)
-             &#123;
-                 vector_t&amp; my_hist &#x3D; priv_h2.local();
-                 for (size_t i &#x3D; r.begin(); i &lt; r.end(); ++i)
-                     my_hist[image[i]]++;
-             &#125;);
-&#x2F;&#x2F;归并
-vector_t hist_p4(num_bins);
-priv_h2.combine_each([&amp;](vector_t i)
-                     &#123; &#x2F;&#x2F; for each priv histogram a
-                         std::transform(hist_p4.begin(),     &#x2F;&#x2F; source 1 begin
-                                        hist_p4.end(),      &#x2F;&#x2F; source 1 end
-                                        i.begin(),          &#x2F;&#x2F; source 2 begin
-                                        hist_p4.begin(),    &#x2F;&#x2F; destination begin
-                                        std::plus&lt;int&gt;() ); &#x2F;&#x2F; binary operation
-                     &#125;);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//combinable</span></span><br><span class="line">tbb::combinable&lt;<span class="type">vector_t</span>&gt; priv_h2&#123;[num_bins]()&#123;<span class="keyword">return</span> <span class="built_in">vector_t</span>(num_bins);&#125;&#125;;</span><br><span class="line"><span class="comment">//私有化</span></span><br><span class="line"><span class="built_in">parallel_for</span>(tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&#123;<span class="number">0</span>, image.<span class="built_in">size</span>()&#125;,</span><br><span class="line">             [&amp;](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&amp; r)</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="type">vector_t</span>&amp; my_hist = priv_h2.<span class="built_in">local</span>();</span><br><span class="line">                 <span class="keyword">for</span> (<span class="type">size_t</span> i = r.<span class="built_in">begin</span>(); i &lt; r.<span class="built_in">end</span>(); ++i)</span><br><span class="line">                     my_hist[image[i]]++;</span><br><span class="line">             &#125;);</span><br><span class="line"><span class="comment">//归并</span></span><br><span class="line"><span class="function"><span class="type">vector_t</span> <span class="title">hist_p4</span><span class="params">(num_bins)</span></span>;</span><br><span class="line">priv_h2.<span class="built_in">combine_each</span>([&amp;](<span class="type">vector_t</span> i)</span><br><span class="line">                     &#123; <span class="comment">// for each priv histogram a</span></span><br><span class="line">                         std::<span class="built_in">transform</span>(hist_p4.<span class="built_in">begin</span>(),     <span class="comment">// source 1 begin</span></span><br><span class="line">                                        hist_p4.<span class="built_in">end</span>(),      <span class="comment">// source 1 end</span></span><br><span class="line">                                        i.<span class="built_in">begin</span>(),          <span class="comment">// source 2 begin</span></span><br><span class="line">                                        hist_p4.<span class="built_in">begin</span>(),    <span class="comment">// destination begin</span></span><br><span class="line">                                        std::<span class="built_in">plus</span>&lt;<span class="type">int</span>&gt;() ); <span class="comment">// binary operation</span></span><br><span class="line">                     &#125;);</span><br></pre></td></tr></table></figure>
 <p>最终性能比较，能看出TLS能大幅提高性能</p>
-<pre class="language-none"><code class="language-none">Serial:       0.399203
-Parallel:     2.01466
-Atomic:       0.500326
-ETC:          0.0348115
-combinable:   0.0339478</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Serial:       0.399203</span><br><span class="line">Parallel:     2.01466</span><br><span class="line">Atomic:       0.500326</span><br><span class="line">ETC:          0.0348115</span><br><span class="line">combinable:   0.0339478</span><br></pre></td></tr></table></figure>
 <h3 id="parallel-reduce">parallel_reduce</h3>
 <p>最简单的归并，还是给用tbb封装好的模板，该算法的本质是树形规约</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;parallel_reduce
-using image_iterator &#x3D; std::vector&lt;uint8_t&gt;::iterator;
-t0 &#x3D; tbb::tick_count::now();
-vector_t hist_p5 &#x3D; parallel_reduce (
-    &#x2F;*range*&#x2F;    
-    tbb::blocked_range&lt;image_iterator&gt;&#123;image.begin(), image.end()&#125;,
-    &#x2F;*identity*&#x2F; 
-    vector_t(num_bins),
-    &#x2F;&#x2F; 1st Lambda: Parallel computation on private histograms
-    [](const tbb::blocked_range&lt;image_iterator&gt;&amp; r, vector_t v) &#123;
-        std::for_each(r.begin(), r.end(),
-                      [&amp;v](uint8_t i) &#123;v[i]++;&#125;);
-        return v;
-    &#125;,
-    &#x2F;&#x2F; 2nd Lambda: Parallel reduction of the private histograms
-    [num_bins](vector_t a, const vector_t &amp; b) -&gt; vector_t &#123;
-        for(int i&#x3D;0; i&lt;num_bins; ++i) a[i] +&#x3D; b[i];
-        return a;
-&#125;);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//parallel_reduce</span></span><br><span class="line"><span class="keyword">using</span> image_iterator = std::vector&lt;<span class="type">uint8_t</span>&gt;::iterator;</span><br><span class="line">t0 = tbb::tick_count::<span class="built_in">now</span>();</span><br><span class="line"><span class="type">vector_t</span> hist_p5 = <span class="built_in">parallel_reduce</span> (</span><br><span class="line">    <span class="comment">/*range*/</span>    </span><br><span class="line">    tbb::blocked_range&lt;image_iterator&gt;&#123;image.<span class="built_in">begin</span>(), image.<span class="built_in">end</span>()&#125;,</span><br><span class="line">    <span class="comment">/*identity*/</span> </span><br><span class="line">    <span class="built_in">vector_t</span>(num_bins),</span><br><span class="line">    <span class="comment">// 1st Lambda: Parallel computation on private histograms</span></span><br><span class="line">    [](<span class="type">const</span> tbb::blocked_range&lt;image_iterator&gt;&amp; r, <span class="type">vector_t</span> v) &#123;</span><br><span class="line">        std::for_each(r.<span class="built_in">begin</span>(), r.<span class="built_in">end</span>(),</span><br><span class="line">                      [&amp;v](<span class="type">uint8_t</span> i) &#123;v[i]++;&#125;);</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 2nd Lambda: Parallel reduction of the private histograms</span></span><br><span class="line">    [num_bins](<span class="type">vector_t</span> a, <span class="type">const</span> <span class="type">vector_t</span> &amp; b) -&gt; <span class="type">vector_t</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;num_bins; ++i) a[i] += b[i];</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="并发容器">并发容器</h2>
 <p>在上一节我们遇到了同步问题，处理同步会大幅降低性能，为此我们使用了TLS等方法实现了高效的显式同步，而这一节，我们将介绍TBB的核心，并发（Concurrent）</p>
 <p>TBB提供了一些高效、线程安全的并发容器，他们大多是使用细粒度的锁或者无锁设计</p>
@@ -3553,51 +2926,10 @@ vector_t hist_p5 &#x3D; parallel_reduce (
 </li>
 </ul>
 <h3 id="concurrent-hash-map">concurrent_hash_map</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template &lt;typename Key, typename T,
-                 typename HashCompare &#x3D; tbb_hash_compare&lt;Key&gt;,
-                 typename Allocator &#x3D; tbb_allocator&lt;std::pair&lt;const Key, T&gt;&gt;&gt;
-class concurrent_hash_map &#123;..&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Key, <span class="keyword">typename</span> T,</span><br><span class="line">                 <span class="keyword">typename</span> HashCompare = tbb_hash_compare&lt;Key&gt;,</span><br><span class="line">                 <span class="keyword">typename</span> Allocator = tbb_allocator&lt;std::pair&lt;<span class="type">const</span> Key, T&gt;&gt;&gt;</span><br><span class="line"><span class="keyword">class</span> concurrent_hash_map &#123;..&#125;</span><br></pre></td></tr></table></figure>
 <p>这是一个字符串-Int的哈希表</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;HashCompare必须有hash函数和equal函数
-struct MyHashCompare&#123;
-    static size_t hash(const std::string&amp; s)&#123;
-        size_t h &#x3D; 0;
-        for(auto &amp;c : s)&#123;
-            h &#x3D; (h*17)^c;
-        &#125;
-        return h;
-    &#125;
-    static bool equal(const std::string&amp; x, const std::string&amp; y)&#123;
-        return x &#x3D;&#x3D; y;
-    &#125;
-&#125;;
-&#x2F;&#x2F;hash map
-typedef tbb::concurrent_hash_map&lt;std::string, int, MyHashCompare&gt; StringTable;
-&#x2F;&#x2F;一个函数对象，用于记录table内元素数量
-class Tally&#123;
-private:
-    StringTable&amp; table;
-public:
-    Tally(StringTable&amp; table_): table(table_) &#123;&#125;
-    void operator() (const tbb::blocked_range&lt;std::string*&gt; range) const &#123;
-        for(std::string* p &#x3D; range.begin(); p !&#x3D; range.end(); ++p)&#123;
-          	&#x2F;&#x2F;accessor类似于锁、智能智能，在accessor完成前，其他线程不能lookup这个key
-            StringTable::accessor a;
-            table.insert(a, *p);
-            a-&gt;second +&#x3D; 1;
-        &#125;
-    &#125;
-&#125;;</code></pre>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int main() &#123;
-    StringTable table;
-    tbb::parallel_for( tbb::blocked_range&lt;std::string*&gt;( Data, Data+N, 1000 ), Tally(table) );
-
-    for( StringTable::iterator i&#x3D;table.begin();
-         i!&#x3D;table.end();
-         ++i )
-        printf(&quot;%s %d\n&quot;,i-&gt;first.c_str(),i-&gt;second);
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//HashCompare必须有hash函数和equal函数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyHashCompare</span>&#123;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">size_t</span> <span class="title">hash</span><span class="params">(<span class="type">const</span> std::string&amp; s)</span></span>&#123;</span><br><span class="line">        <span class="type">size_t</span> h = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;c : s)&#123;</span><br><span class="line">            h = (h*<span class="number">17</span>)^c;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> h;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">bool</span> <span class="title">equal</span><span class="params">(<span class="type">const</span> std::string&amp; x, <span class="type">const</span> std::string&amp; y)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//hash map</span></span><br><span class="line"><span class="keyword">typedef</span> tbb::concurrent_hash_map&lt;std::string, <span class="type">int</span>, MyHashCompare&gt; StringTable;</span><br><span class="line"><span class="comment">//一个函数对象，用于记录table内元素数量</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Tally</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    StringTable&amp; table;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Tally</span>(StringTable&amp; table_): <span class="built_in">table</span>(table_) &#123;&#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="type">const</span> tbb::blocked_range&lt;std::string*&gt; range)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(std::string* p = range.<span class="built_in">begin</span>(); p != range.<span class="built_in">end</span>(); ++p)&#123;</span><br><span class="line">          	<span class="comment">//accessor类似于锁、智能智能，在accessor完成前，其他线程不能lookup这个key</span></span><br><span class="line">            StringTable::accessor a;</span><br><span class="line">            table.<span class="built_in">insert</span>(a, *p);</span><br><span class="line">            a-&gt;second += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    StringTable table;</span><br><span class="line">    tbb::<span class="built_in">parallel_for</span>( tbb::<span class="built_in">blocked_range</span>&lt;std::string*&gt;( Data, Data+N, <span class="number">1000</span> ), <span class="built_in">Tally</span>(table) );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( StringTable::iterator i=table.<span class="built_in">begin</span>();</span><br><span class="line">         i!=table.<span class="built_in">end</span>();</span><br><span class="line">         ++i )</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s %d\n&quot;</span>,i-&gt;first.<span class="built_in">c_str</span>(),i-&gt;second);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="内存分配">内存分配</h2>
 <p>内存分配最重要的是正确，TBB提供了一套可拓展的内存分配</p>
 <p>现代C++推荐使用智能指针进行内存管理，不推荐使用malloc和new。TBB完全适配所有版本的C++标准，也推荐使用智能指针进行内存分配</p>
@@ -3622,27 +2954,9 @@ public:
 <p>这个现象被称为假共享（false sharing），a和b并不是共享对象，但是由于他们靠的太近了，以至于在一个缓存行中，其中一个对象的更新，会强制另一个对象更新。</p>
 <p>在多线程中，假共享可以通过缓存填充（cache padding）解决。缓存填充，就是在缓存中两个变量中间填充一些没有意义的数据，于是导致这两个变量不会处于同一个缓存行中，于是避免了假共享。</p>
 <p>我们还是以统计图片像素为例，我们发现这种方法比直接用原子操作要快一些</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">struct bin&#123;
-    std::atomic&lt;int&gt; count; &#x2F;&#x2F;4 bytes
-    uint8_t padding[64 - sizeof(count)];    &#x2F;&#x2F;60 bytes
-&#125;;
-&#x2F;&#x2F;cache padding
-std::vector&lt;bin, tbb::cache_aligned_allocator&lt;bin&gt;&gt; hist_p6(num_bins);
-t0 &#x3D; tbb::tick_count::now();
-parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
-             [&amp;](const tbb::blocked_range&lt;size_t&gt;&amp; r)
-             &#123;
-               for(size_t i &#x3D; r.begin(); i &lt; r.end(); ++i)
-               &#123;
-                 hist_p6[image[i]].count++;
-               &#125;
-             &#125;
-            );</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">bin</span>&#123;</span><br><span class="line">    std::atomic&lt;<span class="type">int</span>&gt; count; <span class="comment">//4 bytes</span></span><br><span class="line">    <span class="type">uint8_t</span> padding[<span class="number">64</span> - <span class="built_in">sizeof</span>(count)];    <span class="comment">//60 bytes</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//cache padding</span></span><br><span class="line">std::vector&lt;bin, tbb::cache_aligned_allocator&lt;bin&gt;&gt; <span class="built_in">hist_p6</span>(num_bins);</span><br><span class="line">t0 = tbb::tick_count::<span class="built_in">now</span>();</span><br><span class="line"><span class="built_in">parallel_for</span>(tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&#123;<span class="number">0</span>, image.<span class="built_in">size</span>()&#125;,</span><br><span class="line">             [&amp;](<span class="type">const</span> tbb::blocked_range&lt;<span class="type">size_t</span>&gt;&amp; r)</span><br><span class="line">             &#123;</span><br><span class="line">               <span class="keyword">for</span>(<span class="type">size_t</span> i = r.<span class="built_in">begin</span>(); i &lt; r.<span class="built_in">end</span>(); ++i)</span><br><span class="line">               &#123;</span><br><span class="line">                 hist_p6[image[i]].count++;</span><br><span class="line">               &#125;</span><br><span class="line">             &#125;</span><br><span class="line">            );</span><br></pre></td></tr></table></figure>
 <p>我们可以用C++特性来创建结构体：</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">struct bin&#123;
-    &#x2F;&#x2F;C++17后，可以用std::hardware_destructive_interference_size替代64
-    alignas(64) std::atomic&lt;int&gt; count;
-&#125;;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">bin</span>&#123;</span><br><span class="line">    <span class="comment">//C++17后，可以用std::hardware_destructive_interference_size替代64</span></span><br><span class="line">    <span class="built_in">alignas</span>(<span class="number">64</span>) std::atomic&lt;<span class="type">int</span>&gt; count;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="代理">代理</h3>
 <p>TBB的TBBmalloc库使用代理方法，可以实现在不同操作系统，不改变代码，只需要配置一些动态库、代理库、环境变量，就可以实现全局替换new、malloc等分配函数，这对跨平台真的很重要</p>
 <h2 id="Task调度">Task调度</h2>
@@ -3675,10 +2989,10 @@ parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3761,22 +3075,25 @@ parallel_for(tbb::blocked_range&lt;size_t&gt;&#123;0, image.size()&#125;,
   
     <div class="prev-next">
       
-        <a class='prev' href='/program/Csharpe/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>WPF中的C#</p>
-          <p class='content'>WPF中的C#
-一、C#语法
-委托
-C#的委托类似于C++的函数指针，C#中，将参数a,b委托给了对象adder的Add方法，委托本质上是一种支持()运算符的对象。既然是对象，就可以有自己的成员...</p>
+        <a class='prev' href='/graphics/%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>骨骼动画</p>
+          <p class='content'>骨骼动画
+
+序列帧动画：记录动作的每一帧
+
+非矢量动画：每一帧是固定不可复用的，新的一帧本质上是完全重画一次物体，没有发生形态上的改变
+
+
+关键帧动画：记录动作的始末和轨迹曲线，运行时根据曲线进...</p>
         </a>
       
       
-        <a class='next' href='/dcc/maya%E6%8F%92%E4%BB%B6/'>
-          <p class='title'>Maya插件开发<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Maya
-maya，老东西，行业标准，真难用（不是）
-腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建
-创建一个python工具
-Python插件和Unity Editor那种工具不太...</p>
+        <a class='next' href='/program/CMake%E5%85%A5%E9%97%A8/'>
+          <p class='title'>CMake入门<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>CMake
+快速入门
+一个大项目（Project）内嵌多个子项目（SubProject）
+一个子项目内有src、include、CMakeLists.txt，其中有一个子项目中有main.cpp...</p>
         </a>
       
     </div>
@@ -4381,7 +3698,7 @@ Python插件和Unity Editor那种工具不太...</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/math/Pro-TBB/","name":"Pro-TBB"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Pro-TBB","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/math/Pro-TBB/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/math/Pro-TBB/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.102Z","articleSection":"program","keywords":"C++,并行计算","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/math/Pro-TBB/","name":"Pro-TBB"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Pro-TBB","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/math/Pro-TBB/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/math/Pro-TBB/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.289Z","articleSection":"program","keywords":"C++,并行计算","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

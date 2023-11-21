@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.099Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.286Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="TA">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -3290,7 +3290,7 @@ $$</p>
 <h3 id="为什么有法线贴图还需要顶点法线信息">为什么有法线贴图还需要顶点法线信息</h3>
 <p>为了构建TBN矩阵</p>
 <p>在片元着色器中采集切线空间法线贴图信息，然后使用TBN矩阵恢复成世界空间法线，那么TBN是怎么来的呢？</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">half3x3 tangentToWorld &#x3D; half3x3(i.tangentWS.xyz, bitangent.xyz, i.normalWS.xyz);</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">half3x3 tangentToWorld = half3x3(i.tangentWS.xyz, bitangent.xyz, i.normalWS.xyz);</span><br></pre></td></tr></table></figure>
 <p>是使用顶点着色器传入的世界空间切线、次切线、法线构建的</p>
 <h3 id="Forward">Forward+</h3>
 <p>和传统的前向渲染比添加了一个光源剔除阶段</p>
@@ -3335,20 +3335,13 @@ $$</p>
 <img src="/images/视差贴图.jpeg" class="lazyload" data-srcset="/images/视差贴图.jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="视差贴图" style="zoom: 33%;" />
 <p>原本平坦的表面，如果变成如图的凹凸形状，原本视线会与平面在B处相交，现在则在A处相交，我们采集$A’$点的信息</p>
 <p>从B到$A’$做了什么呢？本质就是采样点从B点出发，沿着<strong>视线在平面的投影</strong>做了一次偏移，偏移的长度可以通过三角形相似求得</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F;输入B的uv，得到A‘的uv
-float2 ParallaxMapping(float2 texCoords,float3 viewDir)
-&#123; 
-    float height &#x3D; texture(depthMap, texCoords).r;    
-    float2 p &#x3D; viewDir.xy &#x2F; viewDir.z * (height * height_scale);
-    return texCoords - p;    
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">//输入B的uv，得到A‘的uv</span></span><br><span class="line"><span class="function">float2 <span class="title">ParallaxMapping</span>(<span class="params">float2 texCoords,float3 viewDir</span>)</span></span><br><span class="line">&#123; </span><br><span class="line">    <span class="built_in">float</span> height = texture(depthMap, texCoords).r;    </span><br><span class="line">    float2 p = viewDir.xy / viewDir.z * (height * height_scale);</span><br><span class="line">    <span class="keyword">return</span> texCoords - p;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果按深度步进，通过从上到下找第一个深度小于A的平面，来求$A’$的位置，就是陡峭视差映射(Steep Parallax Mapping)的思想</p>
 <h3 id="virtual-texture">virtual texture</h3>
 <p>根据是否实时生成（合并）virtual texture，该技术分为VT和RVT，该技术主要用于大世界地形上</p>
 <p>在说VT前，要先谈texture splatting。大世界的地表纹理通常是使用多张纹理混合而成的（比如沙子、草、岩石、雪），而混合这些贴图的技术称为<strong>texture splatting</strong></p>
 <p>该技术很简单，比如要混合四张图，那么生成一个新的RGBA贴图，在某一点的混合图为</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">blenderTex &#x3D; Texture1 * map.r + Texture2 * map.g + Texture3 * map.b + Texture4 * map.a;
-&#x2F;&#x2F;其中 map.r + map.g + map.b + map.a 恒等于1</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">blenderTex = Texture1 * map.r + Texture2 * map.g + Texture3 * map.b + Texture4 * map.a;</span><br><span class="line"><span class="comment">//其中 map.r + map.g + map.b + map.a 恒等于1</span></span><br></pre></td></tr></table></figure>
 <img src="/images/texture splatting.png" class="lazyload" data-srcset="/images/texture splatting.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="texture splatting"  />
 <p>我们发现这种混合技术要频繁采样，混合四张图，要采9张图（四个材质图，四个法线图，一个splat图），而我们知道采一张大图会比采多个小图性能高很多，那么我们能不能把这九张小图拼成一张大图呢？这就是VT</p>
 <p>但我们没必要一次把这九张完整的图合并，这也存在浪费，那么我们只需要合并需要被采样的图</p>
@@ -3653,10 +3646,10 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -4362,7 +4355,7 @@ ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fr
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/TA面试题/","name":"TA面试题"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"TA面试题","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.099Z","articleSection":"graphics","keywords":"TA","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/TA面试题/","name":"TA面试题"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"TA面试题","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.286Z","articleSection":"graphics","keywords":"TA","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -42,11 +42,11 @@
 <meta property="og:title" content="WPF中的C#">
 <meta property="og:url" content="https://reubensun.com/program/Csharpe/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="WPF中的C# 一、C#语法 委托 C#的委托类似于C++的函数指针，C#中，将参数a,b委托给了对象adder的Add方法，委托本质上是一种支持()运算符的对象。既然是对象，就可以有自己的成员和状态 delegate int Fun(int a, int b);  class Adder&amp;#123;   private int c &#x3D; 0;      public Adder(int">
+<meta property="og:description" content="WPF中的C# 一、C#语法 委托 C#的委托类似于C++的函数指针，C#中，将参数a,b委托给了对象adder的Add方法，委托本质上是一种支持()运算符的对象。既然是对象，就可以有自己的成员和状态 delegate int Fun(int a, int b);class Adder&#123;  private int c &#x3D; 0;    public Adder(int c)&#123; t">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-01T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.107Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.297Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C#">
 <meta property="article:tag" content="Windows">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2547,192 +2547,33 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h2 id="一、C-语法">一、C#语法</h2>
 <h3 id="委托">委托</h3>
 <p>C#的委托类似于C++的函数指针，C#中，将参数<code>a,b</code>委托给了对象adder的Add方法，委托本质上是一种支持<code>()</code>运算符的<strong>对象</strong>。既然是对象，就可以有自己的成员和状态</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">delegate int Fun(int a, int b);
-
-class Adder&#123;
-  private int c &#x3D; 0;
-  
-  public Adder(int c)&#123; this.c &#x3D; c; &#125;
-  
-  public int Add(int a, int b)&#123; return a+b+c; &#125;
-&#125;
-&#x2F;&#x2F;Main()&#123;...
-Adder adder &#x3D; new Adder(1);
-Fun f &#x3D; adder.Add;
-f(2,3);	&#x2F;&#x2F;return 6</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">delegate</span> <span class="built_in">int</span> <span class="title">Fun</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Adder</span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">int</span> c = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Adder</span>(<span class="params"><span class="built_in">int</span> c</span>)</span>&#123; <span class="keyword">this</span>.c = c; &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Add</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span>&#123; <span class="keyword">return</span> a+b+c; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Main()&#123;...</span></span><br><span class="line">Adder adder = <span class="keyword">new</span> Adder(<span class="number">1</span>);</span><br><span class="line">Fun f = adder.Add;</span><br><span class="line">f(<span class="number">2</span>,<span class="number">3</span>);	<span class="comment">//return 6</span></span><br></pre></td></tr></table></figure>
 <p>C#委托支持匿名委托和lambda表达式</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">delegate int Fun(int a, int b);
-&#x2F;&#x2F;Main()&#123;...
-Fun f &#x3D; delegate(int a, int b)&#123;
-  cout &lt;&lt; a+b &lt;&lt; endl;
-&#125;;
-Fun f2 &#x3D; (int a, int b)&#x3D;&gt;&#123;
-  cout &lt;&lt; a+b &lt;&lt; endl;
-&#125;;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">delegate</span> <span class="built_in">int</span> <span class="title">Fun</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span>;</span><br><span class="line"><span class="comment">//Main()&#123;...</span></span><br><span class="line">Fun f = <span class="built_in">delegate</span>(<span class="built_in">int</span> a, <span class="built_in">int</span> b)&#123;</span><br><span class="line">  cout &lt;&lt; a+b &lt;&lt; endl;</span><br><span class="line">&#125;;</span><br><span class="line">Fun f2 = (<span class="built_in">int</span> a, <span class="built_in">int</span> b)=&gt;&#123;</span><br><span class="line">  cout &lt;&lt; a+b &lt;&lt; endl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="C-的函数指针">C++的函数指针</h4>
 <p>C/C++的函数指针是一个指向函数入口的指针，不具有对象的性质，只能指向非成员函数</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">typedef int(*Func)(int a, int b);
-
-int Add(int a, int b)&#123;
-    return a+b;
-&#125;
-
-int main(int argc, char **argv)&#123;
-    Func func &#x3D; Add;
-    std::cout &lt;&lt; func(1,2);	&#x2F;&#x2F;cout 3
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span><span class="params">(*Func)</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    Func func = Add;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">func</span>(<span class="number">1</span>,<span class="number">2</span>);	<span class="comment">//cout 3</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当然，如果加上类型限制符，还是可以指向成员函数的</p>
-<pre class="language-C++" data-language="C++"><code class="language-C++">class Multiple&#123;
-public:
-    int Mul(int a, int b)&#123;
-        return a * b;
-    &#125;
-&#125;;
-
-typedef int(Multiple::*Fm)(int a, int b);
-
-int main(int argc, char **argv)&#123;
-    Multiple multiple;
-    Fm f &#x3D; &amp;Multiple::Mul;
-    std::cout &lt;&lt; (multiple.*f)(3,4);
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Multiple</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">Mul</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a * b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span><span class="params">(Multiple::*Fm)</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    Multiple multiple;</span><br><span class="line">    Fm f = &amp;Multiple::Mul;</span><br><span class="line">    std::cout &lt;&lt; (multiple.*f)(<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果想让C++对委托具有对象的性质，我们可以重载<code>()</code>操作符</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">class Adder&#123;
-public:
-    Adder(int c)&#123; this-&gt;c &#x3D; c; &#125;
-    int operator()(int a, int b)&#123;
-        return a+b+c;
-    &#125;
-private:
-    int c;
-&#125;;
-
-int main(int argc, char **argv)&#123;
-    Adder adder(1);
-    std::cout &lt;&lt; adder(2, 3);
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Adder</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Adder</span>(<span class="type">int</span> c)&#123; <span class="keyword">this</span>-&gt;c = c; &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a+b+c;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="function">Adder <span class="title">adder</span><span class="params">(<span class="number">1</span>)</span></span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">adder</span>(<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Action泛型委托">Action泛型委托</h4>
 <p>C#一种无返回值的泛型委托</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">public delegate void Action&lt;in T&gt;(T obj);</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="keyword">void</span> <span class="title">Action</span>&lt;<span class="keyword">in</span> <span class="title">T</span>&gt;(<span class="params">T obj</span>)</span>;</span><br></pre></td></tr></table></figure>
 <p>无参数<code>Action xxx = 函数</code></p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">public class Name
-&#123;
-  public string InstanceName&#123; private set; get; &#125;
-  public Name(string name)
-  &#123;
-    InstanceName &#x3D; name;
-  &#125;
-  public void DisplayName()
-  &#123;
-    Console.WriteLine($&quot;I&#39;m &#123;InstanceName&#125;&quot;);
-  &#125;
-&#125;
-public static void Main(string[] args)
-&#123;
-  Name testName &#x3D; new Name(&quot;Tim&quot;);
-  Action showName &#x3D; testName.DisplayName;
-  showName();
-&#125;       </code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Name</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> InstanceName&#123; <span class="keyword">private</span> <span class="keyword">set</span>; <span class="keyword">get</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Name</span>(<span class="params"><span class="built_in">string</span> name</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    InstanceName = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DisplayName</span>()</span></span><br><span class="line">  &#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;I&#x27;m <span class="subst">&#123;InstanceName&#125;</span>&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  Name testName = <span class="keyword">new</span> Name(<span class="string">&quot;Tim&quot;</span>);</span><br><span class="line">  Action showName = testName.DisplayName;</span><br><span class="line">  showName();</span><br><span class="line">&#125;       </span><br></pre></td></tr></table></figure>
 <p>有参数<code>Action&lt;参数类型&gt; xxx = 函数</code></p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">public class Name
-&#123;
-  public string InstanceName&#123; private set; get; &#125;
-  public Name(string name)
-  &#123;
-    InstanceName &#x3D; name;
-  &#125;
-  public void DisplayName(string str)
-  &#123;
-    Console.WriteLine($&quot;I&#39;m &#123;InstanceName&#125;, &#123;str&#125;&quot;);
-  &#125;
-&#125;
-public static void Main(string[] args)
-&#123;
-  Name testName &#x3D; new Name(&quot;Tim&quot;);
-  Action&lt;string&gt; showName &#x3D; testName.DisplayName;
-  showName(&quot;HHH&quot;);
-&#125;    </code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Name</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> InstanceName&#123; <span class="keyword">private</span> <span class="keyword">set</span>; <span class="keyword">get</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Name</span>(<span class="params"><span class="built_in">string</span> name</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    InstanceName = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DisplayName</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;I&#x27;m <span class="subst">&#123;InstanceName&#125;</span>, <span class="subst">&#123;str&#125;</span>&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  Name testName = <span class="keyword">new</span> Name(<span class="string">&quot;Tim&quot;</span>);</span><br><span class="line">  Action&lt;<span class="built_in">string</span>&gt; showName = testName.DisplayName;</span><br><span class="line">  showName(<span class="string">&quot;HHH&quot;</span>);</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
 <h4 id="Func泛型委托">Func泛型委托</h4>
 <p>C#一种有返回值的泛型委托</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">public delegate TResult Func&lt;out TResult&gt;();</code></pre>
-<pre class="language-c#" data-language="c#"><code class="language-c#">public class Adder
-&#123;
-  private int c;
-  public Adder(int c) &#123; this.c &#x3D; c; &#125;
-  public int Add(int a, int b)
-  &#123;
-    return a + b + c;
-  &#125;
-&#125;
-
-public static void Main(string[] args)
-&#123;
-  Adder adder &#x3D; new Adder(1);
-  &#x2F;&#x2F;第一个参数是返回值类型，后面的参数是输入参数类型
-  Func&lt;int, int, int&gt; method &#x3D; adder.Add;
-  &#x2F;&#x2F;使用时不需要写返回值参数
-  Console.WriteLine(method(2, 3));
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> TResult <span class="title">Func</span>&lt;<span class="keyword">out</span> <span class="title">TResult</span>&gt;()</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Adder</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="built_in">int</span> c;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Adder</span>(<span class="params"><span class="built_in">int</span> c</span>)</span> &#123; <span class="keyword">this</span>.c = c; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Add</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b + c;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  Adder adder = <span class="keyword">new</span> Adder(<span class="number">1</span>);</span><br><span class="line">  <span class="comment">//第一个参数是返回值类型，后面的参数是输入参数类型</span></span><br><span class="line">  Func&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; method = adder.Add;</span><br><span class="line">  <span class="comment">//使用时不需要写返回值参数</span></span><br><span class="line">  Console.WriteLine(method(<span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="事件">事件</h3>
 <p><em>这里的事件指CLR事件模型，详细内容见下文</em></p>
 <p>委托：把工作委托给了某个函数，可以直接调用</p>
 <p>事件：订阅者侦听发行者，发行者可以通过回调函数间接让订阅者干事（而且订阅者具体干什么，要看订阅者心情，发行者无权过问）</p>
-<pre class="language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F;事件参数
-public class MyEventArgs: EventArgs
-&#123;
-  public string Args
-  &#123;
-    private set;
-    get;
-  &#125;
-  public MyEventArgs(string args)
-  &#123;
-    Args &#x3D; args;
-  &#125;
-&#125;
-&#x2F;&#x2F;事件发行者
-public class EventSource
-&#123;
-  MyEventArgs eventArgs;
-
-  public string Name;
-
-  public EventSource(string args)
-  &#123;
-    eventArgs &#x3D; new MyEventArgs(args);
-  &#125;
-
-  public delegate void handlerEvent(Object sender, MyEventArgs args);
-
-  public event handlerEvent m_handler_event;
-
-  public void Handler()
-  &#123;
-    m_handler_event?.Invoke(this, eventArgs);
-    &#x2F;&#x2F;也可以写成 m_handler_event(this, eventArgs);
-  &#125;
-&#125;</code></pre>
-<pre class="language-C#" data-language="C#"><code class="language-C#">&#x2F;&#x2F;事件订阅者
-class MainClass
-&#123;
-  public static void Main(string[] args)
-  &#123;
-    EventSource source &#x3D; new EventSource(&quot;Event had been raised!&quot;);
-    source.Name &#x3D; &quot;Tim&quot;;
-    source.m_handler_event +&#x3D; new EventSource.handlerEvent(writeHello);
-    &#x2F;&#x2F;也可以写成 source.m_handler_event +&#x3D; writeHello;
-    source.Handler();		&#x2F;&#x2F;输出：Hello Tim, Event had been raised!
-  &#125;
-
-  static void writeHello(Object sender, MyEventArgs args)
-  &#123;
-    EventSource source &#x3D; sender as EventSource;
-    Console.WriteLine($&quot;Hello &#123;source.Name&#125;, &#123;args.Args&#125;&quot;);
-  &#125;
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">//事件参数</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyEventArgs</span>: <span class="title">EventArgs</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> Args</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">set</span>;</span><br><span class="line">    <span class="keyword">get</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MyEventArgs</span>(<span class="params"><span class="built_in">string</span> args</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Args = args;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//事件发行者</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">EventSource</span></span><br><span class="line">&#123;</span><br><span class="line">  MyEventArgs eventArgs;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">string</span> Name;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">EventSource</span>(<span class="params"><span class="built_in">string</span> args</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    eventArgs = <span class="keyword">new</span> MyEventArgs(args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="keyword">void</span> <span class="title">handlerEvent</span>(<span class="params">Object sender, MyEventArgs args</span>)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">event</span> handlerEvent m_handler_event;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Handler</span>()</span></span><br><span class="line">  &#123;</span><br><span class="line">    m_handler_event?.Invoke(<span class="keyword">this</span>, eventArgs);</span><br><span class="line">    <span class="comment">//也可以写成 m_handler_event(this, eventArgs);</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">//事件订阅者</span></span><br><span class="line"><span class="keyword">class</span> <span class="title">MainClass</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    EventSource source = <span class="keyword">new</span> EventSource(<span class="string">&quot;Event had been raised!&quot;</span>);</span><br><span class="line">    source.Name = <span class="string">&quot;Tim&quot;</span>;</span><br><span class="line">    source.m_handler_event += <span class="keyword">new</span> EventSource.handlerEvent(writeHello);</span><br><span class="line">    <span class="comment">//也可以写成 source.m_handler_event += writeHello;</span></span><br><span class="line">    source.Handler();		<span class="comment">//输出：Hello Tim, Event had been raised!</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writeHello</span>(<span class="params">Object sender, MyEventArgs args</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    EventSource source = sender <span class="keyword">as</span> EventSource;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;Hello <span class="subst">&#123;source.Name&#125;</span>, <span class="subst">&#123;args.Args&#125;</span>&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最初我很好奇，我们注册了一个处理函数，<code>source.m_handler_event += writeHello</code>，但是好像没看到怎么传参进去。</p>
 <p>其实是因为C#的委托本质是一个支持<code>()</code>运算符的对象，所有处理函数形式上跟委托一致，参数是委托对象的成员变量</p>
 <p>一个事件可以注册多个处理函数，于是事件也称为多重委托</p>
@@ -2741,239 +2582,42 @@ class MainClass
 <p>程序 = 数据 + 算法</p>
 <p>三层结构：存储、逻辑、展示（UI）</p>
 <p>逻辑层可以访问UI层的数据，但展示层不能访问逻辑层，UI层能显示信息，靠的是绑定逻辑层数据</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">this.textBoxName.SetBinding(TextBox.TextProperty, new Binding(&quot;Name&quot;) &#123; Source &#x3D; stu &#x3D; new Student() &#125;);</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.textBoxName.SetBinding(TextBox.TextProperty, <span class="keyword">new</span> Binding(<span class="string">&quot;Name&quot;</span>) &#123; Source = stu = <span class="keyword">new</span> Student() &#125;);</span><br></pre></td></tr></table></figure>
 <p>UI层不仅可以绑定逻辑层数据，也可以绑定UI层数据</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">&#x2F;&#x2F;为 Text属性设置 Binding为 slider1的...
-&lt;TextBox x:Name&#x3D;&quot;textBox2&quot; Text&#x3D;&quot;&#123;Binding Value, ElementName&#x3D;slider1&#125;&quot; BorderBrush&#x3D;&quot;Black&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">//为 Text属性设置 Binding为 slider1的...</span></span><br><span class="line">&lt;TextBox x:Name=<span class="string">&quot;textBox2&quot;</span> Text=<span class="string">&quot;&#123;Binding Value, ElementName=slider1&#125;&quot;</span> BorderBrush=<span class="string">&quot;Black&quot;</span> Margin=<span class="string">&quot;5&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
 <p>在XAML中加入</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">xmlns:local&#x3D;&quot;clr-namespace:BindingStudy&quot;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">xmlns:local=<span class="string">&quot;clr-namespace:BindingStudy&quot;</span></span><br></pre></td></tr></table></figure>
 <p>即可在XAML中使用BindingStudy命名空间里C#定义的类</p>
 <h3 id="绑定的实现">绑定的实现</h3>
 <p>绑定实现的机制：源对象的属性（Property）发生改变时，会Invoke一个事件，Binding负责侦听这个事件</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">class Student : INotifyPropertyChanged
-&#123;
-    public event PropertyChangedEventHandler PropertyChanged;
-    private string name;
-    public string Name
-    &#123;
-        get &#123; return name; &#125;
-        set
-        &#123;
-            name &#x3D; value;
-            if(this.PropertyChanged !&#x3D; null)
-            &#123;
-                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(&quot;Name&quot;));
-            &#125;
-        &#125;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Student</span> : <span class="title">INotifyPropertyChanged</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">event</span> PropertyChangedEventHandler PropertyChanged;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> name; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            name = <span class="keyword">value</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.PropertyChanged != <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">this</span>.PropertyChanged.Invoke(<span class="keyword">this</span>, <span class="keyword">new</span> PropertyChangedEventArgs(<span class="string">&quot;Name&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Path">Path</h3>
 <p>源对象往往会有多个属性，我们可以使用Path，设置绑定那些属性，而且Path支持多级路径（简单说就是一直点下去）和索引器（Indexer）</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">&lt;TextBox x:Name&#x3D;&quot;textBoxName&quot; BorderBrush&#x3D;&quot;Black&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-&lt;TextBox x:Name&#x3D;&quot;textBox1&quot; Text&#x3D;&quot;&#123;Binding Path&#x3D;Text.Length, ElementName&#x3D;textBoxName, Mode&#x3D;OneWay&#125;&quot; BorderBrush&#x3D;&quot;Black&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;          
-&lt;TextBox x:Name&#x3D;&quot;textBox2&quot; Text&#x3D;&quot;&#123;Binding Path&#x3D;Text.[3], ElementName&#x3D;textBoxName, Mode&#x3D;OneWay&#125;&quot; BorderBrush&#x3D;&quot;Black&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">&lt;TextBox x:Name=<span class="string">&quot;textBoxName&quot;</span> BorderBrush=<span class="string">&quot;Black&quot;</span> Margin=<span class="string">&quot;5&quot;</span>/&gt;</span><br><span class="line">&lt;TextBox x:Name=<span class="string">&quot;textBox1&quot;</span> Text=<span class="string">&quot;&#123;Binding Path=Text.Length, ElementName=textBoxName, Mode=OneWay&#125;&quot;</span> BorderBrush=<span class="string">&quot;Black&quot;</span> Margin=<span class="string">&quot;5&quot;</span>/&gt;          </span><br><span class="line">&lt;TextBox x:Name=<span class="string">&quot;textBox2&quot;</span> Text=<span class="string">&quot;&#123;Binding Path=Text.[3], ElementName=textBoxName, Mode=OneWay&#125;&quot;</span> BorderBrush=<span class="string">&quot;Black&quot;</span> Margin=<span class="string">&quot;5&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/Path.png" class="lazyload" data-srcset="/images/Path.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Path"></p>
 <p>此外Path也支持多级斜线（也是可以一直斜线下去，其中&quot;/&quot;就是自身）</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">this.textBoxName.SetBinding(TextBox.TextProperty, new Binding(&quot;&#x2F;Length&quot;) &#123; Source &#x3D; stringList &#125;);</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.textBoxName.SetBinding(TextBox.TextProperty, <span class="keyword">new</span> Binding(<span class="string">&quot;/Length&quot;</span>) &#123; Source = stringList &#125;);</span><br></pre></td></tr></table></figure>
 <p>当源数据本身就是数据（比如int、string类型），我们可以不写Path，或者将Path省略为&quot;.&quot;</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">this.textBlock1.SetBinding(TextBlock.TextProperty, new Binding(&quot;.&quot;) &#123; Source &#x3D; str &#125;);</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.textBlock1.SetBinding(TextBlock.TextProperty, <span class="keyword">new</span> Binding(<span class="string">&quot;.&quot;</span>) &#123; Source = str &#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="集合">集合</h3>
-<pre class="language-XML" data-language="XML"><code class="language-XML">&lt;StackPanel x:Name&#x3D;&quot;stackPanel&quot; Background&#x3D;&quot;LightBlue&quot;&gt;
-    &lt;TextBlock Text&#x3D;&quot;Student ID:&quot; FontWeight&#x3D;&quot;Bold&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-    &lt;TextBox x:Name&#x3D;&quot;textBoxId&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-    &lt;TextBlock Text&#x3D;&quot;Student List:&quot; FontWeight&#x3D;&quot;Bold&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-    &lt;ListBox x:Name&#x3D;&quot;listBoxStudents&quot; Height&#x3D;&quot;110&quot; Margin&#x3D;&quot;5&quot;&gt;
-        &lt;ListBox.ItemTemplate&gt;
-            &lt;DataTemplate&gt;
-                &lt;StackPanel Orientation&#x3D;&quot;Horizontal&quot;&gt;
-                    &lt;TextBlock Text&#x3D;&quot;&#123;Binding Path&#x3D;Id&#125;&quot; Width&#x3D;&quot;30&quot;&#x2F;&gt;
-                    &lt;TextBlock Text&#x3D;&quot;&#123;Binding Path&#x3D;Name&#125;&quot; Width&#x3D;&quot;60&quot;&#x2F;&gt;
-                    &lt;TextBlock Text&#x3D;&quot;&#123;Binding Path&#x3D;Age&#125;&quot; Width&#x3D;&quot;30&quot;&#x2F;&gt;
-                &lt;&#x2F;StackPanel&gt;
-            &lt;&#x2F;DataTemplate&gt;
-        &lt;&#x2F;ListBox.ItemTemplate&gt;
-    &lt;&#x2F;ListBox&gt;
-
-&lt;&#x2F;StackPanel&gt;
-public MainWindow()
-&#123;
-    InitializeComponent();
-    List&lt;Student&gt; stuList &#x3D; new List&lt;Student&gt;()
-    &#123;
-        new Student()&#123;Id&#x3D;0, Name&#x3D;&quot;赵&quot;, Age&#x3D;21&#125;,
-        new Student()&#123;Id&#x3D;1, Name&#x3D;&quot;钱&quot;, Age&#x3D;22&#125;,
-        new Student()&#123;Id&#x3D;2, Name&#x3D;&quot;孙&quot;, Age&#x3D;11&#125;,
-        new Student()&#123;Id&#x3D;3, Name&#x3D;&quot;李&quot;, Age&#x3D;50&#125;,
-        new Student()&#123;Id&#x3D;4, Name&#x3D;&quot;周&quot;, Age&#x3D;44&#125;,
-    &#125;;
-    this.listBoxStudents.ItemsSource &#x3D; stuList;
-    &#x2F;&#x2F;this.listBoxStudents.DisplayMemberPath &#x3D; &quot;Name&quot;;
-
-    Binding binding &#x3D; new Binding(&quot;SelectedItem.Id&quot;) &#123; Source &#x3D; this.listBoxStudents &#125;;
-    this.textBoxId.SetBinding(TextBox.TextProperty, binding);
-&#125;</code></pre>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">StackPanel</span> <span class="attr">x:Name</span>=<span class="string">&quot;stackPanel&quot;</span> <span class="attr">Background</span>=<span class="string">&quot;LightBlue&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextBlock</span> <span class="attr">Text</span>=<span class="string">&quot;Student ID:&quot;</span> <span class="attr">FontWeight</span>=<span class="string">&quot;Bold&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextBox</span> <span class="attr">x:Name</span>=<span class="string">&quot;textBoxId&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextBlock</span> <span class="attr">Text</span>=<span class="string">&quot;Student List:&quot;</span> <span class="attr">FontWeight</span>=<span class="string">&quot;Bold&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ListBox</span> <span class="attr">x:Name</span>=<span class="string">&quot;listBoxStudents&quot;</span> <span class="attr">Height</span>=<span class="string">&quot;110&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ListBox.ItemTemplate</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DataTemplate</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">StackPanel</span> <span class="attr">Orientation</span>=<span class="string">&quot;Horizontal&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">TextBlock</span> <span class="attr">Text</span>=<span class="string">&quot;&#123;Binding Path=Id&#125;&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;30&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">TextBlock</span> <span class="attr">Text</span>=<span class="string">&quot;&#123;Binding Path=Name&#125;&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;60&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">TextBlock</span> <span class="attr">Text</span>=<span class="string">&quot;&#123;Binding Path=Age&#125;&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;30&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">StackPanel</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">DataTemplate</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ListBox.ItemTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ListBox</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">StackPanel</span>&gt;</span></span><br><span class="line">public MainWindow()</span><br><span class="line">&#123;</span><br><span class="line">    InitializeComponent();</span><br><span class="line">    List<span class="tag">&lt;<span class="name">Student</span>&gt;</span> stuList = new List<span class="tag">&lt;<span class="name">Student</span>&gt;</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        new Student()&#123;Id=0, Name=&quot;赵&quot;, Age=21&#125;,</span><br><span class="line">        new Student()&#123;Id=1, Name=&quot;钱&quot;, Age=22&#125;,</span><br><span class="line">        new Student()&#123;Id=2, Name=&quot;孙&quot;, Age=11&#125;,</span><br><span class="line">        new Student()&#123;Id=3, Name=&quot;李&quot;, Age=50&#125;,</span><br><span class="line">        new Student()&#123;Id=4, Name=&quot;周&quot;, Age=44&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    this.listBoxStudents.ItemsSource = stuList;</span><br><span class="line">    //this.listBoxStudents.DisplayMemberPath = &quot;Name&quot;;</span><br><span class="line"></span><br><span class="line">    Binding binding = new Binding(&quot;SelectedItem.Id&quot;) &#123; Source = this.listBoxStudents &#125;;</span><br><span class="line">    this.textBoxId.SetBinding(TextBox.TextProperty, binding);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/%E9%9B%86%E5%90%88.png" class="lazyload" data-srcset="/images/%E9%9B%86%E5%90%88.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="集合"></p>
 <h3 id="XML">XML</h3>
 <p>SOAP（Simple Object Access Protocel，简单对象访问协议）：一种基于XML的数据交换协议</p>
-<pre class="language-XML" data-language="XML"><code class="language-XML">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot; ?&gt;
-&lt;StudentList&gt;
-        &lt;Student Id&#x3D;&quot;0&quot;&gt;
-                &lt;Name&gt;赵&lt;&#x2F;Name&gt;
-        &lt;&#x2F;Student&gt;
-        &lt;Student Id&#x3D;&quot;1&quot;&gt;
-                &lt;Name&gt;钱&lt;&#x2F;Name&gt;
-        &lt;&#x2F;Student&gt;
-        &lt;Student Id&#x3D;&quot;2&quot;&gt;
-                &lt;Name&gt;孙&lt;&#x2F;Name&gt;
-        &lt;&#x2F;Student&gt;
-        &lt;Student Id&#x3D;&quot;3&quot;&gt;
-                &lt;Name&gt;李&lt;&#x2F;Name&gt;
-        &lt;&#x2F;Student&gt;
-        &lt;Student Id&#x3D;&quot;4&quot;&gt;
-                &lt;Name&gt;周&lt;&#x2F;Name&gt;
-        &lt;&#x2F;Student&gt;
-&lt;&#x2F;StudentList&gt;
-&lt;ListView x:Name&#x3D;&quot;listViewStudents&quot; Height&#x3D;&quot;130&quot; Margin&#x3D;&quot;5&quot;&gt;
-    &lt;ListView.View&gt;
-        &lt;GridView&gt;
-            &lt;GridViewColumn Header&#x3D;&quot;Id&quot; Width&#x3D;&quot;80&quot; DisplayMemberBinding&#x3D;&quot;&#123;Binding XPath&#x3D;@Id&#125;&quot;&#x2F;&gt;
-            &lt;GridViewColumn Header&#x3D;&quot;Name&quot; Width&#x3D;&quot;120&quot; DisplayMemberBinding&#x3D;&quot;&#123;Binding XPath&#x3D;Name&#125;&quot;&#x2F;&gt;
-        &lt;&#x2F;GridView&gt;
-    &lt;&#x2F;ListView.View&gt;
-&lt;&#x2F;ListView&gt;
-&lt;Button Content&#x3D;&quot;Load Click&quot; Click&#x3D;&quot;Button_Click&quot; Height&#x3D;&quot;25&quot; Margin&#x3D;&quot;5,0&quot;&#x2F;&gt;
- private void Button_Click(object sender, RoutedEventArgs e)
-&#123;
-    XmlDataProvider xdp &#x3D; new XmlDataProvider();
-    xdp.Source &#x3D; new Uri(@&quot;D:\code\BindingStudy\BindingStudy\RawData.xml&quot;);
-    xdp.XPath &#x3D; @&quot;&#x2F;StudentList&#x2F;Student&quot;;
-
-    this.listViewStudents.DataContext &#x3D; xdp;
-    this.listViewStudents.SetBinding(ListView.ItemsSourceProperty, new Binding());
-&#125;</code></pre>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">StudentList</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;0&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Name</span>&gt;</span>赵<span class="tag">&lt;/<span class="name">Name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Name</span>&gt;</span>钱<span class="tag">&lt;/<span class="name">Name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;2&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Name</span>&gt;</span>孙<span class="tag">&lt;/<span class="name">Name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;3&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Name</span>&gt;</span>李<span class="tag">&lt;/<span class="name">Name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Student</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;4&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Name</span>&gt;</span>周<span class="tag">&lt;/<span class="name">Name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Student</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">StudentList</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ListView</span> <span class="attr">x:Name</span>=<span class="string">&quot;listViewStudents&quot;</span> <span class="attr">Height</span>=<span class="string">&quot;130&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ListView.View</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">GridView</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">GridViewColumn</span> <span class="attr">Header</span>=<span class="string">&quot;Id&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;80&quot;</span> <span class="attr">DisplayMemberBinding</span>=<span class="string">&quot;&#123;Binding XPath=@Id&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">GridViewColumn</span> <span class="attr">Header</span>=<span class="string">&quot;Name&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;120&quot;</span> <span class="attr">DisplayMemberBinding</span>=<span class="string">&quot;&#123;Binding XPath=Name&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">GridView</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ListView.View</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ListView</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Button</span> <span class="attr">Content</span>=<span class="string">&quot;Load Click&quot;</span> <span class="attr">Click</span>=<span class="string">&quot;Button_Click&quot;</span> <span class="attr">Height</span>=<span class="string">&quot;25&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5,0&quot;</span>/&gt;</span></span><br><span class="line"> private void Button_Click(object sender, RoutedEventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    XmlDataProvider xdp = new XmlDataProvider();</span><br><span class="line">    xdp.Source = new Uri(@&quot;D:\code\BindingStudy\BindingStudy\RawData.xml&quot;);</span><br><span class="line">    xdp.XPath = @&quot;/StudentList/Student&quot;;</span><br><span class="line"></span><br><span class="line">    this.listViewStudents.DataContext = xdp;</span><br><span class="line">    this.listViewStudents.SetBinding(ListView.ItemsSourceProperty, new Binding());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/xml.png" class="lazyload" data-srcset="/images/xml.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="xml"></p>
 <h3 id="LINQ">LINQ</h3>
 <p>LINQ（Language-Integrated Query，语言集成查询）：一种对象查询机制，查询的结果为IEnumerable<T>类型</p>
-<pre class="language-XML" data-language="XML"><code class="language-XML">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;utf-8&quot; ?&gt;
-&lt;StudentList&gt;
-        &lt;Class&gt;
-                &lt;Student Id&#x3D;&quot;0&quot; Name&#x3D;&quot;Tim&quot; Age&#x3D;&quot;29&quot;&#x2F;&gt;
-                &lt;Student Id&#x3D;&quot;1&quot; Name&#x3D;&quot;Tom&quot; Age&#x3D;&quot;20&quot;&#x2F;&gt;
-                &lt;Student Id&#x3D;&quot;2&quot; Name&#x3D;&quot;Mess&quot; Age&#x3D;&quot;9&quot;&#x2F;&gt;
-        &lt;&#x2F;Class&gt;
-        &lt;Class&gt;
-                &lt;Student Id&#x3D;&quot;3&quot; Name&#x3D;&quot;Tony&quot; Age&#x3D;&quot;2&quot;&#x2F;&gt;
-                &lt;Student Id&#x3D;&quot;4&quot; Name&#x3D;&quot;Viv&quot; Age&#x3D;&quot;23&quot;&#x2F;&gt;
-                &lt;Student Id&#x3D;&quot;5&quot; Name&#x3D;&quot;Oio&quot; Age&#x3D;&quot;88&quot;&#x2F;&gt;
-        &lt;&#x2F;Class&gt;
-&lt;&#x2F;StudentList&gt;
-&lt;ListView x:Name&#x3D;&quot;listViewStudents&quot; Height&#x3D;&quot;130&quot; Margin&#x3D;&quot;5&quot;&gt;
-    &lt;ListView.View&gt;
-        &lt;GridView&gt;
-            &lt;GridViewColumn Header&#x3D;&quot;Id&quot; Width&#x3D;&quot;80&quot; DisplayMemberBinding&#x3D;&quot;&#123;Binding Id&#125;&quot;&#x2F;&gt;
-            &lt;GridViewColumn Header&#x3D;&quot;Name&quot; Width&#x3D;&quot;120&quot; DisplayMemberBinding&#x3D;&quot;&#123;Binding Name&#125;&quot;&#x2F;&gt;
-            &lt;GridViewColumn Header&#x3D;&quot;Age&quot; Width&#x3D;&quot;80&quot; DisplayMemberBinding&#x3D;&quot;&#123;Binding Age&#125;&quot;&#x2F;&gt;
-        &lt;&#x2F;GridView&gt;
-    &lt;&#x2F;ListView.View&gt;
-&lt;&#x2F;ListView&gt;
-private void Button_Click(object sender, RoutedEventArgs e)
-&#123;
-    XDocument doc &#x3D; XDocument.Load(@&quot;D:\code\BindingStudy\BindingStudy\RawData.xml&quot;);
-    this.listViewStudents.ItemsSource &#x3D;
-        from element in doc.Descendants(&quot;Student&quot;)
-        where element.Attribute(&quot;Name&quot;).Value.StartsWith(&quot;T&quot;)
-        select new Student()
-        &#123;
-            Id &#x3D; int.Parse(element.Attribute(&quot;Id&quot;).Value),
-            Name &#x3D; element.Attribute(&quot;Name&quot;).Value,
-            Age &#x3D; int.Parse(element.Attribute(&quot;Age&quot;).Value)
-        &#125;;
-    
-&#125;
-class Student
-&#123;
-    public int Id &#123; get; set; &#125;
-    public string Name &#123; get; set; &#125;
-    public int Age &#123; get; set; &#125;
-&#125;</code></pre>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">StudentList</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Class</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;0&quot;</span> <span class="attr">Name</span>=<span class="string">&quot;Tim&quot;</span> <span class="attr">Age</span>=<span class="string">&quot;29&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;1&quot;</span> <span class="attr">Name</span>=<span class="string">&quot;Tom&quot;</span> <span class="attr">Age</span>=<span class="string">&quot;20&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;2&quot;</span> <span class="attr">Name</span>=<span class="string">&quot;Mess&quot;</span> <span class="attr">Age</span>=<span class="string">&quot;9&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Class</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Class</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;3&quot;</span> <span class="attr">Name</span>=<span class="string">&quot;Tony&quot;</span> <span class="attr">Age</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;4&quot;</span> <span class="attr">Name</span>=<span class="string">&quot;Viv&quot;</span> <span class="attr">Age</span>=<span class="string">&quot;23&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">Student</span> <span class="attr">Id</span>=<span class="string">&quot;5&quot;</span> <span class="attr">Name</span>=<span class="string">&quot;Oio&quot;</span> <span class="attr">Age</span>=<span class="string">&quot;88&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">StudentList</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ListView</span> <span class="attr">x:Name</span>=<span class="string">&quot;listViewStudents&quot;</span> <span class="attr">Height</span>=<span class="string">&quot;130&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ListView.View</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">GridView</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">GridViewColumn</span> <span class="attr">Header</span>=<span class="string">&quot;Id&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;80&quot;</span> <span class="attr">DisplayMemberBinding</span>=<span class="string">&quot;&#123;Binding Id&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">GridViewColumn</span> <span class="attr">Header</span>=<span class="string">&quot;Name&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;120&quot;</span> <span class="attr">DisplayMemberBinding</span>=<span class="string">&quot;&#123;Binding Name&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">GridViewColumn</span> <span class="attr">Header</span>=<span class="string">&quot;Age&quot;</span> <span class="attr">Width</span>=<span class="string">&quot;80&quot;</span> <span class="attr">DisplayMemberBinding</span>=<span class="string">&quot;&#123;Binding Age&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">GridView</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ListView.View</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ListView</span>&gt;</span></span><br><span class="line">private void Button_Click(object sender, RoutedEventArgs e)</span><br><span class="line">&#123;</span><br><span class="line">    XDocument doc = XDocument.Load(@&quot;D:\code\BindingStudy\BindingStudy\RawData.xml&quot;);</span><br><span class="line">    this.listViewStudents.ItemsSource =</span><br><span class="line">        from element in doc.Descendants(&quot;Student&quot;)</span><br><span class="line">        where element.Attribute(&quot;Name&quot;).Value.StartsWith(&quot;T&quot;)</span><br><span class="line">        select new Student()</span><br><span class="line">        &#123;</span><br><span class="line">            Id = int.Parse(element.Attribute(&quot;Id&quot;).Value),</span><br><span class="line">            Name = element.Attribute(&quot;Name&quot;).Value,</span><br><span class="line">            Age = int.Parse(element.Attribute(&quot;Age&quot;).Value)</span><br><span class="line">        &#125;;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">class Student</span><br><span class="line">&#123;</span><br><span class="line">    public int Id &#123; get; set; &#125;</span><br><span class="line">    public string Name &#123; get; set; &#125;</span><br><span class="line">    public int Age &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/LINQ.png" class="lazyload" data-srcset="/images/LINQ.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="LINQ"></p>
 <h3 id="校验">校验</h3>
 <p>“你永远不能相信来自前端的数据”</p>
 <p>我们认为Source的数据一定是正确的，但Target的数据是有可能出现问题的</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">public partial class MainWindow : Window
-&#123;
-    public MainWindow()
-    &#123;
-        InitializeComponent();
-
-        Binding binding &#x3D; new Binding(&quot;Value&quot;) &#123; Source &#x3D; this.slider1 &#125;;
-        binding.UpdateSourceTrigger &#x3D; UpdateSourceTrigger.PropertyChanged;    &#x2F;&#x2F;当源数据改变时进行校验
-        RangeValidationRule rvr &#x3D; new RangeValidationRule();
-        rvr.ValidatesOnTargetUpdated &#x3D; true;    &#x2F;&#x2F;当Target数据改变时进行校验
-        binding.ValidationRules.Add(rvr);
-        binding.NotifyOnValidationError &#x3D; true;
-        this.textBox1.SetBinding(TextBox.TextProperty, binding);
-        this.textBox1.AddHandler(Validation.ErrorEvent, new RoutedEventHandler(this.ValidationError));
-    &#125;
-
-    &#x2F;&#x2F;若校验失败，将失败信息添加到 ToolTip上
-    void ValidationError(object sender, RoutedEventArgs e)
-    &#123;
-        if(Validation.GetErrors(this.textBox1).Count &gt; 0)
-        &#123;
-            this.textBox1.ToolTip &#x3D; Validation.GetErrors(this.textBox1)[0].ErrorContent.ToString();
-        &#125;
-        else
-        &#123;
-            this.textBox1.ToolTip &#x3D; null;
-        &#125;
-    &#125;
-&#125;
-&lt;StackPanel x:Name&#x3D;&quot;stackPanel&quot; Background&#x3D;&quot;LightBlue&quot;&gt;
-    &lt;TextBox x:Name&#x3D;&quot;textBox1&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-    &lt;Slider x:Name&#x3D;&quot;slider1&quot; Minimum&#x3D;&quot;-10&quot; Maximum&#x3D;&quot;110&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-&lt;&#x2F;StackPanel&gt;
-class RangeValidationRule : ValidationRule
-&#123;
-    &#x2F;&#x2F;对数据范围进行校验，仅当在[0,100]时校验通过，校验失败时返回信息
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-    &#123;
-        double d &#x3D; 0;
-        if(double.TryParse(value.ToString(), out d))
-        &#123;
-            if(d &gt;&#x3D; 0 &amp;&amp; d &lt;&#x3D; 100)
-            &#123;
-                return new ValidationResult(true, null);
-            &#125;
-        &#125;
-        return new ValidationResult(false, &quot;Validation Failed!!!&quot;);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">MainWindow</span> : <span class="title">Window</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainWindow</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        InitializeComponent();</span><br><span class="line"></span><br><span class="line">        Binding binding = <span class="keyword">new</span> Binding(<span class="string">&quot;Value&quot;</span>) &#123; Source = <span class="keyword">this</span>.slider1 &#125;;</span><br><span class="line">        binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;    <span class="comment">//当源数据改变时进行校验</span></span><br><span class="line">        RangeValidationRule rvr = <span class="keyword">new</span> RangeValidationRule();</span><br><span class="line">        rvr.ValidatesOnTargetUpdated = <span class="literal">true</span>;    <span class="comment">//当Target数据改变时进行校验</span></span><br><span class="line">        binding.ValidationRules.Add(rvr);</span><br><span class="line">        binding.NotifyOnValidationError = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.textBox1.SetBinding(TextBox.TextProperty, binding);</span><br><span class="line">        <span class="keyword">this</span>.textBox1.AddHandler(Validation.ErrorEvent, <span class="keyword">new</span> RoutedEventHandler(<span class="keyword">this</span>.ValidationError));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//若校验失败，将失败信息添加到 ToolTip上</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ValidationError</span>(<span class="params"><span class="built_in">object</span> sender, RoutedEventArgs e</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(Validation.GetErrors(<span class="keyword">this</span>.textBox1).Count &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.textBox1.ToolTip = Validation.GetErrors(<span class="keyword">this</span>.textBox1)[<span class="number">0</span>].ErrorContent.ToString();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.textBox1.ToolTip = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;StackPanel x:Name=<span class="string">&quot;stackPanel&quot;</span> Background=<span class="string">&quot;LightBlue&quot;</span>&gt;</span><br><span class="line">    &lt;TextBox x:Name=<span class="string">&quot;textBox1&quot;</span> Margin=<span class="string">&quot;5&quot;</span>/&gt;</span><br><span class="line">    &lt;Slider x:Name=<span class="string">&quot;slider1&quot;</span> Minimum=<span class="string">&quot;-10&quot;</span> Maximum=<span class="string">&quot;110&quot;</span> Margin=<span class="string">&quot;5&quot;</span>/&gt;</span><br><span class="line">&lt;/StackPanel&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title">RangeValidationRule</span> : <span class="title">ValidationRule</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//对数据范围进行校验，仅当在[0,100]时校验通过，校验失败时返回信息</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> ValidationResult <span class="title">Validate</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, CultureInfo cultureInfo</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">double</span> d = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">double</span>.TryParse(<span class="keyword">value</span>.ToString(), <span class="keyword">out</span> d))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(d &gt;= <span class="number">0</span> &amp;&amp; d &lt;= <span class="number">100</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> ValidationResult(<span class="literal">true</span>, <span class="literal">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ValidationResult(<span class="literal">false</span>, <span class="string">&quot;Validation Failed!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/images/%E6%A0%A1%E9%AA%8C.png" class="lazyload" data-srcset="/images/%E6%A0%A1%E9%AA%8C.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="校验"></p>
 <h3 id="数据转换">数据转换</h3>
 <p>Slider的Value是double类型，TextBox的Text是string类型，但是Binding后数据往来自如，是因为数据转化机制</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">class ClassAToClassBConverter : IValueConverter
-&#123;
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    &#123;
-        ...
-    &#125;
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    &#123;
-        ...
-    &#125;
-&#125;
-&lt;Window x:Class&#x3D;&quot;BindingStudy.MainWindow&quot;
-        ...
-    &lt;Window.Resources&gt;
-        &lt;local:ClassAToClassBConverter x:Key&#x3D;&quot;atb&quot;&#x2F;&gt;
-    &lt;&#x2F;Window.Resources&gt;
-    &lt;StackPanel x:Name&#x3D;&quot;stackPanel&quot; Background&#x3D;&quot;LightBlue&quot;&gt;
-        ...
-        &lt;..&#x2F;..&#x2F;images Width&#x3D;&quot;20&quot; Height&#x3D;&quot;20&quot; Source&#x3D;&quot;&#123;Binding Path&#x3D;A, Converter&#x3D;&#123;StaticResource atb&#125;&#125;&quot;&#x2F;&gt;
-    &lt;&#x2F;StackPanel&gt;
-&lt;&#x2F;Window&gt;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">ClassAToClassBConverter</span> : <span class="title">IValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">Convert</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span> parameter, CultureInfo culture</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">ConvertBack</span>(<span class="params"><span class="built_in">object</span> <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span> parameter, CultureInfo culture</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;Window x:Class=<span class="string">&quot;BindingStudy.MainWindow&quot;</span></span><br><span class="line">        ...</span><br><span class="line">    &lt;Window.Resources&gt;</span><br><span class="line">        &lt;local:ClassAToClassBConverter x:Key=<span class="string">&quot;atb&quot;</span>/&gt;</span><br><span class="line">    &lt;/Window.Resources&gt;</span><br><span class="line">    &lt;StackPanel x:Name=<span class="string">&quot;stackPanel&quot;</span> Background=<span class="string">&quot;LightBlue&quot;</span>&gt;</span><br><span class="line">        ...</span><br><span class="line">        &lt;../../images Width=<span class="string">&quot;20&quot;</span> Height=<span class="string">&quot;20&quot;</span> Source=<span class="string">&quot;&#123;Binding Path=A, Converter=&#123;StaticResource atb&#125;&#125;&quot;</span>/&gt;</span><br><span class="line">    &lt;/StackPanel&gt;</span><br><span class="line">&lt;/Window&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="三、属性">三、属性</h2>
 <h3 id="英语中的属性">英语中的属性</h3>
 <p>Property是物体自带的属性</p>
@@ -2982,54 +2626,20 @@ class RangeValidationRule : ValidationRule
 <h3 id="C-中的属性">C#中的属性</h3>
 <p>将字段设为private，使用一对非private的方法来包装它，以实现<strong>高内聚</strong></p>
 <p>C#中提供语法糖，将Get和Set合并为了属性（Property），这种属性也被称为CLR（Common Language Runtime）属性</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">class Student
-&#123;
-    private string name;
-    public string Name &#123; get; set; &#125;
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Student</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>此外反编译后发现，属性的本质是两个函数，并不会增加字段数量（不额外占内存）</p>
 <h3 id="依赖属性">依赖属性</h3>
 <p>（WPF属性加强版）</p>
 <p>依赖属性（Dependency Property）可以自己没有值，通过Binding从数据源获得值</p>
 <p>拥有依赖属性的对象被称为依赖对象</p>
 <p>传统开发中，对象所占用的内存在进行实例化时就确定（分配）了，而依赖属性可以允许对象不分配部分空间</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#">class Student : DependencyObject
-&#123;
-    &#x2F;&#x2F;依赖对象的 CLR封装
-    public string Name
-    &#123;
-        get &#123; return (string)GetValue(NameProperty); &#125;
-        set &#123; SetValue(NameProperty, value); &#125;
-    &#125;
-    &#x2F;&#x2F;依赖对象
-    public static readonly DependencyProperty NameProperty &#x3D; DependencyProperty.Register(&quot;Name&quot;, typeof(string), typeof(Student));  
-    &#x2F;&#x2F;Binding封装
-    public BindingExpressionBase SetBinding(DependencyProperty dp, BindingBase binding)
-    &#123;
-        return BindingOperations.SetBinding(this, dp, binding);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Student</span> : <span class="title">DependencyObject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//依赖对象的 CLR封装</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Name</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> (<span class="built_in">string</span>)GetValue(NameProperty); &#125;</span><br><span class="line">        <span class="keyword">set</span> &#123; SetValue(NameProperty, <span class="keyword">value</span>); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//依赖对象</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">readonly</span> DependencyProperty NameProperty = DependencyProperty.Register(<span class="string">&quot;Name&quot;</span>, <span class="keyword">typeof</span>(<span class="built_in">string</span>), <span class="keyword">typeof</span>(Student));  </span><br><span class="line">    <span class="comment">//Binding封装</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BindingExpressionBase <span class="title">SetBinding</span>(<span class="params">DependencyProperty dp, BindingBase binding</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> BindingOperations.SetBinding(<span class="keyword">this</span>, dp, binding);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>“Name”：指明使用哪一个 CLR属性作为这个依赖属性的包装器 (Wrapper)</li>
 <li>typeof(string)：指明此依赖属性用来储存什么类型的值</li>
 <li>typeof(Student))：指明此依赖属性要注册关联到谁身上</li>
 </ul>
-<pre class="language-XML" data-language="XML"><code class="language-XML">&lt;StackPanel x:Name&#x3D;&quot;stackPanel&quot; Background&#x3D;&quot;LightBlue&quot;&gt;
-    &lt;TextBox x:Name&#x3D;&quot;textBox1&quot; BorderBrush&#x3D;&quot;Black&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-    &lt;TextBox x:Name&#x3D;&quot;textBox2&quot; BorderBrush&#x3D;&quot;Black&quot; Margin&#x3D;&quot;5&quot;&#x2F;&gt;
-&lt;&#x2F;StackPanel&gt;
-public partial class MainWindow : Window
-&#123;
-    Student stu;
-    public MainWindow()
-    &#123;
-        InitializeComponent();
-
-        stu &#x3D; new Student();
-        stu.SetBinding(Student.NameProperty, new Binding(&quot;Text&quot;) &#123; Source &#x3D; textBox1 &#125;);
-        textBox2.SetBinding(TextBox.TextProperty, new Binding(&quot;Name&quot;) &#123; Source &#x3D; stu &#125;);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">StackPanel</span> <span class="attr">x:Name</span>=<span class="string">&quot;stackPanel&quot;</span> <span class="attr">Background</span>=<span class="string">&quot;LightBlue&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextBox</span> <span class="attr">x:Name</span>=<span class="string">&quot;textBox1&quot;</span> <span class="attr">BorderBrush</span>=<span class="string">&quot;Black&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TextBox</span> <span class="attr">x:Name</span>=<span class="string">&quot;textBox2&quot;</span> <span class="attr">BorderBrush</span>=<span class="string">&quot;Black&quot;</span> <span class="attr">Margin</span>=<span class="string">&quot;5&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">StackPanel</span>&gt;</span></span><br><span class="line">public partial class MainWindow : Window</span><br><span class="line">&#123;</span><br><span class="line">    Student stu;</span><br><span class="line">    public MainWindow()</span><br><span class="line">    &#123;</span><br><span class="line">        InitializeComponent();</span><br><span class="line"></span><br><span class="line">        stu = new Student();</span><br><span class="line">        stu.SetBinding(Student.NameProperty, new Binding(&quot;Text&quot;) &#123; Source = textBox1 &#125;);</span><br><span class="line">        textBox2.SetBinding(TextBox.TextProperty, new Binding(&quot;Name&quot;) &#123; Source = stu &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们还发现，依赖对象并没有实现INotifyPropertyChanged接口，但是当期值发生改变时，与之相关的Binding对象依然可以得到通知，于是依赖对象是天生的合格源数据</p>
 <p>在VS中，输入propdp并按两次tab，就能得到一个依赖属性模板</p>
 <h4 id="依赖属性的注册">依赖属性的注册</h4>
@@ -3038,7 +2648,7 @@ public partial class MainWindow : Window
 <li>创建DependencyProperty实例，并使用其CLR属性名的哈希异或宿主类型的哈希，得到key（通过其他算法，保证唯一）</li>
 <li>将key和实例存储到一张全局的HashTable上</li>
 </ol>
-<pre class="language-C#" data-language="C#"><code class="language-C#">GlobalIndex &#x3D; CLR属性名的HaseCode XOR 宿主类型HashCode</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line">GlobalIndex = CLR属性名的HaseCode XOR 宿主类型HashCode</span><br></pre></td></tr></table></figure>
 <p>于是运行时只要知道CLR属性名和宿主，就能找到依赖对象实例</p>
 <h4 id="依赖属性的读写">依赖属性的读写</h4>
 <p>依赖属性对象的作用是检索真正的属性值，而非存储属性值</p>
@@ -3101,26 +2711,7 @@ public partial class MainWindow : Window
 </ul>
 </li>
 </ul>
-<pre class="language-C#" data-language="C#"><code class="language-C#">public abstract class ButtonBase : ContentControl, ICommandSource
-&#123;
-    &#x2F;&#x2F;声明并注册路由事件
-    public static readonly RoutedEvent ClickEvent &#x3D; EventManager.RegisterRoutedEvent(&quot;Click&quot;, 
-        RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ButtonBase));
-
-    &#x2F;&#x2F;为路由事件添加 CLR事件包装器
-    public event RoutedEventHandler Click
-    &#123;
-        add &#123; this.AddHandler(ClickEvent, value); &#125;
-        remove &#123; this.RemoveHandler(ClickEvent, value); &#125;
-    &#125;
-    
-    &#x2F;&#x2F;激活路由事件的方法
-    protected virtual void OnClick()
-    &#123;
-        RoutedEventArgs newEvent &#x3D; new RoutedEventArgs(ButtonBase.ClickEvent, this);
-        this.RaiseEvent(newEvent);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">ButtonBase</span> : <span class="title">ContentControl</span>, <span class="title">ICommandSource</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//声明并注册路由事件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">readonly</span> RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent(<span class="string">&quot;Click&quot;</span>, </span><br><span class="line">        RoutingStrategy.Bubble, <span class="keyword">typeof</span>(RoutedEventHandler), <span class="keyword">typeof</span>(ButtonBase));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//为路由事件添加 CLR事件包装器</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">event</span> RoutedEventHandler Click</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">add</span> &#123; <span class="keyword">this</span>.AddHandler(ClickEvent, <span class="keyword">value</span>); &#125;</span><br><span class="line">        <span class="keyword">remove</span> &#123; <span class="keyword">this</span>.RemoveHandler(ClickEvent, <span class="keyword">value</span>); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//激活路由事件的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">OnClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        RoutedEventArgs newEvent = <span class="keyword">new</span> RoutedEventArgs(ButtonBase.ClickEvent, <span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">this</span>.RaiseEvent(newEvent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>WPF路由事件有三种策略</p>
 <ul>
 <li>Bubble：冒泡式，激发者向其上级一层一层路由，直到到根，路径是确定且唯一</li>
@@ -3161,10 +2752,10 @@ public partial class MainWindow : Window
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3256,15 +2847,13 @@ public partial class MainWindow : Window
         </a>
       
       
-        <a class='next' href='/math/Pro-TBB/'>
-          <p class='title'>Pro-TBB<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Pro TBB
-在摩尔定律逐渐失效的今日，CPU主频和单核性能提升越来越不明显，为了得到跟高的性能，我们走向了并行计算的道路
-概念
-并发和并行
-
-
-并发（Concurrent）：happenin...</p>
+        <a class='next' href='/dcc/maya%E6%8F%92%E4%BB%B6/'>
+          <p class='title'>Maya插件开发<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Maya
+maya，老东西，行业标准，真难用（不是）
+腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建
+创建一个python工具
+Python插件和Unity Editor那种工具不太...</p>
         </a>
       
     </div>
@@ -3869,7 +3458,7 @@ public partial class MainWindow : Window
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/Csharpe/","name":"WPF中的C#"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"WPF中的C#","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/Csharpe/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/Csharpe/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.107Z","articleSection":"program","keywords":"C#,Windows","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/Csharpe/","name":"WPF中的C#"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"WPF中的C#","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/Csharpe/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/Csharpe/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.297Z","articleSection":"program","keywords":"C#,Windows","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

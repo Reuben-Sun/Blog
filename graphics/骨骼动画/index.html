@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-01T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.101Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.288Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="TA">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2622,16 +2622,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>本地坐标系就是object space transform</li>
 </ul>
 <p>在播放动画时，会从空间树的根节点（一般为盆骨节点或者root节点）开始向下递归变化，以保证父物体的local transform总是先于子物体刷新</p>
-<pre class="language-C#" data-language="C#"><code class="language-C#"> &#x2F;&#x2F;对关键帧进行插值 
-public OnAnimated(CoordinateTreeNode Key0, CoordinateTreeNode Key1, float t)
-&#123; 
-    Position &#x3D; Vector3.Lerp(Key0.Position, Key1.Position, t); 
-    Rotation &#x3D; Quaternion.Lerp(Key0.Rotation, Key2.Rotation, t); 
-    Scale &#x3D; Vector3.Lerp(Key0.Scale, Key1.Scale, t); 
-    
-    localTransform &#x3D; new TransformMatrix(Position, Rotation, Scale); 
-    combinedTransform &#x3D; parent.localTransform * this.localTransform; 
-&#125; </code></pre>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//对关键帧进行插值 </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">OnAnimated</span>(<span class="params">CoordinateTreeNode Key0, CoordinateTreeNode Key1, <span class="built_in">float</span> t</span>)</span></span><br><span class="line">&#123; </span><br><span class="line">    Position = Vector3.Lerp(Key0.Position, Key1.Position, t); </span><br><span class="line">    Rotation = Quaternion.Lerp(Key0.Rotation, Key2.Rotation, t); </span><br><span class="line">    Scale = Vector3.Lerp(Key0.Scale, Key1.Scale, t); </span><br><span class="line">    </span><br><span class="line">    localTransform = <span class="keyword">new</span> TransformMatrix(Position, Rotation, Scale); </span><br><span class="line">    combinedTransform = parent.localTransform * <span class="keyword">this</span>.localTransform; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <h3 id="骨骼">骨骼</h3>
 <ul>
 <li>盆骨：选盆骨作为根节点（或者是空根节点的第一也是唯一的子节点），是因为盆骨在运动时相对匀速，且位置居中，可以避免骨骼树过深</li>
@@ -2726,10 +2717,10 @@ public OnAnimated(CoordinateTreeNode Key0, CoordinateTreeNode Key1, float t)
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -2837,12 +2828,15 @@ Xcode
         </a>
       
       
-        <a class='next' href='/program/CMake%E5%85%A5%E9%97%A8/'>
-          <p class='title'>CMake入门<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>CMake
-快速入门
-一个大项目（Project）内嵌多个子项目（SubProject）
-一个子项目内有src、include、CMakeLists.txt，其中有一个子项目中有main.cpp...</p>
+        <a class='next' href='/math/Pro-TBB/'>
+          <p class='title'>Pro-TBB<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Pro TBB
+在摩尔定律逐渐失效的今日，CPU主频和单核性能提升越来越不明显，为了得到跟高的性能，我们走向了并行计算的道路
+概念
+并发和并行
+
+
+并发（Concurrent）：happenin...</p>
         </a>
       
     </div>
@@ -3447,7 +3441,7 @@ Xcode
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/骨骼动画/","name":"骨骼动画"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"骨骼动画","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.101Z","articleSection":"graphics","keywords":"TA","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/骨骼动画/","name":"骨骼动画"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"骨骼动画","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.288Z","articleSection":"graphics","keywords":"TA","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

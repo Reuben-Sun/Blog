@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -42,11 +42,11 @@
 <meta property="og:title" content="DX12龙书（一）">
 <meta property="og:url" content="https://reubensun.com/graphics/DX12%E7%AC%94%E8%AE%B01/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="DX12 环境搭建 Windows 10&#x2F;11系统 安装PIX 安装Visual Studio 2019 Windows应用程序 Windows应用程序使用事件驱动（详情可以去看WPF） Windows应用程序的入口点是WinMain函数 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow) &amp;#123;">
+<meta property="og:description" content="DX12 环境搭建 Windows 10&#x2F;11系统 安装PIX 安装Visual Studio 2019 Windows应用程序 Windows应用程序使用事件驱动（详情可以去看WPF） Windows应用程序的入口点是WinMain函数 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.097Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.282Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="DX12">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2550,11 +2550,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="Windows应用程序">Windows应用程序</h3>
 <p>Windows应用程序使用事件驱动（详情可以去看WPF）</p>
 <p>Windows应用程序的入口点是<code>WinMain</code>函数</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
-&#123;
-    LearnDX::D3D12HelloWindow sample(1280, 720, L&quot;D3D12 Hello Window&quot;);
-    return LearnDX::Win32Application::Run(&amp;sample, hInstance, nCmdShow);
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> WINAPI <span class="title">WinMain</span><span class="params">(HINSTANCE hInstance, HINSTANCE, LPSTR, <span class="type">int</span> nCmdShow)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">LearnDX::D3D12HelloWindow <span class="title">sample</span><span class="params">(<span class="number">1280</span>, <span class="number">720</span>, <span class="string">L&quot;D3D12 Hello Window&quot;</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> LearnDX::Win32Application::<span class="built_in">Run</span>(&amp;sample, hInstance, nCmdShow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>主程序会创建一个窗口，并进入消息循环，检索处理操作系统发来的消息，并对其进行相应</p>
 <table>
 <thead>
@@ -2637,25 +2633,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <img src="/images/DXGI.png" class="lazyload" data-srcset="/images/DXGI.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="DXGI" style="zoom:67%;" />
 <h3 id="依赖">依赖</h3>
 <p>VS添加DX12依赖</p>
-<pre class="language-none"><code class="language-none">打开VS--项目--属性--配置属性--链接器--输入--附加依赖项</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">打开VS--项目--属性--配置属性--链接器--输入--附加依赖项</span><br></pre></td></tr></table></figure>
 <p><img src="/images/%E6%B7%BB%E5%8A%A0DX%E4%BE%9D%E8%B5%96.png" class="lazyload" data-srcset="/images/%E6%B7%BB%E5%8A%A0DX%E4%BE%9D%E8%B5%96.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="image-20230112010632277"></p>
 <p>cmake添加依赖</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.20</span><span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>DXEngine<span class="token punctuation">)</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span>
-
-<span class="token keyword">file</span><span class="token punctuation">(</span>GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp src/*.h<span class="token punctuation">)</span>
-
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>DXEngine <span class="token variable">WIN32</span> <span class="token punctuation">$&#123;</span>srcs<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">target_include_directories</span><span class="token punctuation">(</span>DXEngine <span class="token namespace">PUBLIC</span> include<span class="token punctuation">)</span>
-<span class="token comment"># 比较重要的是d3d12.lib dxgi.lib</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>DXEngine <span class="token namespace">PRIVATE</span>
-        d3d12.lib dxgi.lib dxguid.lib uuid.lib
-        kernel32.lib user32.lib
-        comdlg32.lib advapi32.lib shell32.lib
-        ole32.lib oleaut32.lib
-        runtimeobject.lib
-        <span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(DXEngine)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">17</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">file</span>(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp src/*.h)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(DXEngine WIN32 <span class="variable">$&#123;srcs&#125;</span>)</span><br><span class="line"><span class="keyword">target_include_directories</span>(DXEngine PUBLIC <span class="keyword">include</span>)</span><br><span class="line"><span class="comment"># 比较重要的是d3d12.lib dxgi.lib</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(DXEngine PRIVATE</span><br><span class="line">        d3d12.lib dxgi.lib dxguid.lib uuid.lib</span><br><span class="line">        kernel32.lib user32.lib</span><br><span class="line">        comdlg32.lib advapi32.lib shell32.lib</span><br><span class="line">        ole32.lib oleaut32.lib</span><br><span class="line">        runtimeobject.lib</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
 <h3 id="批注">批注</h3>
 <p>VS提供了一套批注系统，SAL（Source code annotation language）</p>
 <h3 id="字符串">字符串</h3>
@@ -2664,8 +2645,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>为了支持两种API，于是推出了一种新的字符类型<strong>宽字符</strong>：<code>wchat_t</code>，微软将其重命名为<code>WCHAR</code></p>
 <p>宽字符在使用时要在前面加<code>L</code>，比如<code>L'a'</code></p>
 <p>微软又将字符串进行重命名，提出了窄字符串STR和宽字符串WSTR，并给出了他们的指针<code>LPSTR</code>和<code>LPWSTR</code></p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">LPSTR &#x3D; const char*
-LPWSTR &#x3D; const wchar_t*</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">LPSTR = <span class="type">const</span> <span class="type">char</span>*</span><br><span class="line">LPWSTR = <span class="type">const</span> <span class="type">wchar_t</span>*</span><br></pre></td></tr></table></figure>
 <p>如果你用VS开发，可以设置整个项目使用<code>UNICODE</code>，但我不建议这样做</p>
 <p>强烈推荐当你要使用字符串函数时，明确使用后缀是<code>A</code>还是<code>W</code>，并且要注意你<code>WindowProc</code>的类型（是使用<code>DefWindowProcW</code>还是<code>DefWindowProcA</code>）</p>
 <h3 id="d3dx12-h">d3dx12.h</h3>
@@ -2821,7 +2801,7 @@ $$</p>
 <p>DX12使用<code>ResourceBarrier</code>管理资源状态</p>
 <h4 id="根签名">根签名</h4>
 <p>在HLSL中，我们可以声明一个变量</p>
-<pre class="language-hlsl" data-language="hlsl"><code class="language-hlsl"><span class="token class-name">Texture2D</span> g_texture <span class="token operator">:</span> <span class="token keyword">register</span><span class="token punctuation">(</span>t0<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Texture2D g_texture : register(t0);</span><br></pre></td></tr></table></figure>
 <p>该变量的类型是SRV，绑定到<code>t</code>的第0槽</p>
 <ul>
 <li><code>t</code>：SRV</li>
@@ -2863,10 +2843,10 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -2949,17 +2929,20 @@ $$</p>
   
     <div class="prev-next">
       
-        <a class='prev' href='/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>大象无形UE笔记</p>
-          <p class='content'>UE学习笔记
-基类
-UObject
-一切对象的基类。UE为UObject类提供了
+        <a class='prev' href='/engine/GC/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>垃圾回收</p>
+          <p class='content'>垃圾回收
+前言
+《垃圾回收的算法与实现》读书笔记，其中的代码大多为伪代码
+一：概念
+GC，Garbage Collection，垃圾回收
+功能
 
-垃圾回收GC
+找到内存中的垃圾
+回收垃圾
 
-被UProperty标记的变量会自动进行生命周期管理
-非UObject可以使用C++标准推荐的...</p>
+为什么需要GC
+如...</p>
         </a>
       
       
@@ -3573,7 +3556,7 @@ UObject
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/DX12笔记1/","name":"DX12龙书（一）"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"DX12龙书（一）","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/DX12%E7%AC%94%E8%AE%B01/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/DX12%E7%AC%94%E8%AE%B01/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.097Z","articleSection":"graphics","keywords":"DX12","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/DX12笔记1/","name":"DX12龙书（一）"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"DX12龙书（一）","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/DX12%E7%AC%94%E8%AE%B01/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/DX12%E7%AC%94%E8%AE%B01/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.282Z","articleSection":"graphics","keywords":"DX12","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

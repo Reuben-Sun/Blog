@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2494,17 +2494,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         无状态方法
 线程安全
 同事经常跟我强调线程安全的重要性，比如下面这段代码，id是一个静态成员变量，被所有Student类的对象共享，在多线程环境下可能会造成不确定行为
-class Student
-&#123;
-private: 
-	static int id = 0;
-public:	
-	int getId()
-	&#123;
-		return id;
-	&#125;
-&#125;
-int ...
+class Student&#123;private: 	static int id = 0;public:		int getId()	&#123;		return id;	&#125;&#125;int Student::i...
       
     
   </div>
@@ -3153,8 +3143,7 @@ public class SphereMovement :...
 在C++标准库中使用了大量模版
 函数模版
 模版定义
-template&lt;typename T>
-T g...
+template&lt;typename T&gt;T...
       
     
   </div>

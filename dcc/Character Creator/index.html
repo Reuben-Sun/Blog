@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-04-14T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.092Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.275Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2577,119 +2577,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </blockquote>
 <h3 id="创建带有按钮的窗口">创建带有按钮的窗口</h3>
 <p>加载脚本后会出现一个对话框，对话框中有一个Label和一个按钮，当按按钮时可以输出”Hello World“</p>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> RLPy
-<span class="token keyword">from</span> shiboken2 <span class="token keyword">import</span> wrapInstance
-<span class="token keyword">from</span> PySide2 <span class="token keyword">import</span> QtWidgets
-
-<span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Hello world"</span><span class="token punctuation">)</span>
-
-<span class="token comment"># 类似于main函数，是脚本的入口，加载脚本时自动执行该函数</span>
-<span class="token keyword">def</span> <span class="token function">run_script</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># 创建一个对话框</span>
-    rl_dialog <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RUi<span class="token punctuation">.</span>CreateRDialog<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token comment"># 设置对话框名称</span>
-    rl_dialog<span class="token punctuation">.</span>SetWindowTitle<span class="token punctuation">(</span><span class="token string">"Main Dialog"</span><span class="token punctuation">)</span>
-
-    pyside_dialog <span class="token operator">=</span> wrapInstance<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>rl_dialog<span class="token punctuation">.</span>GetWindow<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> QtWidgets<span class="token punctuation">.</span>QDialog<span class="token punctuation">)</span>
-    <span class="token comment"># 设置对话框宽度</span>
-    pyside_dialog<span class="token punctuation">.</span>setFixedWidth<span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>
-    sample_layout <span class="token operator">=</span> pyside_dialog<span class="token punctuation">.</span>layout<span class="token punctuation">(</span><span class="token punctuation">)</span>
-		<span class="token comment"># 一个Label</span>
-    label_hello <span class="token operator">=</span> QtWidgets<span class="token punctuation">.</span>QLabel<span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span>
-		<span class="token comment"># 一个Button</span>
-    button_run <span class="token operator">=</span> QtWidgets<span class="token punctuation">.</span>QPushButton<span class="token punctuation">(</span><span class="token string">"run"</span><span class="token punctuation">)</span>
-    <span class="token comment"># Button绑定事件函数 run</span>
-    button_run<span class="token punctuation">.</span>clicked<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>run<span class="token punctuation">)</span>
-		
-    sample_layout<span class="token punctuation">.</span>addWidget<span class="token punctuation">(</span>label_hello<span class="token punctuation">)</span>
-    sample_layout<span class="token punctuation">.</span>addWidget<span class="token punctuation">(</span>button_run<span class="token punctuation">)</span>
-
-    rl_dialog<span class="token punctuation">.</span>Show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> RLPy</span><br><span class="line"><span class="keyword">from</span> shiboken2 <span class="keyword">import</span> wrapInstance</span><br><span class="line"><span class="keyword">from</span> PySide2 <span class="keyword">import</span> QtWidgets</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>():</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;Hello world&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 类似于main函数，是脚本的入口，加载脚本时自动执行该函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_script</span>():</span><br><span class="line">    <span class="comment"># 创建一个对话框</span></span><br><span class="line">    rl_dialog = RLPy.RUi.CreateRDialog()</span><br><span class="line">    <span class="comment"># 设置对话框名称</span></span><br><span class="line">    rl_dialog.SetWindowTitle(<span class="string">&quot;Main Dialog&quot;</span>)</span><br><span class="line"></span><br><span class="line">    pyside_dialog = wrapInstance(<span class="built_in">int</span>(rl_dialog.GetWindow()), QtWidgets.QDialog)</span><br><span class="line">    <span class="comment"># 设置对话框宽度</span></span><br><span class="line">    pyside_dialog.setFixedWidth(<span class="number">200</span>)</span><br><span class="line">    sample_layout = pyside_dialog.layout()</span><br><span class="line">		<span class="comment"># 一个Label</span></span><br><span class="line">    label_hello = QtWidgets.QLabel(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">		<span class="comment"># 一个Button</span></span><br><span class="line">    button_run = QtWidgets.QPushButton(<span class="string">&quot;run&quot;</span>)</span><br><span class="line">    <span class="comment"># Button绑定事件函数 run</span></span><br><span class="line">    button_run.clicked.connect(run)</span><br><span class="line">		</span><br><span class="line">    sample_layout.addWidget(label_hello)</span><br><span class="line">    sample_layout.addWidget(button_run)</span><br><span class="line"></span><br><span class="line">    rl_dialog.Show()</span><br></pre></td></tr></table></figure>
 <p><img src="/images/cc_dialog.jpg" class="lazyload" data-srcset="/images/cc_dialog.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="cc_dialog"></p>
 <h3 id="定时任务">定时任务</h3>
 <p>定时任务十分重要，通过开启计时，就会定时执行<code>Timeout()</code>内到操作</p>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment"># 计时器回调</span>
-<span class="token keyword">class</span> <span class="token class-name">TimerCallback</span><span class="token punctuation">(</span>RLPy<span class="token punctuation">.</span>RPyTimerCallback<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        RLPy<span class="token punctuation">.</span>RPyTimerCallback<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>self<span class="token punctuation">)</span>
-        
-    <span class="token keyword">def</span> <span class="token function">Timeout</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-      	<span class="token comment"># 类似于Update</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Timeout"</span><span class="token punctuation">)</span>
-
-<span class="token comment"># timer，计时器应当放在全局</span>
-timer <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RPyTimer<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment"># 设置间隔为 1000 ms</span>
-timer<span class="token punctuation">.</span>SetInterval<span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span> 
-<span class="token comment"># 定时器设为可以重复触发</span>
-timer<span class="token punctuation">.</span>SetSingleShot<span class="token punctuation">(</span><span class="token boolean">False</span><span class="token punctuation">)</span>
-<span class="token comment"># 注册事件</span>
-timer_callback <span class="token operator">=</span> TimerCallback<span class="token punctuation">(</span><span class="token punctuation">)</span>
-timer<span class="token punctuation">.</span>RegisterPyTimerCallback<span class="token punctuation">(</span>timer_callback<span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">apply</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># 开始计时</span>
-    timer<span class="token punctuation">.</span>Start<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># 暂停计时</span>
-    timer<span class="token punctuation">.</span>Stop<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    
-<span class="token keyword">def</span> <span class="token function">run_script</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># menu</span>
-    rl_dialog <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RUi<span class="token punctuation">.</span>CreateRDialog<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    rl_dialog<span class="token punctuation">.</span>SetWindowTitle<span class="token punctuation">(</span><span class="token string">"main_dialog"</span><span class="token punctuation">)</span>
-
-    pyside_dialog <span class="token operator">=</span> wrapInstance<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>rl_dialog<span class="token punctuation">.</span>GetWindow<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> QtWidgets<span class="token punctuation">.</span>QDialog<span class="token punctuation">)</span>
-    pyside_dialog<span class="token punctuation">.</span>setFixedWidth<span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>
-    sample_layout <span class="token operator">=</span> pyside_dialog<span class="token punctuation">.</span>layout<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    button_apply <span class="token operator">=</span> QtWidgets<span class="token punctuation">.</span>QPushButton<span class="token punctuation">(</span><span class="token string">"Apply"</span><span class="token punctuation">)</span>
-    button_apply<span class="token punctuation">.</span>clicked<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token builtin">apply</span><span class="token punctuation">)</span>
-    button_cancel <span class="token operator">=</span> QtWidgets<span class="token punctuation">.</span>QPushButton<span class="token punctuation">(</span><span class="token string">"Cancel"</span><span class="token punctuation">)</span>
-    button_cancel<span class="token punctuation">.</span>clicked<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>cancel<span class="token punctuation">)</span>
-
-    sample_layout<span class="token punctuation">.</span>addWidget<span class="token punctuation">(</span>button_apply<span class="token punctuation">)</span>
-    sample_layout<span class="token punctuation">.</span>addWidget<span class="token punctuation">(</span>button_cancel<span class="token punctuation">)</span>
-
-    rl_dialog<span class="token punctuation">.</span>Show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计时器回调</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TimerCallback</span>(RLPy.RPyTimerCallback):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        RLPy.RPyTimerCallback.__init__(self)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">Timeout</span>(<span class="params">self</span>):</span><br><span class="line">      	<span class="comment"># 类似于Update</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Timeout&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># timer，计时器应当放在全局</span></span><br><span class="line">timer = RLPy.RPyTimer()</span><br><span class="line"><span class="comment"># 设置间隔为 1000 ms</span></span><br><span class="line">timer.SetInterval(<span class="number">1000</span>) </span><br><span class="line"><span class="comment"># 定时器设为可以重复触发</span></span><br><span class="line">timer.SetSingleShot(<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># 注册事件</span></span><br><span class="line">timer_callback = TimerCallback()</span><br><span class="line">timer.RegisterPyTimerCallback(timer_callback)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">apply</span>():</span><br><span class="line">    <span class="comment"># 开始计时</span></span><br><span class="line">    timer.Start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cancel</span>():</span><br><span class="line">    <span class="comment"># 暂停计时</span></span><br><span class="line">    timer.Stop()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_script</span>():</span><br><span class="line">    <span class="comment"># menu</span></span><br><span class="line">    rl_dialog = RLPy.RUi.CreateRDialog()</span><br><span class="line">    rl_dialog.SetWindowTitle(<span class="string">&quot;main_dialog&quot;</span>)</span><br><span class="line"></span><br><span class="line">    pyside_dialog = wrapInstance(<span class="built_in">int</span>(rl_dialog.GetWindow()), QtWidgets.QDialog)</span><br><span class="line">    pyside_dialog.setFixedWidth(<span class="number">200</span>)</span><br><span class="line">    sample_layout = pyside_dialog.layout()</span><br><span class="line"></span><br><span class="line">    button_apply = QtWidgets.QPushButton(<span class="string">&quot;Apply&quot;</span>)</span><br><span class="line">    button_apply.clicked.connect(apply)</span><br><span class="line">    button_cancel = QtWidgets.QPushButton(<span class="string">&quot;Cancel&quot;</span>)</span><br><span class="line">    button_cancel.clicked.connect(cancel)</span><br><span class="line"></span><br><span class="line">    sample_layout.addWidget(button_apply)</span><br><span class="line">    sample_layout.addWidget(button_cancel)</span><br><span class="line"></span><br><span class="line">    rl_dialog.Show()</span><br></pre></td></tr></table></figure>
 <h3 id="导出当前模型">导出当前模型</h3>
 <blockquote>
 <p>官网甚至还在用iClone7的老东西误导你，太可恶了！</p>
 </blockquote>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">export</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-  	<span class="token comment"># 获取当前场景所有的人物模型（一般只有一个）</span>
-    all_avatars <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RScene<span class="token punctuation">.</span>GetAvatars<span class="token punctuation">(</span>RLPy<span class="token punctuation">.</span>EAvatarType_All<span class="token punctuation">)</span>
-    avatar_name <span class="token operator">=</span> <span class="token boolean">None</span>
-    <span class="token keyword">for</span> _iter_avatar <span class="token keyword">in</span> all_avatars<span class="token punctuation">:</span>
-        avatar_name <span class="token operator">=</span> _iter_avatar<span class="token punctuation">.</span>GetName<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    avatar <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RScene<span class="token punctuation">.</span>FindObject<span class="token punctuation">(</span>RLPy<span class="token punctuation">.</span>EObjectType_Avatar<span class="token punctuation">,</span> avatar_name<span class="token punctuation">)</span>
-    <span class="token comment"># 导出选项</span>
-    export_option <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>EExportFbxOptions__None
-    export_option2 <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>EExportFbxOptions2__None
-    export_option3 <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>EExportFbxOptions3__None
-    export_option <span class="token operator">=</span> export_option <span class="token operator">|</span> RLPy<span class="token punctuation">.</span>EExportFbxOptions_AutoSkinRigidMesh
-    export_option2 <span class="token operator">=</span> export_option2 <span class="token operator">|</span> RLPy<span class="token punctuation">.</span>EExportFbxOptions2_ResetBoneScale
-    original_size <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>EExportTextureSize_Original
-    default_format <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>EExportTextureFormat_Default 
-		
-    setting <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RExportFbxSetting<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    setting<span class="token punctuation">.</span>SetOption<span class="token punctuation">(</span>export_option<span class="token punctuation">)</span>
-    setting<span class="token punctuation">.</span>SetOption2<span class="token punctuation">(</span>export_option2<span class="token punctuation">)</span>
-    setting<span class="token punctuation">.</span>SetOption3<span class="token punctuation">(</span>export_option3<span class="token punctuation">)</span>
-    setting<span class="token punctuation">.</span>SetTextureSize<span class="token punctuation">(</span>original_size<span class="token punctuation">)</span>
-    setting<span class="token punctuation">.</span>SetTextureFormat<span class="token punctuation">(</span>default_format<span class="token punctuation">)</span>
-    setting<span class="token punctuation">.</span>EnableExportMotion<span class="token punctuation">(</span><span class="token boolean">True</span><span class="token punctuation">)</span>	<span class="token comment"># 开启动画导出，启动后默认导出当前Pose</span>
-		setting<span class="token punctuation">.</span>SetExportMotionFps<span class="token punctuation">(</span>RLRy<span class="token punctuation">.</span>RFps<span class="token punctuation">(</span><span class="token number">60</span><span class="token punctuation">)</span><span class="token punctuation">)</span>		<span class="token comment"># 设置导出动画的帧率，会影响动画数据的精度</span>
-    
-    <span class="token comment"># 导出文件</span>
-    result <span class="token operator">=</span> RLPy<span class="token punctuation">.</span>RFileIO<span class="token punctuation">.</span>ExportFbxFile<span class="token punctuation">(</span>avatar<span class="token punctuation">,</span> <span class="token string-interpolation"><span class="token string">f"D://Art/man/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>file_name<span class="token punctuation">&#125;</span></span><span class="token string">.fbx"</span></span><span class="token punctuation">,</span> setting<span class="token punctuation">)</span>
-
-    <span class="token keyword">if</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Success export fbx"</span><span class="token punctuation">)</span>
-    <span class="token keyword">else</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Export error"</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">export</span>():</span><br><span class="line">  	<span class="comment"># 获取当前场景所有的人物模型（一般只有一个）</span></span><br><span class="line">    all_avatars = RLPy.RScene.GetAvatars(RLPy.EAvatarType_All)</span><br><span class="line">    avatar_name = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> _iter_avatar <span class="keyword">in</span> all_avatars:</span><br><span class="line">        avatar_name = _iter_avatar.GetName()</span><br><span class="line">    avatar = RLPy.RScene.FindObject(RLPy.EObjectType_Avatar, avatar_name)</span><br><span class="line">    <span class="comment"># 导出选项</span></span><br><span class="line">    export_option = RLPy.EExportFbxOptions__None</span><br><span class="line">    export_option2 = RLPy.EExportFbxOptions2__None</span><br><span class="line">    export_option3 = RLPy.EExportFbxOptions3__None</span><br><span class="line">    export_option = export_option | RLPy.EExportFbxOptions_AutoSkinRigidMesh</span><br><span class="line">    export_option2 = export_option2 | RLPy.EExportFbxOptions2_ResetBoneScale</span><br><span class="line">    original_size = RLPy.EExportTextureSize_Original</span><br><span class="line">    default_format = RLPy.EExportTextureFormat_Default </span><br><span class="line">		</span><br><span class="line">    setting = RLPy.RExportFbxSetting()</span><br><span class="line">    setting.SetOption(export_option)</span><br><span class="line">    setting.SetOption2(export_option2)</span><br><span class="line">    setting.SetOption3(export_option3)</span><br><span class="line">    setting.SetTextureSize(original_size)</span><br><span class="line">    setting.SetTextureFormat(default_format)</span><br><span class="line">    setting.EnableExportMotion(<span class="literal">True</span>)	<span class="comment"># 开启动画导出，启动后默认导出当前Pose</span></span><br><span class="line">		setting.SetExportMotionFps(RLRy.RFps(<span class="number">60</span>))		<span class="comment"># 设置导出动画的帧率，会影响动画数据的精度</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 导出文件</span></span><br><span class="line">    result = RLPy.RFileIO.ExportFbxFile(avatar, <span class="string">f&quot;D://Art/man/<span class="subst">&#123;file_name&#125;</span>.fbx&quot;</span>, setting)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(result):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Success export fbx&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Export error&quot;</span>)</span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2714,10 +2611,10 @@ timer<span class="token punctuation">.</span>RegisterPyTimerCallback<span class=
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3417,7 +3314,7 @@ timer<span class="token punctuation">.</span>RegisterPyTimerCallback<span class=
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/Character Creator/","name":"Character Creator 插件开发"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Character Creator 插件开发","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/Character%20Creator/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/Character%20Creator/","wordCount":0,"datePublished":"2023-04-14T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.092Z","articleSection":"dcc","keywords":"Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/Character Creator/","name":"Character Creator 插件开发"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Character Creator 插件开发","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/Character%20Creator/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/Character%20Creator/","wordCount":0,"datePublished":"2023-04-14T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.275Z","articleSection":"dcc","keywords":"Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

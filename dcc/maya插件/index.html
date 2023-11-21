@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -42,11 +42,11 @@
 <meta property="og:title" content="Maya插件开发">
 <meta property="og:url" content="https://reubensun.com/dcc/maya%E6%8F%92%E4%BB%B6/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Maya maya，老东西，行业标准，真难用（不是） 腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建 创建一个python工具 Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件 创建一个python文件 import maya.cmds as cmds">
+<meta property="og:description" content="Maya maya，老东西，行业标准，真难用（不是） 腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建 创建一个python工具 Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件 创建一个python文件 import maya.cmds as cmdsde">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.093Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.276Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2548,21 +2548,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="创建一个python工具">创建一个python工具</h3>
 <p>Python插件和Unity Editor那种工具不太一样，这个其实本质就是一个嵌入式的脚本，通过命令调用maya指令，就算有UI也是现绘制的，也不需要什么项目结构，就一个py文件</p>
 <h4 id="创建一个python文件">创建一个python文件</h4>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> maya<span class="token punctuation">.</span>cmds <span class="token keyword">as</span> cmds
-
-
-<span class="token keyword">def</span> <span class="token function">createWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">if</span> cmds<span class="token punctuation">.</span>window<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">,</span> exists<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        cmds<span class="token punctuation">.</span>deleteUI<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">)</span>
-    windowvar <span class="token operator">=</span> cmds<span class="token punctuation">.</span>window<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">)</span>
-    cmds<span class="token punctuation">.</span>columnLayout<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    checkButton <span class="token operator">=</span> cmds<span class="token punctuation">.</span>button<span class="token punctuation">(</span>l<span class="token operator">=</span><span class="token string">'Test'</span><span class="token punctuation">,</span> command<span class="token operator">=</span><span class="token string">'testFunc()'</span><span class="token punctuation">)</span>
-    cmds<span class="token punctuation">.</span>showWindow<span class="token punctuation">(</span><span class="token string">'mywindow'</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">testFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span> <span class="token string">"Hello"</span>
-
-createWindow<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> maya.cmds <span class="keyword">as</span> cmds</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createWindow</span>():</span><br><span class="line">    <span class="keyword">if</span> cmds.window(<span class="string">&#x27;mywindow&#x27;</span>, exists=<span class="literal">True</span>):</span><br><span class="line">        cmds.deleteUI(<span class="string">&#x27;mywindow&#x27;</span>)</span><br><span class="line">    windowvar = cmds.window(<span class="string">&#x27;mywindow&#x27;</span>)</span><br><span class="line">    cmds.columnLayout()</span><br><span class="line">    checkButton = cmds.button(l=<span class="string">&#x27;Test&#x27;</span>, command=<span class="string">&#x27;testFunc()&#x27;</span>)</span><br><span class="line">    cmds.showWindow(<span class="string">&#x27;mywindow&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testFunc</span>():</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;Hello&quot;</span></span><br><span class="line"></span><br><span class="line">createWindow()</span><br></pre></td></tr></table></figure>
 <h4 id="添加到工具栏">添加到工具栏</h4>
 <p>当你的代码完成后，可以将其固定到工具架上</p>
 <p><img src="/images/maya%E4%BF%9D%E5%AD%98%E5%B7%A5%E5%85%B7%E6%A0%8F.png" class="lazyload" data-srcset="/images/maya%E4%BF%9D%E5%AD%98%E5%B7%A5%E5%85%B7%E6%A0%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="maya保存工具栏"></p>
@@ -2572,8 +2558,7 @@ createWindow<span class="token punctuation">(</span><span class="token punctuati
 <p>如果你的脚本编辑器没有显示，那么在脚本编辑器中设置<strong>显示二者</strong></p>
 <p><img src="/images/%E6%98%BE%E7%A4%BA%E4%BA%8C%E8%80%85.png" class="lazyload" data-srcset="/images/%E6%98%BE%E7%A4%BA%E4%BA%8C%E8%80%85.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="显示二者"></p>
 <h3 id="常用API">常用API</h3>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> maya<span class="token punctuation">.</span>cmds <span class="token keyword">as</span> cmds	<span class="token comment">#这是一个将MEL指令用python封装的库，适合面向过程编程</span>
-<span class="token keyword">import</span> maya<span class="token punctuation">.</span>OpenMaya <span class="token keyword">as</span> om	<span class="token comment">#拥有cmd没有的功能，运行效率更高</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> maya.cmds <span class="keyword">as</span> cmds	<span class="comment">#这是一个将MEL指令用python封装的库，适合面向过程编程</span></span><br><span class="line"><span class="keyword">import</span> maya.OpenMaya <span class="keyword">as</span> om	<span class="comment">#拥有cmd没有的功能，运行效率更高</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p>删除：<code>cmds.delete(p)</code></p>
@@ -2620,53 +2605,18 @@ createWindow<span class="token punctuation">(</span><span class="token punctuati
 <ul>
 <li>得到顶点数据</li>
 </ul>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">printVertexPos</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    selectObjectList <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span>selection<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    VertexArray <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span><span class="token string">'&#123;&#125;.vtx[:]'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>selectObjectList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fl <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> v <span class="token keyword">in</span> VertexArray<span class="token punctuation">:</span>
-        <span class="token keyword">print</span> cmds<span class="token punctuation">.</span>xform<span class="token punctuation">(</span>v<span class="token punctuation">,</span> query <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">,</span> translation <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">,</span> worldSpace <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">printVertexPos</span>():</span><br><span class="line">    selectObjectList = cmds.ls(selection=<span class="literal">True</span>)</span><br><span class="line">    VertexArray = cmds.ls(<span class="string">&#x27;&#123;&#125;.vtx[:]&#x27;</span>.<span class="built_in">format</span>(selectObjectList[<span class="number">0</span>]), fl = <span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> VertexArray:</span><br><span class="line">        <span class="built_in">print</span> cmds.xform(v, query = <span class="literal">True</span>, translation = <span class="literal">True</span>, worldSpace = <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="工具实例">工具实例</h3>
 <h4 id="平滑法线">平滑法线</h4>
 <p><a target="_blank" rel="noopener" href="https://github.com/Reuben-Sun/Note-of-Graphics/blob/main/Code/MayaPython/SmoothNormal.py">平滑法线</a></p>
 <h4 id="模型展2UV">模型展2UV</h4>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment">#创建一个名称为sph的多边形</span>
-<span class="token keyword">def</span> <span class="token function">createFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-   cmds<span class="token punctuation">.</span>polySphere<span class="token punctuation">(</span>n<span class="token operator">=</span><span class="token string">'sph'</span><span class="token punctuation">)</span>
-
-<span class="token comment">#删除除了map1以外所有的uvmap</span>
-<span class="token keyword">def</span> <span class="token function">deleteUVs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    au <span class="token operator">=</span> cmds<span class="token punctuation">.</span>polyUVSet<span class="token punctuation">(</span>query<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> allUVSets<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>au<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        cmds<span class="token punctuation">.</span>polyUVSet<span class="token punctuation">(</span>delete<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> uvSet<span class="token operator">=</span>au<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-<span class="token comment">#自动展选中物体的2UV，并命名为map2</span>
-<span class="token keyword">def</span> <span class="token function">pickUV2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token builtin">list</span> <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span>dag<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> selection<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    au <span class="token operator">=</span> cmds<span class="token punctuation">.</span>polyUVSet<span class="token punctuation">(</span>query<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> allUVSets<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>au<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        cmds<span class="token punctuation">.</span>polyAutoProjection<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">'.f[*]'</span><span class="token punctuation">,</span> cm <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> uvs<span class="token operator">=</span> <span class="token string">'map2'</span><span class="token punctuation">)</span>
-    <span class="token keyword">else</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span> <span class="token string">"map2 has been exited"</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#创建一个名称为sph的多边形</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createFunc</span>():</span><br><span class="line">   cmds.polySphere(n=<span class="string">&#x27;sph&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除除了map1以外所有的uvmap</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">deleteUVs</span>():</span><br><span class="line">    au = cmds.polyUVSet(query=<span class="literal">True</span>, allUVSets=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(au)-<span class="number">1</span>):</span><br><span class="line">        cmds.polyUVSet(delete=<span class="literal">True</span>, uvSet=au[j+<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动展选中物体的2UV，并命名为map2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pickUV2</span>():</span><br><span class="line">    <span class="built_in">list</span> = cmds.ls(dag=<span class="number">1</span>, selection=<span class="literal">True</span>)</span><br><span class="line">    au = cmds.polyUVSet(query=<span class="literal">True</span>, allUVSets=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">len</span>(au) == <span class="number">1</span>):</span><br><span class="line">        cmds.polyAutoProjection(<span class="built_in">list</span>[<span class="number">1</span>] + <span class="string">&#x27;.f[*]&#x27;</span>, cm = <span class="number">1</span>, uvs= <span class="string">&#x27;map2&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;map2 has been exited&quot;</span></span><br></pre></td></tr></table></figure>
 <h4 id="动画clip">动画clip</h4>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token comment">#输出选中的动画片段的开始帧和结束帧</span>
-<span class="token keyword">def</span> <span class="token function">printClip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-	<span class="token builtin">list</span> <span class="token operator">=</span> cmds<span class="token punctuation">.</span>ls<span class="token punctuation">(</span>selection<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> p <span class="token keyword">in</span> <span class="token builtin">list</span><span class="token punctuation">:</span>
-        start <span class="token operator">=</span> cmds<span class="token punctuation">.</span>getAttr<span class="token punctuation">(</span><span class="token string">'%s.clipStart '</span> <span class="token operator">%</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        end <span class="token operator">=</span> cmds<span class="token punctuation">.</span>getAttr<span class="token punctuation">(</span><span class="token string">'%s.clipStart '</span> <span class="token operator">%</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> cmds<span class="token punctuation">.</span>getAttr<span class="token punctuation">(</span><span class="token string">'%s.clipDuration '</span> <span class="token operator">%</span> <span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">print</span> start
-        <span class="token keyword">print</span> end</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#输出选中的动画片段的开始帧和结束帧</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">printClip</span>():</span><br><span class="line">	<span class="built_in">list</span> = cmds.ls(selection=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> <span class="built_in">list</span>:</span><br><span class="line">        start = cmds.getAttr(<span class="string">&#x27;%s.clipStart &#x27;</span> % (p))</span><br><span class="line">        end = cmds.getAttr(<span class="string">&#x27;%s.clipStart &#x27;</span> % (p)) + cmds.getAttr(<span class="string">&#x27;%s.clipDuration &#x27;</span> % (p))</span><br><span class="line">        <span class="built_in">print</span> start</span><br><span class="line">        <span class="built_in">print</span> end</span><br></pre></td></tr></table></figure>
 <h4 id="打开文件">打开文件</h4>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">openFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-   path <span class="token operator">=</span> <span class="token string">'C:/Users/Admin/Desktop/多边形.fbx'</span>
-   cmds<span class="token punctuation">.</span><span class="token builtin">file</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> i<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">openFile</span>():</span><br><span class="line">   path = <span class="string">&#x27;C:/Users/Admin/Desktop/多边形.fbx&#x27;</span></span><br><span class="line">   cmds.file(path, i=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 <h4 id="开关UV编辑器">开关UV编辑器</h4>
-<pre class="language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">openUVPanel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-   <span class="token keyword">if</span> cmds<span class="token punctuation">.</span>window<span class="token punctuation">(</span><span class="token string">'polyTexturePlacementPanel1Window'</span><span class="token punctuation">,</span> ex<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        cmds<span class="token punctuation">.</span>deleteUI<span class="token punctuation">(</span><span class="token string">'polyTexturePlacementPanel1Window'</span><span class="token punctuation">)</span>
-        mel<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">'toggleUVToolkit;'</span><span class="token punctuation">)</span>
-   <span class="token keyword">else</span><span class="token punctuation">:</span>
-        mel<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">'texturePanelShow;'</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">openUVPanel</span>():</span><br><span class="line">   <span class="keyword">if</span> cmds.window(<span class="string">&#x27;polyTexturePlacementPanel1Window&#x27;</span>, ex=<span class="number">1</span>):</span><br><span class="line">        cmds.deleteUI(<span class="string">&#x27;polyTexturePlacementPanel1Window&#x27;</span>)</span><br><span class="line">        mel.<span class="built_in">eval</span>(<span class="string">&#x27;toggleUVToolkit;&#x27;</span>)</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">        mel.<span class="built_in">eval</span>(<span class="string">&#x27;texturePanelShow;&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2691,10 +2641,10 @@ createWindow<span class="token punctuation">(</span><span class="token punctuati
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -2777,32 +2727,26 @@ createWindow<span class="token punctuation">(</span><span class="token punctuati
   
     <div class="prev-next">
       
-        <a class='prev' href='/math/Pro-TBB/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>Pro-TBB</p>
-          <p class='content'>Pro TBB
-在摩尔定律逐渐失效的今日，CPU主频和单核性能提升越来越不明显，为了得到跟高的性能，我们走向了并行计算的道路
-概念
-并发和并行
-
-
-并发（Concurrent）：happenin...</p>
+        <a class='prev' href='/program/Csharpe/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>WPF中的C#</p>
+          <p class='content'>WPF中的C#
+一、C#语法
+委托
+C#的委托类似于C++的函数指针，C#中，将参数a,b委托给了对象adder的Add方法，委托本质上是一种支持()运算符的对象。既然是对象，就可以有自己的成员...</p>
         </a>
       
       
-        <a class='next' href='/engine/GC/'>
-          <p class='title'>垃圾回收<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>垃圾回收
-前言
-《垃圾回收的算法与实现》读书笔记，其中的代码大多为伪代码
-一：概念
-GC，Garbage Collection，垃圾回收
-功能
+        <a class='next' href='/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/'>
+          <p class='title'>大象无形UE笔记<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>UE学习笔记
+基类
+UObject
+一切对象的基类。UE为UObject类提供了
 
-找到内存中的垃圾
-回收垃圾
+垃圾回收GC
 
-为什么需要GC
-如...</p>
+被UProperty标记的变量会自动进行生命周期管理
+非UObject可以使用C++标准推荐的...</p>
         </a>
       
     </div>
@@ -3407,7 +3351,7 @@ GC，Garbage Collection，垃圾回收
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/maya插件/","name":"Maya插件开发"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Maya插件开发","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/maya%E6%8F%92%E4%BB%B6/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/maya%E6%8F%92%E4%BB%B6/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.093Z","articleSection":"dcc","keywords":"Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/maya插件/","name":"Maya插件开发"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Maya插件开发","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/maya%E6%8F%92%E4%BB%B6/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/maya%E6%8F%92%E4%BB%B6/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.276Z","articleSection":"dcc","keywords":"Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

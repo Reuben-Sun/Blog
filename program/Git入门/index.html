@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-07-04T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:09.640Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:20.939Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2552,41 +2552,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="Cherry-pick">Cherry pick</h3>
 <p>常用于获取他人其他分支的某些改动，相较于Rebase，对于本地代码的破坏性更小，会保留commit信息</p>
 <p>Cherry pick，摘樱桃，功能是将某个commit复制到当前分支</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Cherry pick 哈希值为8e8b...的commit</span>
-<span class="token function">git</span> cherry-pick 8e8bd4a89063535cb91de56a57e3a1683927a3b1
-<span class="token comment"># Cherry pick 哈希值从8e8b...到e652...的一系列连续的commit</span>
-<span class="token function">git</span> cherry-pick e65275b5b2b71153ff08e865cd825e27b5d247b5^<span class="token punctuation">..</span>8e8bd4a89063535cb91de56a57e3a1683927a3b1</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Cherry pick 哈希值为8e8b...的commit</span></span><br><span class="line">git cherry-pick 8e8bd4a89063535cb91de56a57e3a1683927a3b1</span><br><span class="line"><span class="comment"># Cherry pick 哈希值从8e8b...到e652...的一系列连续的commit</span></span><br><span class="line">git cherry-pick e65275b5b2b71153ff08e865cd825e27b5d247b5^..8e8bd4a89063535cb91de56a57e3a1683927a3b1</span><br></pre></td></tr></table></figure>
 <h3 id="设置别名">设置别名</h3>
 <p>有时很多很常用的命令你感觉太长了，于是可以使用别名</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置commit别名c，git c将等同于git commit</span>
-<span class="token function">git</span> config <span class="token parameter variable">--global</span> alias.c commit
-<span class="token comment"># 设置status别名s</span>
-<span class="token function">git</span> config <span class="token parameter variable">--global</span> alias.s status</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置commit别名c，git c将等同于git commit</span></span><br><span class="line">git config --global alias.c commit</span><br><span class="line"><span class="comment"># 设置status别名s</span></span><br><span class="line">git config --global alias.s status</span><br></pre></td></tr></table></figure>
 <h3 id="补丁">补丁</h3>
 <p>常用于获取他人其他分支的某些改动，但并不会保存commit信息，你需要手动add、commit</p>
 <h4 id="diff">diff</h4>
 <p>差异，用于生成补丁文件（patch），补丁文件本身是个纯文本文件</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 比较branch1和2的最新提交间的差异，将差异保存在mypatch.patch文件中</span>
-<span class="token function">git</span> <span class="token function">diff</span> branch1 branch2 <span class="token operator">></span> mypatch.patch</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 比较branch1和2的最新提交间的差异，将差异保存在mypatch.patch文件中</span></span><br><span class="line">git diff branch1 branch2 &gt; mypatch.patch</span><br></pre></td></tr></table></figure>
 <h4 id="apply">apply</h4>
 <p>应用，用于应用补丁文件（patch），若出现冲突，会生成拒绝（reject）文件，你可以手动处理掉这些reject文件</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> apply xxx.ptach <span class="token parameter variable">--reject</span></code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git apply xxx.ptach --reject</span><br></pre></td></tr></table></figure>
 <h3 id="清理">清理</h3>
 <p>手动进行垃圾回收，以释放本地存储空间</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> prune</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git prune</span><br></pre></td></tr></table></figure>
 <h3 id="网络443">网络443</h3>
 <p>有的时候我们挂了梯子仍然连不上github服务器，报错</p>
 <blockquote>
 <p>fatal: unable to access ‘<a target="_blank" rel="noopener" href="https://github.com/Reuben-Sun/ToolEngine.git/">https://github.com/Reuben-Sun/ToolEngine.git/</a>’: Failed to connect to <a target="_blank" rel="noopener" href="http://github.com">github.com</a> port 443 after 21070 ms: Couldn’t connect to server</p>
 </blockquote>
 <p>此时我们可以先查看自己梯子的端口号，然后找到<code>.gitconfig</code>文件，添加代理设置（我这里以端口号为7890为例）</p>
-<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">[</span>user<span class="token punctuation">]</span>
-	email = xxx@xxx.com
-	name = xxx
-<span class="token punctuation">[</span>http<span class="token punctuation">]</span>
-	proxy = http<span class="token punctuation">:</span>//127.0.0.1<span class="token punctuation">:</span><span class="token number">7890</span>
-<span class="token punctuation">[</span>https<span class="token punctuation">]</span>
-	proxy = http<span class="token punctuation">:</span>//127.0.0.1<span class="token punctuation">:</span><span class="token number">7890</span></code></pre>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">user</span>]</span><br><span class="line">	<span class="string">email</span> <span class="string">=</span> <span class="string">xxx@xxx.com</span></span><br><span class="line">	<span class="string">name</span> <span class="string">=</span> <span class="string">xxx</span></span><br><span class="line">[<span class="string">http</span>]</span><br><span class="line">	<span class="string">proxy</span> <span class="string">=</span> <span class="string">http://127.0.0.1:7890</span></span><br><span class="line">[<span class="string">https</span>]</span><br><span class="line">	<span class="string">proxy</span> <span class="string">=</span> <span class="string">http://127.0.0.1:7890</span></span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2611,10 +2598,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:09+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:20+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3322,7 +3309,7 @@ exterminate（消灭）
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/Git入门/","name":"Git使用记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Git使用记录","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/Git%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/Git%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-07-04T10:01:25.000Z","dateModified":"2023-11-16T02:49:09.640Z","articleSection":"program","keywords":"Git","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/Git入门/","name":"Git使用记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Git使用记录","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/Git%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/Git%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-07-04T10:01:25.000Z","dateModified":"2023-11-21T01:45:20.939Z","articleSection":"program","keywords":"Git","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

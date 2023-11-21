@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -42,11 +42,11 @@
 <meta property="og:title" content="C++11特性">
 <meta property="og:url" content="https://reubensun.com/program/C++11/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="C++11特性 都什么年代了，还在整C++11？八股害人啊 一：C++11的“新”特性 nullptr 一个新关键字，用于表示指针指向no value，可以被自动转化为各种指针类型，但是不会被转化为整数 比NULL好，因为NULL的本质就是整数0 auto 通过auto声明变量、对象，可以自动推到其类型，在处理表达式时有奇效 auto l &#x3D; [](int x) -&gt; &amp;#123;">
+<meta property="og:description" content="C++11特性 都什么年代了，还在整C++11？八股害人啊 一：C++11的“新”特性 nullptr 一个新关键字，用于表示指针指向no value，可以被自动转化为各种指针类型，但是不会被转化为整数 比NULL好，因为NULL的本质就是整数0 auto 通过auto声明变量、对象，可以自动推到其类型，在处理表达式时有奇效 auto l &#x3D; [](int x) -&gt; &#123;...&amp;#">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-01T14:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:09.638Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:20.937Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2550,191 +2550,83 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><em>比NULL好，因为NULL的本质就是整数0</em></p>
 <h3 id="auto">auto</h3>
 <p>通过auto声明变量、对象，可以自动推到其类型，在处理表达式时有奇效</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">auto l &#x3D; [](int x) -&gt; &#123;...&#125;;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> l = [](<span class="type">int</span> x) -&gt; &#123;...&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="一致性初始化">一致性初始化</h3>
 <p>一致性初始化（Uniform Initiallization），简单来说就是可以用大括号来做初始化</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int v[] &#123;1, 2, 3&#125;;
-vector&lt;int&gt; v2 &#123;1, 2, 3&#125;;
-complex&lt;double&gt; c&#123;4.0, 3.0&#125;;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> v[] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; v2 &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">complex&lt;<span class="type">double</span>&gt; c&#123;<span class="number">4.0</span>, <span class="number">3.0</span>&#125;;</span><br></pre></td></tr></table></figure>
 <p>但是这个操作不支持<strong>窄化（narrowing）</strong>，即</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int x &#x3D; 5.3;	&#x2F;&#x2F;x &#x3D;&#x3D; 5
-int y &#123;5.3&#125;;	&#x2F;&#x2F;Error</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5.3</span>;	<span class="comment">//x == 5</span></span><br><span class="line"><span class="type">int</span> y &#123;<span class="number">5.3</span>&#125;;	<span class="comment">//Error</span></span><br></pre></td></tr></table></figure>
 <h3 id="新的for循环">新的for循环</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">for(auto&amp; item: lists)&#123;...&#125;
-
-for(int i : &#123;1, 2, 3, 4&#125;)&#123;...&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; item: lists)&#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i : &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;)&#123;...&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="左值右值">左值右值</h3>
 <p>左值：占用一定内存，具有可辨认的地址的对象（表达式结束后仍然存在的持久对象），C++中绝大多数变量都是左值</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int i &#x3D; 1;		&#x2F;&#x2F; i 是左值
-int *p &#x3D; &amp;i;	&#x2F;&#x2F; i 的地址是可辨认的
-i &#x3D; 2; 				&#x2F;&#x2F; i 在内存中的值可以改变
-A a; 					&#x2F;&#x2F; 用户自定义类实例化的对象也是左值</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">1</span>;		<span class="comment">// i 是左值</span></span><br><span class="line"><span class="type">int</span> *p = &amp;i;	<span class="comment">// i 的地址是可辨认的</span></span><br><span class="line">i = <span class="number">2</span>; 				<span class="comment">// i 在内存中的值可以改变</span></span><br><span class="line">A a; 					<span class="comment">// 用户自定义类实例化的对象也是左值</span></span><br></pre></td></tr></table></figure>
 <p>右值：左值以外的所有对象（表达式结束后就消失的对象）</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>			<span class="token comment">// 2 是右值</span>
-<span class="token keyword">int</span> x <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span> 	<span class="token comment">// (i + 2) 是右值</span>
-A a <span class="token operator">=</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 			<span class="token comment">// A() 是右值，是一个临时对象，在a构造完成后会被销毁</span>
-A<span class="token operator">&amp;&amp;</span> a <span class="token operator">=</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">// a是一个右值引用，引用的就是A()所创建的对象，这个对象的生命周期和a一致</span>
-<span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> 	<span class="token comment">// sum(1, 2) 是右值</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">2</span>;			<span class="comment">// 2 是右值</span></span><br><span class="line"><span class="type">int</span> x = i + <span class="number">2</span>; 	<span class="comment">// (i + 2) 是右值</span></span><br><span class="line">A a = <span class="built_in">A</span>(); 			<span class="comment">// A() 是右值，是一个临时对象，在a构造完成后会被销毁</span></span><br><span class="line">A&amp;&amp; a = <span class="built_in">A</span>();		<span class="comment">// a是一个右值引用，引用的就是A()所创建的对象，这个对象的生命周期和a一致</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">sum</span>(<span class="number">1</span>, <span class="number">2</span>) 	<span class="comment">// sum(1, 2) 是右值</span></span><br></pre></td></tr></table></figure>
 <p>不能对右值赋值</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">i + 2 &#x3D; 4; &#x2F;&#x2F; 错误，不能对右值赋值</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">i + <span class="number">2</span> = <span class="number">4</span>; <span class="comment">// 错误，不能对右值赋值</span></span><br></pre></td></tr></table></figure>
 <p>不能对右值取地址</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int *p &#x3D; &amp;(i + 2);	&#x2F;&#x2F; 错误，不能对右值取地址</code></pre>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int square1(int&amp; a) &#123;return a * a;&#125;
-int square2(const int&amp; a) &#123;return a * a;&#125; 
-...
-int i &#x3D; 2;
-square1(i); &#x2F;&#x2F; 正确
-square1(2); &#x2F;&#x2F; 错误，不能对右值取地址
-square2(2);	&#x2F;&#x2F; 正确</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> *p = &amp;(i + <span class="number">2</span>);	<span class="comment">// 错误，不能对右值取地址</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">square1</span><span class="params">(<span class="type">int</span>&amp; a)</span> </span>&#123;<span class="keyword">return</span> a * a;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">square2</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; a)</span> </span>&#123;<span class="keyword">return</span> a * a;&#125; </span><br><span class="line">...</span><br><span class="line"><span class="type">int</span> i = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">square1</span>(i); <span class="comment">// 正确</span></span><br><span class="line"><span class="built_in">square1</span>(<span class="number">2</span>); <span class="comment">// 错误，不能对右值取地址</span></span><br><span class="line"><span class="built_in">square2</span>(<span class="number">2</span>);	<span class="comment">// 正确</span></span><br></pre></td></tr></table></figure>
 <p>为什么可以<code>const int &amp;a = 2;</code>呢？可以视为一个例外，const引用 指向了一个 临时左值的引用，其值为2</p>
 <h3 id="转移语意">转移语意</h3>
 <p>转移语意（move semantic），本质是所有权的转移，将即将销毁的对象转移给他人，避免非必要的拷贝和临时对象</p>
 <p>比如一个函数定义为</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void fun(const T&amp; v)&#123;...&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">const</span> T&amp; v)</span></span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
 <p>当我们调用时</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">T t;
-fun(t);		&#x2F;&#x2F;1
-fun(t+1);	&#x2F;&#x2F;2</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">T t;</span><br><span class="line"><span class="built_in">fun</span>(t);		<span class="comment">//1</span></span><br><span class="line"><span class="built_in">fun</span>(t+<span class="number">1</span>);	<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
 <p>我们发现，第一种调用时，直接传了引用，没有拷贝和临时变量，而第二种，实际上是</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">T temp &#x3D; t+1;		&#x2F;&#x2F;T temp(t+1)或者 T temp.T(t+1)
-fun(temp);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">T temp = t+<span class="number">1</span>;		<span class="comment">//T temp(t+1)或者 T temp.T(t+1)</span></span><br><span class="line"><span class="built_in">fun</span>(temp);</span><br></pre></td></tr></table></figure>
 <p>总之是调用了拷贝构造函数和生成了临时变量，这不是我们想要的，于是引入了左右值和转移语意的概念，然后就诞生了一种新的调用方式：</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">fun(std::move(t+1));</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">fun</span>(std::<span class="built_in">move</span>(t+<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
 <p><code>std::move</code>的作用是将其参数<code>t+1</code>变成一个<strong>右值引用（rvalue reference）</strong>，是一个<code>T&amp;&amp;</code>的类型</p>
 <p>一旦一个类型被“标记”为右值，就意味着这是一个临时对象，你可以随意使用它的内容和资源</p>
 <p>然后我们可以优化一下这个函数的定义</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">class T&#123;
-public:
-  T (const T&amp; lvalue);	&#x2F;&#x2F; 通过左值拷贝构造（根传统C++一样）
-  T (T&amp;&amp; rvalue);		&#x2F;&#x2F; 通过右值move构造
-&#125;
-void fun(T&amp;&amp; v)&#123;...&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">T</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">T</span> (<span class="type">const</span> T&amp; lvalue);	<span class="comment">// 通过左值拷贝构造（根传统C++一样）</span></span><br><span class="line">  <span class="built_in">T</span> (T&amp;&amp; rvalue);		<span class="comment">// 通过右值move构造</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(T&amp;&amp; v)</span></span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
 <p>右值被move以后，就变成有效但不确定的状态</p>
 <h3 id="字符串字面量">字符串字面量</h3>
 <h4 id="Raw-String-Literal">Raw String Literal</h4>
 <p>以R开头的字符串，可以换行，不需要转义，用于正则表示式有奇效</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">R&quot;(\\n)&quot;;	&#x2F;&#x2F;等于 &quot;\\\\n&quot;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="string">R&quot;(\\n)&quot;</span>;	<span class="comment">//等于 &quot;\\\\n&quot;</span></span><br></pre></td></tr></table></figure>
 <h4 id="Encoded-String-Literal">Encoded String Literal</h4>
 <p>用于国际化</p>
 <h3 id="noexcept">noexcept</h3>
 <p>让函数无法抛出异常，遇到未定义事件会直接<code>abort</code></p>
 <p>noexcept后面可以跟一个bool条件，为true时就不抛异常</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void fun() noexcept;
-void fun2(T&amp; x, T&amp; y) noexcept(noexcept(x.swap(y)))&#123;
-    x.swap(y);
-    &#x2F;&#x2F;这个函数意味着，只要xy交换不抛异常，那么下面这些函数体做任何事都不会抛异常
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">()</span> <span class="keyword">noexcept</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun2</span><span class="params">(T&amp; x, T&amp; y)</span> <span class="title">noexcept</span><span class="params">(<span class="keyword">noexcept</span>(x.swap(y)))</span></span>&#123;</span><br><span class="line">    x.<span class="built_in">swap</span>(y);</span><br><span class="line">    <span class="comment">//这个函数意味着，只要xy交换不抛异常，那么下面这些函数体做任何事都不会抛异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="constexpr">constexpr</h3>
 <p>用于让表达式核定与编译期，能助力TMP编程</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">constexpr int square(int x)&#123;
-    return x*x;
-&#125;
-float a[square(9)];</code></pre>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;以前的写法
-template&lt;unsigned n&gt;
-struct Factorial
-&#123;
-    enum &#123; value &#x3D; n * Factorial&lt;n-1&gt;::value &#125;;
-&#125;;
-&#x2F;&#x2F;C++11写法
-template&lt;unsigned n&gt;
-struct Factorial
-&#123;
-    constexpr static auto value&#123; n * Factorial&lt;n - 1&gt;::value &#125;;
-&#125;;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">constexpr</span> <span class="type">int</span> <span class="title">square</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x*x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">float</span> a[<span class="built_in">square</span>(<span class="number">9</span>)];</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//以前的写法</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="type">unsigned</span> n&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Factorial</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">enum</span> &#123; value = n * Factorial&lt;n<span class="number">-1</span>&gt;::value &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//C++11写法</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="type">unsigned</span> n&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Factorial</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">constexpr</span> <span class="type">static</span> <span class="keyword">auto</span> value&#123; n * Factorial&lt;n - <span class="number">1</span>&gt;::value &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="新的模板">新的模板</h3>
 <h4 id="不定个数的参数">不定个数的参数</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void f(int i)&#123;
-    cout &lt;&lt; i &lt;&lt; endl;
-&#125;
-template &lt;typename T , typename... Types&gt;
-void f(const T&amp; first, const Types&amp;... args)&#123;
-    cout &lt;&lt; first &lt;&lt; endl;
-    f(args...);
-&#125;
-int main() &#123;
-    f(1, 2, 3);
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> i)</span></span>&#123;</span><br><span class="line">    cout &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T , <span class="keyword">typename</span>... Types&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">const</span> T&amp; first, <span class="type">const</span> Types&amp;... args)</span></span>&#123;</span><br><span class="line">    cout &lt;&lt; first &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">f</span>(args...);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">f</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="模板别名">模板别名</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;
-using Vec &#x3D; std::vector&lt;T, MyAlloc&lt;T&gt;&gt;;
-Vec&lt;int&gt; coll;	&#x2F;&#x2F;等价于std::vector&lt;int, MyAlloc&lt;int&gt;&gt; coll;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">using</span> Vec = std::vector&lt;T, MyAlloc&lt;T&gt;&gt;;</span><br><span class="line">Vec&lt;<span class="type">int</span>&gt; coll;	<span class="comment">//等价于std::vector&lt;int, MyAlloc&lt;int&gt;&gt; coll;</span></span><br></pre></td></tr></table></figure>
 <h3 id="Lambda">Lambda</h3>
 <p>允许函数的定义式被用作一个参数、local对象</p>
 <h4 id="定义与调用">定义与调用</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">[]&#123;
-    cout &lt;&lt; &quot;hello&quot; &lt;&lt; endl;
-&#125;;	&#x2F;&#x2F;这是一个lambda表达式
-
-[]&#123;
-    cout &lt;&lt; &quot;hello&quot; &lt;&lt; endl;
-&#125;();	&#x2F;&#x2F;定义并直接调用表达式
-
-auto l &#x3D; []&#123;
-    cout &lt;&lt; &quot;hello&quot; &lt;&lt; endl;
-&#125;;
-l();	&#x2F;&#x2F;调用表达式</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">[]&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;;	<span class="comment">//这是一个lambda表达式</span></span><br><span class="line"></span><br><span class="line">[]&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;();	<span class="comment">//定义并直接调用表达式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> l = []&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;hello&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">l</span>();	<span class="comment">//调用表达式</span></span><br></pre></td></tr></table></figure>
 <h4 id="含参">含参</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">auto l2 &#x3D; [](const std::string&amp; s)&#123;
-    cout &lt;&lt; s &lt;&lt; endl;
-&#125;;
-l(&quot;hello&quot;);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> l2 = [](<span class="type">const</span> std::string&amp; s)&#123;</span><br><span class="line">    cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">l</span>(<span class="string">&quot;hello&quot;</span>);</span><br></pre></td></tr></table></figure>
 <h4 id="返回值">返回值</h4>
-<pre class="language-c++" data-language="c++"><code class="language-c++">[]() -&gt; int &#123;
-    return 42;	
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">[]() -&gt; <span class="type">int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="外部作用域">外部作用域</h4>
 <p>分值传递和引用传递两种，值传递不能进行修改</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int x &#x3D; 0;
-int y &#x3D; 42;
-auto l &#x3D; [x, &amp;y] &#123;
-    cout &lt;&lt; x &lt;&lt; &quot;+&quot; &lt;&lt; y &lt;&lt; endl;
-    ++y;
-&#125;
-l();	&#x2F;&#x2F;调用，注意xy不是参数，不需要写在括号里</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> y = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">auto</span> l = [x, &amp;y] &#123;</span><br><span class="line">    cout &lt;&lt; x &lt;&lt; <span class="string">&quot;+&quot;</span> &lt;&lt; y &lt;&lt; endl;</span><br><span class="line">    ++y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">l</span>();	<span class="comment">//调用，注意xy不是参数，不需要写在括号里</span></span><br></pre></td></tr></table></figure>
 <h4 id="mutable">mutable</h4>
 <p>这个关键词是const的反义词，意思是可变的，于是让值传递也可变</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int x &#x3D; 0;
-auto l &#x3D; [x]() mutable &#123;
-    cout &lt;&lt; x &lt;&lt; endl;
-    x++;
-&#125;
-l();</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> l = [x]() <span class="keyword">mutable</span> &#123;</span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl;</span><br><span class="line">    x++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">l</span>();</span><br></pre></td></tr></table></figure>
 <h3 id="decltype">decltype</h3>
 <p>自动推导表达式的类型，大号typeof</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">const int &amp;i &#x3D; 1;
-int a &#x3D; 2;
-decltype(i) b &#x3D; 2; &#x2F;&#x2F; b是const int&amp;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;i = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">decltype</span>(i) b = <span class="number">2</span>; <span class="comment">// b是const int&amp;</span></span><br></pre></td></tr></table></figure>
 <h4 id="推断返回类型">推断返回类型</h4>
 <p>可以将返回类型的声明放在参数列之后</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T1</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">T2</span><span class="token operator">></span>
-<span class="token keyword">auto</span> <span class="token function">add</span><span class="token punctuation">(</span>T1 x<span class="token punctuation">,</span> T2 y<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">decltype</span><span class="token punctuation">(</span>x<span class="token operator">+</span>y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> x <span class="token operator">+</span> y<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;</span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">add</span><span class="params">(T1 x, T2 y)</span> -&gt; <span class="title">decltype</span><span class="params">(x+y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="带领域的枚举">带领域的枚举</h3>
 <h3 id="promise与future">promise与future</h3>
 <p><code>std::promise</code>意思为共享状态，是C++11提供的在两个异步任务间传递数据的方式，常与<code>std::future</code>一起使用</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">producer</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>promise<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> p<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token comment">// 生产者端</span>
-    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Producer\n"</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>this_thread<span class="token double-colon punctuation">::</span><span class="token function">sleep_for</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>chrono<span class="token double-colon punctuation">::</span><span class="token function">seconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 设置共享数据为 42</span>
-    p<span class="token punctuation">.</span><span class="token function">set_value</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    std<span class="token double-colon punctuation">::</span>promise<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> p<span class="token punctuation">;</span>
-    <span class="token comment">// 将 promise 与 future 绑定</span>
-    std<span class="token double-colon punctuation">::</span>future<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> f <span class="token operator">=</span> p<span class="token punctuation">.</span><span class="token function">get_future</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>thread <span class="token function">producer_thread</span><span class="token punctuation">(</span>producer<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">ref</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 分离执行线程</span>
-    producer_thread<span class="token punctuation">.</span><span class="token function">detach</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> result <span class="token operator">=</span> f<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Result: "</span> <span class="token operator">&lt;&lt;</span> result <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">producer</span><span class="params">(std::promise&lt;<span class="type">int</span>&gt;&amp; p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 生产者端</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Producer\n&quot;</span>;</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">1</span>));</span><br><span class="line">    <span class="comment">// 设置共享数据为 42</span></span><br><span class="line">    p.<span class="built_in">set_value</span>(<span class="number">42</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::promise&lt;<span class="type">int</span>&gt; p;</span><br><span class="line">    <span class="comment">// 将 promise 与 future 绑定</span></span><br><span class="line">    std::future&lt;<span class="type">int</span>&gt; f = p.<span class="built_in">get_future</span>();</span><br><span class="line">    <span class="function">std::thread <span class="title">producer_thread</span><span class="params">(producer, std::ref(p))</span></span>;</span><br><span class="line">    <span class="comment">// 分离执行线程</span></span><br><span class="line">    producer_thread.<span class="built_in">detach</span>();</span><br><span class="line">    <span class="type">int</span> result = f.<span class="built_in">get</span>();</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; result &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p><code>std::thread</code>用于表示一个执行线程，这个线程可以选择在主线程执行<code>join()</code>或者另一个线程中执行<code>detach()</code>。</p>
 <p>若使用<code>join()</code>，则主线程会等待子线程执行完毕后再继续执行，若使用<code>detach()</code>，则主线程会直接执行，而子线程会在后台执行，两者不会相互影响。</p>
@@ -2751,25 +2643,10 @@ decltype(i) b &#x3D; 2; &#x2F;&#x2F; b是const int&amp;</code></pre>
 <h2 id="三：通用工具">三：通用工具</h2>
 <h3 id="pair">pair</h3>
 <p>本质是一个struct</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int add(pair&lt;int, int&gt; p)&#123;
-    return p.first + p.second;
-&#125;
-
-int main() &#123;
-    pair&lt;int, int&gt; p(42, 10);
-    cout &lt;&lt; add(p);
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p.first + p.second;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; <span class="title">p</span><span class="params">(<span class="number">42</span>, <span class="number">10</span>)</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">add</span>(p);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="tuple">tuple</h3>
 <p>大号pair，可以有多个值</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">int f(tuple&lt;int, int, int&gt; t)&#123;
-    return get&lt;0&gt;(t) + get&lt;1&gt;(t) + get&lt;2&gt;(t);
-&#125;
-int main() &#123;
-    tuple&lt;int, int, int&gt; t(3, 5, 7);
-    cout &lt;&lt; f(t);
-    return 0;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">(tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt; t)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(t) + <span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(t) + <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(t);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">tuple&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt; <span class="title">t</span><span class="params">(<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>)</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">f</span>(t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="智能指针">智能指针</h3>
 <p>智能指针智能在，它能知道自己是不是指向某物的最后一个指针</p>
 <ul>
@@ -2798,23 +2675,10 @@ int main() &#123;
 <li>ref：隐式转化为<code>T&amp;</code></li>
 <li>cref：隐式转化为<code>const T &amp;</code></li>
 </ul>
-<pre class="language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;
-void fun(T v);
-
-int x;
-fun(std::ref(x));	&#x2F;&#x2F;此时T为int&amp;
-
-int x;
-fun(std::cref(x));	&#x2F;&#x2F;此时T为const int&amp;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(T v)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> x;</span><br><span class="line"><span class="built_in">fun</span>(std::<span class="built_in">ref</span>(x));	<span class="comment">//此时T为int&amp;</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> x;</span><br><span class="line"><span class="built_in">fun</span>(std::<span class="built_in">cref</span>(x));	<span class="comment">//此时T为const int&amp;</span></span><br></pre></td></tr></table></figure>
 <h4 id="Function-Type-Wrapper">Function Type Wrapper</h4>
 <p>允许将可调用对象当作最高级对象（first-class object）</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">vector&lt;function&lt;void(int, int)&gt;&gt; tasks;	&#x2F;&#x2F;一个存储多个可调用对象的vector
-tasks.push_back(func);	&#x2F;&#x2F;void func(int x, int y);
-tasks.push_back([] (int x, int y) &#123;...&#125;);	&#x2F;&#x2F;添加一个lambda表达式
-
-for(function&lt;void(int, int)&gt; f : tasks)&#123;
-    f(36, 36);	&#x2F;&#x2F;遍历所有的可调用对象，并调用
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;function&lt;<span class="type">void</span>(<span class="type">int</span>, <span class="type">int</span>)&gt;&gt; tasks;	<span class="comment">//一个存储多个可调用对象的vector</span></span><br><span class="line">tasks.<span class="built_in">push_back</span>(func);	<span class="comment">//void func(int x, int y);</span></span><br><span class="line">tasks.<span class="built_in">push_back</span>([] (<span class="type">int</span> x, <span class="type">int</span> y) &#123;...&#125;);	<span class="comment">//添加一个lambda表达式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(function&lt;<span class="built_in">void</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; f : tasks)&#123;</span><br><span class="line">    <span class="built_in">f</span>(<span class="number">36</span>, <span class="number">36</span>);	<span class="comment">//遍历所有的可调用对象，并调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="辅助函数">辅助函数</h3>
 <ul>
 <li>min</li>
@@ -2832,11 +2696,7 @@ for(function&lt;void(int, int)&gt; f : tasks)&#123;
 </li>
 </ul>
 <h3 id="编译期分数运算">编译期分数运算</h3>
-<pre class="language-c++" data-language="c++"><code class="language-c++">ratio&lt;5, 5&gt; one;
-cout &lt;&lt; one.num &lt;&lt; &quot;&#x2F;&quot; &lt;&lt; one.den &lt;&lt; endl;	&#x2F;&#x2F; 1&#x2F;1
-
-ratio&lt;5, 3&gt; two;
-cout &lt;&lt; two.num &lt;&lt; &quot;&#x2F;&quot; &lt;&lt; two.den &lt;&lt; endl;	&#x2F;&#x2F; 5&#x2F;3</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ratio&lt;<span class="number">5</span>, <span class="number">5</span>&gt; one;</span><br><span class="line">cout &lt;&lt; one.num &lt;&lt; <span class="string">&quot;/&quot;</span> &lt;&lt; one.den &lt;&lt; endl;	<span class="comment">// 1/1</span></span><br><span class="line"></span><br><span class="line">ratio&lt;<span class="number">5</span>, <span class="number">3</span>&gt; two;</span><br><span class="line">cout &lt;&lt; two.num &lt;&lt; <span class="string">&quot;/&quot;</span> &lt;&lt; two.den &lt;&lt; endl;	<span class="comment">// 5/3</span></span><br></pre></td></tr></table></figure>
 <h2 id="四：STL">四：STL</h2>
 <p>STL是C++标准库的核心，是一个泛型（generic）程序库，由三部分组成</p>
 <ul>
@@ -2928,13 +2788,7 @@ cout &lt;&lt; two.num &lt;&lt; &quot;&#x2F;&quot; &lt;&lt; two.den &lt;&lt; endl
 <p>大多为非成员函数，思想是泛型编程（而不是OOP）</p>
 <h3 id="函数对象">函数对象</h3>
 <p>一个行为像函数的对象，思想是泛型编程</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">class X&#123;
-public:
-    int operator() (int a, int b) const;
-&#125;;
-...
-X fo;
-fo(arg1, arg2);	&#x2F;&#x2F;等同于fo.operator()(arg1, arg2);</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">X</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> <span class="type">const</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br><span class="line">X fo;</span><br><span class="line"><span class="built_in">fo</span>(arg1, arg2);	<span class="comment">//等同于fo.operator()(arg1, arg2);</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>函数对象是一个带状态的函数</li>
 <li>函数对象有自己的类型</li>
@@ -2964,10 +2818,10 @@ fo(arg1, arg2);	&#x2F;&#x2F;等同于fo.operator()(arg1, arg2);</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:09+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:20+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3686,7 +3540,7 @@ Xcode
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++11/","name":"C++11特性"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C++11特性","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++11/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++11/","wordCount":0,"datePublished":"2023-02-01T14:01:25.000Z","dateModified":"2023-11-16T02:49:09.638Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++11/","name":"C++11特性"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C++11特性","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++11/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++11/","wordCount":0,"datePublished":"2023-02-01T14:01:25.000Z","dateModified":"2023-11-21T01:45:20.937Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

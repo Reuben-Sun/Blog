@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -42,11 +42,11 @@
 <meta property="og:title" content="CMake入门">
 <meta property="og:url" content="https://reubensun.com/program/CMake%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="CMake 快速入门 一个大项目（Project）内嵌多个子项目（SubProject） 一个子项目内有src、include、CMakeLists.txt，其中有一个子项目中有main.cpp  最外面的CMakeLists.txt，负责连接所有子项目： cmake_minimum_required(VERSION 3.20) project(Project) set(CMAKE_CXX_STA">
+<meta property="og:description" content="CMake 快速入门 一个大项目（Project）内嵌多个子项目（SubProject） 一个子项目内有src、include、CMakeLists.txt，其中有一个子项目中有main.cpp  最外面的CMakeLists.txt，负责连接所有子项目： cmake_minimum_required(VERSION 3.20)project(Project)set(CMAKE_CXX_STAND">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-02-01T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.107Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.296Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="CMake">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2549,69 +2549,47 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>一个子项目内有src、include、CMakeLists.txt，其中有一个子项目中有main.cpp</p>
 <img src="/images/C++项目结构.png" class="lazyload" data-srcset="/images/C++项目结构.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="C++项目结构" style="zoom:50%;" />
 <p>最外面的CMakeLists.txt，负责连接所有子项目：</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.20</span><span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>Project<span class="token punctuation">)</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_STANDARD</span> <span class="token number">14</span><span class="token punctuation">)</span>
-<span class="token keyword">add_subdirectory</span><span class="token punctuation">(</span>subProject1<span class="token punctuation">)</span>
-<span class="token keyword">add_subdirectory</span><span class="token punctuation">(</span>subProject2<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(<span class="keyword">Project</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">14</span>)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(subProject1)</span><br><span class="line"><span class="keyword">add_subdirectory</span>(subProject2)</span><br></pre></td></tr></table></figure>
 <p>subProject1（main.cpp所在的子项目）下面的CMakeLists.txt：</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">file</span><span class="token punctuation">(</span>GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp include/*.h<span class="token punctuation">)</span>
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>subProject1 <span class="token punctuation">$&#123;</span>srcs<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">target_include_directories</span><span class="token punctuation">(</span>subProject1 <span class="token namespace">PUBLIC</span> include<span class="token punctuation">)</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>subProject1 <span class="token namespace">PUBLIC</span> subProject2<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">file</span>(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp <span class="keyword">include</span>/*.h)</span><br><span class="line"><span class="keyword">add_executable</span>(subProject1 <span class="variable">$&#123;srcs&#125;</span>)</span><br><span class="line"><span class="keyword">target_include_directories</span>(subProject1 PUBLIC <span class="keyword">include</span>)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(subProject1 PUBLIC subProject2)</span><br></pre></td></tr></table></figure>
 <p>subProject2下面的CMakeLists.txt：</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">file</span><span class="token punctuation">(</span>GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp include/*.h<span class="token punctuation">)</span>
-<span class="token keyword">add_library</span><span class="token punctuation">(</span>subProject2 <span class="token namespace">STATIC</span> <span class="token punctuation">$&#123;</span>srcs<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">target_include_directories</span><span class="token punctuation">(</span>subProject2 <span class="token namespace">PUBLIC</span> include<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">file</span>(GLOB_RECURSE srcs CONFIGURE_DEPENDS src/*.cpp <span class="keyword">include</span>/*.h)</span><br><span class="line"><span class="keyword">add_library</span>(subProject2 STATIC <span class="variable">$&#123;srcs&#125;</span>)</span><br><span class="line"><span class="keyword">target_include_directories</span>(subProject2 PUBLIC <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure>
 <p>生成sln项目</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$cmake</span> <span class="token parameter variable">-G</span> <span class="token string">"Visual Studio 16 2019"</span></code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="variable">$cmake</span> -G <span class="string">&quot;Visual Studio 16 2019&quot;</span></span><br></pre></td></tr></table></figure>
 <p>用vs打开sln项目能看到2+n个项目，其中</p>
 <ul>
 <li><code>ALL_BUILD</code>：编译该项目会编译整个工程</li>
 <li><code>ZERO_CHECK</code>：监视<code>CMakeLists.txt</code>的变化，一旦改变会告诉编译器重新构建工程</li>
 </ul>
 <p>或者可以用make构建项目</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$cmake</span> -H. <span class="token parameter variable">-Bbuild</span></code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="variable">$cmake</span> -H. -Bbuild</span><br></pre></td></tr></table></figure>
 <h2 id="一：CMake基础语法">一：CMake基础语法</h2>
 <h3 id="CMakeLists-txt">CMakeLists.txt</h3>
 <p>我们将CMake指令放在<code>CMakeLists.txt</code>文件中</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#设置CMake所需最低版本</span>
-<span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.20</span><span class="token punctuation">)</span>
-<span class="token comment">#设置项目名称为CMakeStudy，支持的语言为C++（CXX表示C++）</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>CMakeStudy LANGUAGES CXX<span class="token punctuation">)</span>
-<span class="token comment">#设置创建的新目标名称：一个名叫CMakeStudy的可执行文件</span>
-<span class="token comment">#这个可执行文件是通过编译和链接源文件main.cpp生成的</span>
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>CMakeStudy main.cpp<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#设置CMake所需最低版本</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="comment">#设置项目名称为CMakeStudy，支持的语言为C++（CXX表示C++）</span></span><br><span class="line"><span class="keyword">project</span>(CMakeStudy LANGUAGES CXX)</span><br><span class="line"><span class="comment">#设置创建的新目标名称：一个名叫CMakeStudy的可执行文件</span></span><br><span class="line"><span class="comment">#这个可执行文件是通过编译和链接源文件main.cpp生成的</span></span><br><span class="line"><span class="keyword">add_executable</span>(CMakeStudy main.cpp)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>CMake语言不区分大小写，但参数区分大小写</li>
 <li>CMake的缺省默认语言为C++</li>
 </ul>
 <h3 id="构建">构建</h3>
 <p>写好<code>CMakeLists.txt</code>文件后，在命令行中输入：</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$cmake</span> -H. <span class="token parameter variable">-Bbuild</span></code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">cmake -H. -Bbuild</span></span><br></pre></td></tr></table></figure>
 <p>这个命令会搜索当前目录下的根<code>CMakeLists.txt</code>文件，创建一个<code>build</code>目录，在其中生成所有的代码</p>
 <p>然后再build目录中输入命令，以完成编译</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$cmake</span> <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span></code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">cmake --build .</span></span><br></pre></td></tr></table></figure>
 <p>一般我们不会在源码内部构建，因为这会污染源码的目录树</p>
 <h3 id="链接">链接</h3>
 <p>如果项目中有多个文件，如</p>
 <p><img src="/images/%E9%93%BE%E6%8E%A5.png" class="lazyload" data-srcset="/images/%E9%93%BE%E6%8E%A5.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="链接"></p>
 <p>可以改目标生成</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_executable</span><span class="token punctuation">(</span>hello main.cpp Message.cpp Message.h<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(hello main.cpp <span class="keyword">Message</span>.cpp <span class="keyword">Message</span>.h)</span><br></pre></td></tr></table></figure>
 <p>但是这种改法太麻烦了，每添加一个文件就要在后面添一端，最后这东西会特别长</p>
 <p>我们可以把这个类编译成一个（静态）库，然后再将库链接到可执行文件中（你还记得c++编译器的编译步骤吗？）</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.20</span><span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>CMakeStudy LANGUAGES CXX<span class="token punctuation">)</span>
-<span class="token comment">#将两个文件编译成库</span>
-<span class="token keyword">add_library</span><span class="token punctuation">(</span>message <span class="token namespace">STATIC</span> Message.h Message.cpp<span class="token punctuation">)</span>
-<span class="token comment">#目标不变</span>
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>hello main.cpp<span class="token punctuation">)</span>
-<span class="token comment">#链接</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>hello message<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(CMakeStudy LANGUAGES CXX)</span><br><span class="line"><span class="comment">#将两个文件编译成库</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="keyword">message</span> STATIC <span class="keyword">Message</span>.h <span class="keyword">Message</span>.cpp)</span><br><span class="line"><span class="comment">#目标不变</span></span><br><span class="line"><span class="keyword">add_executable</span>(hello main.cpp)</span><br><span class="line"><span class="comment">#链接</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(hello <span class="keyword">message</span>)</span><br></pre></td></tr></table></figure>
 <p>此外，我们能在buid目录中找到一个名为/形如<code>libmessage.a</code>的文件，这就是编译得到的静态库</p>
 <h4 id="add-library">add_library</h4>
 <p>生成一个名叫<code>message</code>的库</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_library</span><span class="token punctuation">(</span>message <span class="token namespace">STATIC</span> Message.h Message.cpp<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(<span class="keyword">message</span> STATIC <span class="keyword">Message</span>.h <span class="keyword">Message</span>.cpp)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p>第一个参数是目标名，后续可以使用该名来引用库</p>
@@ -2634,23 +2612,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h4 id="条件语句">条件语句</h4>
 <p>在讲链接时，我们给出了两种编译方法，我们希望能在两种方式间切换</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.20</span><span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>CMakeStudy LANGUAGES CXX<span class="token punctuation">)</span>
-<span class="token comment">#引入一个新变量USE_LIBRARY，设置为OFF</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span>USE_LIBRARY <span class="token boolean">OFF</span><span class="token punctuation">)</span>
-<span class="token comment">#打印信息</span>
-<span class="token keyword">message</span><span class="token punctuation">(</span>STATUS <span class="token string">"Compile sources into a library? <span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">USE_LIBRARY</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">BUILD_SHARED_LIBS</span> <span class="token boolean">OFF</span><span class="token punctuation">)</span>
-<span class="token comment">#引入一个list变量: _sources，包含两个文件</span>
-<span class="token keyword">list</span><span class="token punctuation">(</span>APPEND _sources Message.h Message.cpp<span class="token punctuation">)</span>
-<span class="token comment">#判断，若USE_LIBRARY为真，则编译成库</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span>USE_LIBRARY<span class="token punctuation">)</span>
-    <span class="token keyword">add_library</span><span class="token punctuation">(</span>message <span class="token punctuation">$&#123;</span>_sources<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-    <span class="token keyword">add_executable</span><span class="token punctuation">(</span>hello main.cpp<span class="token punctuation">)</span>
-    <span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>hello message<span class="token punctuation">)</span>
-<span class="token keyword">else</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">add_executable</span><span class="token punctuation">(</span>hello main.cpp <span class="token punctuation">$&#123;</span>_sources<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(CMakeStudy LANGUAGES CXX)</span><br><span class="line"><span class="comment">#引入一个新变量USE_LIBRARY，设置为OFF</span></span><br><span class="line"><span class="keyword">set</span>(USE_LIBRARY <span class="keyword">OFF</span>)</span><br><span class="line"><span class="comment">#打印信息</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">&quot;Compile sources into a library? $&#123;USE_LIBRARY&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">set</span>(BUILD_SHARED_LIBS <span class="keyword">OFF</span>)</span><br><span class="line"><span class="comment">#引入一个list变量: _sources，包含两个文件</span></span><br><span class="line"><span class="keyword">list</span>(APPEND _sources <span class="keyword">Message</span>.h <span class="keyword">Message</span>.cpp)</span><br><span class="line"><span class="comment">#判断，若USE_LIBRARY为真，则编译成库</span></span><br><span class="line"><span class="keyword">if</span>(USE_LIBRARY)</span><br><span class="line">    <span class="keyword">add_library</span>(<span class="keyword">message</span> <span class="variable">$&#123;_sources&#125;</span>)</span><br><span class="line">    <span class="keyword">add_executable</span>(hello main.cpp)</span><br><span class="line">    <span class="keyword">target_link_libraries</span>(hello <span class="keyword">message</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">add_executable</span>(hello main.cpp <span class="variable">$&#123;_sources&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
 <h4 id="逻辑变量">逻辑变量</h4>
 <ul>
 <li>true：<code>1</code>、<code>ON</code>、<code>YES</code>、<code>true</code>、<code>Y</code>、非零数</li>
@@ -2658,7 +2620,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h4 id="全局变量">全局变量</h4>
 <p>CMake有一些全局变量，修改他们可以起到配置作用，这里设置的</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">BUILD_SHARED_LIBS</span> <span class="token boolean">OFF</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span>(BUILD_SHARED_LIBS <span class="keyword">OFF</span>)</span><br></pre></td></tr></table></figure>
 <p>当设置为OFF时，可以使<code>add_library</code>不用传递第二个参数</p>
 <table>
 <thead>
@@ -2696,10 +2658,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </table>
 <h3 id="用户选项">用户选项</h3>
 <p>在上面我们引入了一个条件语句，但是是硬编码的。我们希望用户可以控制<code>USE_LIBRARY</code>，于是可以使用<code>option</code></p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#set(USE_LIBRARY OFF)</span>
-<span class="token keyword">option</span><span class="token punctuation">(</span>USE_LIBRARY <span class="token string">"Compile sources into a library"</span> <span class="token boolean">OFF</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#set(USE_LIBRARY OFF)</span></span><br><span class="line"><span class="keyword">option</span>(USE_LIBRARY <span class="string">&quot;Compile sources into a library&quot;</span> <span class="keyword">OFF</span>)</span><br></pre></td></tr></table></figure>
 <p>将上面下面的<code>set</code>替换为<code>option</code>，运行</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$cmake</span> <span class="token parameter variable">-D</span> <span class="token assign-left variable">USE_LIBRARY</span><span class="token operator">=</span>ON</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">cmake -D USE_LIBRARY=ON</span></span><br></pre></td></tr></table></figure>
 <p>如果是Clion可以配置</p>
 <p><img src="/images/Clion-Option.png" class="lazyload" data-srcset="/images/Clion-Option.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Clion-Option"></p>
 <h3 id="构建类型">构建类型</h3>
@@ -2730,33 +2691,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </tbody>
 </table>
 <h3 id="编译选项">编译选项</h3>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.20</span><span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>CMakeStudy LANGUAGES CXX<span class="token punctuation">)</span>
-
-<span class="token keyword">list</span><span class="token punctuation">(</span>APPEND flags <span class="token string">"-fPIC"</span> <span class="token string">"-Wall"</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">NOT</span> <span class="token variable">WIN32</span><span class="token punctuation">)</span>
-    <span class="token keyword">list</span><span class="token punctuation">(</span>APPEND flags <span class="token string">"-Wextra"</span> <span class="token string">"-Wpedantic"</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment">#添加一个库</span>
-<span class="token keyword">add_library</span><span class="token punctuation">(</span>message
-    <span class="token namespace">STATIC</span>
-        Message.h
-        Message.cpp
-<span class="token punctuation">)</span>
-<span class="token comment">#为库设置编译选项</span>
-<span class="token keyword">target_compile_options</span><span class="token punctuation">(</span>message
-    <span class="token namespace">PRIVATE</span>
-        <span class="token punctuation">$&#123;</span>flags<span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span>
-<span class="token comment">#添加可执行目标</span>
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>hello main.cpp<span class="token punctuation">)</span>
-<span class="token comment">#为可执行目标设置编译选项</span>
-<span class="token keyword">target_compile_options</span><span class="token punctuation">(</span>hello
-    <span class="token namespace">PRIVATE</span>
-        <span class="token string">"-fPIC"</span>
-<span class="token punctuation">)</span>
-<span class="token comment">#链接</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>hello message<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.20</span>)</span><br><span class="line"><span class="keyword">project</span>(CMakeStudy LANGUAGES CXX)</span><br><span class="line"></span><br><span class="line"><span class="keyword">list</span>(APPEND flags <span class="string">&quot;-fPIC&quot;</span> <span class="string">&quot;-Wall&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">NOT</span> WIN32)</span><br><span class="line">    <span class="keyword">list</span>(APPEND flags <span class="string">&quot;-Wextra&quot;</span> <span class="string">&quot;-Wpedantic&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="comment">#添加一个库</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="keyword">message</span></span><br><span class="line">    STATIC</span><br><span class="line">        <span class="keyword">Message</span>.h</span><br><span class="line">        <span class="keyword">Message</span>.cpp</span><br><span class="line">)</span><br><span class="line"><span class="comment">#为库设置编译选项</span></span><br><span class="line"><span class="keyword">target_compile_options</span>(<span class="keyword">message</span></span><br><span class="line">    PRIVATE</span><br><span class="line">        <span class="variable">$&#123;flags&#125;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">#添加可执行目标</span></span><br><span class="line"><span class="keyword">add_executable</span>(hello main.cpp)</span><br><span class="line"><span class="comment">#为可执行目标设置编译选项</span></span><br><span class="line"><span class="keyword">target_compile_options</span>(hello</span><br><span class="line">    PRIVATE</span><br><span class="line">        <span class="string">&quot;-fPIC&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">#链接</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(hello <span class="keyword">message</span>)</span><br></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -2785,22 +2720,12 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </blockquote>
 <h4 id="MSVC">MSVC</h4>
 <p>配置MSVC编译选项</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">MSVC</span><span class="token punctuation">)</span>
-    <span class="token keyword">target_compile_options</span><span class="token punctuation">(</span>my_executable <span class="token namespace">PRIVATE</span> /EHs-c-<span class="token punctuation">)</span>  <span class="token comment"># 禁用异常处理</span>
-    <span class="token keyword">target_compile_options</span><span class="token punctuation">(</span>my_executable <span class="token namespace">PRIVATE</span> /W4 /WX<span class="token punctuation">)</span>  <span class="token comment"># 设置警告级别为 4，并将警告视为错误</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(MSVC)</span><br><span class="line">    <span class="keyword">target_compile_options</span>(my_executable PRIVATE /EHs-c-)  <span class="comment"># 禁用异常处理</span></span><br><span class="line">    <span class="keyword">target_compile_options</span>(my_executable PRIVATE /W4 /WX)  <span class="comment"># 设置警告级别为 4，并将警告视为错误</span></span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
 <h3 id="循环">循环</h3>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">foreach</span><span class="token punctuation">(</span>_source <span class="token punctuation">$&#123;</span>sources_with_lower_optimization<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-  <span class="token keyword">get_source_file_property</span><span class="token punctuation">(</span>_flags <span class="token punctuation">$&#123;</span>_source<span class="token punctuation">&#125;</span> <span class="token property">COMPILE_FLAGS</span><span class="token punctuation">)</span>
-  <span class="token keyword">message</span><span class="token punctuation">(</span>STATUS <span class="token string">"Source <span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">_source</span><span class="token punctuation">&#125;</span></span> has the following extra COMPILE_FLAGS: <span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">_flags</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">endforeach</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(_source <span class="variable">$&#123;sources_with_lower_optimization&#125;</span>)</span><br><span class="line">  <span class="keyword">get_source_file_property</span>(_flags <span class="variable">$&#123;_source&#125;</span> COMPILE_FLAGS)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;Source $&#123;_source&#125; has the following extra COMPILE_FLAGS: $&#123;_flags&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br></pre></td></tr></table></figure>
 <h3 id="命令">命令</h3>
 <p>cmake中可以添加一些自定义命令，常用于实现编译前文件拷贝操作，比如将第三方<code>.dll</code>文件复制到可执行文件到项目根路径</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_custom_command</span><span class="token punctuation">(</span>TARGET <span class="token punctuation">$&#123;</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">&#125;</span> 
-                   POST_BUILD 
-                   COMMAND <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_COMMAND</span><span class="token punctuation">&#125;</span> -E 
-                   copy “<span class="token punctuation">$&#123;</span>xxx.dll<span class="token punctuation">&#125;</span>” <span class="token punctuation">$&lt;</span>TARGET_FILE_DIR:<span class="token punctuation">$&#123;</span><span class="token variable">PROJECT_NAME</span><span class="token punctuation">&#125;</span><span class="token punctuation">></span>
-                   <span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> <span class="variable">$&#123;PROJECT_NAME&#125;</span> </span><br><span class="line">                   POST_BUILD </span><br><span class="line">                   <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E </span><br><span class="line">                   copy “<span class="variable">$&#123;xxx.dll&#125;</span>” $&lt;TARGET_FILE_DIR:<span class="variable">$&#123;PROJECT_NAME&#125;</span>&gt;</span><br><span class="line">                   )</span><br></pre></td></tr></table></figure>
 <p>命令执行时机：</p>
 <ul>
 <li><code>POST_BUILD</code>：生成目标文件后</li>
@@ -2810,59 +2735,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>执行的命令是Linux Command，比如<code>copy $&#123;source&#125; $&#123;target&#125;</code>，<code>echo $&#123;output_string&#125;</code></p>
 <h3 id="搜索">搜索</h3>
 <p>我们不可能将每一个文件都以单文件的形式写进<code>CMakeLists.txt</code>中，于是我们需要按照某种规则搜索所有的文件</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">file</span><span class="token punctuation">(</span>GLOB_RECURSE SRC_FILES_H <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">SOURCE_DIR</span><span class="token punctuation">&#125;</span></span>/*.h"</span><span class="token punctuation">)</span>
-<span class="token keyword">file</span><span class="token punctuation">(</span>GLOB_RECURSE SRC_FILES_CPP <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">SOURCE_DIR</span><span class="token punctuation">&#125;</span></span>/*.cpp"</span><span class="token punctuation">)</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span>ALL_FILES <span class="token punctuation">$&#123;</span>SRC_FILES_H<span class="token punctuation">&#125;</span> <span class="token punctuation">$&#123;</span>SRC_FILES_CPP<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">file</span>(GLOB_RECURSE SRC_FILES_H <span class="string">&quot;$&#123;SOURCE_DIR&#125;/*.h&quot;</span>)</span><br><span class="line"><span class="keyword">file</span>(GLOB_RECURSE SRC_FILES_CPP <span class="string">&quot;$&#123;SOURCE_DIR&#125;/*.cpp&quot;</span>)</span><br><span class="line"><span class="keyword">set</span>(ALL_FILES <span class="variable">$&#123;SRC_FILES_H&#125;</span> <span class="variable">$&#123;SRC_FILES_CPP&#125;</span>)</span><br></pre></td></tr></table></figure>
 <p>排除SRC中部分文件</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">list</span><span class="token punctuation">(</span>FILTER SRC EXCLUDE REGEX <span class="token string">"/ui/*"</span><span class="token punctuation">)</span>
-<span class="token keyword">list</span><span class="token punctuation">(</span>FILTER SRC EXCLUDE REGEX <span class="token string">"/core/+"</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">list</span>(FILTER SRC EXCLUDE REGEX <span class="string">&quot;/ui/*&quot;</span>)</span><br><span class="line"><span class="keyword">list</span>(FILTER SRC EXCLUDE REGEX <span class="string">&quot;/core/+&quot;</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="二：环境检查">二：环境检查</h2>
 <h3 id="检查平台">检查平台</h3>
 <p>我们要处理如下的C++源码（hello-world.cpp）</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">std::string say_hello() &#123;
-#ifdef IS_WINDOWS
-  return std::string(&quot;Hello from Windows!&quot;);
-#elif IS_LINUX
-  return std::string(&quot;Hello from Linux!&quot;);
-#elif IS_MACOS
-  return std::string(&quot;Hello from macOS!&quot;);
-#else
-  return std::string(&quot;Hello from an unknown system!&quot;);
-#endif
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">std::string <span class="title">say_hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> IS_WINDOWS</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from Windows!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_LINUX</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from Linux!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">elif</span> IS_MACOS</span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from macOS!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">  <span class="keyword">return</span> std::<span class="built_in">string</span>(<span class="string">&quot;Hello from an unknown system!&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>CMake可以加入</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#查询操作系统</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_SYSTEM_NAME</span> <span class="token operator">STREQUAL</span> <span class="token string">"Linux"</span><span class="token punctuation">)</span>
-	<span class="token comment">#设置宏</span>
-  <span class="token keyword">target_compile_definitions</span><span class="token punctuation">(</span>hello-world <span class="token namespace">PUBLIC</span> <span class="token string">"IS_LINUX"</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_SYSTEM_NAME</span> <span class="token operator">STREQUAL</span> <span class="token string">"Darwin"</span><span class="token punctuation">)</span>
-  <span class="token keyword">target_compile_definitions</span><span class="token punctuation">(</span>hello-world <span class="token namespace">PUBLIC</span> <span class="token string">"IS_MACOS"</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_SYSTEM_NAME</span> <span class="token operator">STREQUAL</span> <span class="token string">"Windows"</span><span class="token punctuation">)</span>
-  <span class="token keyword">target_compile_definitions</span><span class="token punctuation">(</span>hello-world <span class="token namespace">PUBLIC</span> <span class="token string">"IS_WINDOWS"</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询操作系统</span></span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Linux&quot;</span>)</span><br><span class="line">	<span class="comment">#设置宏</span></span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_LINUX&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Darwin&quot;</span>)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_MACOS&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_SYSTEM_NAME <span class="keyword">STREQUAL</span> <span class="string">&quot;Windows&quot;</span>)</span><br><span class="line">  <span class="keyword">target_compile_definitions</span>(hello-world PUBLIC <span class="string">&quot;IS_WINDOWS&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
 <h3 id="检查编译器">检查编译器</h3>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_COMPILER_ID</span> <span class="token operator">MATCHES</span> Intel<span class="token punctuation">)</span>
-	...
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_COMPILER_ID</span> <span class="token operator">MATCHES</span> GNU<span class="token punctuation">)</span>
-	...
-...</code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_CXX_COMPILER_ID <span class="keyword">MATCHES</span> Intel)</span><br><span class="line">	...</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">if</span>(CMAKE_CXX_COMPILER_ID <span class="keyword">MATCHES</span> GNU)</span><br><span class="line">	...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <h3 id="检查处理器架构">检查处理器架构</h3>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_SIZEOF_VOID_P</span> <span class="token operator">EQUAL</span> <span class="token number">8</span><span class="token punctuation">)</span>
-	<span class="token comment">#64bits</span>
-<span class="token keyword">else</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-	<span class="token comment">#32bits</span>
-<span class="token function">endlf</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_SIZEOF_VOID_P <span class="keyword">EQUAL</span> <span class="number">8</span>)</span><br><span class="line">	<span class="comment">#64bits</span></span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">	<span class="comment">#32bits</span></span><br><span class="line">endlf()</span><br></pre></td></tr></table></figure>
 <h2 id="三：链接外部库">三：链接外部库</h2>
 <h3 id="语法">语法</h3>
 <h4 id="find-package">find_package</h4>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#查找名为OpenCV的包，如果没找到就报错</span>
-<span class="token keyword">find_package</span><span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查找名为OpenCV的包，如果没找到就报错</span></span><br><span class="line"><span class="keyword">find_package</span>(OpenCV REQUIRED)</span><br></pre></td></tr></table></figure>
 <p>该函数的本质就是去（先去标准路径）寻找一个<code>包名-config.cmake</code>文件</p>
 <p>在mac，找OpenCV找的可能就是</p>
-<pre class="language-none"><code class="language-none">&#x2F;usr&#x2F;lib&#x2F;cmake&#x2F;OpenCV&#x2F;OpenCVConfig.cmake</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/usr/lib/cmake/OpenCV/OpenCVConfig.cmake</span><br></pre></td></tr></table></figure>
 <p>如果你安装的位置不是标准路径，你可以</p>
 <ul>
 <li>在build时手动指定<code>-xxx_DIR=&quot;aaa/lib/cmake/xxx&quot;</code>
@@ -2879,11 +2771,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>将要链接的静态库（<code>test_library.a</code>）复制到lib文件夹中</li>
 <li>找包</li>
 </ol>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">find_library</span><span class="token punctuation">(</span>TEXT_LIBRARY test_library lib<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">find_library</span>(TEXT_LIBRARY test_library lib)</span><br></pre></td></tr></table></figure>
 <ol start="4">
 <li>链接</li>
 </ol>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>testapp LINK_PUBLIC &amp;&#123;TEST_LIBRARY<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(testapp LINK_PUBLIC &amp;&#123;TEST_LIBRARY&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="链接动态库">链接动态库</h3>
 <h3 id="常用库">常用库</h3>
 <h4 id="Eigen">Eigen</h4>
@@ -2891,36 +2783,16 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <ol>
 <li>安装（记住eigen的版本）</li>
 </ol>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$brew</span> <span class="token function">install</span> eigen</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">brew install eigen</span></span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>将Eigen链接到系统文件夹（brew一般会自动链接）</li>
 </ol>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable">$brew</span> <span class="token function">link</span> <span class="token parameter variable">--overwrite</span> eigen</code></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">brew <span class="built_in">link</span> --overwrite eigen</span></span><br></pre></td></tr></table></figure>
 <ol start="3">
 <li>链接</li>
 </ol>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#寻找Eigen包，并附带包版本</span>
-<span class="token keyword">find_package</span><span class="token punctuation">(</span>Eigen3 <span class="token number">3.4</span> REQUIRED CONFIG<span class="token punctuation">)</span>
-<span class="token comment">#若找到，则打印信息</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>TARGET <span class="token inserted class-name">Eigen3::Eigen</span><span class="token punctuation">)</span>
-    <span class="token keyword">message</span><span class="token punctuation">(</span>STATUS <span class="token string">"Eigen3 <span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">EIGEN3_VERSION_STRING</span><span class="token punctuation">&#125;</span></span> found in <span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">EIGEN3_INCLUDE_DIR</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment">#目标</span>
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>path-info main.cpp<span class="token punctuation">)</span>
-<span class="token comment">#链接</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>path-info
-        <span class="token namespace">PUBLIC</span>
-        <span class="token inserted class-name">Eigen3::Eigen</span>
-        <span class="token punctuation">)</span></code></pre>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;Eigen&#x2F;Dense&gt;
-
-int main(int argc, char **argv)&#123;
-    int dim &#x3D; std::atoi(argv[1]);
-    Eigen::MatrixXd A &#x3D; Eigen::MatrixXd::Random(dim, dim);
-    std::cout &lt;&lt; A;
-    return 0;
-&#125;</code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#寻找Eigen包，并附带包版本</span></span><br><span class="line"><span class="keyword">find_package</span>(Eigen3 <span class="number">3.4</span> REQUIRED CONFIG)</span><br><span class="line"><span class="comment">#若找到，则打印信息</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">TARGET</span> Eigen3::Eigen)</span><br><span class="line">    <span class="keyword">message</span>(STATUS <span class="string">&quot;Eigen3 $&#123;EIGEN3_VERSION_STRING&#125; found in $&#123;EIGEN3_INCLUDE_DIR&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span> ()</span><br><span class="line"><span class="comment">#目标</span></span><br><span class="line"><span class="keyword">add_executable</span>(path-info main.cpp)</span><br><span class="line"><span class="comment">#链接</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(path-info</span><br><span class="line">        PUBLIC</span><br><span class="line">        Eigen3::Eigen</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> dim = std::<span class="built_in">atoi</span>(argv[<span class="number">1</span>]);</span><br><span class="line">    Eigen::MatrixXd A = Eigen::MatrixXd::<span class="built_in">Random</span>(dim, dim);</span><br><span class="line">    std::cout &lt;&lt; A;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="brew的用法">brew的用法</h3>
 <p>这里提一嘴Homebrew，这是一个mac上非常好用的包管理器，可以非常“优雅”地安装软件</p>
 <p>brew会把软件安装在<code>/usr/local/Cellar</code>目录</p>
@@ -2929,76 +2801,21 @@ int main(int argc, char **argv)&#123;
 <li>bin目录执行文件链接到<code>/usr/local/bin</code>中（opt也有可能在根目录）</li>
 </ul>
 <p>常用命令</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">$ brew <span class="token parameter variable">-v</span>     <span class="token comment"># 安装完成后可以查看版本</span>
-$ brew <span class="token parameter variable">--help</span> <span class="token comment"># 简洁命令帮助</span>
-$ <span class="token function">man</span> brew    <span class="token comment"># 完整命令帮助</span>
-
-$ brew search <span class="token function">git</span>    <span class="token comment"># 搜索软件包</span>
-$ brew info <span class="token function">git</span>      <span class="token comment"># 查看软件包信息</span>
-$ brew home <span class="token function">git</span>      <span class="token comment"># 访问软件包官方站(用浏览器打开)</span>
-
-$ brew <span class="token function">install</span> <span class="token function">git</span>   <span class="token comment"># 安装软件包(这里是示例安装Git版本控制)</span>
-$ brew uninstall <span class="token function">git</span> <span class="token comment"># 卸载软件包</span>
-$ brew list          <span class="token comment"># 显示已经安装的所有软件包</span>
-$ brew list <span class="token parameter variable">--versions</span> <span class="token comment"># 查看你安装过的包列表（包括版本号）</span>
-
-$ brew update        <span class="token comment"># 同步远程最新更新情况，对本机已经安装并有更新的软件用*标明</span>
-$ brew outdated      <span class="token comment"># 查看已安装的哪些软件包需要更新</span>
-$ brew upgrade <span class="token function">git</span>   <span class="token comment"># 更新单个软件包</span>
-$ brew deps php      <span class="token comment"># 显示包依赖</span>
-
-$ brew cleanup       <span class="token comment"># 清理所有已安装软件包的历史老版本</span>
-$ brew cleanup <span class="token function">git</span>   <span class="token comment"># 清理单个已安装软件包的历史版本</span>
-$ brew cleanup <span class="token parameter variable">-n</span>    <span class="token comment"># 查看哪些软件包要被清除</span></code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew -v     <span class="comment"># 安装完成后可以查看版本</span></span><br><span class="line">$ brew --<span class="built_in">help</span> <span class="comment"># 简洁命令帮助</span></span><br><span class="line">$ man brew    <span class="comment"># 完整命令帮助</span></span><br><span class="line"></span><br><span class="line">$ brew search git    <span class="comment"># 搜索软件包</span></span><br><span class="line">$ brew info git      <span class="comment"># 查看软件包信息</span></span><br><span class="line">$ brew home git      <span class="comment"># 访问软件包官方站(用浏览器打开)</span></span><br><span class="line"></span><br><span class="line">$ brew install git   <span class="comment"># 安装软件包(这里是示例安装Git版本控制)</span></span><br><span class="line">$ brew uninstall git <span class="comment"># 卸载软件包</span></span><br><span class="line">$ brew list          <span class="comment"># 显示已经安装的所有软件包</span></span><br><span class="line">$ brew list --versions <span class="comment"># 查看你安装过的包列表（包括版本号）</span></span><br><span class="line"></span><br><span class="line">$ brew update        <span class="comment"># 同步远程最新更新情况，对本机已经安装并有更新的软件用*标明</span></span><br><span class="line">$ brew outdated      <span class="comment"># 查看已安装的哪些软件包需要更新</span></span><br><span class="line">$ brew upgrade git   <span class="comment"># 更新单个软件包</span></span><br><span class="line">$ brew deps php      <span class="comment"># 显示包依赖</span></span><br><span class="line"></span><br><span class="line">$ brew cleanup       <span class="comment"># 清理所有已安装软件包的历史老版本</span></span><br><span class="line">$ brew cleanup git   <span class="comment"># 清理单个已安装软件包的历史版本</span></span><br><span class="line">$ brew cleanup -n    <span class="comment"># 查看哪些软件包要被清除</span></span><br></pre></td></tr></table></figure>
 <h3 id="拷贝动态库">拷贝动态库</h3>
 <p>有时为了可拓展性和编译速度，我们会将一个项目切分为多个模块，这些模块编译为dll，然后拷贝到主程序（exe）所在的目录</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment"># 将 OptickCore.dll拷贝到 client.exe所在路径</span>
-<span class="token keyword">add_custom_command</span><span class="token punctuation">(</span>TARGET client POST_BUILD
-    COMMAND <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_COMMAND</span><span class="token punctuation">&#125;</span> -E copy_if_different
-    <span class="token punctuation">$&lt;</span>TARGET_FILE:OptickCore<span class="token punctuation">></span>
-    <span class="token punctuation">$&lt;</span>TARGET_FILE_DIR:client<span class="token punctuation">></span>
-<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将 OptickCore.dll拷贝到 client.exe所在路径</span></span><br><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> client POST_BUILD</span><br><span class="line">    <span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy_if_different</span><br><span class="line">    $&lt;TARGET_FILE:OptickCore&gt;</span><br><span class="line">    $&lt;TARGET_FILE_DIR:client&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <h2 id="四：项目">四：项目</h2>
 <h3 id="模块">模块</h3>
 <p>我们可以将一个大的CMake源码分成一个个模块，将这些模块放在<code>cmake</code>文件夹里，后缀为<code>.cmake</code></p>
 <p>如下的项目结构</p>
-<pre class="language-none"><code class="language-none">.
-├── cmake
-│     └── colors.cmake
-└── CMakeLists.txt</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── cmake</span><br><span class="line">│     └── colors.cmake</span><br><span class="line">└── CMakeLists.txt</span><br></pre></td></tr></table></figure>
 <p><code>cmake/colors.cmake</code>文件内包含了一个色彩输出的定义</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">macro</span><span class="token punctuation">(</span>define_colors<span class="token punctuation">)</span>
-  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">WIN32</span><span class="token punctuation">)</span>
-    <span class="token comment"># has no effect on WIN32</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>ColourReset <span class="token string">""</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>ColourBold <span class="token string">""</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Red <span class="token string">""</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Green <span class="token string">""</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Yellow <span class="token string">""</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Blue <span class="token string">""</span><span class="token punctuation">)</span>
-   	...
-  <span class="token keyword">else</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">string</span><span class="token punctuation">(</span>ASCII <span class="token number">27</span> Esc<span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>ColourReset <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">Esc</span><span class="token punctuation">&#125;</span></span>[m"</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>ColourBold <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">Esc</span><span class="token punctuation">&#125;</span></span>[1m"</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Red <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">Esc</span><span class="token punctuation">&#125;</span></span>[31m"</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Green <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">Esc</span><span class="token punctuation">&#125;</span></span>[32m"</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Yellow <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">Esc</span><span class="token punctuation">&#125;</span></span>[33m"</span><span class="token punctuation">)</span>
-    <span class="token keyword">set</span><span class="token punctuation">(</span>Blue <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">Esc</span><span class="token punctuation">&#125;</span></span>[34m"</span><span class="token punctuation">)</span>
-    ...
-  <span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">endmacro</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">macro</span>(define_colors)</span><br><span class="line">  <span class="keyword">if</span>(WIN32)</span><br><span class="line">    <span class="comment"># has no effect on WIN32</span></span><br><span class="line">    <span class="keyword">set</span>(ColourReset <span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(ColourBold <span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Red <span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Green <span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Yellow <span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Blue <span class="string">&quot;&quot;</span>)</span><br><span class="line">   	...</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">string</span>(ASCII <span class="number">27</span> Esc)</span><br><span class="line">    <span class="keyword">set</span>(ColourReset <span class="string">&quot;$&#123;Esc&#125;[m&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(ColourBold <span class="string">&quot;$&#123;Esc&#125;[1m&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Red <span class="string">&quot;$&#123;Esc&#125;[31m&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Green <span class="string">&quot;$&#123;Esc&#125;[32m&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Yellow <span class="string">&quot;$&#123;Esc&#125;[33m&quot;</span>)</span><br><span class="line">    <span class="keyword">set</span>(Blue <span class="string">&quot;$&#123;Esc&#125;[34m&quot;</span>)</span><br><span class="line">    ...</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endmacro</span>()</span><br></pre></td></tr></table></figure>
 <p>在<code>CMakeLists.txt</code>引用</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment">#将/cmake目录添加到路径列表</span>
-<span class="token keyword">list</span><span class="token punctuation">(</span>APPEND <span class="token variable">CMAKE_MODULE_PATH</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">&#125;</span></span>/cmake"</span><span class="token punctuation">)</span>
-<span class="token comment">#引入colors.cmake</span>
-<span class="token keyword">include</span><span class="token punctuation">(</span>colors<span class="token punctuation">)</span>
-<span class="token comment">#使用定义</span>
-<span class="token function">define_colors</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment">#将/cmake目录添加到路径列表</span></span><br><span class="line"><span class="keyword">list</span>(APPEND CMAKE_MODULE_PATH <span class="string">&quot;$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/cmake&quot;</span>)</span><br><span class="line"><span class="comment">#引入colors.cmake</span></span><br><span class="line"><span class="keyword">include</span>(colors)</span><br><span class="line"><span class="comment">#使用定义</span></span><br><span class="line">define_colors()</span><br></pre></td></tr></table></figure>
 <h3 id="函数">函数</h3>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">function</span><span class="token punctuation">(</span>函数名 参数<span class="token number">1</span> 参数<span class="token number">2</span><span class="token punctuation">)</span>
-	...
-<span class="token keyword">endfunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span>(函数名 参数<span class="number">1</span> 参数<span class="number">2</span>)</span><br><span class="line">	...</span><br><span class="line"><span class="keyword">endfunction</span>()</span><br></pre></td></tr></table></figure>
 <h2 id="参考资料">参考资料</h2>
 <p><a target="_blank" rel="noopener" href="https://www.jetbrains.com/help/clion/quick-cmake-tutorial.html?keymap=secondary_macos#seealso">Clion CMake</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/CMake-Cookbook/content-preface-preface-chinese.md">CMake菜谱</a></p>
@@ -3027,10 +2844,10 @@ $ brew cleanup <span class="token parameter variable">-n</span>    <span class="
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3113,16 +2930,15 @@ $ brew cleanup <span class="token parameter variable">-n</span>    <span class="
   
     <div class="prev-next">
       
-        <a class='prev' href='/graphics/%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>骨骼动画</p>
-          <p class='content'>骨骼动画
+        <a class='prev' href='/math/Pro-TBB/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>Pro-TBB</p>
+          <p class='content'>Pro TBB
+在摩尔定律逐渐失效的今日，CPU主频和单核性能提升越来越不明显，为了得到跟高的性能，我们走向了并行计算的道路
+概念
+并发和并行
 
-序列帧动画：记录动作的每一帧
 
-非矢量动画：每一帧是固定不可复用的，新的一帧本质上是完全重画一次物体，没有发生形态上的改变
-
-
-关键帧动画：记录动作的始末和轨迹曲线，运行时根据曲线进...</p>
+并发（Concurrent）：happenin...</p>
         </a>
       
       
@@ -3736,7 +3552,7 @@ C#的委托类似于C++的函数指针，C#中，将参数a,b委托给了对象a
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/CMake入门/","name":"CMake入门"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"CMake入门","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/CMake%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/CMake%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.107Z","articleSection":"program","keywords":"C++,CMake","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/CMake入门/","name":"CMake入门"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"CMake入门","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/CMake%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/CMake%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-02-01T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.296Z","articleSection":"program","keywords":"C++,CMake","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

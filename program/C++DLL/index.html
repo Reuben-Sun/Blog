@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-03-08T15:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:09.638Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:20.937Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2554,11 +2554,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>DLL的本质其实是<strong>目标文件</strong>的打包，由目标文件和三张表组成</p>
 <h3 id="编译">编译</h3>
 <p>代码会编译为目标文件<code>.obj</code>，目标文件中包含<strong>导出符号表</strong>，这些符号会有明确的地址</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// test1.cpp</span>
-<span class="token keyword">int</span> a<span class="token punctuation">;</span>		<span class="token comment">// 在test1.obj文件中a有明确的地址</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test1.cpp</span></span><br><span class="line"><span class="type">int</span> a;		<span class="comment">// 在test1.obj文件中a有明确的地址</span></span><br></pre></td></tr></table></figure>
 <p>有的文件中会有只声明，没有实现的符号，放在<strong>未解决符号表</strong>中。在这些符号没有明确的地址，需要去其他目标文件中寻找</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//test2.cpp</span>
-<span class="token keyword">extern</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span>		<span class="token comment">// 在test2.obj文件中a没有明确的地址</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//test2.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> a;		<span class="comment">// 在test2.obj文件中a没有明确的地址</span></span><br></pre></td></tr></table></figure>
 <h3 id="链接与装载">链接与装载</h3>
 <p>若程序为<strong>静态链接</strong>，编译器会在链接阶段扫描导出符号表中的符号地址，将计算后的地址写给未解决符号表中的符号，这个过程被称为重定位</p>
 <p>也就是说，从<code>test1.obj</code>中得到<code>a</code>的地址，经过计算，写给<code>test2.obj</code>中的<code>a</code>，这个过程会记录在<strong>地址重定向表</strong>中</p>
@@ -2596,27 +2594,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>值得注意的是，如果一个程序混用MT和MD，很容易出现版本不兼容的错误（尤其是在使用编译好的第三方库时）</p>
 <h3 id="C-生成DLL">C++生成DLL</h3>
 <p>CMakeList.txt</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">SET</span><span class="token punctuation">(</span>LIB_SRC ./Math.h ./Math.cpp<span class="token punctuation">)</span>
-<span class="token function">SET</span><span class="token punctuation">(</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span> ../libMath<span class="token punctuation">)</span>
-
-<span class="token function">ADD_LIBRARY</span><span class="token punctuation">(</span>MathDLL <span class="token namespace">SHARED</span> <span class="token punctuation">$&#123;</span>LIB_SRC<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token function">INSTALL</span><span class="token punctuation">(</span>TARGETS MathDLL<span class="token punctuation">)</span>
-
-<span class="token function">SET_TARGET_PROPERTIES</span><span class="token punctuation">(</span>MathDLL <span class="token namespace">PROPERTIES</span> <span class="token property">LINKER_LANGUAGE</span> C
-        <span class="token property">RUNTIME_OUTPUT_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="token punctuation">&#125;</span>
-        <span class="token property">LIBRARY_OUTPUT_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_LIBRARY_OUTPUT_DIRECTORY</span><span class="token punctuation">&#125;</span>
-        <span class="token property">OUTPUT_NAME</span> <span class="token string">"MathDLL"</span>
-        <span class="token property">PREFIX</span> <span class="token string">""</span><span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SET</span>(LIB_SRC ./<span class="keyword">Math</span>.h ./<span class="keyword">Math</span>.cpp)</span><br><span class="line"><span class="keyword">SET</span>(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../libMath)</span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD_LIBRARY</span>(MathDLL SHARED <span class="variable">$&#123;LIB_SRC&#125;</span>)</span><br><span class="line"><span class="keyword">INSTALL</span>(TARGETS MathDLL)</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET_TARGET_PROPERTIES</span>(MathDLL PROPERTIES LINKER_LANGUAGE C</span><br><span class="line">        RUNTIME_OUTPUT_DIRECTORY <span class="variable">$&#123;CMAKE_LIBRARY_OUTPUT_DIRECTORY&#125;</span></span><br><span class="line">        LIBRARY_OUTPUT_DIRECTORY <span class="variable">$&#123;CMAKE_LIBRARY_OUTPUT_DIRECTORY&#125;</span></span><br><span class="line">        OUTPUT_NAME <span class="string">&quot;MathDLL&quot;</span></span><br><span class="line">        PREFIX <span class="string">&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>Math.h</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">DLL_EXPORT</span> <span class="token expression"><span class="token keyword">extern</span> </span><span class="token string">"C"</span> <span class="token expression"><span class="token function">__declspec</span><span class="token punctuation">(</span>dllexport<span class="token punctuation">)</span></span></span>
-
-DLL_EXPORT <span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> DLL_EXPORT extern <span class="string">&quot;C&quot;</span> __declspec(dllexport)</span></span><br><span class="line"></span><br><span class="line"><span class="function">DLL_EXPORT <span class="type">int</span> <span class="title">MathAdd</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>Math.cpp</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Math.h"</span></span>
-
-<span class="token keyword">int</span> <span class="token function">MathAdd</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Math.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">MathAdd</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="动态加载DLL">动态加载DLL</h2>
 <p>windows下DLL加载：</p>
 <ol>
@@ -2624,18 +2606,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 <li>为dll文件开辟虚拟地址空间</li>
 <li>当dll被真正调用时，将dll文件加载到内存中</li>
 </ol>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
-
-<span class="token keyword">typedef</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>pfnAdd<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    HINSTANCE handle <span class="token operator">=</span> <span class="token function">LoadLibrary</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"../lib/libMath/MathDLL.dll"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    pfnAdd pAdd <span class="token operator">=</span> <span class="token punctuation">(</span>pfnAdd<span class="token punctuation">)</span> <span class="token function">GetProcAddress</span><span class="token punctuation">(</span>handle<span class="token punctuation">,</span> <span class="token string">"MathAdd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">pAdd</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-    <span class="token function">FreeLibrary</span><span class="token punctuation">(</span>handle<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(*pfnAdd)</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    HINSTANCE handle = <span class="built_in">LoadLibrary</span>(<span class="built_in">TEXT</span>(<span class="string">&quot;../lib/libMath/MathDLL.dll&quot;</span>));</span><br><span class="line">    pfnAdd pAdd = (pfnAdd) <span class="built_in">GetProcAddress</span>(handle, <span class="string">&quot;MathAdd&quot;</span>);</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">pAdd</span>(<span class="number">1</span>, <span class="number">2</span>) &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">FreeLibrary</span>(handle);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="参考">参考</h3>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16730284/dll-written-in-c-vs-the-same-written-in-c">DLL written in C vs the same written in C++</a></p>
 <p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2171177/what-is-an-application-binary-interface-abi">What is an application binary interface (ABI)?</a></p>
@@ -2664,10 +2635,10 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:09+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:20+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3369,7 +3340,7 @@ DLL_EXPORT <span class="token keyword">int</span> <span class="token function">M
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++DLL/","name":"C与C++的DLL"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C与C++的DLL","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++DLL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++DLL/","wordCount":0,"datePublished":"2023-03-08T15:01:25.000Z","dateModified":"2023-11-16T02:49:09.638Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/C++DLL/","name":"C与C++的DLL"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C与C++的DLL","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/C++DLL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/C++DLL/","wordCount":0,"datePublished":"2023-03-08T15:01:25.000Z","dateModified":"2023-11-21T01:45:20.937Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.093Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.277Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="GC">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2607,12 +2607,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>通过根，找到直接引用的对象，标记</li>
 <li>递归标记所有能访问到的对象（常用深搜，因为内存使用量更少）</li>
 </ol>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void mark(obj)&#123;
-	if(!obj.mark) 
-        obj.mark &#x3D; true;
-	for(child: obj.children) 
-        mark(*child);
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mark</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!obj.mark) </span><br><span class="line">        obj.mark = <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">for</span>(child: obj.children) </span><br><span class="line">        <span class="built_in">mark</span>(*child);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="清除阶段">清除阶段</h4>
 <p>遍历堆，回收所有没有被标记的对象，并将其放入空闲链表，以备分配</p>
 <h4 id="分配策略">分配策略</h4>
@@ -2662,21 +2657,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>创建新对象：分配内存，将对象引用次数设为1</li>
 <li>更新指针：先增后减计数器值，若引用次数为0则回收</li>
 </ol>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;更新指针ptr，让其指向obj
-void update_ptr(ptr, obj)&#123;	
-	inc_ref_cnt(obj);	&#x2F;&#x2F;obj要被ptr引用了，所以obj计数值++
-    dec_ref_cnt(*ptr);	&#x2F;&#x2F;ptr之前引用的东西不再被引用
-    *ptr &#x3D; obj;
-&#125;
-void dec_ref_cnt(obj)&#123;
-    obj.ref_cnt--;	&#x2F;&#x2F;obj不再被引用，所以计数值--
-    if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;	&#x2F;&#x2F;如果obj没人用了，obj就要被清除
-        for(child: obj.children)&#123;	&#x2F;&#x2F;obj被清除了，那obj引用的对象，被引用次数要--
-            dec_ref_cnt(*child);
-        &#125;
-        reclaim(obj);	&#x2F;&#x2F;执行回收
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//更新指针ptr，让其指向obj</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">update_ptr</span><span class="params">(ptr, obj)</span></span>&#123;	</span><br><span class="line">	<span class="built_in">inc_ref_cnt</span>(obj);	<span class="comment">//obj要被ptr引用了，所以obj计数值++</span></span><br><span class="line">    <span class="built_in">dec_ref_cnt</span>(*ptr);	<span class="comment">//ptr之前引用的东西不再被引用</span></span><br><span class="line">    *ptr = obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dec_ref_cnt</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">    obj.ref_cnt--;	<span class="comment">//obj不再被引用，所以计数值--</span></span><br><span class="line">    <span class="keyword">if</span>(obj.ref_cnt == <span class="number">0</span>)&#123;	<span class="comment">//如果obj没人用了，obj就要被清除</span></span><br><span class="line">        <span class="keyword">for</span>(child: obj.children)&#123;	<span class="comment">//obj被清除了，那obj引用的对象，被引用次数要--</span></span><br><span class="line">            <span class="built_in">dec_ref_cnt</span>(*child);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">reclaim</span>(obj);	<span class="comment">//执行回收</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="评价-2">评价</h4>
 <p>优点：</p>
 <ul>
@@ -2707,29 +2688,7 @@ void dec_ref_cnt(obj)&#123;
 </ul>
 </li>
 </ul>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void dec_ref_cnt(obj)&#123;
-    obj.ref_cnt--;
-    if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;	&#x2F;&#x2F;计数值变为0，可能会变成垃圾
-        if(is_full($zct))&#123;
-            scan_zct();		&#x2F;&#x2F;如果zct表满了，就扫描zct，并回收
-        &#125;
-        push($zct, obj);	&#x2F;&#x2F;将obj放入zct表
-    &#125;
-&#125;
-void scane_zct()&#123;
-    fot(r: $root)&#123;
-        (*r).ref_cnt++;	&#x2F;&#x2F;根直接引用的对象的计数器++，直接引用计数时，根会极频繁改动
-    &#125;
-    for(obj: $zct)&#123;
-        if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;
-            remove($zct, obj);
-            delete(obj);
-        &#125;
-    &#125;
-    fot(r: $root)&#123;
-        (*r).ref_cnt--;	
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dec_ref_cnt</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">    obj.ref_cnt--;</span><br><span class="line">    <span class="keyword">if</span>(obj.ref_cnt == <span class="number">0</span>)&#123;	<span class="comment">//计数值变为0，可能会变成垃圾</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">is_full</span>($zct))&#123;</span><br><span class="line">            <span class="built_in">scan_zct</span>();		<span class="comment">//如果zct表满了，就扫描zct，并回收</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">push</span>($zct, obj);	<span class="comment">//将obj放入zct表</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">scane_zct</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">fot</span>(r: $root)&#123;</span><br><span class="line">        (*r).ref_cnt++;	<span class="comment">//根直接引用的对象的计数器++，直接引用计数时，根会极频繁改动</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(obj: $zct)&#123;</span><br><span class="line">        <span class="keyword">if</span>(obj.ref_cnt == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">remove</span>($zct, obj);</span><br><span class="line">            <span class="built_in">delete</span>(obj);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">fot</span>(r: $root)&#123;</span><br><span class="line">        (*r).ref_cnt--;	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="Sticky引用计数法">Sticky引用计数法</h5>
 <p>解决空间浪费</p>
 <p>32位电脑意味着可以有$2^{32}$个对象，这些对象可能都会引用<code>obj</code>，所以<code>obj</code>的计数位应当可以记录被引用$2^{32}$次，所以计数位要有32位</p>
@@ -2749,46 +2708,11 @@ void scane_zct()&#123;
 </ul>
 </li>
 </ul>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;标记
-void mark()&#123;	
-    for(r: $roots)&#123;
-        push(*r, $stack);	&#x2F;&#x2F;将所有根直接引用对象入栈
-    &#125;
-    while(!$stack.empty())&#123;
-        obj &#x3D; pop($stack);
-        obj.ref_cnt++;
-        if(obj.ref_cnt &#x3D;&#x3D; 1)&#123;	&#x2F;&#x2F;这说明obj只进栈一次
-            for(child: obj.children)&#123;
-                push(*child, $stack);
-            &#125;
-        &#125;
-    &#125;
-&#125;
-&#x2F;&#x2F;清除
-void sweep()&#123;
-    index &#x3D; $heap_top;
-    while(index &lt; $heap_end)&#123;	&#x2F;&#x2F;遍历整个堆
-        if(index.ref_cnt &#x3D;&#x3D; 0)&#123;
-            reclaim(index);		&#x2F;&#x2F;回收计数值为0的对象
-        &#125;
-        index +&#x3D; index.size;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//标记</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mark</span><span class="params">()</span></span>&#123;	</span><br><span class="line">    <span class="keyword">for</span>(r: $roots)&#123;</span><br><span class="line">        <span class="built_in">push</span>(*r, $stack);	<span class="comment">//将所有根直接引用对象入栈</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(!$stack.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        obj = <span class="built_in">pop</span>($stack);</span><br><span class="line">        obj.ref_cnt++;</span><br><span class="line">        <span class="keyword">if</span>(obj.ref_cnt == <span class="number">1</span>)&#123;	<span class="comment">//这说明obj只进栈一次</span></span><br><span class="line">            <span class="keyword">for</span>(child: obj.children)&#123;</span><br><span class="line">                <span class="built_in">push</span>(*child, $stack);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//清除</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sweep</span><span class="params">()</span></span>&#123;</span><br><span class="line">    index = $heap_top;</span><br><span class="line">    <span class="keyword">while</span>(index &lt; $heap_end)&#123;	<span class="comment">//遍历整个堆</span></span><br><span class="line">        <span class="keyword">if</span>(index.ref_cnt == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">reclaim</span>(index);		<span class="comment">//回收计数值为0的对象</span></span><br><span class="line">        &#125;</span><br><span class="line">        index += index.size;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="一位引用计数法">一位引用计数法</h5>
 <p>是Sticky的极端，计数位只有一位（两个tag，一个MULTIPLE，一个UNIQUE），而且将计数位放在指针上，而非放在对象上</p>
 <p><img src="/images/%E4%B8%80%E4%BD%8D%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0.png" class="lazyload" data-srcset="/images/%E4%B8%80%E4%BD%8D%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="一位引用计数"></p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void copy_ptr(dest_ptr, src_ptr)&#123;
-    delete_ptr(dest_ptr);
-    *dest_ptr &#x3D; *src_ptr;
-    set_tag(dest_ptr, MULTIPLE);
-    if(src_ptr.tag &#x3D;&#x3D; UNIQUE)&#123;
-        set_tag(src_ptr, MULTIPLE);
-    &#125;
-&#125;
-void delete_ptr(ptr)&#123;
-    if(ptr.tag &#x3D;&#x3D; UNIQUE)	
-        reclaim(*ptr);	&#x2F;&#x2F;如果对象以前只被引用一次，那么这次就要被回收
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">copy_ptr</span><span class="params">(dest_ptr, src_ptr)</span></span>&#123;</span><br><span class="line">    <span class="built_in">delete_ptr</span>(dest_ptr);</span><br><span class="line">    *dest_ptr = *src_ptr;</span><br><span class="line">    <span class="built_in">set_tag</span>(dest_ptr, MULTIPLE);</span><br><span class="line">    <span class="keyword">if</span>(src_ptr.tag == UNIQUE)&#123;</span><br><span class="line">        <span class="built_in">set_tag</span>(src_ptr, MULTIPLE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">delete_ptr</span><span class="params">(ptr)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ptr.tag == UNIQUE)	</span><br><span class="line">        <span class="built_in">reclaim</span>(*ptr);	<span class="comment">//如果对象以前只被引用一次，那么这次就要被回收</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>优点</p>
 <ul>
 <li>cache命中率高</li>
@@ -2807,83 +2731,9 @@ void delete_ptr(ptr)&#123;
 <li>GRAY：搜索完毕的对象</li>
 <li>HATCH：可能是循环垃圾的对象</li>
 </ul>
-<pre class="language-c++" data-language="c++"><code class="language-c++">void dec_ref_cnt(obj)&#123;
-    obj.ref_cnt--;
-    if(obj.ref_cnt &#x3D;&#x3D; 0)&#123;
-        delete(obj);
-    &#125;
-    else if(obj.color !&#x3D; HATCH)&#123;
-        obj.color &#x3D; HATCH;
-        queue.push(obj);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dec_ref_cnt</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">    obj.ref_cnt--;</span><br><span class="line">    <span class="keyword">if</span>(obj.ref_cnt == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">delete</span>(obj);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(obj.color != HATCH)&#123;</span><br><span class="line">        obj.color = HATCH;</span><br><span class="line">        queue.<span class="built_in">push</span>(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>对放入队列的对象进行标记清除算法</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">Object new_obj(size)&#123;
-    obj &#x3D; pickup_chunk(size);	&#x2F;&#x2F;分配内存
-    if(obj !&#x3D; null)&#123;	&#x2F;&#x2F;如果分配成功
-        obj.color &#x3D; BLACK;
-        obj.ref_cnt &#x3D; 1;
-        return obj;
-    &#125;
-    else if(!queue.empty())&#123;	&#x2F;&#x2F;说明现在空间不足，要回收垃圾，先看是否存在HATCH物体
-        scan_hatch_queue();		
-        return new_obj(size);	&#x2F;&#x2F;回收queue内后重新尝试分配
-    &#125;
-    else&#123;
-        allocation_fall();
-    &#125;
-&#125;
-void scan_hatch_queue()&#123;	&#x2F;&#x2F;循环扫描队列，直至队列为空
-    obj &#x3D; queue.pop();
-    if(obj.color &#x3D;&#x3D; HATCH)&#123;
-        paint_gray(obj);	&#x2F;&#x2F;把obj和其孩子变为GRAY，孩子们引用值--
-        scan_gray(obj);		&#x2F;&#x2F;引用值&gt;0涂黑，等于0涂白
-        collect_while(obj);
-    &#125;
-    else if(!queue.empty())&#123;
-        scane_hatch_queue();
-    &#125;
-&#125;
-void paint_gray(obj)&#123;
-    if(obj.color &#x3D;&#x3D; (BLACK | HATCH))&#123;	
-        obj.color &#x3D; GRAY;	
-        for(child: obj.children)&#123;
-            (*child).ref_cnt--;
-            paint_gray(*child);
-        &#125;
-    &#125;
-&#125;
-void scan_gray(obj)&#123;
-    if(obj.color &#x3D;&#x3D; GRAY)&#123;
-        if(obj.ref_cnt &gt; 0)&#123;
-            paint_black(obj);
-        &#125;
-        else&#123;
-            obj.color &#x3D; WHITE;
-            for(child: children(obj))&#123;
-                scan_gray(*child);
-            &#125;
-        &#125;
-    &#125;
-&#125;
-void paint_black(obj)&#123;
-     obj.color &#x3D; BLACK;
-	 for(child : children(obj))&#123;
-		(*child).ref_cnt++
-		if((*child).color !&#x3D; BLACK)&#123;
-			paint_black(*child)            
-        &#125;          
-     &#125;		
-&#125;
-void collect_while()&#123;
-    if(obj.color &#x3D;&#x3D; WHILE)&#123;
-        obj.color &#x3D; BLACK;
-        for(child: obj.children)&#123;
-            collect_while(*child);
-        &#125;
-        reclaim(obj);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Object <span class="title">new_obj</span><span class="params">(size)</span></span>&#123;</span><br><span class="line">    obj = <span class="built_in">pickup_chunk</span>(size);	<span class="comment">//分配内存</span></span><br><span class="line">    <span class="keyword">if</span>(obj != null)&#123;	<span class="comment">//如果分配成功</span></span><br><span class="line">        obj.color = BLACK;</span><br><span class="line">        obj.ref_cnt = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(!queue.<span class="built_in">empty</span>())&#123;	<span class="comment">//说明现在空间不足，要回收垃圾，先看是否存在HATCH物体</span></span><br><span class="line">        <span class="built_in">scan_hatch_queue</span>();		</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">new_obj</span>(size);	<span class="comment">//回收queue内后重新尝试分配</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">allocation_fall</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">scan_hatch_queue</span><span class="params">()</span></span>&#123;	<span class="comment">//循环扫描队列，直至队列为空</span></span><br><span class="line">    obj = queue.<span class="built_in">pop</span>();</span><br><span class="line">    <span class="keyword">if</span>(obj.color == HATCH)&#123;</span><br><span class="line">        <span class="built_in">paint_gray</span>(obj);	<span class="comment">//把obj和其孩子变为GRAY，孩子们引用值--</span></span><br><span class="line">        <span class="built_in">scan_gray</span>(obj);		<span class="comment">//引用值&gt;0涂黑，等于0涂白</span></span><br><span class="line">        <span class="built_in">collect_while</span>(obj);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(!queue.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="built_in">scane_hatch_queue</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">paint_gray</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.color == (BLACK | HATCH))&#123;	</span><br><span class="line">        obj.color = GRAY;	</span><br><span class="line">        <span class="keyword">for</span>(child: obj.children)&#123;</span><br><span class="line">            (*child).ref_cnt--;</span><br><span class="line">            <span class="built_in">paint_gray</span>(*child);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">scan_gray</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.color == GRAY)&#123;</span><br><span class="line">        <span class="keyword">if</span>(obj.ref_cnt &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">paint_black</span>(obj);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            obj.color = WHITE;</span><br><span class="line">            <span class="keyword">for</span>(child: <span class="built_in">children</span>(obj))&#123;</span><br><span class="line">                <span class="built_in">scan_gray</span>(*child);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">paint_black</span><span class="params">(obj)</span></span>&#123;</span><br><span class="line">     obj.color = BLACK;</span><br><span class="line">	 <span class="keyword">for</span>(child : <span class="built_in">children</span>(obj))&#123;</span><br><span class="line">		(*child).ref_cnt++</span><br><span class="line">		<span class="keyword">if</span>((*child).color != BLACK)&#123;</span><br><span class="line">			<span class="built_in">paint_black</span>(*child)            </span><br><span class="line">        &#125;          </span><br><span class="line">     &#125;		</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">collect_while</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.color == WHILE)&#123;</span><br><span class="line">        obj.color = BLACK;</span><br><span class="line">        <span class="keyword">for</span>(child: obj.children)&#123;</span><br><span class="line">            <span class="built_in">collect_while</span>(*child);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">reclaim</span>(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>优点</p>
 <ul>
 <li>可以回收循环引用</li>
@@ -3031,17 +2881,7 @@ void collect_while()&#123;
 <li>32位CPU指针的值是4的倍数，那么其<strong>低2位</strong>一定是0</li>
 <li>我们可以将所有非指针左移1位，然后将其<strong>低1位</strong>置为1</li>
 </ul>
-<pre class="language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;打标签
-int addTag(int a)&#123;
-    a &#x3D; a &lt;&lt; 1;	&#x2F;&#x2F;小心溢出，如果会溢出，就用一个更大的数据结构
-	a &#x3D; a|1;
-    return a;
-&#125;
-&#x2F;&#x2F;去标签（在使用时需要恢复成正常数值），而且使用完后还有再次打标签
-int getValue(int a)&#123;
-    a  &#x3D; a &gt;&gt; 1;
-    return a;
-&#125;</code></pre>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//打标签</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">addTag</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">    a = a &lt;&lt; <span class="number">1</span>;	<span class="comment">//小心溢出，如果会溢出，就用一个更大的数据结构</span></span><br><span class="line">	a = a|<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//去标签（在使用时需要恢复成正常数值），而且使用完后还有再次打标签</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">    a  = a &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>除了打标签，还可以专门构建一个只存放指针的根，比如一些使用虚拟机（VM）的语言</p>
 <h5 id="评价-5">评价</h5>
 <p>优点</p>
@@ -3131,10 +2971,10 @@ int getValue(int a)&#123;
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3217,18 +3057,8 @@ int getValue(int a)&#123;
   
     <div class="prev-next">
       
-        <a class='prev' href='/dcc/maya%E6%8F%92%E4%BB%B6/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>Maya插件开发</p>
-          <p class='content'>Maya
-maya，老东西，行业标准，真难用（不是）
-腾讯巨神级TA、碧血红天的blog、Pycharm环境搭建
-创建一个python工具
-Python插件和Unity Editor那种工具不太...</p>
-        </a>
-      
-      
-        <a class='next' href='/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/'>
-          <p class='title'>大象无形UE笔记<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+        <a class='prev' href='/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>大象无形UE笔记</p>
           <p class='content'>UE学习笔记
 基类
 UObject
@@ -3238,6 +3068,19 @@ UObject
 
 被UProperty标记的变量会自动进行生命周期管理
 非UObject可以使用C++标准推荐的...</p>
+        </a>
+      
+      
+        <a class='next' href='/graphics/DX12%E7%AC%94%E8%AE%B01/'>
+          <p class='title'>DX12龙书（一）<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>DX12
+环境搭建
+Windows 10/11系统
+安装PIX
+安装Visual Studio 2019
+Windows应用程序
+Windows应用程序使用事件驱动（详情可以去看WPF）
+Win...</p>
         </a>
       
     </div>
@@ -3842,7 +3685,7 @@ UObject
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/GC/","name":"垃圾回收"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"垃圾回收","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/GC/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/GC/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.093Z","articleSection":"engine","keywords":"GC","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/GC/","name":"垃圾回收"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"垃圾回收","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/GC/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/GC/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.277Z","articleSection":"engine","keywords":"GC","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

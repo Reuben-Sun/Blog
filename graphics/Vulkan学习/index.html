@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-06-13T22:16:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:09.631Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:20.929Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Vulkan">
 <meta property="article:tag" content="Ray Tracing">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2549,10 +2549,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </blockquote>
 <h2 id="Shader">Shader</h2>
 <p>Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语言，可以使用glslang编译GLSL得到</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 将vert_shader.vert编译为vert_spv</span>
-<span class="token variable">$glslangValidator</span> <span class="token parameter variable">-V</span> vert_shader.vert
-<span class="token comment"># 将vert_shader.vert编译为test.spv</span>
-<span class="token variable">$glslangValidator</span> <span class="token parameter variable">-V</span> vert_shader.vert <span class="token parameter variable">-o</span> test.spv</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将vert_shader.vert编译为vert_spv</span></span><br><span class="line"><span class="variable">$glslangValidator</span> -V vert_shader.vert</span><br><span class="line"><span class="comment"># 将vert_shader.vert编译为test.spv</span></span><br><span class="line"><span class="variable">$glslangValidator</span> -V vert_shader.vert -o test.spv</span><br></pre></td></tr></table></figure>
 <h3 id="GLSL文件类型">GLSL文件类型</h3>
 <ul>
 <li>头文件（header）
@@ -2582,121 +2579,22 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h2 id="cmake">cmake</h2>
 <h3 id="项目结构">项目结构</h3>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake">.
-├─client
-├─core
-│  ├─include
-│  │  ├─common
-│  │  ├─file
-│  │  ├─render
-│  │  └─rhi
-│  └─src
-│      ├─file
-│      ├─render
-│      └─rhi
-├─scene
-├─shaders
-│  └─spv
-└─third_party
-    ├─glfw
-    ├─glm
-    ├─imgui
-    ├─optick
-    └─tbb  </code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├─client</span><br><span class="line">├─core</span><br><span class="line">│  ├─<span class="keyword">include</span></span><br><span class="line">│  │  ├─common</span><br><span class="line">│  │  ├─<span class="keyword">file</span></span><br><span class="line">│  │  ├─render</span><br><span class="line">│  │  └─rhi</span><br><span class="line">│  └─src</span><br><span class="line">│      ├─<span class="keyword">file</span></span><br><span class="line">│      ├─render</span><br><span class="line">│      └─rhi</span><br><span class="line">├─scene</span><br><span class="line">├─shaders</span><br><span class="line">│  └─spv</span><br><span class="line">└─third_party</span><br><span class="line">    ├─glfw</span><br><span class="line">    ├─glm</span><br><span class="line">    ├─imgui</span><br><span class="line">    ├─optick</span><br><span class="line">    └─tbb  </span><br></pre></td></tr></table></figure>
 <h3 id="cmake与项目构建">cmake与项目构建</h3>
 <p>项目用cmake构建，用Visual Studio 2022作为IDE，可以配置一个<code>.bat</code>文件快速生成vs项目（当你添加文件时，运行这个脚本）</p>
-<pre class="language-bat" data-language="bat"><code class="language-bat">@echo off
-
-set SOURCE_DIR&#x3D;..&#x2F;engine&#x2F;
-set BUILD_DIR&#x3D;..&#x2F;build&#x2F;
-
-cmake -S %SOURCE_DIR% -B %BUILD_DIR% -G &quot;Visual Studio 17 2022&quot;
-cmake --build %BUILD_DIR%
-
-pause</code></pre>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> SOURCE_DIR=../engine/</span><br><span class="line"><span class="built_in">set</span> BUILD_DIR=../build/</span><br><span class="line"></span><br><span class="line">cmake -S <span class="variable">%SOURCE_DIR%</span> -B <span class="variable">%BUILD_DIR%</span> -G &quot;Visual Studio <span class="number">17</span> <span class="number">2022</span>&quot;</span><br><span class="line">cmake --build <span class="variable">%BUILD_DIR%</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
 <h3 id="cmake与shader编译">cmake与shader编译</h3>
 <p>cmake在项目构建时可以通过echo执行命令行命令，以实现shader编译</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_custom_command</span><span class="token punctuation">(</span>
-         PRE_BUILD
-         OUTPUT <span class="token punctuation">$&#123;</span>GLSL_OUT<span class="token punctuation">&#125;</span>
-         COMMAND echo <span class="token punctuation">$&#123;</span>GLSLANGVALIDATOR<span class="token punctuation">&#125;</span> <span class="token punctuation">$&#123;</span>COMPILE_CMD<span class="token punctuation">&#125;</span>
-         COMMAND <span class="token punctuation">$&#123;</span>GLSLANGVALIDATOR<span class="token punctuation">&#125;</span> <span class="token punctuation">$&#123;</span>COMPILE_CMD<span class="token punctuation">&#125;</span>
-         MAIN_DEPENDENCY <span class="token punctuation">$&#123;</span>GLSL_SRC<span class="token punctuation">&#125;</span>
-         <span class="token property">WORKING_DIRECTORY</span> <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_CURRENT_SOURCE_DIR</span><span class="token punctuation">&#125;</span>
-         <span class="token property">DEPENDS</span> <span class="token punctuation">$&#123;</span>GLSL_DEPENDENCY<span class="token punctuation">&#125;</span>
-      <span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">         PRE_BUILD</span><br><span class="line">         OUTPUT <span class="variable">$&#123;GLSL_OUT&#125;</span></span><br><span class="line">         <span class="keyword">COMMAND</span> echo <span class="variable">$&#123;GLSLANGVALIDATOR&#125;</span> <span class="variable">$&#123;COMPILE_CMD&#125;</span></span><br><span class="line">         <span class="keyword">COMMAND</span> <span class="variable">$&#123;GLSLANGVALIDATOR&#125;</span> <span class="variable">$&#123;COMPILE_CMD&#125;</span></span><br><span class="line">         MAIN_DEPENDENCY <span class="variable">$&#123;GLSL_SRC&#125;</span></span><br><span class="line">         WORKING_DIRECTORY <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span></span><br><span class="line">         DEPENDS <span class="variable">$&#123;GLSL_DEPENDENCY&#125;</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
 <p>同时也可以使用cmake实现编译后的spv文件拷贝</p>
-<pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment"># Copy shaders</span>
-<span class="token keyword">message</span><span class="token punctuation">(</span>STATUS <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_SOURCE_DIR</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token keyword">add_custom_command</span><span class="token punctuation">(</span>TARGET client POST_BUILD
-	COMMAND <span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_COMMAND</span><span class="token punctuation">&#125;</span> -E copy_directory
-	<span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_SOURCE_DIR</span><span class="token punctuation">&#125;</span>/shaders/spv
-	<span class="token punctuation">$&lt;</span>TARGET_FILE_DIR:client<span class="token punctuation">></span>/shaders
-<span class="token punctuation">)</span></code></pre>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Copy shaders</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>)</span><br><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> client POST_BUILD</span><br><span class="line">	<span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy_directory</span><br><span class="line">	<span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/shaders/spv</span><br><span class="line">	$&lt;TARGET_FILE_DIR:client&gt;/shaders</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <h2 id="第三方库">第三方库</h2>
 <h3 id="GLFW">GLFW</h3>
 <p><a target="_blank" rel="noopener" href="https://github.com/glfw/glfw">GLFW</a>是一个开源的跨平台窗口库，支持OpenGL和Vulkan上下文，常用于开发图形密集型程序</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-  <span class="token comment">// 设置错误回调</span>
-  <span class="token function">glfwSetErrorCallback</span><span class="token punctuation">(</span>onErrorCallback<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token comment">// glfw初始化</span>
-  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">glfwInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-  <span class="token comment">// 设置窗口的客户端API，GLFW_NO_API表示不使用Vulkan/OpenGL（你可以自己创建Vulkan对象）</span>
-  <span class="token function">glfwWindowHint</span><span class="token punctuation">(</span>GLFW_CLIENT_API<span class="token punctuation">,</span> GLFW_NO_API<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token comment">// 创建窗口，设置窗口大小、标题、不使用共享上下文和监视器</span>
-  GLFWwindow<span class="token operator">*</span> window <span class="token operator">=</span> <span class="token function">glfwCreateWindow</span><span class="token punctuation">(</span>SAMPLE_WIDTH<span class="token punctuation">,</span> SAMPLE_HEIGHT<span class="token punctuation">,</span> PROJECT_NAME<span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token comment">// 主循环，直到窗口需要被关闭</span>
-  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">glfwWindowShouldClose</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 处理窗口事件</span>
-    <span class="token function">glfwPollEvents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-  <span class="token punctuation">&#125;</span>
-  <span class="token comment">// 销毁窗口</span>
-  <span class="token function">glfwDestroyWindow</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token comment">// 释放glfw资源</span>
-  <span class="token function">glfwTerminate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// 设置错误回调</span></span><br><span class="line">  <span class="built_in">glfwSetErrorCallback</span>(onErrorCallback);</span><br><span class="line">  <span class="comment">// glfw初始化</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">glfwInit</span>()) &#123; <span class="keyword">return</span> <span class="number">1</span>;&#125;</span><br><span class="line">  <span class="comment">// 设置窗口的客户端API，GLFW_NO_API表示不使用Vulkan/OpenGL（你可以自己创建Vulkan对象）</span></span><br><span class="line">  <span class="built_in">glfwWindowHint</span>(GLFW_CLIENT_API, GLFW_NO_API);</span><br><span class="line">  <span class="comment">// 创建窗口，设置窗口大小、标题、不使用共享上下文和监视器</span></span><br><span class="line">  GLFWwindow* window = <span class="built_in">glfwCreateWindow</span>(SAMPLE_WIDTH, SAMPLE_HEIGHT, PROJECT_NAME, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">  <span class="comment">// 主循环，直到窗口需要被关闭</span></span><br><span class="line">  <span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 处理窗口事件</span></span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 销毁窗口</span></span><br><span class="line">  <span class="built_in">glfwDestroyWindow</span>(window);</span><br><span class="line">  <span class="comment">// 释放glfw资源</span></span><br><span class="line">  <span class="built_in">glfwTerminate</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="IMGUI">IMGUI</h3>
 <p><a target="_blank" rel="noopener" href="https://github.com/ocornut/imgui">Dear IMGUI</a>是一个广泛用于游戏开发的轻量级UI库，可以与Vulkan和GLFW集成</p>
-<pre class="language-cpp" data-language="cpp"><code class="language-cpp">HelloVulkan helloVk<span class="token punctuation">;</span>
-<span class="token function">ImGui_ImplGlfw_InitForVulkan</span><span class="token punctuation">(</span>window<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// Main loop</span>
-<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">glfwWindowShouldClose</span><span class="token punctuation">(</span>window<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-  <span class="token comment">// Start the Dear ImGui frame</span>
-  <span class="token function">ImGui_ImplGlfw_NewFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">NewFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-  <span class="token comment">// Show UI window.</span>
-  <span class="token keyword">if</span><span class="token punctuation">(</span>helloVk<span class="token punctuation">.</span><span class="token function">showGui</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    ImGuiH<span class="token double-colon punctuation">::</span><span class="token class-name">Panel</span><span class="token double-colon punctuation">::</span><span class="token function">Begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">ColorEdit3</span><span class="token punctuation">(</span><span class="token string">"Clear color"</span><span class="token punctuation">,</span> <span class="token generic-function"><span class="token function">reinterpret_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">*</span><span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>clearColor<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">renderUI</span><span class="token punctuation">(</span>helloVk<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">"Application average %.3f ms/frame (%.1f FPS)"</span><span class="token punctuation">,</span> <span class="token number">1000.0f</span> <span class="token operator">/</span> <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">GetIO</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Framerate<span class="token punctuation">,</span> <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">GetIO</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Framerate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ImGuiH<span class="token double-colon punctuation">::</span><span class="token class-name">Control</span><span class="token double-colon punctuation">::</span><span class="token function">Info</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"(F10) Toggle Pane"</span><span class="token punctuation">,</span> ImGuiH<span class="token double-colon punctuation">::</span>Control<span class="token double-colon punctuation">::</span>Flags<span class="token double-colon punctuation">::</span>Disabled<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ImGuiH<span class="token double-colon punctuation">::</span><span class="token class-name">Panel</span><span class="token double-colon punctuation">::</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
-
-  <span class="token comment">// Start rendering the scene</span>
-  helloVk<span class="token punctuation">.</span><span class="token function">prepareFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-  <span class="token comment">// Start command buffer of this frame</span>
-  <span class="token keyword">auto</span>                   curFrame <span class="token operator">=</span> helloVk<span class="token punctuation">.</span><span class="token function">getCurFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> VkCommandBuffer<span class="token operator">&amp;</span> cmdBuf   <span class="token operator">=</span> helloVk<span class="token punctuation">.</span><span class="token function">getCommandBuffers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span>curFrame<span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-  <span class="token comment">// Rendering UI</span>
-  <span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">Render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">ImGui_ImplVulkan_RenderDrawData</span><span class="token punctuation">(</span><span class="token class-name">ImGui</span><span class="token double-colon punctuation">::</span><span class="token function">GetDrawData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cmdBuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">vkCmdEndRenderPass</span><span class="token punctuation">(</span>cmdBuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-  <span class="token comment">// Submit for display</span>
-  <span class="token function">vkEndCommandBuffer</span><span class="token punctuation">(</span>cmdBuf<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  helloVk<span class="token punctuation">.</span><span class="token function">submitFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">HelloVulkan helloVk;</span><br><span class="line"><span class="built_in">ImGui_ImplGlfw_InitForVulkan</span>(window, <span class="literal">true</span>);</span><br><span class="line"><span class="comment">// Main loop</span></span><br><span class="line"><span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="comment">// Start the Dear ImGui frame</span></span><br><span class="line">  <span class="built_in">ImGui_ImplGlfw_NewFrame</span>();</span><br><span class="line">  ImGui::<span class="built_in">NewFrame</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Show UI window.</span></span><br><span class="line">  <span class="keyword">if</span>(helloVk.<span class="built_in">showGui</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    ImGuiH::Panel::<span class="built_in">Begin</span>();</span><br><span class="line">    ImGui::<span class="built_in">ColorEdit3</span>(<span class="string">&quot;Clear color&quot;</span>, <span class="built_in">reinterpret_cast</span>&lt;<span class="type">float</span>*&gt;(&amp;clearColor));</span><br><span class="line">    <span class="built_in">renderUI</span>(helloVk);</span><br><span class="line">    ImGui::<span class="built_in">Text</span>(<span class="string">&quot;Application average %.3f ms/frame (%.1f FPS)&quot;</span>, <span class="number">1000.0f</span> / ImGui::<span class="built_in">GetIO</span>().Framerate, ImGui::<span class="built_in">GetIO</span>().Framerate);</span><br><span class="line">    ImGuiH::Control::<span class="built_in">Info</span>(<span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;(F10) Toggle Pane&quot;</span>, ImGuiH::Control::Flags::Disabled);</span><br><span class="line">    ImGuiH::Panel::<span class="built_in">End</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Start rendering the scene</span></span><br><span class="line">  helloVk.<span class="built_in">prepareFrame</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Start command buffer of this frame</span></span><br><span class="line">  <span class="keyword">auto</span>                   curFrame = helloVk.<span class="built_in">getCurFrame</span>();</span><br><span class="line">  <span class="type">const</span> VkCommandBuffer&amp; cmdBuf   = helloVk.<span class="built_in">getCommandBuffers</span>()[curFrame];</span><br><span class="line">	...</span><br><span class="line">  <span class="comment">// Rendering UI</span></span><br><span class="line">  ImGui::<span class="built_in">Render</span>();</span><br><span class="line">  <span class="built_in">ImGui_ImplVulkan_RenderDrawData</span>(ImGui::<span class="built_in">GetDrawData</span>(), cmdBuf);</span><br><span class="line">  <span class="built_in">vkCmdEndRenderPass</span>(cmdBuf);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Submit for display</span></span><br><span class="line">  <span class="built_in">vkEndCommandBuffer</span>(cmdBuf);</span><br><span class="line">  helloVk.<span class="built_in">submitFrame</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="tbb">tbb</h3>
 <p><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneTBB">tbb</a>是英特尔推出的一个并行库，可以用于多线程编程，包含了线程池、并行算法等</p>
 <h3 id="optick">optick</h3>
@@ -2746,10 +2644,10 @@ pause</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:09+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:20+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3453,7 +3351,7 @@ pause</code></pre>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2023-11-16T02:49:09.631Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2023-11-21T01:45:20.929Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/#6.0.0-alpha.1'>
-  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="generator" content="Hexo 7.0.0">
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T02:49:17.096Z">
+<meta property="article:modified_time" content="2023-11-21T01:45:35.282Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="shader">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1700102959326),
+    lastupdate: new Date(1700531138490),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2556,27 +2556,18 @@ $$<br>
 <p>使用mipmap会增加贴图存储，但是能提高性能和效果，在对mipmap贴图进行采样时，我们可以手动指定采样层级</p>
 <p>我们需要一种方法能求mipmap层级（如果层级不对，会导致纹素比异常，产生摩尔纹等）</p>
 <p>ddx和ddy一个应用是求贴图mipmap层级</p>
-<pre class="language-glsl" data-language="glsl"><code class="language-glsl"><span class="token keyword">float</span> <span class="token function">mip_map_level</span><span class="token punctuation">(</span><span class="token keyword">in</span> <span class="token keyword">vec2</span> texture_coordinate<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">vec2</span>  dx_vtc        <span class="token operator">=</span> <span class="token function">dFdx</span><span class="token punctuation">(</span>texture_coordinate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">vec2</span>  dy_vtc        <span class="token operator">=</span> <span class="token function">dFdy</span><span class="token punctuation">(</span>texture_coordinate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">float</span> delta_max_sqr <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">dot</span><span class="token punctuation">(</span>dx_vtc<span class="token punctuation">,</span> dx_vtc<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">dot</span><span class="token punctuation">(</span>dy_vtc<span class="token punctuation">,</span> dy_vtc<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0.5</span> <span class="token operator">*</span> <span class="token function">log2</span><span class="token punctuation">(</span>delta_max_sqr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> mip_map_level(<span class="keyword">in</span> <span class="type">vec2</span> texture_coordinate)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">vec2</span>  dx_vtc        = <span class="built_in">dFdx</span>(texture_coordinate);</span><br><span class="line">    <span class="type">vec2</span>  dy_vtc        = <span class="built_in">dFdy</span>(texture_coordinate);</span><br><span class="line">    <span class="type">float</span> delta_max_sqr = <span class="built_in">max</span>(<span class="built_in">dot</span>(dx_vtc, dx_vtc), <span class="built_in">dot</span>(dy_vtc, dy_vtc));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.5</span> * <span class="built_in">log2</span>(delta_max_sqr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>在OpenGL4.x提供了mipmap函数<code>textureQueryLod()</code></p>
 </blockquote>
 <h3 id="面法线（坐标）">面法线（坐标）</h3>
 <p>我们在fragment着色器中对世界坐标做ddx和ddy，就能得到三角面上两个向量（这俩向量还是垂直的），而平面上两个非平行向量就能确定一个平面，他们的叉积就是面法线（注意手系和法线正负）</p>
-<pre class="language-glsl" data-language="glsl"><code class="language-glsl"><span class="token keyword">vec3</span> faceNormal <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span> <span class="token function">cross</span><span class="token punctuation">(</span><span class="token function">dFdx</span><span class="token punctuation">(</span>pos<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">dFdy</span><span class="token punctuation">(</span>pos<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="type">vec3</span> faceNormal = <span class="built_in">normalize</span>( <span class="built_in">cross</span>(<span class="built_in">dFdx</span>(pos), <span class="built_in">dFdy</span>(pos)) );</span><br></pre></td></tr></table></figure>
 <p><img src="/images/%E9%9D%A2%E6%B3%95%E7%BA%BF.png" class="lazyload" data-srcset="/images/%E9%9D%A2%E6%B3%95%E7%BA%BF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="面法线"></p>
 <p>该技术常用于平面着色（Flat Shading），让物体有一种低面感，法线没有插值，是ground着色、phong着色以前的东西（老古董前的老古董）</p>
 <h3 id="高度图（法线）">高度图（法线）</h3>
 <p>与面法线原理类似，给定一张单通道的灰度图当作高度图，通过ddx、ddy就能得到高度的变化，进而得到法线的变化</p>
-<pre class="language-glsl" data-language="glsl"><code class="language-glsl"><span class="token keyword">fixed</span> h <span class="token operator">=</span> <span class="token function">tex2D</span><span class="token punctuation">(</span>_HightMap<span class="token punctuation">,</span> i<span class="token punctuation">.</span>uv<span class="token punctuation">)</span><span class="token punctuation">.</span>r<span class="token punctuation">;</span>
-<span class="token keyword">float</span> offsetU <span class="token operator">=</span> <span class="token operator">-</span><span class="token function">ddx</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">;</span> 
-<span class="token keyword">float</span> offsetV <span class="token operator">=</span> <span class="token function">ddy</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">;</span>
-float3 n <span class="token operator">=</span> <span class="token function">normalize</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span>normal<span class="token punctuation">.</span>xyz <span class="token operator">+</span> <span class="token function">float3</span><span class="token punctuation">(</span>offsetU<span class="token punctuation">,</span> offsetV<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">*</span> _Intensity<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">fixed h = tex2D(_HightMap, i.uv).r;</span><br><span class="line"><span class="type">float</span> offsetU = -ddx(h); </span><br><span class="line"><span class="type">float</span> offsetV = ddy(h);</span><br><span class="line">float3 n = <span class="built_in">normalize</span>(i.normal.xyz + float3(offsetU, offsetV, <span class="number">0</span>) * _Intensity);</span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2601,10 +2592,10 @@ float3 n <span class="token operator">=</span> <span class="token function">norm
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-16T02:49:17+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-21T01:45:35+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月16日</p>
+    <p>更新于：2023年11月21日</p>
   </a>
 </div>
 
@@ -3306,7 +3297,7 @@ float3 n <span class="token operator">=</span> <span class="token function">norm
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/ddx与ddy/","name":"ddx与ddy"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"ddx与ddy","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/ddx%E4%B8%8Eddy/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/ddx%E4%B8%8Eddy/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-16T02:49:17.096Z","articleSection":"graphics","keywords":"shader","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/ddx与ddy/","name":"ddx与ddy"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"ddx与ddy","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/ddx%E4%B8%8Eddy/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/ddx%E4%B8%8Eddy/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2023-11-21T01:45:35.282Z","articleSection":"graphics","keywords":"shader","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
