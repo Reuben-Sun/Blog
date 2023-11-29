@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1701276459365),
+    lastupdate: new Date(1701278922281),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2381,7 +2381,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/TA面试题/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/GC/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2399,27 +2399,30 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"  itemprop="url">
-        TA面试题
+      <a href="/engine/GC/"  itemprop="url">
+        垃圾回收
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        TA面试题
-这里面不少答案都是我自己凭感觉答的，不保真
-什么是渲染管线
-渲染管线是通过安排CPU发出Draw Call的内容以及顺序，指导GPU进行一系列操作，并协同将开发者期待的图像渲染在屏幕上
+        垃圾回收
+前言
+《垃圾回收的算法与实现》读书笔记，其中的代码大多为伪代码
+一：概念
+GC，Garbage Collection，垃圾回收
+功能
 
-剔除
-渲染
-后处理
+找到内存中的垃圾
+回收垃圾
 
-什么是Draw Call
-Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操作，是重量级的
-什么是Batching
-将多个简单、使用同一材质的物体...
+为什么需要GC
+如果没有GC，程序员需要手动进行内存管理，开发麻烦，容易引发内存泄漏、野指针，而且因此导致的BUG很难被定位，修复麻烦
+如果有GC，就可以避免这些问题
+GC的种类
+
+保守式GC：不能识别指针和非指针时，...
       
     
   </div>
@@ -2430,17 +2433,17 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
+          <a class="category-link" href="/categories/engine/">engine</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/' itemprop="url">
+          <a class='readmore' href='/engine/GC/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2456,7 +2459,7 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/大象无形UE笔记/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2474,20 +2477,38 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
+      <a href="/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/"  itemprop="url">
+        大象无形UE笔记
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
+        UE学习笔记
+基类
+UObject
+一切对象的基类。UE为UObject类提供了
+
+垃圾回收GC
+
+被UProperty标记的变量会自动进行生命周期管理
+非UObject可以使用C++标准推荐的智能指针
+
+
+引用计数
+反射
+序列化
+
+资源的存储与加载
+
+
+自动检测默认变量的更改
+自动变量初始化
+与Editor的交互
+运行时类型识别
+
+UE禁用了C++的dynamic_cast，你可以使用Ca...
       
     
   </div>
@@ -2498,17 +2519,17 @@ $$
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
+          <a class="category-link" href="/categories/engine/">engine</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
+          <a class='readmore' href='/engine/%E5%A4%A7%E8%B1%A1%E6%97%A0%E5%BD%A2UE%E7%AC%94%E8%AE%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2587,92 +2608,6 @@ $\nabla$：Nabla算子，将数量场变成向量场
       
         <div>
           <a class='readmore' href='/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/复变函数/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
-        复变函数
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        复变函数
-复变函数
-复数
-复数可以表示为实数和纯虚数的和
-代数式：
-$$
-z=x+\mathrm{i}y
-$$
-
-x：实部，记为Re z
-y：虚部，记为Im z
-
-复平面：
-
-极坐标下
-$$
-\begin{cases}
-\rho=\sqrt{x^2+y^2} \
-\varphi=\arctan (y/x)
-\end{cases}
-$$
-$$
-\begin{cases}
-x=\rho \cos...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3005,6 +2940,92 @@ x_1-2x_2+x_3=0 \\
       
         <div>
           <a class='readmore' href='/math/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/复变函数/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
+        复变函数
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        复变函数
+复变函数
+复数
+复数可以表示为实数和纯虚数的和
+代数式：
+$$
+z=x+\mathrm{i}y
+$$
+
+x：实部，记为Re z
+y：虚部，记为Im z
+
+复平面：
+
+极坐标下
+$$
+\begin{cases}
+\rho=\sqrt{x^2+y^2} \
+\varphi=\arctan (y/x)
+\end{cases}
+$$
+$$
+\begin{cases}
+x=\rho \cos...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/math/">math</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
