@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-11-29T15:39:25.000Z">
-<meta property="article:modified_time" content="2023-11-29T17:28:37.990Z">
+<meta property="article:modified_time" content="2023-11-30T06:05:17.629Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Texture">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1701278922281),
+    lastupdate: new Date(1701324320663),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2609,6 +2609,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </tr>
 </tbody>
 </table>
+<p>DX9：BC1~3</p>
+<p>DX10：BC4~5</p>
+<p>DX11：BC7，BC6H</p>
 <h3 id="BC1">BC1</h3>
 <blockquote>
 <p>下面这些图左边这个n bytes是指每一行是n bytes</p>
@@ -2634,7 +2637,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><img src="/images/BC3.png" class="lazyload" data-srcset="/images/BC3.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="BC3"></p>
 <p>为了精度，Alpha的位数是三个比特位，最多能表示八种Alpha，也就是说这16个像素最多会被分成八种Alpha</p>
 <blockquote>
-<p>我有些不能理解为什么alpha_0会有比alpha_1小的情况，而且我也不能理解使用6位table比8位的优势，这是有什么使用场景吗？</p>
+<p>alpha_0和alpha_1的大小对比提供了两个模式，使用第二个模式时可以直接得到0和255两个极值，而其他颜色还是在color间插值，效果会比所有颜色都直接在0和255两个极值间插8份更好，适用于颜色中存在极值的情况</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>( alpha_0 &gt; alpha_1 )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 6 interpolated alpha values.</span></span><br><span class="line">  alpha_2 = <span class="number">6</span>/<span class="number">7</span>*alpha_0 + <span class="number">1</span>/<span class="number">7</span>*alpha_1; <span class="comment">// bit code 010</span></span><br><span class="line">  alpha_3 = <span class="number">5</span>/<span class="number">7</span>*alpha_0 + <span class="number">2</span>/<span class="number">7</span>*alpha_1; <span class="comment">// bit code 011</span></span><br><span class="line">  alpha_4 = <span class="number">4</span>/<span class="number">7</span>*alpha_0 + <span class="number">3</span>/<span class="number">7</span>*alpha_1; <span class="comment">// bit code 100</span></span><br><span class="line">  alpha_5 = <span class="number">3</span>/<span class="number">7</span>*alpha_0 + <span class="number">4</span>/<span class="number">7</span>*alpha_1; <span class="comment">// bit code 101</span></span><br><span class="line">  alpha_6 = <span class="number">2</span>/<span class="number">7</span>*alpha_0 + <span class="number">5</span>/<span class="number">7</span>*alpha_1; <span class="comment">// bit code 110</span></span><br><span class="line">  alpha_7 = <span class="number">1</span>/<span class="number">7</span>*alpha_0 + <span class="number">6</span>/<span class="number">7</span>*alpha_1; <span class="comment">// bit code 111</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 4 interpolated alpha values.</span></span><br><span class="line">  alpha_2 = <span class="number">4</span>/<span class="number">5</span>*alpha_0 + <span class="number">1</span>/<span class="number">5</span>*alpha_1; <span class="comment">// bit code 010</span></span><br><span class="line">  alpha_3 = <span class="number">3</span>/<span class="number">5</span>*alpha_0 + <span class="number">2</span>/<span class="number">5</span>*alpha_1; <span class="comment">// bit code 011</span></span><br><span class="line">  alpha_4 = <span class="number">2</span>/<span class="number">5</span>*alpha_0 + <span class="number">3</span>/<span class="number">5</span>*alpha_1; <span class="comment">// bit code 100</span></span><br><span class="line">  alpha_5 = <span class="number">1</span>/<span class="number">5</span>*alpha_0 + <span class="number">4</span>/<span class="number">5</span>*alpha_1; <span class="comment">// bit code 101</span></span><br><span class="line">  alpha_6 = <span class="number">0</span>;                         <span class="comment">// bit code 110</span></span><br><span class="line">  alpha_7 = <span class="number">255</span>;                       <span class="comment">// bit code 111</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="BC4">BC4</h3>
@@ -2666,14 +2669,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ol>
 <p><img src="/images/BC1%E7%9A%84%E9%97%AE%E9%A2%98.png" class="lazyload" data-srcset="/images/BC1%E7%9A%84%E9%97%AE%E9%A2%98.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="BC1的问题"></p>
 <h3 id="BC7">BC7</h3>
-<blockquote>
-<p>我还不是特别明白，下面的可能会有问题</p>
-</blockquote>
 <p>核心思想</p>
 <ol>
 <li>存多个color，两个index</li>
 <li>使用预计算的<strong>partition sets</strong>（调色盘）</li>
 </ol>
+<p>如果16个方块使用两个颜色涂抹，那么一共只会有$2^{16}$个情况，我们将这些情况全部离线存储在本地，并称之为调色盘（partition sets），使用一个索引即可得到对应的调色盘，还原出当前情况。</p>
+<p>事实上由于颜色是存在连续性的，于是并不会出现这么多情况，于是我们可以大幅简化，使得几百种调色盘就足够使用。</p>
+<p>更进一步，我们可以在调色盘种类和颜色数量间做平衡，使用更多种类的颜色和更少的调色盘种类，得到更丰富的模式</p>
+<blockquote>
+<p>BC7不同模式下总位数是确定的，于是color占的位数多了，调色盘占的位数就会变少</p>
+</blockquote>
 <p><img src="/images/BC7.png" class="lazyload" data-srcset="/images/BC7.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="BC7"></p>
 <p><img src="/images/BC7_2.png" class="lazyload" data-srcset="/images/BC7_2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="BC7_2"></p>
 <p>BC7有很多模式（mode），我们可以为每块（4x4）选择一种模式，模式存储在BC7的开头（上图00001和1）</p>
@@ -2687,7 +2693,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <blockquote>
 <p>干翻了RGBM，是BCN中唯一一个支持HDR的格式</p>
 </blockquote>
-<p>用无符号整数来表示浮点数，将16位的数据的Sign位移除，加到Fraction位上，以提高float范围和精度</p>
+<p>插值算法与BC7相同，用无符号整数来表示浮点数，将16位的数据的Sign位移除，加到Fraction位上，以提高float范围和精度</p>
 <p><img src="/images/BC6H.png" class="lazyload" data-srcset="/images/BC6H.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="BC6H"></p>
 <h2 id="DDS">DDS</h2>
 <blockquote>
@@ -2722,7 +2728,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>Texconv有很浓厚的微软风格。。。</li>
 <li>Oodle是商业软件，编码速度极慢，而且没有内置的Mipmap和贴图IO工具，他只会处理raw block data，说实话挺不方便的，而且网上资料特别少，用过的人也因为版权不敢去分享，传Github还会被删库，但是Oodle生成的dds二压后包体特别小，正式项目还是建议用Oodle</li>
 </ul>
-<p>下面是NVTT读TGA生成DDS的样例代码，可以说非常地干净清晰</p>
+<p>下面是NVTT读TGA生成BC7格式DDS的样例代码，可以说非常地干净清晰</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;nvtt.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::string raw_tga_path = <span class="string">&quot;D:\\art\\raw.tga&quot;</span>;</span><br><span class="line">	std::string output_dds_path = <span class="string">&quot;D:\\art\\out\\nvtt_out.dds&quot;</span>;</span><br><span class="line">    <span class="type">int</span> mipmap_count = <span class="number">3</span>;</span><br><span class="line">    nvtt::Surface image;</span><br><span class="line">    image.<span class="built_in">load</span>(raw_tga_path.<span class="built_in">c_str</span>());</span><br><span class="line">    <span class="function">nvtt::Context <span class="title">context</span><span class="params">(<span class="literal">true</span>)</span></span>;</span><br><span class="line">    nvtt::CompressionOptions compression_options;</span><br><span class="line">    compression_options.<span class="built_in">setFormat</span>(nvtt::Format_BC7);</span><br><span class="line">    nvtt::OutputOptions output_options;</span><br><span class="line">    output_options.<span class="built_in">setFileName</span>(output_dds_path.<span class="built_in">c_str</span>());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!context.<span class="built_in">outputHeader</span>(image, mipmap_count, compression_options, output_options)) </span><br><span class="line">    &#123;</span><br><span class="line">        std::cerr &lt;&lt; <span class="string">&quot;Writing the DDS header failed!&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Compress and write the compressed data.</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> mipmap_index = <span class="number">0</span>; mipmap_index &lt; mipmap_count; mipmap_index++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!context.<span class="built_in">compress</span>(image, <span class="number">0</span> , mipmap_index, compression_options, output_options)) </span><br><span class="line">        &#123;</span><br><span class="line">            std::cerr &lt;&lt; <span class="string">&quot;Compressing and writing the DDS file failed!&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(mipmap_index == mipmap_count - <span class="number">1</span>) <span class="keyword">break</span>;</span><br><span class="line">        image.<span class="built_in">toLinearFromSrgb</span>();</span><br><span class="line">        image.<span class="built_in">premultiplyAlpha</span>();</span><br><span class="line">        image.<span class="built_in">buildNextMipmap</span>(nvtt::MipmapFilter_Triangle);</span><br><span class="line">        image.<span class="built_in">demultiplyAlpha</span>();</span><br><span class="line">        image.<span class="built_in">toSrgb</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/microsoft/DirectXTex">微软开源的贴图工具，包含Texconv</a></p>
@@ -2754,10 +2760,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-29T17:28:37+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-11-30T06:05:17+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2023年11月29日</p>
+    <p>更新于：2023年11月30日</p>
   </a>
 </div>
 
@@ -3450,7 +3456,7 @@ DrawCall和着色十分昂贵，于是我们希望可以剔除掉那些看不见
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/BCN编码/","name":"BCN编码"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"BCN编码","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/BCN%E7%BC%96%E7%A0%81/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/BCN%E7%BC%96%E7%A0%81/","wordCount":0,"datePublished":"2023-11-29T15:39:25.000Z","dateModified":"2023-11-29T17:28:37.990Z","articleSection":"graphics","keywords":"Texture","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/BCN编码/","name":"BCN编码"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"BCN编码","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/BCN%E7%BC%96%E7%A0%81/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/BCN%E7%BC%96%E7%A0%81/","wordCount":0,"datePublished":"2023-11-29T15:39:25.000Z","dateModified":"2023-11-30T06:05:17.629Z","articleSection":"graphics","keywords":"Texture","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
