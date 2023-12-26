@@ -1802,31 +1802,6 @@
     
     
     <entry>
-      <title>Ubuntu入门</title>
-      <link href="/program/Ubuntu%E5%85%A5%E9%97%A8/"/>
-      <url>/program/Ubuntu%E5%85%A5%E9%97%A8/</url>
-      
-        <content type="html"><![CDATA[<h1>Ubuntu入门</h1><p>虽说是Ubuntu，实际上是WSL2</p><p>你可以使用neofetch查看系统信息</p><p><img src="/images/neofetch.png" class="lazyload" data-srcset="/images/neofetch.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="neofetch"></p><h3 id="环境搭建">环境搭建</h3><h4 id="VS-Code">VS Code</h4><ol><li>在Windows系统中安装VS Code，并选择添加PATH</li><li>在WSL中如果要打开当前目录，直接输入</li></ol><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$code</span> .</span><br></pre></td></tr></table></figure><p>推荐安装VS Code的WSL插件</p><p>使用快捷键<code>CTRL+SHIFT+P</code>，打开命令面板，键入<code>WSL</code>，进行一些设置</p><h4 id="Git">Git</h4><p>使用Git前需要先配置git config，可以输命令，也可以无脑用vscode改<code>.gitconfig</code>文件</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">&quot;youremail@domain.com&quot;</span></span><br></pre></td></tr></table></figure><h3 id="常用命令">常用命令</h3><table><thead><tr><th>命令</th><th>意义</th><th></th></tr></thead><tbody><tr><td>ls -a</td><td>查看当前目录内容</td><td></td></tr><tr><td>cd 路径名</td><td>路径跳转</td><td></td></tr><tr><td>clear</td><td>清空窗口</td><td></td></tr><tr><td>find 文件名</td><td>找出当前文件夹内符合条件的文件</td><td>支持正则</td></tr><tr><td>whoami</td><td>查看当前用户身份</td><td></td></tr><tr><td>pwd</td><td>查看当前工作目录</td><td></td></tr><tr><td>cat test.txt</td><td>查看文件内容</td><td></td></tr><tr><td>cat &gt; new.txt</td><td>新建文件</td><td></td></tr><tr><td>cat file1 file2 &gt; file</td><td>合并文件</td><td></td></tr><tr><td>mkdir 文件夹名</td><td>创建文件夹</td><td>-p可以创建多级文件夹</td></tr><tr><td>cp src dst</td><td>复制文件</td><td></td></tr><tr><td>kill 进程名</td><td>杀死进程</td><td></td></tr><tr><td>unzip</td><td>解压zip文件</td><td>需要先安装unzip</td></tr><tr><td>rm test.txt</td><td>删除文件</td><td>-r递归删文件夹 -f强删</td></tr></tbody></table><h3 id="文件访问">文件访问</h3><p>Windows访问Linux文件，路径为<code>\\wsl$\Ubuntu-20.04\home\username</code></p><p>Linux访问Windows文件，路径为<code>/mnt/c/Users/username</code></p><h3 id="apt-get">apt-get</h3><p>Linux内置的包管理器，可以非常优雅地安装管理各种包、软件</p><h4 id="安装">安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#安装git</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install git</span><br><span class="line"><span class="comment">#安装tbb</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install libtbb-dev</span><br></pre></td></tr></table></figure><h4 id="查看所有已安装软件">查看所有已安装软件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看所有已安装软件（这个信息量巨大，而且有重复信息，不简易使用）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all</span><br><span class="line"><span class="comment">#查看所有已安装软件（去重）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | <span class="built_in">wc</span></span><br><span class="line"><span class="comment">#查看所有名字中带gcc的软件</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | grep gcc</span><br></pre></td></tr></table></figure><h4 id="E-Unable-to-locate-package">E: Unable to locate package</h4><p>如果遇到这个报错，可以执行一次更新</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get update</span><br></pre></td></tr></table></figure><h4 id="C-安装清单">C++安装清单</h4><table><thead><tr><th>包名</th><th>描述</th></tr></thead><tbody><tr><td>g++</td><td>C++编译器</td></tr><tr><td>libtbb-dev</td><td>tbb并行库</td></tr><tr><td>cmake</td><td>项目构建</td></tr><tr><td>git</td><td>版本管理</td></tr><tr><td>gfortran</td><td>fortran编译器</td></tr><tr><td>liblapack-dev、liblapacke-dev</td><td>BLAS和LAPACK线代库</td></tr><tr><td>gdb</td><td>调试器</td></tr><tr><td></td><td></td></tr></tbody></table><h3 id="Git使用">Git使用</h3><h4 id="拉取项目">拉取项目</h4><p>项目拉取有两种常见方法</p><ul><li><p>ssh：需要配置SSH Key，只能拉自己的项目，但不提交时不需要账号密码</p></li><li><p>https：非常方便，只需要git clone，而且可以拉别人的项目，但提交时需要输入账号密码</p><ul><li>其实你也可以在输入一次密码后输入</li></ul></li></ul><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global credential.helper store</span><br></pre></td></tr></table></figure><p>我们这里说的密码是token，可以去<a href="https://github.com/settings/tokens">Github</a>生成token</p><h4 id="提交">提交</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加要提交的内容</span></span><br><span class="line"><span class="variable">$git</span> add 文件名/文件夹名</span><br><span class="line"><span class="comment">#提交所有内容（不包含忽略文件），并设置提交信息为“这是一段话”</span></span><br><span class="line"><span class="variable">$git</span> commit -a -m 这是一段话</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> program </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Linux </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Effective C++</title>
       <link href="/program/Effective%20C++/"/>
       <url>/program/Effective%20C++/</url>
@@ -1844,6 +1819,31 @@
         <tags>
             
             <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Ubuntu入门</title>
+      <link href="/program/Ubuntu%E5%85%A5%E9%97%A8/"/>
+      <url>/program/Ubuntu%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<h1>Ubuntu入门</h1><p>虽说是Ubuntu，实际上是WSL2</p><p>你可以使用neofetch查看系统信息</p><p><img src="/images/neofetch.png" class="lazyload" data-srcset="/images/neofetch.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="neofetch"></p><h3 id="环境搭建">环境搭建</h3><h4 id="VS-Code">VS Code</h4><ol><li>在Windows系统中安装VS Code，并选择添加PATH</li><li>在WSL中如果要打开当前目录，直接输入</li></ol><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$code</span> .</span><br></pre></td></tr></table></figure><p>推荐安装VS Code的WSL插件</p><p>使用快捷键<code>CTRL+SHIFT+P</code>，打开命令面板，键入<code>WSL</code>，进行一些设置</p><h4 id="Git">Git</h4><p>使用Git前需要先配置git config，可以输命令，也可以无脑用vscode改<code>.gitconfig</code>文件</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">&quot;youremail@domain.com&quot;</span></span><br></pre></td></tr></table></figure><h3 id="常用命令">常用命令</h3><table><thead><tr><th>命令</th><th>意义</th><th></th></tr></thead><tbody><tr><td>ls -a</td><td>查看当前目录内容</td><td></td></tr><tr><td>cd 路径名</td><td>路径跳转</td><td></td></tr><tr><td>clear</td><td>清空窗口</td><td></td></tr><tr><td>find 文件名</td><td>找出当前文件夹内符合条件的文件</td><td>支持正则</td></tr><tr><td>whoami</td><td>查看当前用户身份</td><td></td></tr><tr><td>pwd</td><td>查看当前工作目录</td><td></td></tr><tr><td>cat test.txt</td><td>查看文件内容</td><td></td></tr><tr><td>cat &gt; new.txt</td><td>新建文件</td><td></td></tr><tr><td>cat file1 file2 &gt; file</td><td>合并文件</td><td></td></tr><tr><td>mkdir 文件夹名</td><td>创建文件夹</td><td>-p可以创建多级文件夹</td></tr><tr><td>cp src dst</td><td>复制文件</td><td></td></tr><tr><td>kill 进程名</td><td>杀死进程</td><td></td></tr><tr><td>unzip</td><td>解压zip文件</td><td>需要先安装unzip</td></tr><tr><td>rm test.txt</td><td>删除文件</td><td>-r递归删文件夹 -f强删</td></tr></tbody></table><h3 id="文件访问">文件访问</h3><p>Windows访问Linux文件，路径为<code>\\wsl$\Ubuntu-20.04\home\username</code></p><p>Linux访问Windows文件，路径为<code>/mnt/c/Users/username</code></p><h3 id="apt-get">apt-get</h3><p>Linux内置的包管理器，可以非常优雅地安装管理各种包、软件</p><h4 id="安装">安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#安装git</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install git</span><br><span class="line"><span class="comment">#安装tbb</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install libtbb-dev</span><br></pre></td></tr></table></figure><h4 id="查看所有已安装软件">查看所有已安装软件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看所有已安装软件（这个信息量巨大，而且有重复信息，不简易使用）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all</span><br><span class="line"><span class="comment">#查看所有已安装软件（去重）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | <span class="built_in">wc</span></span><br><span class="line"><span class="comment">#查看所有名字中带gcc的软件</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | grep gcc</span><br></pre></td></tr></table></figure><h4 id="E-Unable-to-locate-package">E: Unable to locate package</h4><p>如果遇到这个报错，可以执行一次更新</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get update</span><br></pre></td></tr></table></figure><h4 id="C-安装清单">C++安装清单</h4><table><thead><tr><th>包名</th><th>描述</th></tr></thead><tbody><tr><td>g++</td><td>C++编译器</td></tr><tr><td>libtbb-dev</td><td>tbb并行库</td></tr><tr><td>cmake</td><td>项目构建</td></tr><tr><td>git</td><td>版本管理</td></tr><tr><td>gfortran</td><td>fortran编译器</td></tr><tr><td>liblapack-dev、liblapacke-dev</td><td>BLAS和LAPACK线代库</td></tr><tr><td>gdb</td><td>调试器</td></tr><tr><td></td><td></td></tr></tbody></table><h3 id="Git使用">Git使用</h3><h4 id="拉取项目">拉取项目</h4><p>项目拉取有两种常见方法</p><ul><li><p>ssh：需要配置SSH Key，只能拉自己的项目，但不提交时不需要账号密码</p></li><li><p>https：非常方便，只需要git clone，而且可以拉别人的项目，但提交时需要输入账号密码</p><ul><li>其实你也可以在输入一次密码后输入</li></ul></li></ul><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global credential.helper store</span><br></pre></td></tr></table></figure><p>我们这里说的密码是token，可以去<a href="https://github.com/settings/tokens">Github</a>生成token</p><h4 id="提交">提交</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加要提交的内容</span></span><br><span class="line"><span class="variable">$git</span> add 文件名/文件夹名</span><br><span class="line"><span class="comment">#提交所有内容（不包含忽略文件），并设置提交信息为“这是一段话”</span></span><br><span class="line"><span class="variable">$git</span> commit -a -m 这是一段话</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> program </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
             
         </tags>
       
