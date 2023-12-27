@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1703669782194),
+    lastupdate: new Date(1703672541329),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2485,6 +2485,84 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/编译与链接/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/"  itemprop="url">
+        编译与链接
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        C/C++编译与链接
+编译
+编译可以被分为四个步骤：
+
+预编译（Prepressing）
+编译（Compilation）
+汇编（Assembly）
+链接（Linking）
+
+预编译
+gcc -E hello.c -o hello.i
+cpp hello.c &gt; hello.i
+
+移除并展开所有#define
+处理所有条件预编译指令，如#ifdef
+递归处理#include指令，将被包含...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-12-27T17:49:25+00:00">2023-12-27</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3102,72 +3180,6 @@ struct Student&#123;...
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/LogSystem/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/LogSystem/"  itemprop="url">
-        C++20下spdlog使用踩坑
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        C++20下spdlog使用踩坑
-spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo引擎写了一个Log系统，结果由于C++不允许连续进行两次及以上的用户自定义的隐式构造，使得spdlog的log函数无法正确推断匹配Args...，最后在公司C++高手的帮助下成功解决了问题，于是在此记录一下踩坑历程
-最初的版本
-我参考开源项目的实现，使用spdlog写了一个简易的L...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-10-29T23:25:25+00:00">2023-10-29</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/program/LogSystem/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3305,7 +3317,7 @@ spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo�
           <li><a class="flat-box"
             title="/categories/program/" href="/categories/program/"
             active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(25)</div></a></li>
+            ><div class='name'>program</div><div class='badge'>(26)</div></a></li>
         
       </ul>
     </div>
