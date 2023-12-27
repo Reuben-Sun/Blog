@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>map</title>
+      <link href="/program/map/"/>
+      <url>/program/map/</url>
+      
+        <content type="html"><![CDATA[<h1>map</h1><blockquote><p>突然发现一个华科大佬的博客，学习一波</p></blockquote><p>map是一种映射结构，能够存取键值对（键是唯一的）</p><p>map通常有两种实现方式：哈希表（<code>std::unordered_map</code>）、红黑树（<code>std::map</code>）</p><h2 id="哈希表">哈希表</h2><p>哈希表的查找删除均为O(1)</p><p>哈希表是一种空间换时间的算法，现在我们要存储一组键值对，假设键的范围是0~99，那么我们就开辟一个大小为100的数组，数组中存储了指向值的指针，于是我们就可以通过Key去数组中找指针，再找到值</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">value = a[key];</span><br></pre></td></tr></table></figure><p>不过开辟大小为100的数组过于昂贵了，只开辟大小为10的数组，Key去找值时先取模，再去数组中找指针</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">value = a[key%<span class="number">10</span>];</span><br></pre></td></tr></table></figure><p>不过这样也带来了一个问题，我们无法区分<code>key==21</code>和<code>key==31</code>，这种情况我们称之为<strong>哈希冲突</strong>，我们称21和31为同义词</p><p>解决哈希冲突的方式有：</p><ul><li>开放地址法</li><li>拉链法</li></ul><h3 id="拉链法">拉链法</h3><p>Key取模后去数组中找指针，这个指针是一个链表的头，遍历链表，找到对应Key的value</p><p>这种方法非同义词间不会影响</p><p><img src="/images/%E6%8B%89%E9%93%BE%E6%B3%95.jpg" class="lazyload" data-srcset="/images/%E6%8B%89%E9%93%BE%E6%B3%95.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="拉链法"></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">point = a[key%<span class="number">10</span>];</span><br><span class="line"><span class="keyword">while</span>(point != <span class="literal">nullptr</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(point-&gt;key != key)</span><br><span class="line">    &#123;</span><br><span class="line">        point = point-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">break</span>;    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">value = point-&gt;value;</span><br></pre></td></tr></table></figure><h2 id="红黑树">红黑树</h2><p>红黑树的查找删除为O(logN)，但是空间效率更高</p><p>红黑树是一种自平衡的二叉搜索树，每个节点是黑色或红色</p><h3 id="二叉搜索树">二叉搜索树</h3><p>二叉搜索树（BST）：排序二叉树，任意一个根节点，其左子树Key均小于根，其右子树Key均大于根</p><p>BST的操作复杂度取决于树的高度，但某些情况下BST会退化为一条链</p><h3 id="平衡二叉树">平衡二叉树</h3><p>平衡二叉树（AVL）：左右子树的高度差不能大于1，操作过程中树一旦不稳定，就会进行旋转，以重新恢复平衡</p><p><img src="/images/avl-LL.jpg" class="lazyload" data-srcset="/images/avl-LL.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="avl-LL"></p><p><img src="/images/avl-RR.jpg" class="lazyload" data-srcset="/images/avl-RR.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="avl-RR"></p><p><img src="/images/avl-LR.jpg" class="lazyload" data-srcset="/images/avl-LR.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="avl-LR"></p><p><img src="/images/avl-RL.jpg" class="lazyload" data-srcset="/images/avl-RL.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="avl-RL"></p><h3 id="红黑树-2">红黑树</h3><p>红黑树左右子树高度差不能超过一倍</p><ol><li>所有null节点都认为是黑色。</li><li>一个红节点不能有红色孩子，即红色节点之间不能相邻。</li><li>红黑树中的节点到其任意叶子节点路径上的黑节点个数相同。</li><li>新插入的节点都是红色，在平衡过程中可能变色。</li></ol><p>红黑树比平衡二叉树更容易保持平衡，于是效率更高</p><p><img src="/images/%E7%BA%A2%E9%BB%91%E6%A0%91.png" class="lazyload" data-srcset="/images/%E7%BA%A2%E9%BB%91%E6%A0%91.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="红黑树"></p><h2 id="参考">参考</h2><p><a href="https://gufeijun.com/">辜飞俊的博客</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> program </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>BCN编码</title>
       <link href="/graphics/BCN%E7%BC%96%E7%A0%81/"/>
       <url>/graphics/BCN%E7%BC%96%E7%A0%81/</url>
