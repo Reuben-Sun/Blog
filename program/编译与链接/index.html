@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-12-27T17:49:25.000Z">
-<meta property="article:modified_time" content="2023-12-28T03:51:00.012Z">
+<meta property="article:modified_time" content="2023-12-28T06:34:21.220Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1703735471851),
+    lastupdate: new Date(1703745272500),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2671,10 +2671,50 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>弱符号会被强符号覆盖</li>
 <li>若一个符号在所有文件中都是弱符号，则选择体积最大的符号去链接</li>
 </ul>
-<h3 id="强弱引用">强弱引用</h3>
+<h4 id="强弱引用">强弱引用</h4>
 <p>强引用：在链接时，如果没有找到强引用的符号，会报符号未定义的错误</p>
 <p>弱引用：在链接时，若符号未定义，会给一个默认值0</p>
+<p>弱符号、弱引用对于库来说十分有用，可以被用户自己定义的强符号所覆盖，也可以使得程序功能被剪裁组合</p>
 <h2 id="静态链接">静态链接</h2>
+<p>链接会将多个目标文件加工成一个可执行文件</p>
+<h3 id="段合并">段合并</h3>
+<p>相似段合并：将所有具有相同性质的段合并在一起，比如多个文件的.data段合在一个大的.data段中</p>
+<h3 id="两步链接">两步链接</h3>
+<ol>
+<li>空间和地址分配</li>
+<li><strong>符号解析</strong>和重定位</li>
+</ol>
+<h3 id="C-链接步骤">C++链接步骤</h3>
+<ol>
+<li>重复代码消除，一个模板可能在多个编译单元中被实例化，且实例化成相同的代码，将这些重复代码消除可以提高缓存利用率和节约空间</li>
+<li>函数级别链接（选择性开启）：每一个函数都单独存储在一个段中，链接时按需添加到目标文件，可以减少包体，但是会降低编译链接速度</li>
+</ol>
+<h3 id="程序入口">程序入口</h3>
+<p>Linux下程序的入口是<code>_start</code>，这是Glibc库的一部分，会进行程序的初始化，比如全局函数的创建，然后再去<code>main</code>函数执行</p>
+<p>ELF有.init和.fini两个段，在这两个段中的代码会在<code>mian</code>前后执行</p>
+<h3 id="ABI">ABI</h3>
+<p>两个代码想要链接，需要使用相同的目标文件格式。我们将符号修饰、变量内存布局、函数调用方法等和二进制可执行文件兼容性相关的内容称为ABI（Application Binary Interface）</p>
+<p>对于C语言，通过下列内容判断二进制兼容性：</p>
+<ul>
+<li>内置类型（int、char）的大小、字节序、对齐方式</li>
+<li>组合类型（struct、array、union）的存储方式和内存分布</li>
+<li>外部符号的解析方式，比如外部的<code>func</code>被解析为<code>_func</code></li>
+<li>函数调用方式，比如参数入栈顺序，返回值如何保持</li>
+<li>堆栈分布方式</li>
+<li>寄存器使用约定</li>
+</ul>
+<p>对于C++还额外有：</p>
+<ul>
+<li>继承相关的内存分布</li>
+<li>指向成员函数的指针的内存分布，如何通过成员函数指针调用成员函数，如何传递this指针</li>
+<li>如何调用虚函数，虚表的内容及分布</li>
+<li>模板如何实例化</li>
+<li>Name Mangling</li>
+<li>全局对象的构造与析构</li>
+<li>异常</li>
+<li>RTTI</li>
+<li>inline</li>
+</ul>
 <h2 id="装载">装载</h2>
 <h2 id="动态链接">动态链接</h2>
 <h2 id="Linux">Linux</h2>
@@ -2704,7 +2744,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-12-28T03:51:00+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-12-28T06:34:21+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年12月28日</p>
@@ -2859,7 +2899,7 @@ map通常有两种实现方式：哈希表（std::unordered_map）、红黑树�
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91"><span class="toc-text">预编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-2"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96"><span class="toc-text">汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">目标文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">目标文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-h-hello-o"><span class="toc-text">objdump -h hello.o</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-s-d-hello-o"><span class="toc-text">objdump -s -d hello.o</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF"><span class="toc-text">大小端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8C%BA%E5%88%86%E4%BB%A3%E7%A0%81%E5%9D%97%E5%92%8C%E6%95%B0%E6%8D%AE%E5%9D%97%E5%91%A2%EF%BC%9F"><span class="toc-text">为什么要区分代码块和数据块呢？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#readelf-h-hello-o"><span class="toc-text">readelf -h hello.o</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7"><span class="toc-text">符号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#extern-%E2%80%9CC%E2%80%9D"><span class="toc-text">extern “C”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E7%AC%A6%E5%8F%B7"><span class="toc-text">强弱符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E5%BC%95%E7%94%A8"><span class="toc-text">强弱引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">静态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E8%BD%BD"><span class="toc-text">装载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">动态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%BA%93"><span class="toc-text">运行库</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91"><span class="toc-text">预编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-2"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96"><span class="toc-text">汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">目标文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">目标文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-h-hello-o"><span class="toc-text">objdump -h hello.o</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-s-d-hello-o"><span class="toc-text">objdump -s -d hello.o</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF"><span class="toc-text">大小端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8C%BA%E5%88%86%E4%BB%A3%E7%A0%81%E5%9D%97%E5%92%8C%E6%95%B0%E6%8D%AE%E5%9D%97%E5%91%A2%EF%BC%9F"><span class="toc-text">为什么要区分代码块和数据块呢？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#readelf-h-hello-o"><span class="toc-text">readelf -h hello.o</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7"><span class="toc-text">符号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#extern-%E2%80%9CC%E2%80%9D"><span class="toc-text">extern “C”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E7%AC%A6%E5%8F%B7"><span class="toc-text">强弱符号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E5%BC%95%E7%94%A8"><span class="toc-text">强弱引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">静态链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%90%88%E5%B9%B6"><span class="toc-text">段合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AD%A5%E9%93%BE%E6%8E%A5"><span class="toc-text">两步链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E9%93%BE%E6%8E%A5%E6%AD%A5%E9%AA%A4"><span class="toc-text">C++链接步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-text">程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E8%BD%BD"><span class="toc-text">装载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">动态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%BA%93"><span class="toc-text">运行库</span></a></li></ol>
   </div>
 </section>
 
@@ -3403,7 +3443,7 @@ map通常有两种实现方式：哈希表（std::unordered_map）、红黑树�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/编译与链接/","name":"编译与链接"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"编译与链接","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/","wordCount":0,"datePublished":"2023-12-27T17:49:25.000Z","dateModified":"2023-12-28T03:51:00.012Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/编译与链接/","name":"编译与链接"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"编译与链接","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/","wordCount":0,"datePublished":"2023-12-27T17:49:25.000Z","dateModified":"2023-12-28T06:34:21.220Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
