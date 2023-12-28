@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-12-27T17:49:25.000Z">
-<meta property="article:modified_time" content="2023-12-28T06:34:21.220Z">
+<meta property="article:modified_time" content="2023-12-28T07:27:54.414Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1703745272500),
+    lastupdate: new Date(1703748487931),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2715,11 +2715,75 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>RTTI</li>
 <li>inline</li>
 </ul>
+<p>C++的ABI不稳定，于是DLL建议使用C风格</p>
 <h2 id="装载">装载</h2>
+<p>可执行文件要装载到内存中才能被CPU执行</p>
+<p>动态装入：许多情况下程序所需要的内存远超物理内存，为此我们会将一部分数据存储在磁盘里，内存中只保留最常用的部分。目前最常用的方法是页映射</p>
+<h3 id="进程的创建">进程的创建</h3>
+<ol>
+<li>创建一个独立的虚拟内存空间
+<ul>
+<li>分配页目录</li>
+<li>虚拟内存区域（VMA）</li>
+<li>段（Segment）</li>
+</ul>
+</li>
+<li>读取可执行文件的头，建立虚拟空间和可执行文件的映射关系
+<ul>
+<li>当程序发生<strong>缺页</strong>时，需要知道当前所需的页在可执行文件的哪一位置，这个位置信息存储在映射关系中</li>
+<li>这是装载最核心的步骤，于是很多可执行文件也叫映像文件（Image）</li>
+</ul>
+</li>
+<li>CPU指令寄存器设置为可执行文件的入口，程序运行</li>
+</ol>
+<h3 id="页错误">页错误</h3>
+<p>当CPU开始执行一段指令时，发现所在地址的页面是一个空页面，这就是页错误</p>
+<ol>
+<li>此时操作系统会去读映射关系，找到当前页所在的VMA，计算出该页在可执行文件的位置</li>
+<li>去物理内存中读这个页，并建立虚拟页和物理页的映射关系</li>
+<li>回到先前的地址，继续执行指令</li>
+</ol>
+<h3 id="VMA">VMA</h3>
+<p>VMA除了可以映射段，还会映射堆（Stack）和栈（Heap）</p>
+<table>
+<thead>
+<tr>
+<th>VMA类型</th>
+<th>权限</th>
+<th>能否执行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代码VMA</td>
+<td>只读</td>
+<td>可执行</td>
+</tr>
+<tr>
+<td>数据VMA</td>
+<td>读写</td>
+<td>可执行</td>
+</tr>
+<tr>
+<td>堆VMA</td>
+<td>读写</td>
+<td>可执行</td>
+</tr>
+<tr>
+<td>栈VMA</td>
+<td>读写</td>
+<td>不可执行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="段地址对齐">段地址对齐</h3>
+<p>x86处理器默认页的大小为4096字节，于是物理地址和虚拟地址进行映射时，虚拟内存空间的大小应该为4096字节的整数倍</p>
 <h2 id="动态链接">动态链接</h2>
-<h2 id="Linux">Linux</h2>
-<h2 id="Windows">Windows</h2>
-<h2 id="运行库">运行库</h2>
+<p>静态链接浪费内存空间、磁盘空间、难以更新</p>
+<p>动态链接将链接推迟到了运行（装载），能够实现库的复用，减少包体、提高缓存命中率</p>
+<p>动态链接升级模块时，理论上只需要重新编译、替换动态库的模块，可以实现插件系统</p>
+<p>Linux下动态库是动态共享对象（DSO），以<code>.so</code>结尾</p>
+<p>Windows下动态库是动态链接库（DLL），以<code>.dll</code>结尾</p>
 
   </div>
   
@@ -2744,7 +2808,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-12-28T06:34:21+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-12-28T07:27:54+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2023年12月28日</p>
@@ -2899,7 +2963,7 @@ map通常有两种实现方式：哈希表（std::unordered_map）、红黑树�
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91"><span class="toc-text">预编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-2"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96"><span class="toc-text">汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">目标文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">目标文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-h-hello-o"><span class="toc-text">objdump -h hello.o</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-s-d-hello-o"><span class="toc-text">objdump -s -d hello.o</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF"><span class="toc-text">大小端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8C%BA%E5%88%86%E4%BB%A3%E7%A0%81%E5%9D%97%E5%92%8C%E6%95%B0%E6%8D%AE%E5%9D%97%E5%91%A2%EF%BC%9F"><span class="toc-text">为什么要区分代码块和数据块呢？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#readelf-h-hello-o"><span class="toc-text">readelf -h hello.o</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7"><span class="toc-text">符号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#extern-%E2%80%9CC%E2%80%9D"><span class="toc-text">extern “C”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E7%AC%A6%E5%8F%B7"><span class="toc-text">强弱符号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E5%BC%95%E7%94%A8"><span class="toc-text">强弱引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">静态链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%90%88%E5%B9%B6"><span class="toc-text">段合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AD%A5%E9%93%BE%E6%8E%A5"><span class="toc-text">两步链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E9%93%BE%E6%8E%A5%E6%AD%A5%E9%AA%A4"><span class="toc-text">C++链接步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-text">程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E8%BD%BD"><span class="toc-text">装载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">动态链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%BA%93"><span class="toc-text">运行库</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-text">编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91"><span class="toc-text">预编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-2"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96"><span class="toc-text">汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">目标文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">目标文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-h-hello-o"><span class="toc-text">objdump -h hello.o</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#objdump-s-d-hello-o"><span class="toc-text">objdump -s -d hello.o</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF"><span class="toc-text">大小端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8C%BA%E5%88%86%E4%BB%A3%E7%A0%81%E5%9D%97%E5%92%8C%E6%95%B0%E6%8D%AE%E5%9D%97%E5%91%A2%EF%BC%9F"><span class="toc-text">为什么要区分代码块和数据块呢？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#readelf-h-hello-o"><span class="toc-text">readelf -h hello.o</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7"><span class="toc-text">符号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Mangling"><span class="toc-text">Name Mangling</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#extern-%E2%80%9CC%E2%80%9D"><span class="toc-text">extern “C”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E7%AC%A6%E5%8F%B7"><span class="toc-text">强弱符号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E5%BC%B1%E5%BC%95%E7%94%A8"><span class="toc-text">强弱引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">静态链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%90%88%E5%B9%B6"><span class="toc-text">段合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AD%A5%E9%93%BE%E6%8E%A5"><span class="toc-text">两步链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E9%93%BE%E6%8E%A5%E6%AD%A5%E9%AA%A4"><span class="toc-text">C++链接步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-text">程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ABI"><span class="toc-text">ABI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E8%BD%BD"><span class="toc-text">装载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">进程的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%94%99%E8%AF%AF"><span class="toc-text">页错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VMA"><span class="toc-text">VMA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90"><span class="toc-text">段地址对齐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text">动态链接</span></a></li></ol>
   </div>
 </section>
 
@@ -3443,7 +3507,7 @@ map通常有两种实现方式：哈希表（std::unordered_map）、红黑树�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/编译与链接/","name":"编译与链接"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"编译与链接","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/","wordCount":0,"datePublished":"2023-12-27T17:49:25.000Z","dateModified":"2023-12-28T06:34:21.220Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/编译与链接/","name":"编译与链接"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"编译与链接","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5/","wordCount":0,"datePublished":"2023-12-27T17:49:25.000Z","dateModified":"2023-12-28T07:27:54.414Z","articleSection":"program","keywords":"C++","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
