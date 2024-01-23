@@ -35,21 +35,20 @@
   <!-- feed -->
   <!-- 页面元数据 -->
   <title>Vulkan学习笔记 - ReubenSun</title>
-  <meta name="keywords" content="Vulkan,Ray Tracing,reubensun computer graphics engine Technical Artist">
+  <meta name="keywords" content="Vulkan,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vulkan学习笔记">
 <meta property="og:url" content="https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Vulkan学习笔记  在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达nvpro和Vulkan官方教程，打算自己敲一个小demo  Shader Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语言，可以使用glslang编译GLSL得到 # 将vert_">
+<meta property="og:description" content="Vulkan学习笔记  在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达nvpro和Vulkan官方教程，打算自己敲一个小demo  Vulkan API Render Pass  画啥  Vulkan相较于OpenGL、DX11&#x2F;12，一大特点就是有Render Pass这">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2023-06-13T22:16:25.000Z">
-<meta property="article:modified_time" content="2024-01-23T02:10:08.714Z">
+<meta property="article:published_time" content="2024-01-23T09:37:25.000Z">
+<meta property="article:modified_time" content="2024-01-23T08:01:52.736Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Vulkan">
-<meta property="article:tag" content="Ray Tracing">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2114,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1705975819225),
+    lastupdate: new Date(1705996931421),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2517,10 +2516,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2023-06-13T22:16:25+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-01-23T09:37:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2023年6月13日</p>
+    <p>发布于：2024年1月23日</p>
   </a>
 </div>
 
@@ -2547,6 +2546,98 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <blockquote>
 <p>在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看<a target="_blank" rel="noopener" href="https://github.com/nvpro-samples/build_all">英伟达nvpro</a>和<a target="_blank" rel="noopener" href="https://vulkan-tutorial.com/Introduction">Vulkan官方教程</a>，打算自己敲一个小demo</p>
 </blockquote>
+<h2 id="Vulkan-API">Vulkan API</h2>
+<h3 id="Render-Pass">Render Pass</h3>
+<blockquote>
+<p>画啥</p>
+</blockquote>
+<p>Vulkan相较于OpenGL、DX11/12，一大特点就是有Render Pass这个概念</p>
+<p>Render Pass的作用是描述绘制的目标（attachments），比如color，比如depth，这个概念很像RT</p>
+<p>比如一个Forward Pass，他的目标可能就是一张color和一张depth，一个Deferred Pass，他的目标可能是GBuffer（一组color）和一个depth</p>
+<h4 id="Subpass">Subpass</h4>
+<p>一个像素在绘制单元绘制后，通常需要被拷贝出去，形成一张完整的RT，然后再由另一个绘制单元绘制</p>
+<p>Subpass的一大特点是一个像素被一个Subpass绘制后，并不会立刻被拷贝出去，而是继续被另一个Subpass绘制</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li>减少了拷贝带来的带宽，减少延迟和发热，移动端延迟渲染常用该技术</li>
+<li>像素间绘制彼此独立，不需要一整张RT绘制后再绘制下一张，提高并行效率，还能用来实现OIT和Zero Overdraw</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>拿不到其他位置的RT的绘制内容，无法实现一些依赖RT的屏幕后效</li>
+</ol>
+<h3 id="Pipeline">Pipeline</h3>
+<blockquote>
+<p>怎么画</p>
+</blockquote>
+<p>用于设置管线的状态</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>主要作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>管线类型</td>
+<td>图形管线还是计算管线</td>
+</tr>
+<tr>
+<td>Shader Stage</td>
+<td>指定绘制用的Shader</td>
+</tr>
+<tr>
+<td>Vertex Input</td>
+<td>顶点缓冲的结构</td>
+</tr>
+<tr>
+<td>Input Assembly</td>
+<td>输入的结构，比如三角形的拓扑规则</td>
+</tr>
+<tr>
+<td>Viewport &amp; Scissors</td>
+<td></td>
+</tr>
+<tr>
+<td>Rasterizer</td>
+<td>光栅化的规则，比如用线、用三角面绘制，是否背面剔除</td>
+</tr>
+<tr>
+<td>Multisampling</td>
+<td>多采样的规则</td>
+</tr>
+<tr>
+<td>Depth Stencil</td>
+<td>深度测试、模板测试的规则</td>
+</tr>
+<tr>
+<td>Blending</td>
+<td>颜色混合规则（半透明）</td>
+</tr>
+<tr>
+<td>Pipeline Layout</td>
+<td>管线的结构，比如UBO binding规则</td>
+</tr>
+</tbody>
+</table>
+<p>在Vulkan中，Render Pass是比Pipeline大的，这也很好理解，毕竟只要绘制目标没有改变，自然不需要改动Render Pass</p>
+<p>而一个场景中有大量不同材质、Shader的对象，而且有的可能是线，有的是三角形，于是需要经常调整Pipeline，于是Vulkan的Pipeline就像Descriptor Set一样，可以随时改绑定的</p>
+<p>Vulkan的Pipeline是很大的东西，实时创建大量开销过大，而大部分的Pipeline对象都很接近，可能就只有一小部分有差异。为了实现复用，Vulkan的Pipeline是可以动态修改、可以Cache、可以生成子类</p>
+<h3 id="Descriptor-Set-Layout">Descriptor Set Layout</h3>
+<blockquote>
+<p>Shader中的资源位置</p>
+</blockquote>
+<p>Shader中会使用很多资源，比如UBO，比如贴图Sampler，需要指定绑定的位置</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">layout</span>(binding = <span class="number">0</span>) uniform GlobalUBO &#123;</span><br><span class="line">    mat4 modelMatrix;</span><br><span class="line">    mat4 viewMatrix;</span><br><span class="line">    mat4 projectionMatrix;</span><br><span class="line">&#125; ubo;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">layout</span>(binding = <span class="number">1</span>) uniform sampler2D texSampler;</span><br></pre></td></tr></table></figure>
+<h3 id="Descriptor-Set">Descriptor Set</h3>
+<blockquote>
+<p>资源</p>
+</blockquote>
+<p>简单理解为Vulkan管线能理解、使用的资源，比如UBO，比如贴图Sampler</p>
+<p>在绘制时，我们可以绑定一个Descriptor Sets，里面包含多个Descriptor Set，其结构是Layout决定的</p>
+<p>我们可以单独更新某一个Set</p>
 <h2 id="Shader">Shader</h2>
 <p>Vulkan使用SPIR-V作为着色语言，这是一种底层的二进制着色语言，可以使用glslang编译GLSL得到</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将vert_shader.vert编译为vert_spv</span></span><br><span class="line"><span class="variable">$glslangValidator</span> -V vert_shader.vert</span><br><span class="line"><span class="comment"># 将vert_shader.vert编译为test.spv</span></span><br><span class="line"><span class="variable">$glslangValidator</span> -V vert_shader.vert -o test.spv</span><br></pre></td></tr></table></figure>
@@ -2555,13 +2646,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>头文件（header）
 <ul>
 <li><code>.glsl</code></li>
-<li><code>.h</code></li>
 </ul>
 </li>
 <li>源文件（source）
 <ul>
-<li><code>.comp</code>：Compute</li>
+<li><code>.vert</code>：Vertex</li>
 <li><code>.frag</code>：Fragment</li>
+<li><code>.comp</code>：Compute</li>
 <li><code>.geom</code>：Geometry</li>
 <li><code>.mesh</code>：Mesh</li>
 <li><code>.rahit</code>：Ray any hit</li>
@@ -2573,53 +2664,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li><code>.task</code>：Task</li>
 <li><code>.tesc</code>：Tessellation control</li>
 <li><code>.tese</code>：Tessellation evaluation</li>
-<li><code>.vert</code>：Vertex</li>
 </ul>
 </li>
 </ul>
-<h2 id="cmake">cmake</h2>
-<h3 id="项目结构">项目结构</h3>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├─client</span><br><span class="line">├─core</span><br><span class="line">│  ├─<span class="keyword">include</span></span><br><span class="line">│  │  ├─common</span><br><span class="line">│  │  ├─<span class="keyword">file</span></span><br><span class="line">│  │  ├─render</span><br><span class="line">│  │  └─rhi</span><br><span class="line">│  └─src</span><br><span class="line">│      ├─<span class="keyword">file</span></span><br><span class="line">│      ├─render</span><br><span class="line">│      └─rhi</span><br><span class="line">├─scene</span><br><span class="line">├─shaders</span><br><span class="line">│  └─spv</span><br><span class="line">└─third_party</span><br><span class="line">    ├─glfw</span><br><span class="line">    ├─glm</span><br><span class="line">    ├─imgui</span><br><span class="line">    ├─optick</span><br><span class="line">    └─tbb  </span><br></pre></td></tr></table></figure>
-<h3 id="cmake与项目构建">cmake与项目构建</h3>
-<p>项目用cmake构建，用Visual Studio 2022作为IDE，可以配置一个<code>.bat</code>文件快速生成vs项目（当你添加文件时，运行这个脚本）</p>
-<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> SOURCE_DIR=../engine/</span><br><span class="line"><span class="built_in">set</span> BUILD_DIR=../build/</span><br><span class="line"></span><br><span class="line">cmake -S <span class="variable">%SOURCE_DIR%</span> -B <span class="variable">%BUILD_DIR%</span> -G &quot;Visual Studio <span class="number">17</span> <span class="number">2022</span>&quot;</span><br><span class="line">cmake --build <span class="variable">%BUILD_DIR%</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
-<h3 id="cmake与shader编译">cmake与shader编译</h3>
-<p>cmake在项目构建时可以通过echo执行命令行命令，以实现shader编译</p>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">add_custom_command</span>(</span><br><span class="line">         PRE_BUILD</span><br><span class="line">         OUTPUT <span class="variable">$&#123;GLSL_OUT&#125;</span></span><br><span class="line">         <span class="keyword">COMMAND</span> echo <span class="variable">$&#123;GLSLANGVALIDATOR&#125;</span> <span class="variable">$&#123;COMPILE_CMD&#125;</span></span><br><span class="line">         <span class="keyword">COMMAND</span> <span class="variable">$&#123;GLSLANGVALIDATOR&#125;</span> <span class="variable">$&#123;COMPILE_CMD&#125;</span></span><br><span class="line">         MAIN_DEPENDENCY <span class="variable">$&#123;GLSL_SRC&#125;</span></span><br><span class="line">         WORKING_DIRECTORY <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span></span><br><span class="line">         DEPENDS <span class="variable">$&#123;GLSL_DEPENDENCY&#125;</span></span><br><span class="line">      )</span><br></pre></td></tr></table></figure>
-<p>同时也可以使用cmake实现编译后的spv文件拷贝</p>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Copy shaders</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>)</span><br><span class="line"><span class="keyword">add_custom_command</span>(<span class="keyword">TARGET</span> client POST_BUILD</span><br><span class="line">	<span class="keyword">COMMAND</span> <span class="variable">$&#123;CMAKE_COMMAND&#125;</span> -E copy_directory</span><br><span class="line">	<span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/shaders/spv</span><br><span class="line">	$&lt;TARGET_FILE_DIR:client&gt;/shaders</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h2 id="第三方库">第三方库</h2>
-<h3 id="GLFW">GLFW</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/glfw/glfw">GLFW</a>是一个开源的跨平台窗口库，支持OpenGL和Vulkan上下文，常用于开发图形密集型程序</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// 设置错误回调</span></span><br><span class="line">  <span class="built_in">glfwSetErrorCallback</span>(onErrorCallback);</span><br><span class="line">  <span class="comment">// glfw初始化</span></span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">glfwInit</span>()) &#123; <span class="keyword">return</span> <span class="number">1</span>;&#125;</span><br><span class="line">  <span class="comment">// 设置窗口的客户端API，GLFW_NO_API表示不使用Vulkan/OpenGL（你可以自己创建Vulkan对象）</span></span><br><span class="line">  <span class="built_in">glfwWindowHint</span>(GLFW_CLIENT_API, GLFW_NO_API);</span><br><span class="line">  <span class="comment">// 创建窗口，设置窗口大小、标题、不使用共享上下文和监视器</span></span><br><span class="line">  GLFWwindow* window = <span class="built_in">glfwCreateWindow</span>(SAMPLE_WIDTH, SAMPLE_HEIGHT, PROJECT_NAME, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line">  <span class="comment">// 主循环，直到窗口需要被关闭</span></span><br><span class="line">  <span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 处理窗口事件</span></span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 销毁窗口</span></span><br><span class="line">  <span class="built_in">glfwDestroyWindow</span>(window);</span><br><span class="line">  <span class="comment">// 释放glfw资源</span></span><br><span class="line">  <span class="built_in">glfwTerminate</span>();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="IMGUI">IMGUI</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/ocornut/imgui">Dear IMGUI</a>是一个广泛用于游戏开发的轻量级UI库，可以与Vulkan和GLFW集成</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">HelloVulkan helloVk;</span><br><span class="line"><span class="built_in">ImGui_ImplGlfw_InitForVulkan</span>(window, <span class="literal">true</span>);</span><br><span class="line"><span class="comment">// Main loop</span></span><br><span class="line"><span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">  <span class="comment">// Start the Dear ImGui frame</span></span><br><span class="line">  <span class="built_in">ImGui_ImplGlfw_NewFrame</span>();</span><br><span class="line">  ImGui::<span class="built_in">NewFrame</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Show UI window.</span></span><br><span class="line">  <span class="keyword">if</span>(helloVk.<span class="built_in">showGui</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    ImGuiH::Panel::<span class="built_in">Begin</span>();</span><br><span class="line">    ImGui::<span class="built_in">ColorEdit3</span>(<span class="string">&quot;Clear color&quot;</span>, <span class="built_in">reinterpret_cast</span>&lt;<span class="type">float</span>*&gt;(&amp;clearColor));</span><br><span class="line">    <span class="built_in">renderUI</span>(helloVk);</span><br><span class="line">    ImGui::<span class="built_in">Text</span>(<span class="string">&quot;Application average %.3f ms/frame (%.1f FPS)&quot;</span>, <span class="number">1000.0f</span> / ImGui::<span class="built_in">GetIO</span>().Framerate, ImGui::<span class="built_in">GetIO</span>().Framerate);</span><br><span class="line">    ImGuiH::Control::<span class="built_in">Info</span>(<span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;(F10) Toggle Pane&quot;</span>, ImGuiH::Control::Flags::Disabled);</span><br><span class="line">    ImGuiH::Panel::<span class="built_in">End</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Start rendering the scene</span></span><br><span class="line">  helloVk.<span class="built_in">prepareFrame</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Start command buffer of this frame</span></span><br><span class="line">  <span class="keyword">auto</span>                   curFrame = helloVk.<span class="built_in">getCurFrame</span>();</span><br><span class="line">  <span class="type">const</span> VkCommandBuffer&amp; cmdBuf   = helloVk.<span class="built_in">getCommandBuffers</span>()[curFrame];</span><br><span class="line">	...</span><br><span class="line">  <span class="comment">// Rendering UI</span></span><br><span class="line">  ImGui::<span class="built_in">Render</span>();</span><br><span class="line">  <span class="built_in">ImGui_ImplVulkan_RenderDrawData</span>(ImGui::<span class="built_in">GetDrawData</span>(), cmdBuf);</span><br><span class="line">  <span class="built_in">vkCmdEndRenderPass</span>(cmdBuf);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Submit for display</span></span><br><span class="line">  <span class="built_in">vkEndCommandBuffer</span>(cmdBuf);</span><br><span class="line">  helloVk.<span class="built_in">submitFrame</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="tbb">tbb</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneTBB">tbb</a>是英特尔推出的一个并行库，可以用于多线程编程，包含了线程池、并行算法等</p>
-<h3 id="optick">optick</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/bombomby/optick">optick</a>是一个CPU端上的C++性能分析工具，使用方便，支持多线程调试，但是是侵入式的（需要在代码中加宏）</p>
-<h3 id="glm">glm</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/g-truc/glm">glm</a>是一个OpenGL数学库，包含大量线性代数和几何运算，与OpenGL配合良好</p>
-<h2 id="RHI封装">RHI封装</h2>
-<h3 id="Instance">Instance</h3>
-<h3 id="Validation-layers">Validation layers</h3>
-<h3 id="Physical-device">Physical device</h3>
-<h3 id="Deivce">Deivce</h3>
-<h3 id="Swap-chain">Swap chain</h3>
-<h3 id="Image-views">Image views</h3>
-<h3 id="Frame-buffers">Frame buffers</h3>
-<h3 id="Command-buffers">Command buffers</h3>
-<h3 id="Semaphores">Semaphores</h3>
-<h3 id="Fences">Fences</h3>
-<h2 id="画一个三角形">画一个三角形</h2>
-<h3 id="Window">Window</h3>
-<ul>
-<li>Surface</li>
-</ul>
-<h3 id="GLFWwindow">GLFWwindow</h3>
-<h3 id="Application">Application</h3>
-<h3 id="Blit-Pipeline">Blit Pipeline</h3>
+<h3 id="Vertex">Vertex</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#version 450</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">layout</span>(binding = <span class="number">0</span>) uniform GlobalUBO &#123;</span><br><span class="line">    mat4 modelMatrix;</span><br><span class="line">    mat4 viewMatrix;</span><br><span class="line">    mat4 projectionMatrix;</span><br><span class="line">&#125; ubo;</span><br><span class="line"></span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">0</span>) in vec3 inPosition;</span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">1</span>) in vec3 inColor;</span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">2</span>) in vec2 inTexCoord;</span><br><span class="line"></span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">0</span>) out vec3 fragColor;</span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">1</span>) out vec2 uv0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    gl_Position = ubo.projectionMatrix * ubo.viewMatrix * ubo.modelMatrix * <span class="built_in">vec4</span>(inPosition, <span class="number">1.0</span>);</span><br><span class="line">    fragColor = inColor;</span><br><span class="line">    uv0 = inTexCoord;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Fragment">Fragment</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#version 450</span></span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">0</span>) in vec3 fragColor;</span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">1</span>) in vec2 uv0;</span><br><span class="line"></span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">0</span>) out vec4 outColor;</span><br><span class="line"></span><br><span class="line"><span class="built_in">layout</span>(binding = <span class="number">1</span>) uniform sampler2D texSampler;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    outColor = <span class="built_in">texture</span>(texSampler, uv0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2644,7 +2695,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-23T02:10:08+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-23T08:01:52+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年1月23日</p>
@@ -2658,8 +2709,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Vulkan/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Vulkan</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Ray-Tracing/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Ray Tracing</p></a></div>
-  <span hidden itemprop="keywords">Vulkan Ray Tracing</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Vulkan/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Vulkan</p></a></div>
+  <span hidden itemprop="keywords">Vulkan</span>
   
 
 
@@ -2730,23 +2781,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/program/C++template/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>C++模版</p>
-          <p class='content'>C++模版
-
-《C++ Templates: The Complete Guide》笔记
-
-为什么使用模版
-为了实现泛型
-如果不使用泛型，对于一些通用的函数或容器，比如print、vector，...</p>
-        </a>
       
-      
-        <a class='next' href='/game/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E5%AD%A6%E4%B9%A0/'>
-          <p class='title'>银河恶魔城设计理念学习<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>银河恶魔城设计理念学习
-
-昨天跟魔方的策划沟通了一下，发现我之前的设计很不成熟，我所认为的Hook（比如“玩家因为缺少一个能力卡关了，于是去岔路口寻找其他能力”）原来只是这类游戏的共性（Pill...</p>
+        <a class='next' href='/program/CSharpeAttribute/'>
+          <p class='title'>C# Attribute用法<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>C# Attribute用法
+内建功能
+标记函数
+比如标记函数已过时，再调用这个函数时会有绿色的波浪线，并提示你函数已过时
+[Obsolete(&quot;This func is obsole...</p>
         </a>
       
     </div>
@@ -2807,7 +2849,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cmake"><span class="toc-text">cmake</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">项目结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake%E4%B8%8E%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA"><span class="toc-text">cmake与项目构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake%E4%B8%8Eshader%E7%BC%96%E8%AF%91"><span class="toc-text">cmake与shader编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-text">第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GLFW"><span class="toc-text">GLFW</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMGUI"><span class="toc-text">IMGUI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tbb"><span class="toc-text">tbb</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#optick"><span class="toc-text">optick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#glm"><span class="toc-text">glm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RHI%E5%B0%81%E8%A3%85"><span class="toc-text">RHI封装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Instance"><span class="toc-text">Instance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Validation-layers"><span class="toc-text">Validation layers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Physical-device"><span class="toc-text">Physical device</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deivce"><span class="toc-text">Deivce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swap-chain"><span class="toc-text">Swap chain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image-views"><span class="toc-text">Image views</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Frame-buffers"><span class="toc-text">Frame buffers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Command-buffers"><span class="toc-text">Command buffers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Semaphores"><span class="toc-text">Semaphores</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fences"><span class="toc-text">Fences</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%BB%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="toc-text">画一个三角形</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Window"><span class="toc-text">Window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GLFWwindow"><span class="toc-text">GLFWwindow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application"><span class="toc-text">Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blit-Pipeline"><span class="toc-text">Blit Pipeline</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulkan-API"><span class="toc-text">Vulkan API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Render-Pass"><span class="toc-text">Render Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Subpass"><span class="toc-text">Subpass</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipeline"><span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Descriptor-Set-Layout"><span class="toc-text">Descriptor Set Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Descriptor-Set"><span class="toc-text">Descriptor Set</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vertex"><span class="toc-text">Vertex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fragment"><span class="toc-text">Fragment</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3351,7 +3393,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2023-06-13T22:16:25.000Z","dateModified":"2024-01-23T02:10:08.714Z","articleSection":"graphics","keywords":"Vulkan,Ray Tracing","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2024-01-23T09:37:25.000Z","dateModified":"2024-01-23T08:01:52.736Z","articleSection":"graphics","keywords":"Vulkan","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
