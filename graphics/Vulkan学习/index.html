@@ -42,11 +42,11 @@
 <meta property="og:title" content="Vulkan学习笔记">
 <meta property="og:url" content="https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Vulkan学习笔记  在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达nvpro和Vulkan官方教程，打算自己敲一个小demo  Vulkan API Render Pass  画啥  Vulkan相较于OpenGL、DX11&#x2F;12，一大特点就是有Render Pass这">
+<meta property="og:description" content="Vulkan学习笔记  在过去，我以为Vulkan只有高端安卓才会用，相当复杂，没有下定决心去学。后来发现很多桌面和主机游戏也在用Vulkan，Vulkan真的很出色很重要，于是这几天开始看英伟达nvpro和Vulkan官方教程，打算自己敲一个小demo  Vulkan API Render Pass  画到哪  Vulkan相较于OpenGL、DX11&#x2F;12，一大特点就是有Render Pass">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-01-23T09:37:25.000Z">
-<meta property="article:modified_time" content="2024-01-30T14:27:04.129Z">
+<meta property="article:modified_time" content="2024-01-30T14:40:44.663Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Vulkan">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1706624846086),
+    lastupdate: new Date(1706625659279),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2549,11 +2549,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h2 id="Vulkan-API">Vulkan API</h2>
 <h3 id="Render-Pass">Render Pass</h3>
 <blockquote>
-<p>画啥</p>
+<p>画到哪</p>
 </blockquote>
 <p>Vulkan相较于OpenGL、DX11/12，一大特点就是有Render Pass这个概念</p>
-<p>Render Pass的作用是描述绘制的目标（attachments），比如color，比如depth，这个概念很像RT</p>
+<p>Render Pass的作用是描述绘制的目标（attachments，很像RT），比如color，比如depth</p>
 <p>比如一个Forward Pass，他的目标可能就是一张color和一张depth，一个Deferred Pass，他的目标可能是GBuffer（一组color）和一个depth</p>
+<h4 id="VkAttachmentDescription">VkAttachmentDescription</h4>
+<p>值得注意的参数</p>
+<ul>
+<li>format：image view格式</li>
+<li>samples：多采样次数</li>
+<li>finalLayout：当renderpass绘制结束时，会将color转化为该格式</li>
+</ul>
 <h4 id="Subpass">Subpass</h4>
 <p>一个像素在绘制单元绘制后，通常需要被拷贝出去，形成一张完整的RT，然后再由另一个绘制单元绘制</p>
 <p>Subpass的一大特点是一个像素被一个Subpass绘制后，并不会立刻被拷贝出去，而是继续被另一个Subpass绘制</p>
@@ -2800,7 +2807,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-30T14:27:04+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-01-30T14:40:44+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年1月30日</p>
@@ -2961,7 +2968,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulkan-API"><span class="toc-text">Vulkan API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Render-Pass"><span class="toc-text">Render Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Subpass"><span class="toc-text">Subpass</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipeline"><span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Descriptor-Set-Layout"><span class="toc-text">Descriptor Set Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Descriptor-Set"><span class="toc-text">Descriptor Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image"><span class="toc-text">Image</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Usage"><span class="toc-text">Usage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Layout"><span class="toc-text">Layout</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image-View"><span class="toc-text">Image View</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vertex"><span class="toc-text">Vertex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fragment"><span class="toc-text">Fragment</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulkan-API"><span class="toc-text">Vulkan API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Render-Pass"><span class="toc-text">Render Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#VkAttachmentDescription"><span class="toc-text">VkAttachmentDescription</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Subpass"><span class="toc-text">Subpass</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pipeline"><span class="toc-text">Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Descriptor-Set-Layout"><span class="toc-text">Descriptor Set Layout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Descriptor-Set"><span class="toc-text">Descriptor Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image"><span class="toc-text">Image</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Usage"><span class="toc-text">Usage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Layout"><span class="toc-text">Layout</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image-View"><span class="toc-text">Image View</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shader"><span class="toc-text">Shader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GLSL%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">GLSL文件类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vertex"><span class="toc-text">Vertex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fragment"><span class="toc-text">Fragment</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3505,7 +3512,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2024-01-23T09:37:25.000Z","dateModified":"2024-01-30T14:27:04.129Z","articleSection":"graphics","keywords":"Vulkan","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/Vulkan学习/","name":"Vulkan学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Vulkan学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/Vulkan%E5%AD%A6%E4%B9%A0/","wordCount":0,"datePublished":"2024-01-23T09:37:25.000Z","dateModified":"2024-01-30T14:40:44.663Z","articleSection":"graphics","keywords":"Vulkan","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
