@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>头发渲染学习</title>
+      <link href="/graphics/%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93%E5%AD%A6%E4%B9%A0/"/>
+      <url>/graphics/%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93%E5%AD%A6%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<h1>头发渲染学习</h1><p>最近因为不了解头发渲染的流程，整了乌龙，把正确的结果当成错误了。于是打算学习一下头发渲染的流程</p><h2 id="渲染方程">渲染方程</h2><p>如下图所示，毛发渲染通常由三部分组成：</p><ul><li>反射（R，下图1）</li><li>传播-传播（TT，下图2）</li><li>传播-反射-传播（TRT，下图3）</li></ul><p><img src="/images/HairDiagram.gif" class="lazyload" data-srcset="/images/HairDiagram.gif" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="HairDiagram"></p><h2 id="资产制作">资产制作</h2><h2 id="参考">参考</h2><p><a href="https://cseweb.ucsd.edu/~ravir/paper_fur.pdf">Physically-Accurate Fur Reflectance: Modeling, Measurement and Rendering</a></p><p><a href="https://www.astroite.com/Graphics/Rendering/Hair/HairRendering.html#%E5%AD%A6%E6%9C%AF%E7%A0%94%E7%A9%B6">从理论到实现的头发渲染—基于UE4</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> graphics </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Hair </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>使用Rust与WebAssembly画三角形</title>
       <link href="/program/Rust-WebAssembly/"/>
       <url>/program/Rust-WebAssembly/</url>
