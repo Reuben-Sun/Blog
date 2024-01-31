@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1706671034188),
+    lastupdate: new Date(1706682489979),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2436,18 +2436,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         头发渲染学习
 最近因为不了解头发渲染的流程，整了乌龙，把正确的结果当成错误了。于是打算学习一下头发渲染的流程
+面片发是由大量非平面面片制作，他们的切线沿着头发丝的方向，渲染时开启双面绘制
 渲染方程
-如下图所示，毛发渲染通常由三部分组成：
-
-反射（R，下图1）
-传播-传播（TT，下图2）
-传播-反射-传播（TRT，下图3）
-
-
-资产制作
-面片发是由大量非平面面片制作，渲染时开启双面绘制
-参考
-Physically-Accurate Fur Reflectance: Mo...
+传入切线
+UE5在绘制头发时，向GBuffer的法线位写入的是Tangent
+WriteGBuffer(    Samples_Tangent,	// 写入切线而非法线    Samples_Sp...
       
     
   </div>
