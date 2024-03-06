@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1709634407738),
+    lastupdate: new Date(1709721070609),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2645,9 +2645,11 @@ Intel认为，CPU端使用GPU生成的Depth buffer做剔除，如果你不提前
     
       
         grep搜索lib
-前几天写Vulkan发现链接不到vkCmdBeginDebugUtilsLabelEXT这个函数，同事说我肯定少链接了一个.lib文件，然我却不知道少链接了谁
+grep
+前几天写代码发现链接不到某个函数，同事说我肯定少链接了一个.lib文件，然我却不知道少链接了谁
 同事交给我一个小技巧，lib文件本质是一个代码压缩包，是可以对里面的内容进行搜索的，在Linux（WSL）中进入存放.lib的库，输入命令
-grep -r vkCmdBeginDebugUtilsLabelEXT ...
+grep -r &lt;函数名&gt; .
+就会匹配vkCmdBeginDebugUtilsLabelEXT这个函数在哪一个.l...
       
     
   </div>
