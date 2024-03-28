@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <!-- SEO相关 -->
   
-  <link rel="canonical" href="https://reubensun.com/program/p4入门/"/>
+  <link rel="canonical" href="https://reubensun.com/program/csharp表格/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,21 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>Perforce入门 - ReubenSun</title>
-  <meta name="keywords" content="Perforce,reubensun computer graphics engine Technical Artist">
+  <title>C#读表格 - ReubenSun</title>
+  <meta name="keywords" content="CSharp,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="Perforce入门">
-<meta property="og:url" content="https://reubensun.com/program/P4%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:title" content="C#读表格">
+<meta property="og:url" content="https://reubensun.com/program/CSharp%E8%A1%A8%E6%A0%BC/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Perforce入门  Perforce又称P4、P4V  为什么要用P4 游戏开发一定需要一个版本管理工具，除了保留编辑记录外，还可以保护资产，遇到一些严重崩溃可以回退，不然会出现引擎打不开了，蓝图数据全丢了，一天白干的情况 为什么不使用Git呢？因为Git对二进制支持很差，即使使用LFS，对于动辄几十G的项目也无能为力 而且P4与Git不同，Git是在状态间切换，一旦切分支、拉新，就要将所有文">
+<meta property="og:description" content="C#读表格  这里使用Open XML SDK读xml和xlsx表格  读XLSX 打开一个xlsx static bool readResourceXlsxTable(string xlsx_path, string prefix_path, Dictionary&lt;string, string&gt; id_to_texture_path)&#123;    using (Spreadsh">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2024-03-21T10:01:25.000Z">
-<meta property="article:modified_time" content="2024-03-28T10:42:09.853Z">
+<meta property="article:published_time" content="2024-03-28T18:32:25.000Z">
+<meta property="article:modified_time" content="2024-03-28T10:42:00.372Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="Perforce">
+<meta property="article:tag" content="CSharp">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2459,7 +2459,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/P4入门/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/CSharp表格/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2480,7 +2480,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        Perforce入门
+        C#读表格
       </h1>
       <div class='new-meta-box'>
         
@@ -2516,10 +2516,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-03-21T10:01:25+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-03-28T18:32:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2024年3月21日</p>
+    <p>发布于：2024年3月28日</p>
   </a>
 </div>
 
@@ -2542,78 +2542,32 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <h1>Perforce入门</h1>
+    <h1>C#读表格</h1>
 <blockquote>
-<p>Perforce又称P4、P4V</p>
+<p>这里使用<a target="_blank" rel="noopener" href="https://github.com/dotnet/Open-XML-SDK">Open XML SDK</a>读xml和xlsx表格</p>
 </blockquote>
-<h2 id="为什么要用P4">为什么要用P4</h2>
-<p>游戏开发一定需要一个版本管理工具，除了保留编辑记录外，还可以保护资产，遇到一些严重崩溃可以回退，不然会出现引擎打不开了，蓝图数据全丢了，一天白干的情况</p>
-<p>为什么不使用Git呢？因为Git对二进制支持很差，即使使用LFS，对于动辄几十G的项目也无能为力</p>
-<p>而且P4与Git不同，Git是在状态间切换，一旦切分支、拉新，就要将所有文件更新到某个状态，而P4可以只更新某个文件</p>
-<p>此外P4也有分支、合并等概念，对于代码的处理也是完全可以接受的，因为强推P4</p>
-<h2 id="个人P4环境搭建">个人P4环境搭建</h2>
-<blockquote>
-<p>指服务器和客户端都搭在本机，仅用作版本管理，不考虑协作</p>
-</blockquote>
-<h3 id="1-下载P4D">1. 下载P4D</h3>
-<p><a target="_blank" rel="noopener" href="https://www.perforce.com/downloads/helix-core-p4d">Download Helix Core (P4D) | Perforce</a></p>
-<p>这是P4的服务器，一路继续就可以，记住服务器端口（默认是1666）</p>
-<h3 id="2-下载P4V">2. 下载P4V</h3>
-<p><a target="_blank" rel="noopener" href="https://www.perforce.com/downloads/helix-visual-client-p4v">Download Helix Visual Client (P4V) | Perforce</a></p>
-<p>这是P4客户端，一路继续</p>
-<h3 id="3-创建用户">3. 创建用户</h3>
-<p>打开P4V后，会弹出一个连接选项</p>
-<p>Server填P4D创建时的端口（这里就是1666），如果是远程服务器，就是远程的链接:端口</p>
-<p>点击User右侧的New，创建用户</p>
-<p>结束后按OK进行P4V</p>
-<p><img src="/images/p4%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7.png" class="lazyload" data-srcset="/images/p4%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="p4创建用户"></p>
-<h3 id="4-创建Depot">4. 创建Depot</h3>
-<p>此时我们是什么都没有的，所以要先创建一个Depot，这是类似仓库根节点的东西</p>
-<p>点击Tools–Administration打开管理员面版</p>
-<p><img src="/images/%E6%89%93%E5%BC%80%E7%AE%A1%E7%90%86%E5%91%98%E9%9D%A2%E6%9D%BF.png" class="lazyload" data-srcset="/images/%E6%89%93%E5%BC%80%E7%AE%A1%E7%90%86%E5%91%98%E9%9D%A2%E6%9D%BF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="打开管理员面板"></p>
-<p><img src="/images/p4%E5%88%9B%E5%BB%BAdepot.png" class="lazyload" data-srcset="/images/p4%E5%88%9B%E5%BB%BAdepot.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="p4创建depot"></p>
-<h3 id="5-创建Stream">5. 创建Stream</h3>
-<p>stream很类似于Git的分支，我们回到P4V的窗口，点击一个Depot后创建一个Stream</p>
-<p><img src="/images/p4%E5%88%9B%E5%BB%BAstream.png" class="lazyload" data-srcset="/images/p4%E5%88%9B%E5%BB%BAstream.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="p4创建stream"></p>
-<p>Stream是可以衍生出其他子分支的</p>
-<p>你可以在Stream Graph窗口查看Stream的关系，注意需要按一下Apply来刷新显示</p>
-<p><img src="/images/StreamGraph.png" class="lazyload" data-srcset="/images/StreamGraph.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="StreamGraph"></p>
-<p>Stream上的小显示器，就是当前Workspace所在的位置，你可以拖动显示器到其他Stream，以实现分支切换</p>
-<h3 id="6-创建Workspace">6. 创建Workspace</h3>
-<p>前面的东西都还是在服务端的，Workspace才是本地的东西，对着一个Stream右键，New Workspace</p>
-<p>在Advanced里有一些配置，比如文件换行符格式，建议都用Unix</p>
-<h2 id="P4使用">P4使用</h2>
-<h3 id="拉新">拉新</h3>
-<p>Get Lastest</p>
-<h3 id="强制拉新">强制拉新</h3>
-<p>对着某个文件夹右键——Get Revison</p>
-<p><img src="/images/%E5%BC%BA%E5%88%B6%E6%8B%89%E6%96%B0.png" class="lazyload" data-srcset="/images/%E5%BC%BA%E5%88%B6%E6%8B%89%E6%96%B0.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="强制拉新"></p>
-<h3 id="Checkout">Checkout</h3>
-<blockquote>
-<p>俗称锁了，一般这些二进制文件会被设置为只读，被checkout后才可写</p>
-</blockquote>
-<p>一些二进制文件，如果不Checkout，就不能修改</p>
-<p>文件被checkout后，其他人也能看到这个文件被谁checkout，有的文件一旦被其他人checkout，就不能对其进行修改，于是经常遇到有人来找你解锁某个文件</p>
-<h3 id="收集修改">收集修改</h3>
-<blockquote>
-<p>基本是最常用的功能，尤其是一个人用时</p>
-</blockquote>
-<p>对着某个文件夹右键——Reconcile Offline Work</p>
-<p><img src="/images/%E6%94%B6%E9%9B%86%E4%BF%AE%E6%94%B9.png" class="lazyload" data-srcset="/images/%E6%94%B6%E9%9B%86%E4%BF%AE%E6%94%B9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="收集修改"></p>
-<p>收集的修改会放在Pending中</p>
-<h3 id="回退">回退</h3>
-<p>右键——Revert</p>
-<h3 id="提交修改">提交修改</h3>
-<p>将Pending中某个修改提交，不要用default提交，注意写提交信息</p>
-<h3 id="暂存修改">暂存修改</h3>
-<p>将某个Pending的修改临时“回退”掉，不过这个回退其实会上传到服务器</p>
-<p>这个功能最大的作用其实是私下传递资源，你可以把你的修改给其它他人，而不需要提交、污染主分支</p>
-<p>其他人可以通过ID找到这个Shelve，按右键UnShelve就可以将这个Change应用到本地</p>
-<p><img src="/images/%E6%9A%82%E5%AD%98%E4%BF%AE%E6%94%B9.png" class="lazyload" data-srcset="/images/%E6%9A%82%E5%AD%98%E4%BF%AE%E6%94%B9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="暂存修改"></p>
-<h3 id="解决冲突">解决冲突</h3>
-<h2 id="P4-Net-API">P4 .Net API</h2>
-<p>P4所有操作其实都是通过命令实现的，在Log窗口可以看到，使用C# Api可以模拟这些接口，实现一些工具</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Perforce.P4;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">P4DoNetApi</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">P4Utils</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="built_in">string</span> uri;</span><br><span class="line">        <span class="keyword">private</span> <span class="built_in">string</span> user;</span><br><span class="line">        <span class="keyword">private</span> <span class="built_in">string</span> workspace;</span><br><span class="line">        <span class="keyword">private</span> Repository repo;</span><br><span class="line">        <span class="keyword">private</span> Connection conn;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">P4Utils</span>(<span class="params"><span class="built_in">string</span> uri, <span class="built_in">string</span> user, <span class="built_in">string</span> workspace</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.uri = uri;</span><br><span class="line">            <span class="keyword">this</span>.user = user;</span><br><span class="line">            <span class="keyword">this</span>.workspace = workspace;</span><br><span class="line">            repo = <span class="keyword">new</span> Repository(<span class="keyword">new</span> Server(<span class="keyword">new</span> ServerAddress(uri)));</span><br><span class="line">            conn = repo.Connection;</span><br><span class="line">            conn.UserName = user;</span><br><span class="line">            conn.Client = <span class="keyword">new</span> Client &#123; Name = workspace &#125;;</span><br><span class="line">            conn.Connect(<span class="literal">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 获取当前workspace所有changelist描述</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>描述名list<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> List&lt;<span class="built_in">string</span>&gt; <span class="title">getAllChangeListDescription</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            List&lt;<span class="built_in">string</span>&gt; result = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">            <span class="comment">// p4 changes -L -c &#123;workspace&#125; -m 10 -u &#123;user&#125;</span></span><br><span class="line">            ChangesCmdOptions options = <span class="keyword">new</span> ChangesCmdOptions(ChangesCmdFlags.LongDescription, workspace, <span class="number">10</span>, ChangeListStatus.None, user);</span><br><span class="line">            IList&lt;Changelist&gt; changelists = repo.GetChangelists(options, <span class="literal">null</span>);</span><br><span class="line">            <span class="keyword">foreach</span>(<span class="keyword">var</span> change <span class="keyword">in</span> changelists)</span><br><span class="line">            &#123;</span><br><span class="line">                result.Add(change.Description);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> List&lt;<span class="built_in">string</span>&gt; <span class="title">getAllFileDepotPathInChangeList</span>(<span class="params"><span class="built_in">int</span> changelistId</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            List&lt;<span class="built_in">string</span>&gt; result = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">            Changelist changelist = repo.GetChangelist(changelistId);</span><br><span class="line">            <span class="keyword">if</span>(changelist != <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">foreach</span>(<span class="keyword">var</span> fileMetaData <span class="keyword">in</span> changelist.Files)</span><br><span class="line">                &#123;</span><br><span class="line">                    result.Add(fileMetaData.DepotPath.Path);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="读XLSX">读XLSX</h2>
+<h3 id="打开一个xlsx">打开一个xlsx</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">bool</span> <span class="title">readResourceXlsxTable</span><span class="params">(string xlsx_path, string prefix_path, Dictionary&lt;string, string&gt; id_to_texture_path)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">using</span> (SpreadsheetDocument doc = SpreadsheetDocument.<span class="built_in">Open</span>(xlsx_path, <span class="literal">false</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        OpenXmlElementList childs = doc.WorkbookPart.Workbook.Sheets.ChildElements;</span><br><span class="line">        OpenXmlElement sheet_element = childs.<span class="built_in">GetItem</span>(<span class="number">0</span>);</span><br><span class="line">        Sheet sheet = (Sheet)sheet_element;</span><br><span class="line">        Worksheet worksheet = (doc.WorkbookPart.<span class="built_in">GetPartById</span>(sheet.Id.Value) as WorksheetPart).Worksheet;</span><br><span class="line">        IEnumerable&lt;Row&gt; rows = worksheet.<span class="built_in">GetFirstChild</span>&lt;SheetData&gt;().<span class="built_in">Descendants</span>&lt;Row&gt;();</span><br><span class="line">        SharedStringTablePart string_table_part = doc.WorkbookPart.SharedStringTablePart;</span><br><span class="line">        <span class="type">int</span> excel_row_count = rows.<span class="built_in">Count</span>();</span><br><span class="line">        <span class="keyword">if</span> (excel_row_count &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            List&lt;string&gt; string_table = <span class="keyword">new</span> <span class="built_in">List</span>&lt;string&gt;();</span><br><span class="line">            foreach (OpenXmlElement node in string_table_part.SharedStringTable.ChildElements)</span><br><span class="line">            &#123;</span><br><span class="line">                string_table.<span class="built_in">Add</span>(node.InnerText);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// MARK: 这里不是真正的row和column</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> row_index = <span class="number">0</span>; row_index &lt; excel_row_count; row_index++)</span><br><span class="line">            &#123;</span><br><span class="line">                var cells = rows.<span class="built_in">ElementAt</span>(row_index).<span class="built_in">Descendants</span>&lt;Cell&gt;().<span class="built_in">ToList</span>();</span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> column_index = <span class="number">0</span>; column_index &lt; cells.Length; column_index++)</span><br><span class="line">                &#123;</span><br><span class="line">                    Cell cell = cells.<span class="built_in">ElementAt</span>(column_index);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读单元格数据">读单元格数据</h3>
+<p>值得注意的是，单元格数据是有类型的，尤其是<strong>字符串</strong>，有的是直接内嵌到<code>cell.CellValue.InnerText</code>中，有的是放在<code>SharedStringTablePart</code>中，单元格内只保留一个引用</p>
+<p>于是我们需要先拿到共享字符串表的内容，然后用引用ID去得到真正的字符串</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">SharedStringTablePart string_table_part = doc.WorkbookPart.SharedStringTablePart;</span><br><span class="line">List&lt;<span class="built_in">string</span>&gt; string_table = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line"><span class="keyword">foreach</span> (OpenXmlElement node <span class="keyword">in</span> string_table_part.SharedStringTable.ChildElements)</span><br><span class="line">&#123;</span><br><span class="line">    string_table.Add(node.InnerText);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (cell.DataType == CellValues.SharedString)</span><br><span class="line">&#123;</span><br><span class="line">    text = string_table.ElementAt(Convert.ToInt32(cell.CellValue.InnerText));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    text = cell.CellValue.InnerText;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="单元格坐标">单元格坐标</h3>
+<p>我们使用Excel打开一个表格，每个单元格是通过英文字母和数字拼成一个ID，这个是真正的坐标，存储在<code>cell.CellReference</code>中，我们上面的遍历，如果遇到空单元格，会出现问题（会认为空单元格不存在）</p>
+<p>可以解析<code>CellReference</code>获得真正的坐标</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetRowAndColumn</span>(<span class="params"><span class="built_in">string</span> cellReference, <span class="keyword">out</span> <span class="built_in">int</span> row, <span class="keyword">out</span> <span class="built_in">int</span> column</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    row = <span class="number">0</span>;</span><br><span class="line">    column = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">string</span> columnLetters = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="comment">// column index</span></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="built_in">char</span> c <span class="keyword">in</span> cellReference)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">char</span>.IsLetter(c))</span><br><span class="line">        &#123;</span><br><span class="line">            columnLetters += c;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    column = ColumnLettersToNumber(columnLetters);</span><br><span class="line">    <span class="comment">// row index</span></span><br><span class="line">    <span class="built_in">int</span>.TryParse(cellReference.Substring(columnLetters.Length), <span class="keyword">out</span> row);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="built_in">int</span> <span class="title">ColumnLettersToNumber</span>(<span class="params"><span class="built_in">string</span> letters</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="built_in">char</span> c <span class="keyword">in</span> letters)</span><br><span class="line">    &#123;</span><br><span class="line">        result = result * <span class="number">26</span> + (c - <span class="string">&#x27;A&#x27;</span> + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">GetRowAndColumn(cell.CellReference, <span class="keyword">out</span> <span class="built_in">int</span> real_row, <span class="keyword">out</span> <span class="built_in">int</span> real_column);</span><br></pre></td></tr></table></figure>
+<h2 id="读XML">读XML</h2>
+<p>这个也可以读XML</p>
+<h3 id="打开一个xml">打开一个xml</h3>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="built_in">bool</span> <span class="title">readResourceXmlTable</span>(<span class="params"><span class="built_in">string</span> xml_path, <span class="built_in">string</span> prefix_path, Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; id_to_texture_path</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    XmlDocument xml_doc = <span class="keyword">new</span> XmlDocument();</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        xml_doc.Load(xml_path);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;Error: <span class="subst">&#123;ex.Message&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="访问Sheet">访问Sheet</h3>
+<p>用Excel打开一个表格，我们可以看到左下角有好多Sheet</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">XmlNamespaceManager ns_manager = <span class="keyword">new</span> XmlNamespaceManager(xml_doc.NameTable);</span><br><span class="line">ns_manager.AddNamespace(<span class="string">&quot;ss&quot;</span>, <span class="string">&quot;urn:schemas-microsoft-com:office:spreadsheet&quot;</span>);</span><br><span class="line">XmlNodeList work_sheet_nodes = xml_doc.SelectNodes(<span class="string">&quot;//ss:Worksheet&quot;</span>, ns_manager);</span><br><span class="line"><span class="keyword">foreach</span> (XmlNode work_sheet_node <span class="keyword">in</span> work_sheet_nodes)</span><br><span class="line">&#123;</span><br><span class="line">    XmlAttribute name_attribute = work_sheet_node.Attributes[<span class="string">&quot;ss:Name&quot;</span>];</span><br><span class="line">    <span class="keyword">if</span> (name_attribute != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        XmlNode table_node = work_sheet_node.SelectSingleNode(<span class="string">&quot;ss:Table&quot;</span>, ns_manager);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="访问行和列">访问行和列</h3>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">XmlNode table_node = work_sheet_node.SelectSingleNode(<span class="string">&quot;ss:Table&quot;</span>, ns_manager);</span><br><span class="line">XmlAttribute row_count_attribute = table_node.Attributes[<span class="string">&quot;ss:ExpandedRowCount&quot;</span>];</span><br><span class="line">XmlNodeList row_nodes = table_node.SelectNodes(<span class="string">&quot;ss:Row&quot;</span>, ns_manager);</span><br><span class="line"><span class="keyword">foreach</span> (XmlNode row_node <span class="keyword">in</span> row_nodes)</span><br><span class="line">&#123;</span><br><span class="line">    XmlNodeList cell_nodes = row_node.SelectNodes(<span class="string">&quot;ss:Cell&quot;</span>, ns_manager);</span><br><span class="line">    <span class="keyword">foreach</span> (XmlNode column_node <span class="keyword">in</span> cell_nodes)</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2638,7 +2592,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-03-28T10:42:09+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-03-28T10:42:00+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年3月28日</p>
@@ -2652,8 +2606,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Perforce/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Perforce</p></a></div>
-  <span hidden itemprop="keywords">Perforce</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/CSharp/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>CSharp</p></a></div>
+  <span hidden itemprop="keywords">CSharp</span>
   
 
 
@@ -2667,7 +2621,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/P4%E5%85%A5%E9%97%A8/&title=Perforce入门 - ReubenSun&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/program/CSharp%E8%A1%A8%E6%A0%BC/&title=C#读表格 - ReubenSun&summary="
           
           >
           
@@ -2679,7 +2633,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/P4%E5%85%A5%E9%97%A8/&title=Perforce入门 - ReubenSun&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/program/CSharp%E8%A1%A8%E6%A0%BC/&title=C#读表格 - ReubenSun&summary="
           
           >
           
@@ -2691,7 +2645,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/P4%E5%85%A5%E9%97%A8/&title=Perforce入门 - ReubenSun&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/program/CSharp%E8%A1%A8%E6%A0%BC/&title=C#读表格 - ReubenSun&summary="
           
           >
           
@@ -2724,24 +2678,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/program/CSharp%E8%A1%A8%E6%A0%BC/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>C#读表格</p>
-          <p class='content'>C#读表格
-
-这里使用Open XML SDK读xml和xlsx表格
-
-读XLSX
-打开一个xlsx
-static bool readResourceXlsxTable(string xlsx_...</p>
-        </a>
       
-      
-        <a class='next' href='/graphics/MetalShader/'>
-          <p class='title'>HLSL 转 Metal<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>HLSL 转 Metal
-为了方便游戏移植到iOS和Mac，苹果近年推出了一个Metal shader converter工具，这个工具可以搭配微软的DXC工具，实现HLSL转化为Metal
+        <a class='next' href='/program/P4%E5%85%A5%E9%97%A8/'>
+          <p class='title'>Perforce入门<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>Perforce入门
 
-...</p>
+Perforce又称P4、P4V
+
+为什么要用P4
+游戏开发一定需要一个版本管理工具，除了保留编辑记录外，还可以保护资产，遇到一些严重崩溃可以回退，不然会出现引擎打不开了...</p>
         </a>
       
     </div>
@@ -2760,7 +2705,7 @@ static bool readResourceXlsxTable(string xlsx_...</p>
 
   <article class="post white-box shadow floatable blur" id="comments">
     <span hidden>
-      <meta itemprop="discussionUrl" content="/program/P4%E5%85%A5%E9%97%A8/index.html#comments">
+      <meta itemprop="discussionUrl" content="/program/CSharp%E8%A1%A8%E6%A0%BC/index.html#comments">
     </span>
     <p ct><i class='fa-solid fa-comments'></i> 评论</p>
     
@@ -2802,7 +2747,7 @@ static bool readResourceXlsxTable(string xlsx_...</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8P4"><span class="toc-text">为什么要用P4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BAP4%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">个人P4环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BDP4D"><span class="toc-text">1. 下载P4D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BDP4V"><span class="toc-text">2. 下载P4V</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="toc-text">3. 创建用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BADepot"><span class="toc-text">4. 创建Depot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%88%9B%E5%BB%BAStream"><span class="toc-text">5. 创建Stream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%88%9B%E5%BB%BAWorkspace"><span class="toc-text">6. 创建Workspace</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4%E4%BD%BF%E7%94%A8"><span class="toc-text">P4使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%89%E6%96%B0"><span class="toc-text">拉新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E6%8B%89%E6%96%B0"><span class="toc-text">强制拉新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Checkout"><span class="toc-text">Checkout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%E4%BF%AE%E6%94%B9"><span class="toc-text">收集修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%80%80"><span class="toc-text">回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="toc-text">提交修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%82%E5%AD%98%E4%BF%AE%E6%94%B9"><span class="toc-text">暂存修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="toc-text">解决冲突</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P4-Net-API"><span class="toc-text">P4 .Net API</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BBXLSX"><span class="toc-text">读XLSX</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AAxlsx"><span class="toc-text">打开一个xlsx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8D%95%E5%85%83%E6%A0%BC%E6%95%B0%E6%8D%AE"><span class="toc-text">读单元格数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%A0%BC%E5%9D%90%E6%A0%87"><span class="toc-text">单元格坐标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BBXML"><span class="toc-text">读XML</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AAxml"><span class="toc-text">打开一个xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AESheet"><span class="toc-text">访问Sheet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E8%A1%8C%E5%92%8C%E5%88%97"><span class="toc-text">访问行和列</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3346,7 +3291,7 @@ static bool readResourceXlsxTable(string xlsx_...</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/P4入门/","name":"Perforce入门"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Perforce入门","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/P4%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/P4%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2024-03-21T10:01:25.000Z","dateModified":"2024-03-28T10:42:09.853Z","articleSection":"program","keywords":"Perforce","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/CSharp表格/","name":"C#读表格"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"C#读表格","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/CSharp%E8%A1%A8%E6%A0%BC/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/CSharp%E8%A1%A8%E6%A0%BC/","wordCount":0,"datePublished":"2024-03-28T18:32:25.000Z","dateModified":"2024-03-28T10:42:00.372Z","articleSection":"program","keywords":"CSharp","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
