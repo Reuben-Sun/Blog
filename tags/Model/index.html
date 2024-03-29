@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1711725400053),
+    lastupdate: new Date(1711727191238),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2421,12 +2421,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         三维模型的表示方法
 常见的模型表示法有：多边形网格、点云、体素、参数模型、隐式表面
 Polygon mesh
-Voxel
-与2D的像素类似，我们使用体素填充3D空间，就能表示一个三维模型
-体素对空间的描述是均匀的，想要达到和三角网格相近的精度，需要占用更大的容量，这也意味着相同容量下体素的精度更差
-下图左为2MB的三角网格，图右为13MB的SDF体素
 
-SDF体素具有非常好的光追性能，很容易...
+一般特指三角形网格
+
+三角形网格由两部分组成：
+
+一个个离散的顶点
+顶点间的拓扑关系
+
+图形渲染中最常见的方法是光栅化和光追，都适用于三角形
+方便进行深度测试、UV映射
+方便进行模型细分和简化、布尔建模
+美术行业长期使用该格式，存在很强的惯性
+Voxel
+与2D的像素类似，我们使用...
       
     
   </div>
