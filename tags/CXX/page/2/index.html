@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1711702887574),
+    lastupdate: new Date(1711717016461),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2573,15 +2573,13 @@ J...
 FBX是一种主流的三维模型格式，格式闭源，但可以通过免费的FBX SDK编辑模型
 开发环境
 
-Visual Studio 2019
+Visual Studio 2022
 Cmake
-安装FBX SDK，我根据环境安装的是2020 VS2019
+安装FBX SDK，我根据环境安装的是2020 VS2022
 
-样例
-VS项目中使用FBX SDK需要配置大量的头文件dll，比较复杂，可以参考配置FBX SDK
-个人建议直接使用cmake构建官方样例，在官方代码上进行修改
-
-在FB...
+cmake构建
+在FBX SDK安装位置，能看到include、lib等，这里使用动态库构建
+cmake_minimum_required(VERSION 3.21)pr...
       
     
   </div>
