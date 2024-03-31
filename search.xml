@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>KL散度</title>
+      <link href="/math/KL%E6%95%A3%E5%BA%A6/"/>
+      <url>/math/KL%E6%95%A3%E5%BA%A6/</url>
+      
+        <content type="html"><![CDATA[<h1>KL散度</h1><p>在AI领域，我们经常需要衡量两个概率分布的相似度</p><h3 id="KL散度">KL散度</h3><p>KL散度（Kullback-Leibler Divergence），也称为相对熵（Relative Entropy），用于衡量一个分布相对于另一个分布的相似性</p><p>假设现在有两个离散概率分布$P$和$Q$，他们的KL散度计算公式为：<br>$$<br>D_{KL}(P||Q)=\sum_{i}P(i)\log \left(\frac{P(i)}{Q(i)} \right)<br>$$<br>其中$P(i)$表示分布$P$在第$i$个事件的概率</p><p>特性：</p><ul><li>非负性，KL散度通常大于等于0，当且仅当两个分布相同时等于0</li><li>不对称性，$D_{KL}(P||Q)$往往和$D_{KL}(Q||P)$不同</li><li>不满足三角不等式（即两边之和大于第三边）</li></ul><h3 id="JSD">JSD</h3><p>Jensen-Shannon Divergence (JSD)也是一种衡量两个概率分布相似性的的指标，基于KL散度，但JSD具有对称性</p><p>JSD计算方式：</p><ol><li>计算$P$和$Q$的平均分布</li></ol><p>$$<br>M = (P+Q)/2<br>$$</p><ol start="2"><li><p>计算$D_{KL}(P||M)$和$D_{KL}(Q||M)$</p></li><li><p>JSD是两个散度的平均值</p></li></ol><p>$$<br>JSD(P||Q)=\frac{1}{2}(D_{KL}(P||M) + D_{KL}(Q||M))<br>$$</p><p>JSD的范围是<code>[0, 1]</code>，0表示两个分布完全重合，1表示两个分布完全没有重叠（差异最大）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ai </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 高等数学 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PyTorch学习记录</title>
       <link href="/ai/Pytorch/"/>
       <url>/ai/Pytorch/</url>
@@ -1950,6 +1975,33 @@
     
     
     <entry>
+      <title>Nabla算子</title>
+      <link href="/math/Nabla%E7%AE%97%E5%AD%90/"/>
+      <url>/math/Nabla%E7%AE%97%E5%AD%90/</url>
+      
+        <content type="html"><![CDATA[<h1>Nabla算子</h1><p><a href="https://www.bilibili.com/video/BV1a541127cX/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a72e0e57d1aa2c57c64020832e1cde7e">参考</a></p><p>$\nabla$：Nabla算子，将数量场变成向量场</p><ul><li><p>当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度</p></li><li><p>当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度</p></li><li><p>当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度</p></li></ul><h3 id="函数可视化">函数可视化</h3><p>对于函数$f(x,y)=x^2+y^2$，我们有两种可视化方法，第一种叫做图像：<br>$$<br>{(\vec{x}, f(\vec{x}))|\vec{x} \in D}<br>$$<br><img src="/images//%E5%9B%BE%E5%83%8F.png" class="lazyload" data-srcset="/images//%E5%9B%BE%E5%83%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="图像"></p><p>第二种叫做等值面:<br>$$<br>{\vec{x}|f(\vec{x})=c}<br>$$<br><img src="/images//%E7%AD%89%E5%80%BC%E9%9D%A2.png" class="lazyload" data-srcset="/images//%E7%AD%89%E5%80%BC%E9%9D%A2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="等值面"></p><p>等值面只需要二维空间就能表示三维数据</p><h3 id="梯度">梯度</h3><p>Nabla算子其实是一个向量：<br>$$<br>\nabla =\left[</p><p>\frac{\partial }{\partial x_1}, \frac{\partial }{\partial x_2 },\cdots,\frac{\partial }{\partial x_n }</p><p>\right]^{T}<br>$$<br>Nabla算子作用于函数（标量场），可以将标量场转化为向量场，我们称该向量场为<strong>梯度</strong><br>$$<br>\nabla f=<br>\left[<br>\begin{array}{c}<br>\frac{\partial f}{\partial x_1}\\<br>\frac{\partial f}{\partial x_2}\\<br>\vdots\\<br>\frac{\partial f}{\partial x_n}\\<br>\end{array}<br>\right]<br>$$<br><img src="/images//%E6%A2%AF%E5%BA%A6.png" class="lazyload" data-srcset="/images//%E6%A2%AF%E5%BA%A6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="梯度"></p><p>梯度垂直于等值面，意义为变化最快的方向（图中黄色箭头）</p><h3 id="散度">散度</h3><p>我们知道向量和向量间可以进行点乘，其结果为一个标量，那么Nabla算子和向量相乘，我们称所得到的标量为<strong>散度</strong><br>$$<br>\vec{f}=\left[<br>\begin{array}{c}<br>f_1\\<br>f_2\\<br>\vdots\\<br>f_n\\<br>\end{array}<br>\right]<br>$$</p><p>$$<br>\nabla \cdot \vec{f}=\frac{\partial f_1}{\partial x_1}+\frac{\partial f_2}{\partial x_2}+\cdots +\frac{\partial f_n}{\partial x_n}<br>$$</p><p><img src="/images//%E6%95%A3%E5%BA%A6.png" class="lazyload" data-srcset="/images//%E6%95%A3%E5%BA%A6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="散度"></p><p>上图的白色箭头表示一个向量，我们发现这些箭头都是在朝外扩散，而散度就是用来衡量箭头向外扩散的程度</p><p>散度的物理意义是通量的局部描述。我们在图上画一个圈，我们发现会有向量进入这个圈，也有向量离开这个圈，那么进出之合，我们就称之为通量（比如磁通量），我们将通量除以圈的面积，就得到了通量的体密度。若这个圆取无穷小，那么体密度的极限值就是该点的散度</p><p>是不是突然很好理解麦克斯韦方程中$\nabla \cdot \mathbf{E}=0$的原因了？</p><p><img src="/images//%E7%94%B5%E8%8D%B7%E5%9C%BA%E6%BA%90.png" class="lazyload" data-srcset="/images//%E7%94%B5%E8%8D%B7%E5%9C%BA%E6%BA%90.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="电荷场源"></p><p>其实这个公式就是高斯公式</p><p><img src="/images//Gauss%E5%85%AC%E5%BC%8F.png" class="lazyload" data-srcset="/images//Gauss%E5%85%AC%E5%BC%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Gauss公式"></p><h3 id="旋度">旋度</h3><p>向量不仅可以点乘，其实也可以叉乘，两个三维向量叉乘，能得到一个3x3的行列式。最后得到一个矩阵，我们称为<strong>旋度</strong></p><p><img src="/images//%E6%97%8B%E5%BA%A6.png" class="lazyload" data-srcset="/images//%E6%97%8B%E5%BA%A6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="旋度"></p><p>旋度的物理意义就是环量的面密度。现在有一个在旋转的场，我们在场上画一个圈，场在这个圈内会做功，这个功就是环量，我们求出单位面积上环量，这个极限值描述了漩涡的强度。旋度就是旋转最快的方向</p><p><img src="/images//%E6%97%8B%E5%BA%A62.png" class="lazyload" data-srcset="/images//%E6%97%8B%E5%BA%A62.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="旋度2"></p><p><img src="/images//%E6%96%AF%E6%89%98%E5%85%8B%E6%96%AF%E5%85%AC%E5%BC%8F.png" class="lazyload" data-srcset="/images//%E6%96%AF%E6%89%98%E5%85%8B%E6%96%AF%E5%85%AC%E5%BC%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="斯托克斯公式"></p><h3 id="梯度的散度">梯度的散度</h3><p>nabla算子和自己做内积，于是会得到一个数量场，意义为求梯度的散度</p><p>这个操作为$\nabla\cdot \nabla$，也可以写作$\nabla^2、\nabla^T \nabla$，但为了避免歧义，我们引入了一个新的符号，拉普拉斯算子<br>$$<br>\Delta=\nabla \cdot\nabla<br>$$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 高等数学 </tag>
+            
+            <tag> 光学 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>复变函数</title>
       <link href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"/>
       <url>/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/</url>
@@ -1992,33 +2044,6 @@
         <tags>
             
             <tag> 高等数学 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Nabla算子</title>
-      <link href="/math/Nabla%E7%AE%97%E5%AD%90/"/>
-      <url>/math/Nabla%E7%AE%97%E5%AD%90/</url>
-      
-        <content type="html"><![CDATA[<h1>Nabla算子</h1><p><a href="https://www.bilibili.com/video/BV1a541127cX/?spm_id_from=333.337.search-card.all.click&amp;vd_source=a72e0e57d1aa2c57c64020832e1cde7e">参考</a></p><p>$\nabla$：Nabla算子，将数量场变成向量场</p><ul><li><p>当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度</p></li><li><p>当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度</p></li><li><p>当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度</p></li></ul><h3 id="函数可视化">函数可视化</h3><p>对于函数$f(x,y)=x^2+y^2$，我们有两种可视化方法，第一种叫做图像：<br>$$<br>{(\vec{x}, f(\vec{x}))|\vec{x} \in D}<br>$$<br><img src="/images//%E5%9B%BE%E5%83%8F.png" class="lazyload" data-srcset="/images//%E5%9B%BE%E5%83%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="图像"></p><p>第二种叫做等值面:<br>$$<br>{\vec{x}|f(\vec{x})=c}<br>$$<br><img src="/images//%E7%AD%89%E5%80%BC%E9%9D%A2.png" class="lazyload" data-srcset="/images//%E7%AD%89%E5%80%BC%E9%9D%A2.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="等值面"></p><p>等值面只需要二维空间就能表示三维数据</p><h3 id="梯度">梯度</h3><p>Nabla算子其实是一个向量：<br>$$<br>\nabla =\left[</p><p>\frac{\partial }{\partial x_1}, \frac{\partial }{\partial x_2 },\cdots,\frac{\partial }{\partial x_n }</p><p>\right]^{T}<br>$$<br>Nabla算子作用于函数（标量场），可以将标量场转化为向量场，我们称该向量场为<strong>梯度</strong><br>$$<br>\nabla f=<br>\left[<br>\begin{array}{c}<br>\frac{\partial f}{\partial x_1}\\<br>\frac{\partial f}{\partial x_2}\\<br>\vdots\\<br>\frac{\partial f}{\partial x_n}\\<br>\end{array}<br>\right]<br>$$<br><img src="/images//%E6%A2%AF%E5%BA%A6.png" class="lazyload" data-srcset="/images//%E6%A2%AF%E5%BA%A6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="梯度"></p><p>梯度垂直于等值面，意义为变化最快的方向（图中黄色箭头）</p><h3 id="散度">散度</h3><p>我们知道向量和向量间可以进行点乘，其结果为一个标量，那么Nabla算子和向量相乘，我们称所得到的标量为<strong>散度</strong><br>$$<br>\vec{f}=\left[<br>\begin{array}{c}<br>f_1\\<br>f_2\\<br>\vdots\\<br>f_n\\<br>\end{array}<br>\right]<br>$$</p><p>$$<br>\nabla \cdot \vec{f}=\frac{\partial f_1}{\partial x_1}+\frac{\partial f_2}{\partial x_2}+\cdots +\frac{\partial f_n}{\partial x_n}<br>$$</p><p><img src="/images//%E6%95%A3%E5%BA%A6.png" class="lazyload" data-srcset="/images//%E6%95%A3%E5%BA%A6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="散度"></p><p>上图的白色箭头表示一个向量，我们发现这些箭头都是在朝外扩散，而散度就是用来衡量箭头向外扩散的程度</p><p>散度的物理意义是通量的局部描述。我们在图上画一个圈，我们发现会有向量进入这个圈，也有向量离开这个圈，那么进出之合，我们就称之为通量（比如磁通量），我们将通量除以圈的面积，就得到了通量的体密度。若这个圆取无穷小，那么体密度的极限值就是该点的散度</p><p>是不是突然很好理解麦克斯韦方程中$\nabla \cdot \mathbf{E}=0$的原因了？</p><p><img src="/images//%E7%94%B5%E8%8D%B7%E5%9C%BA%E6%BA%90.png" class="lazyload" data-srcset="/images//%E7%94%B5%E8%8D%B7%E5%9C%BA%E6%BA%90.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="电荷场源"></p><p>其实这个公式就是高斯公式</p><p><img src="/images//Gauss%E5%85%AC%E5%BC%8F.png" class="lazyload" data-srcset="/images//Gauss%E5%85%AC%E5%BC%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Gauss公式"></p><h3 id="旋度">旋度</h3><p>向量不仅可以点乘，其实也可以叉乘，两个三维向量叉乘，能得到一个3x3的行列式。最后得到一个矩阵，我们称为<strong>旋度</strong></p><p><img src="/images//%E6%97%8B%E5%BA%A6.png" class="lazyload" data-srcset="/images//%E6%97%8B%E5%BA%A6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="旋度"></p><p>旋度的物理意义就是环量的面密度。现在有一个在旋转的场，我们在场上画一个圈，场在这个圈内会做功，这个功就是环量，我们求出单位面积上环量，这个极限值描述了漩涡的强度。旋度就是旋转最快的方向</p><p><img src="/images//%E6%97%8B%E5%BA%A62.png" class="lazyload" data-srcset="/images//%E6%97%8B%E5%BA%A62.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="旋度2"></p><p><img src="/images//%E6%96%AF%E6%89%98%E5%85%8B%E6%96%AF%E5%85%AC%E5%BC%8F.png" class="lazyload" data-srcset="/images//%E6%96%AF%E6%89%98%E5%85%8B%E6%96%AF%E5%85%AC%E5%BC%8F.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="斯托克斯公式"></p><h3 id="梯度的散度">梯度的散度</h3><p>nabla算子和自己做内积，于是会得到一个数量场，意义为求梯度的散度</p><p>这个操作为$\nabla\cdot \nabla$，也可以写作$\nabla^2、\nabla^T \nabla$，但为了避免歧义，我们引入了一个新的符号，拉普拉斯算子<br>$$<br>\Delta=\nabla \cdot\nabla<br>$$</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> math </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 高等数学 </tag>
-            
-            <tag> 光学 </tag>
             
         </tags>
       
