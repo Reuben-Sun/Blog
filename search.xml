@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>插值</title>
+      <link href="/math/%E6%8F%92%E5%80%BC/"/>
+      <url>/math/%E6%8F%92%E5%80%BC/</url>
+      
+        <content type="html"><![CDATA[<h1>插值</h1><h2 id="线性插值">线性插值</h2><p>$$<br>\mathrm{lerp}(p_0,p_1;t)=(1-t)p_0+tp_1<br>$$</p><h2 id="Smoothstep">Smoothstep</h2><blockquote><p>Hermite</p></blockquote><p>将一个数平滑映射到<code>[0, 1]</code></p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> v = <span class="built_in">smoothstep</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, time);</span><br><span class="line"><span class="comment">// 等同于 time * time * (3 - 2 * time)</span></span><br></pre></td></tr></table></figure><h2 id="球面插值">球面插值</h2><blockquote><p>Slerp</p></blockquote><p>在球面上线性插值</p><p><img src="/images/lerp_vs_slerp.png" class="lazyload" data-srcset="/images/lerp_vs_slerp.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="lerp_vs_slerp"></p><p><img src="/images/Slerp_factor_explanation.png" class="lazyload" data-srcset="/images/Slerp_factor_explanation.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Slerp_factor_explanation"><br>$$<br>\mathrm{Slerp(p_0,p_1;t)}=\frac{\sin[(1-t)\Omega]}{\sin \Omega}p_0+\frac{\sin [t\Omega]}{\sin \Omega}p_1<br>$$</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">vec4 <span class="title">Slerp</span><span class="params">(vec4 p0, vec4 p1, <span class="type">float</span> t)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">float</span> dotp = <span class="built_in">dot</span>(<span class="built_in">normalize</span>(p0), <span class="built_in">normalize</span>(p1));</span><br><span class="line">  <span class="keyword">if</span> ((dotp &gt; <span class="number">0.9999</span>) || (dotp&lt;<span class="number">-0.9999</span>))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (t&lt;=<span class="number">0.5</span>)</span><br><span class="line">      <span class="keyword">return</span> p0;</span><br><span class="line">    <span class="keyword">return</span> p1;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">float</span> theta = <span class="built_in">acos</span>(dotp * <span class="number">3.14159</span>/<span class="number">180.0</span>);</span><br><span class="line">  vec4 P = ((p0*<span class="built_in">sin</span>((<span class="number">1</span>-t)*theta) + p1*<span class="built_in">sin</span>(t*theta)) / <span class="built_in">sin</span>(theta));</span><br><span class="line">  P.w = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> P;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vec4 P = <span class="built_in">Slerp</span>(gxl3d_Position, gxl3d_Attrib1, time);</span><br><span class="line">  gl_Position = gxl3d_ModelViewProjectionMatrix * P;</span><br><span class="line">  Vertex_Color = gxl3d_Attrib0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><p><a href="https://www.geeks3d.com/20140205/glsl-simple-morph-target-animation-opengl-glslhacker-demo/">glsl-simple-morph-target-animation</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Shader </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Marching Cubes</title>
       <link href="/graphics/MarchingCube/"/>
       <url>/graphics/MarchingCube/</url>
@@ -65,7 +90,7 @@
       
       <categories>
           
-          <category> ai </category>
+          <category> math </category>
           
       </categories>
       
