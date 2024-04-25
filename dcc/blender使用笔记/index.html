@@ -42,11 +42,11 @@
 <meta property="og:title" content="blender使用笔记">
 <meta property="og:url" content="https://reubensun.com/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Blender使用笔记 网格合并 选中模型，按快捷键ctrl+J 布尔建模  创建一个圆柱1，按tab进入编辑模式，选中上表面，按s将上表面进行缩放，变成一个类似“圆锥”的东西 在圆锥上侧创建一个球，下侧创建一个圆柱2 使用布尔操作，球布尔Difference，圆柱2布尔Union（注意操作后隐藏球和圆柱）   于是得到了枪的建模（相当粗糙）  模型添加材质">
+<meta property="og:description" content="Blender使用笔记 网格合并 选中模型，按快捷键ctrl+J 布尔建模  创建一个圆柱1，按tab进入编辑模式，选中上表面，按s将上表面进行缩放，变成一个类似“圆锥”的东西 在圆锥上侧创建一个球，下侧创建一个圆柱2 使用布尔操作，球布尔Difference，圆柱2布尔Union（注意操作后隐藏球和圆柱）   于是得到了枪的建模（相当粗糙）  模型添加材质  自动展UV2 点击Mesh，在Dat">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-06-30T10:01:25.000Z">
-<meta property="article:modified_time" content="2024-04-24T09:59:55.078Z">
+<meta property="article:modified_time" content="2024-04-25T09:07:53.581Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="blender">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1713952796755),
+    lastupdate: new Date(1714036075507),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2563,6 +2563,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <img src="/images/布尔建模.png" class="lazyload" data-srcset="/images/布尔建模.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="布尔建模" style="zoom:50%;" />
 <h3 id="模型添加材质">模型添加材质</h3>
 <img src="/images/模型材质.png" class="lazyload" data-srcset="/images/模型材质.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="模型材质" style="zoom:50%;" />
+<h3 id="自动展UV2">自动展UV2</h3>
+<p>点击Mesh，在Data处添加UV Maps</p>
+<p><img src="/images/%E6%B7%BB%E5%8A%A0uv%E9%9B%86.png" class="lazyload" data-srcset="/images/%E6%B7%BB%E5%8A%A0uv%E9%9B%86.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="添加uv集"></p>
+<p>选择要修改的uvmap（看不见的话向右拉）</p>
+<p><img src="/images/%E9%80%89%E6%8B%A9uvmap.png" class="lazyload" data-srcset="/images/%E9%80%89%E6%8B%A9uvmap.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="选择uvmap"></p>
+<p>点击UV Editor——按Table开启编辑模式——全选模型——设置Select Mode为面——对模型按右键——UV Unwrap Faces——Smart UV Project</p>
+<p><img src="/images/%E8%87%AA%E5%8A%A8%E5%B1%95%E5%BC%80UV.png" class="lazyload" data-srcset="/images/%E8%87%AA%E5%8A%A8%E5%B1%95%E5%BC%80UV.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="自动展开UV"></p>
 
   </div>
   
@@ -2587,10 +2594,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-04-24T09:59:55+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-04-25T09:07:53+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年4月24日</p>
+    <p>更新于：2024年4月25日</p>
   </a>
 </div>
 
@@ -2754,7 +2761,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E5%90%88%E5%B9%B6"><span class="toc-text">网格合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%BB%BA%E6%A8%A1"><span class="toc-text">布尔建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%B7%BB%E5%8A%A0%E6%9D%90%E8%B4%A8"><span class="toc-text">模型添加材质</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E5%90%88%E5%B9%B6"><span class="toc-text">网格合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E5%BB%BA%E6%A8%A1"><span class="toc-text">布尔建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%B7%BB%E5%8A%A0%E6%9D%90%E8%B4%A8"><span class="toc-text">模型添加材质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%B1%95UV2"><span class="toc-text">自动展UV2</span></a></li></ol>
   </div>
 </section>
 
@@ -3298,7 +3305,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/blender使用笔记/","name":"blender使用笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"blender使用笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/","wordCount":0,"datePublished":"2023-06-30T10:01:25.000Z","dateModified":"2024-04-24T09:59:55.078Z","articleSection":"dcc","keywords":"blender","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/blender使用笔记/","name":"blender使用笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"blender使用笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/blender%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/","wordCount":0,"datePublished":"2023-06-30T10:01:25.000Z","dateModified":"2024-04-25T09:07:53.581Z","articleSection":"dcc","keywords":"blender","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
