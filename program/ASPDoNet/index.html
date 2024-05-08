@@ -45,8 +45,8 @@
 <meta property="og:description" content="ASP.Net最小Web API 最近需要搭建一个Windows Web服务器，处理一些很简单的访问请求，于是研究了一下ASP.Net的最小Web API 项目创建 打开VS2022，按照ASP.Net模块后，使用模板创建项目   程序运行 模板是一个预测（随机生成）未来五天天气的demo，可以用命令行启动程序 dotnet run --project&#x3D;.&#x2F;项目名称 程序内容 模板项目内容非常少，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2024-05-07T15:54:06.732Z">
-<meta property="article:modified_time" content="2024-05-07T15:54:15.138Z">
+<meta property="article:published_time" content="2024-05-08T06:46:42.141Z">
+<meta property="article:modified_time" content="2024-05-08T06:46:51.192Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="CSharp">
 <meta property="article:tag" content="Web">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1715097256493),
+    lastupdate: new Date(1715150812729),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2524,10 +2524,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-05-07T15:54:06+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-05-08T06:46:42+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2024年5月7日</p>
+    <p>发布于：2024年5月8日</p>
   </a>
 </div>
 
@@ -2565,8 +2565,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个Get接口，返回天气预测结果</span></span><br><span class="line">app.MapGet(<span class="string">&quot;/weatherforecast&quot;</span>, () =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> forecast = Enumerable.Range(<span class="number">1</span>, <span class="number">5</span>).Select(index =&gt;</span><br><span class="line">        <span class="keyword">new</span> WeatherForecast</span><br><span class="line">        (</span><br><span class="line">            ...</span><br><span class="line">        ))</span><br><span class="line">        .ToArray();</span><br><span class="line">    <span class="keyword">return</span> forecast;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.Run();</span><br><span class="line"></span><br><span class="line"><span class="comment">// record是C#的一个关键字，可以定义一个不可变的数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">internal</span> <span class="keyword">record</span> <span class="title">WeatherForecast</span>(<span class="params">DateOnly Date, <span class="built_in">int</span> TemperatureC, <span class="built_in">string</span>? Summary</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> TemperatureF =&gt; <span class="number">32</span> + (<span class="built_in">int</span>)(TemperatureC / <span class="number">0.5556</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="添加一个新Get">添加一个新Get</h3>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">app.MapGet(<span class="string">&quot;/open/&#123;path&#125;&quot;</span>, (<span class="built_in">string</span> path) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        Process.Start(<span class="string">&quot;explorer.exe&quot;</span>, path);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;Can&#x27;t open folder: <span class="subst">&#123;ex.Message&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//localhost:5262/open/C%3A%5CUsers%5C28240%5Ccode</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//localhost:xxxx/open/C%3A%5CUsers%5C28240%5Ccode</span></span><br></pre></td></tr></table></figure>
 <p>用文件浏览器打开本地的<code>C:\Users\28240\code</code>路径</p>
+<h3 id="解析Request内容">解析Request内容</h3>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">app.MapGet(<span class="string">&quot;/do&quot;</span>, (HttpRequest request) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> prop_a = request.Query[<span class="string">&quot;a&quot;</span>];</span><br><span class="line">    <span class="keyword">var</span> prop_b = request.Query[<span class="string">&quot;b&quot;</span>];</span><br><span class="line">    <span class="keyword">var</span> sessionid = request.Query[<span class="string">&quot;sessionid&quot;</span>];    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//localhost:xxxx/do?a=hello&amp;b=world&amp;sessionid=default</span></span><br></pre></td></tr></table></figure>
 <h3 id="url转义规则">url转义规则</h3>
 <p>除了下面这些保留字外，用<code>%&#123;两位十六进制&#125;</code>进行转义</p>
 <table>
@@ -2679,10 +2682,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-05-07T15:54:15+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-05-08T06:46:51+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年5月7日</p>
+    <p>更新于：2024年5月8日</p>
   </a>
 </div>
 
@@ -2765,24 +2768,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/dcc/OBJ%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>OBJ格式解析</p>
-          <p class='content'>OBJ 格式解析
-OBJ是一种常用的文本格式（也可以是二进制）的三维模型格式，可读性很强
-.OBJ
-打开一个.obj文件，通常形如
-mtllib sphere.mtlo Sphere v 0.5...</p>
-        </a>
       
-      
-        <a class='next' href='/engine/UnityNovaUI/'>
-          <p class='title'>Unity Nova UI<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Unity Nova UI
-今天发现了一个特别好的Unity Game UI框架：Nova，挖个坑，打算学习一下
-
-
-
-</p>
+        <a class='next' href='/ai/%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93/'>
+          <p class='title'>可微渲染<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>可微渲染
+2022年王者荣耀使用可微渲染，使用一张basecolor图+unlit材质，模拟了多张贴图+PBR的渲染效果，使得渣配手机也能玩王者荣耀。最近了解到，可微渲染在AI届已经是非常成熟的...</p>
         </a>
       
     </div>
@@ -2843,7 +2833,7 @@ mtllib sphere.mtlo Sphere v 0.5...</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA"><span class="toc-text">项目创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C"><span class="toc-text">程序运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AE%B9"><span class="toc-text">程序内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%96%B0Get"><span class="toc-text">添加一个新Get</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#url%E8%BD%AC%E4%B9%89%E8%A7%84%E5%88%99"><span class="toc-text">url转义规则</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA"><span class="toc-text">项目创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C"><span class="toc-text">程序运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AE%B9"><span class="toc-text">程序内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%96%B0Get"><span class="toc-text">添加一个新Get</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90Request%E5%86%85%E5%AE%B9"><span class="toc-text">解析Request内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#url%E8%BD%AC%E4%B9%89%E8%A7%84%E5%88%99"><span class="toc-text">url转义规则</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3387,7 +3377,7 @@ mtllib sphere.mtlo Sphere v 0.5...</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/ASPDoNet/","name":"ASP.Net最小Web API"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"ASP.Net最小Web API","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/ASPDoNet/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/ASPDoNet/","wordCount":0,"datePublished":"2024-05-07T15:54:06.732Z","dateModified":"2024-05-07T15:54:15.138Z","articleSection":"program","keywords":"CSharp,Web","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/ASPDoNet/","name":"ASP.Net最小Web API"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"ASP.Net最小Web API","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/ASPDoNet/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/ASPDoNet/","wordCount":0,"datePublished":"2024-05-08T06:46:42.141Z","dateModified":"2024-05-08T06:46:51.192Z","articleSection":"program","keywords":"CSharp,Web","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ASP.Net最小Web API</title>
+      <link href="/program/ASPDoNet/"/>
+      <url>/program/ASPDoNet/</url>
+      
+        <content type="html"><![CDATA[<h1>ASP.Net最小Web API</h1><p>最近需要搭建一个Windows Web服务器，处理一些很简单的访问请求，于是研究了一下ASP.Net的最小Web API</p><h2 id="项目创建">项目创建</h2><p>打开VS2022，按照ASP.Net模块后，使用模板创建项目</p><p><img src="/images/ASP%E6%A8%A1%E6%9D%BF.png" class="lazyload" data-srcset="/images/ASP%E6%A8%A1%E6%9D%BF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ASP模板"></p><p><img src="/images/ASP%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0.png" class="lazyload" data-srcset="/images/ASP%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ASP模板参数"></p><h2 id="程序运行">程序运行</h2><p>模板是一个预测（随机生成）未来五天天气的demo，可以用命令行启动程序</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dotnet run --project=./项目名称</span><br></pre></td></tr></table></figure><h2 id="程序内容">程序内容</h2><p>模板项目内容非常少，只有一个C#文件</p><p><img src="/images/ASP%E6%A8%A1%E6%9D%BF%E5%86%85%E5%AE%B9.png" class="lazyload" data-srcset="/images/ASP%E6%A8%A1%E6%9D%BF%E5%86%85%E5%AE%B9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ASP模板内容"></p><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个Get接口，返回天气预测结果</span></span><br><span class="line">app.MapGet(<span class="string">&quot;/weatherforecast&quot;</span>, () =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> forecast = Enumerable.Range(<span class="number">1</span>, <span class="number">5</span>).Select(index =&gt;</span><br><span class="line">        <span class="keyword">new</span> WeatherForecast</span><br><span class="line">        (</span><br><span class="line">            ...</span><br><span class="line">        ))</span><br><span class="line">        .ToArray();</span><br><span class="line">    <span class="keyword">return</span> forecast;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.Run();</span><br><span class="line"></span><br><span class="line"><span class="comment">// record是C#的一个关键字，可以定义一个不可变的数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">internal</span> <span class="keyword">record</span> <span class="title">WeatherForecast</span>(<span class="params">DateOnly Date, <span class="built_in">int</span> TemperatureC, <span class="built_in">string</span>? Summary</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> TemperatureF =&gt; <span class="number">32</span> + (<span class="built_in">int</span>)(TemperatureC / <span class="number">0.5556</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="添加一个新Get">添加一个新Get</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">app.MapGet(<span class="string">&quot;/open/&#123;path&#125;&quot;</span>, (<span class="built_in">string</span> path) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        Process.Start(<span class="string">&quot;explorer.exe&quot;</span>, path);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;Can&#x27;t open folder: <span class="subst">&#123;ex.Message&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//localhost:xxxx/open/C%3A%5CUsers%5C28240%5Ccode</span></span><br></pre></td></tr></table></figure><p>用文件浏览器打开本地的<code>C:\Users\28240\code</code>路径</p><h3 id="解析Request内容">解析Request内容</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">app.MapGet(<span class="string">&quot;/do&quot;</span>, (HttpRequest request) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> prop_a = request.Query[<span class="string">&quot;a&quot;</span>];</span><br><span class="line">    <span class="keyword">var</span> prop_b = request.Query[<span class="string">&quot;b&quot;</span>];</span><br><span class="line">    <span class="keyword">var</span> sessionid = request.Query[<span class="string">&quot;sessionid&quot;</span>];    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//localhost:xxxx/do?a=hello&amp;b=world&amp;sessionid=default</span></span><br></pre></td></tr></table></figure><h3 id="url转义规则">url转义规则</h3><p>除了下面这些保留字外，用<code>%&#123;两位十六进制&#125;</code>进行转义</p><table><thead><tr><th>字符</th><th>转义形式</th></tr></thead><tbody><tr><td>空格</td><td>%20</td></tr><tr><td>!</td><td>%21</td></tr><tr><td>*</td><td>%2A</td></tr><tr><td>’</td><td>%27</td></tr><tr><td>(</td><td>%28</td></tr><tr><td>)</td><td>%29</td></tr><tr><td>;</td><td>%3B</td></tr><tr><td>:</td><td>%3A</td></tr><tr><td>@</td><td>%40</td></tr><tr><td>&amp;</td><td>%26</td></tr><tr><td>=</td><td>%3D</td></tr><tr><td>+</td><td>%2B</td></tr><tr><td>$</td><td>%24</td></tr><tr><td>,</td><td>%2C</td></tr><tr><td>/</td><td>%2F</td></tr><tr><td>?</td><td>%3F</td></tr><tr><td>#</td><td>%23</td></tr><tr><td>[</td><td>%5B</td></tr><tr><td>]</td><td>%5D</td></tr></tbody></table>]]></content>
+      
+      
+      <categories>
+          
+          <category> program </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSharp </tag>
+            
+            <tag> Web </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>可微渲染</title>
       <link href="/ai/%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93/"/>
       <url>/ai/%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93/</url>
@@ -46,33 +73,6 @@
         <tags>
             
             <tag> OBJ </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>ASP.Net最小Web API</title>
-      <link href="/program/ASPDoNet/"/>
-      <url>/program/ASPDoNet/</url>
-      
-        <content type="html"><![CDATA[<h1>ASP.Net最小Web API</h1><p>最近需要搭建一个Windows Web服务器，处理一些很简单的访问请求，于是研究了一下ASP.Net的最小Web API</p><h2 id="项目创建">项目创建</h2><p>打开VS2022，按照ASP.Net模块后，使用模板创建项目</p><p><img src="/images/ASP%E6%A8%A1%E6%9D%BF.png" class="lazyload" data-srcset="/images/ASP%E6%A8%A1%E6%9D%BF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ASP模板"></p><p><img src="/images/ASP%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0.png" class="lazyload" data-srcset="/images/ASP%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ASP模板参数"></p><h2 id="程序运行">程序运行</h2><p>模板是一个预测（随机生成）未来五天天气的demo，可以用命令行启动程序</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dotnet run --project=./项目名称</span><br></pre></td></tr></table></figure><h2 id="程序内容">程序内容</h2><p>模板项目内容非常少，只有一个C#文件</p><p><img src="/images/ASP%E6%A8%A1%E6%9D%BF%E5%86%85%E5%AE%B9.png" class="lazyload" data-srcset="/images/ASP%E6%A8%A1%E6%9D%BF%E5%86%85%E5%AE%B9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ASP模板内容"></p><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = builder.Build();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个Get接口，返回天气预测结果</span></span><br><span class="line">app.MapGet(<span class="string">&quot;/weatherforecast&quot;</span>, () =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> forecast = Enumerable.Range(<span class="number">1</span>, <span class="number">5</span>).Select(index =&gt;</span><br><span class="line">        <span class="keyword">new</span> WeatherForecast</span><br><span class="line">        (</span><br><span class="line">            ...</span><br><span class="line">        ))</span><br><span class="line">        .ToArray();</span><br><span class="line">    <span class="keyword">return</span> forecast;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.Run();</span><br><span class="line"></span><br><span class="line"><span class="comment">// record是C#的一个关键字，可以定义一个不可变的数据类型</span></span><br><span class="line"><span class="function"><span class="keyword">internal</span> <span class="keyword">record</span> <span class="title">WeatherForecast</span>(<span class="params">DateOnly Date, <span class="built_in">int</span> TemperatureC, <span class="built_in">string</span>? Summary</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> TemperatureF =&gt; <span class="number">32</span> + (<span class="built_in">int</span>)(TemperatureC / <span class="number">0.5556</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="添加一个新Get">添加一个新Get</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">app.MapGet(<span class="string">&quot;/open/&#123;path&#125;&quot;</span>, (<span class="built_in">string</span> path) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        Process.Start(<span class="string">&quot;explorer.exe&quot;</span>, path);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;Can&#x27;t open folder: <span class="subst">&#123;ex.Message&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">http:<span class="comment">//localhost:5262/open/C%3A%5CUsers%5C28240%5Ccode</span></span><br></pre></td></tr></table></figure><p>用文件浏览器打开本地的<code>C:\Users\28240\code</code>路径</p><h3 id="url转义规则">url转义规则</h3><p>除了下面这些保留字外，用<code>%&#123;两位十六进制&#125;</code>进行转义</p><table><thead><tr><th>字符</th><th>转义形式</th></tr></thead><tbody><tr><td>空格</td><td>%20</td></tr><tr><td>!</td><td>%21</td></tr><tr><td>*</td><td>%2A</td></tr><tr><td>’</td><td>%27</td></tr><tr><td>(</td><td>%28</td></tr><tr><td>)</td><td>%29</td></tr><tr><td>;</td><td>%3B</td></tr><tr><td>:</td><td>%3A</td></tr><tr><td>@</td><td>%40</td></tr><tr><td>&amp;</td><td>%26</td></tr><tr><td>=</td><td>%3D</td></tr><tr><td>+</td><td>%2B</td></tr><tr><td>$</td><td>%24</td></tr><tr><td>,</td><td>%2C</td></tr><tr><td>/</td><td>%2F</td></tr><tr><td>?</td><td>%3F</td></tr><tr><td>#</td><td>%23</td></tr><tr><td>[</td><td>%5B</td></tr><tr><td>]</td><td>%5D</td></tr></tbody></table>]]></content>
-      
-      
-      <categories>
-          
-          <category> program </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> CSharp </tag>
-            
-            <tag> Web </tag>
             
         </tags>
       
@@ -2170,9 +2170,9 @@
       
         <tags>
             
-            <tag> 光学 </tag>
-            
             <tag> 高等数学 </tag>
+            
+            <tag> 光学 </tag>
             
         </tags>
       
