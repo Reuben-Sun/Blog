@@ -42,11 +42,11 @@
 <meta property="og:title" content="Ubuntu入门">
 <meta property="og:url" content="https://reubensun.com/program/Ubuntu%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Ubuntu入门 虽说是Ubuntu，实际上是WSL2 你可以使用neofetch查看系统信息  环境搭建 VS Code  在Windows系统中安装VS Code，并选择添加PATH 在WSL中如果要打开当前目录，直接输入  $code . 推荐安装VS Code的WSL插件 使用快捷键CTRL+SHIFT+P，打开命令面板，键入WSL，进行一些设置 Git 使用Git前需要先配置git co">
+<meta property="og:description" content="Ubuntu入门 虽说是Ubuntu，实际上是WSL2 你可以使用neofetch查看系统信息  环境搭建 VS Code  在Windows系统中安装VS Code，并选择添加PATH 在WSL中如果要打开当前目录，直接输入  $code . 推荐安装VS Code的WSL插件 使用快捷键CTRL+SHIFT+P，打开命令面板，键入WSL，进行一些设置 常用快捷键    快捷键 意义     c">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-01-31T10:01:25.000Z">
-<meta property="article:modified_time" content="2024-05-08T06:46:51.201Z">
+<meta property="article:modified_time" content="2024-05-08T10:02:54.726Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1715150812729),
+    lastupdate: new Date(1715162576889),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2553,8 +2553,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>虽说是Ubuntu，实际上是WSL2</p>
 <p>你可以使用neofetch查看系统信息</p>
 <p><img src="/images/neofetch.png" class="lazyload" data-srcset="/images/neofetch.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="neofetch"></p>
-<h3 id="环境搭建">环境搭建</h3>
-<h4 id="VS-Code">VS Code</h4>
+<h2 id="环境搭建">环境搭建</h2>
+<h3 id="VS-Code">VS Code</h3>
 <ol>
 <li>在Windows系统中安装VS Code，并选择添加PATH</li>
 <li>在WSL中如果要打开当前目录，直接输入</li>
@@ -2562,10 +2562,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$code</span> .</span><br></pre></td></tr></table></figure>
 <p>推荐安装VS Code的WSL插件</p>
 <p>使用快捷键<code>CTRL+SHIFT+P</code>，打开命令面板，键入<code>WSL</code>，进行一些设置</p>
-<h4 id="Git">Git</h4>
-<p>使用Git前需要先配置git config，可以输命令，也可以无脑用vscode改<code>.gitconfig</code>文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">&quot;youremail@domain.com&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="常用命令">常用命令</h3>
+<h2 id="常用快捷键">常用快捷键</h2>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ctrl+C</td>
+<td>关掉当前运行的程序</td>
+</tr>
+<tr>
+<td>ctrl+R</td>
+<td>搜索过去运行过的命令</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常用命令">常用命令</h2>
 <table>
 <thead>
 <tr>
@@ -2645,21 +2661,41 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <td>删除文件</td>
 <td>-r递归删文件夹 -f强删</td>
 </tr>
+<tr>
+<td>nvidia-smi</td>
+<td>查看当前N卡驱动</td>
+<td></td>
+</tr>
+<tr>
+<td>echo &lt;变量名称&gt;</td>
+<td>打印一个变量</td>
+<td>echo $xxx 打印环境变量</td>
+</tr>
+<tr>
+<td>eval $(命令内容)</td>
+<td>执行一个命令</td>
+<td>可以传入很多参数</td>
+</tr>
+<tr>
+<td>bash &lt;程序名称&gt;</td>
+<td>用bash执行一个程序</td>
+<td>可以再前面加一些临时的变量，如venv_dir=- bash ./webui.sh</td>
+</tr>
 </tbody>
 </table>
-<h3 id="文件访问">文件访问</h3>
+<h2 id="文件访问">文件访问</h2>
 <p>Windows访问Linux文件，路径为<code>\\wsl$\Ubuntu-20.04\home\username</code></p>
 <p>Linux访问Windows文件，路径为<code>/mnt/c/Users/username</code></p>
-<h3 id="apt-get">apt-get</h3>
+<h2 id="apt-get">apt-get</h2>
 <p>Linux内置的包管理器，可以非常优雅地安装管理各种包、软件</p>
-<h4 id="安装">安装</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#安装git</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install git</span><br><span class="line"><span class="comment">#安装tbb</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install libtbb-dev</span><br></pre></td></tr></table></figure>
-<h4 id="查看所有已安装软件">查看所有已安装软件</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看所有已安装软件（这个信息量巨大，而且有重复信息，不简易使用）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all</span><br><span class="line"><span class="comment">#查看所有已安装软件（去重）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | <span class="built_in">wc</span></span><br><span class="line"><span class="comment">#查看所有名字中带gcc的软件</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | grep gcc</span><br></pre></td></tr></table></figure>
-<h4 id="E-Unable-to-locate-package">E: Unable to locate package</h4>
+<h3 id="安装">安装</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装git</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install git</span><br><span class="line"><span class="comment"># 安装tbb</span></span><br><span class="line"><span class="variable">$sudo</span> apt-get install libtbb-dev</span><br></pre></td></tr></table></figure>
+<h3 id="查看所有已安装软件">查看所有已安装软件</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看所有已安装软件（这个信息量巨大，而且有重复信息，不简易使用）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all</span><br><span class="line"><span class="comment"># 查看所有已安装软件（去重）</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | <span class="built_in">wc</span></span><br><span class="line"><span class="comment">#查看所有名字中带gcc的软件</span></span><br><span class="line"><span class="variable">$sudo</span> apt-cache search all | grep gcc</span><br></pre></td></tr></table></figure>
+<h3 id="E-Unable-to-locate-package">E: Unable to locate package</h3>
 <p>如果遇到这个报错，可以执行一次更新</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-get update</span><br></pre></td></tr></table></figure>
-<h4 id="C-安装清单">C++安装清单</h4>
+<h3 id="C-安装清单">C++安装清单</h3>
 <table>
 <thead>
 <tr>
@@ -2702,8 +2738,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </tr>
 </tbody>
 </table>
-<h3 id="Git使用">Git使用</h3>
-<h4 id="拉取项目">拉取项目</h4>
+<h2 id="Git使用">Git使用</h2>
+<h3 id="配置">配置</h3>
+<p>使用Git前需要先配置git config，可以输命令，也可以无脑用vscode改<code>.gitconfig</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">&quot;youremail@domain.com&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="生成SSH公钥">生成SSH公钥</h3>
+<p>SSH公钥对Linux很重要，比如SSH连接、Git都会用到</p>
+<p>生成方法很简单，生成后你可以将<code>.ssh/id_rsa.pub</code>的内容拷贝到需要密钥的网站</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &lt;邮箱&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="拉取项目">拉取项目</h3>
 <p>项目拉取有两种常见方法</p>
 <ul>
 <li>
@@ -2718,9 +2761,50 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$git</span> config --global credential.helper store</span><br></pre></td></tr></table></figure>
 <p>我们这里说的密码是token，可以去<a target="_blank" rel="noopener" href="https://github.com/settings/tokens">Github</a>生成token</p>
-<h4 id="提交">提交</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加要提交的内容</span></span><br><span class="line"><span class="variable">$git</span> add 文件名/文件夹名</span><br><span class="line"><span class="comment">#提交所有内容（不包含忽略文件），并设置提交信息为“这是一段话”</span></span><br><span class="line"><span class="variable">$git</span> commit -a -m 这是一段话</span><br></pre></td></tr></table></figure>
-
+<h3 id="提交">提交</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加要提交的内容</span></span><br><span class="line"><span class="variable">$git</span> add &lt;文件名/文件夹名&gt;</span><br><span class="line"><span class="comment"># 提交所有内容（不包含忽略文件），并设置提交信息为“这是一段话”</span></span><br><span class="line"><span class="variable">$git</span> commit -a -m &lt;信息&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="分支">分支</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 展示所有分支</span></span><br><span class="line"><span class="variable">$git</span> branch -a</span><br><span class="line"><span class="comment"># 切分支</span></span><br><span class="line"><span class="variable">$git</span> checkout &lt;分支名&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Tmux">Tmux</h2>
+<p>经常使用Windows系统的同学，直接使用Linux会感觉我好像一次只能干一件事（尤其是你运行了一个Web后端），因为Windows所有窗口都是一个个单独的进程，UI和逻辑也是多线程，于是我们可以轻松在多个<strong>前台</strong>任务中切换</p>
+<p>其实Linux也是一个多线程多进程的操作系统，我们也可以同时执行多个前台任务，使用的就是Tmux</p>
+<p>你可以认为Tmux就是一个个窗口，你可以打开、挂起、恢复窗口，你可以开一个窗口用于开Web后端，然后开另一个窗口做其他事情</p>
+<h3 id="命令">命令</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 展示当前所有的窗口</span></span><br><span class="line"><span class="variable">$tmux</span> <span class="built_in">ls</span></span><br><span class="line"><span class="comment"># 杀掉某个窗口</span></span><br><span class="line"><span class="variable">$tmux</span> kill-window -t &lt;窗口编号&gt;</span><br><span class="line"><span class="comment"># 新建某个窗口</span></span><br><span class="line"><span class="variable">$tmux</span> new</span><br><span class="line"><span class="comment"># 挂起，窗口内的程序会继续运行，直接关窗口也是这样</span></span><br><span class="line"><span class="variable">$tmux</span> detach</span><br><span class="line"><span class="comment"># 打开最近一个窗口</span></span><br><span class="line"><span class="variable">$tmux</span> a</span><br><span class="line"><span class="comment"># 关闭当前窗口</span></span><br><span class="line"><span class="variable">$exit</span></span><br></pre></td></tr></table></figure>
+<h3 id="快捷键">快捷键</h3>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ctrl+B</td>
+<td>进入命令模式</td>
+</tr>
+<tr>
+<td>shift+’</td>
+<td>创建一个新的窗口</td>
+</tr>
+<tr>
+<td>命令模式下 + D</td>
+<td>挂起当前窗口</td>
+</tr>
+<tr>
+<td>命令模式下 + [</td>
+<td>开启上下滚动模式（可以看之前的命令行输出，按ctrl+C退出）</td>
+</tr>
+<tr>
+<td>命令模式下 + /</td>
+<td>搜索内容，按n匹配下一个</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Anaconda3">Anaconda3</h2>
+<p>非常好用的Python环境管理工具，你可以创建多个虚拟Python环境，不用再考虑版本问题了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建一个环境，python版本指定为3.10</span></span><br><span class="line">conda create -n &lt;环境名&gt; python=3.10 pip</span><br><span class="line"><span class="comment"># 切换环境，成功切换后bash左侧会有一个(环境名)</span></span><br><span class="line">conda activate &lt;环境名&gt;</span><br><span class="line"><span class="comment"># 删除环境</span></span><br><span class="line">conda remove -n &lt;环境名&gt; --all</span><br></pre></td></tr></table></figure>
   </div>
   
   
@@ -2744,7 +2828,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-05-08T06:46:51+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-05-08T10:02:54+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年5月8日</p>
@@ -2897,7 +2981,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#VS-Code"><span class="toc-text">VS Code</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git"><span class="toc-text">Git</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="toc-text">文件访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apt-get"><span class="toc-text">apt-get</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%B7%B2%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="toc-text">查看所有已安装软件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E-Unable-to-locate-package"><span class="toc-text">E: Unable to locate package</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E5%AE%89%E8%A3%85%E6%B8%85%E5%8D%95"><span class="toc-text">C++安装清单</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E4%BD%BF%E7%94%A8"><span class="toc-text">Git使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E9%A1%B9%E7%9B%AE"><span class="toc-text">拉取项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4"><span class="toc-text">提交</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code"><span class="toc-text">VS Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">常用快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="toc-text">文件访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apt-get"><span class="toc-text">apt-get</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%B7%B2%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="toc-text">查看所有已安装软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#E-Unable-to-locate-package"><span class="toc-text">E: Unable to locate package</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E5%AE%89%E8%A3%85%E6%B8%85%E5%8D%95"><span class="toc-text">C++安装清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git%E4%BD%BF%E7%94%A8"><span class="toc-text">Git使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90SSH%E5%85%AC%E9%92%A5"><span class="toc-text">生成SSH公钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E9%A1%B9%E7%9B%AE"><span class="toc-text">拉取项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4"><span class="toc-text">提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tmux"><span class="toc-text">Tmux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">快捷键</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Anaconda3"><span class="toc-text">Anaconda3</span></a></li></ol>
   </div>
 </section>
 
@@ -3441,7 +3525,7 @@ C++支持面向过程（procedural）、面向对象（object-orientend）、函
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/Ubuntu入门/","name":"Ubuntu入门"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Ubuntu入门","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/Ubuntu%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/Ubuntu%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2024-05-08T06:46:51.201Z","articleSection":"program","keywords":"Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/program/","name":"program"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/program/Ubuntu入门/","name":"Ubuntu入门"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Ubuntu入门","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/program/Ubuntu%E5%85%A5%E9%97%A8/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/program/Ubuntu%E5%85%A5%E9%97%A8/","wordCount":0,"datePublished":"2023-01-31T10:01:25.000Z","dateModified":"2024-05-08T10:02:54.726Z","articleSection":"program","keywords":"Linux","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
