@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Blender Python 插件开发</title>
+      <link href="/dcc/BlenderPython%E6%8F%92%E4%BB%B6/"/>
+      <url>/dcc/BlenderPython%E6%8F%92%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<h1>Blender Python 插件开发</h1><h2 id="打开提示">打开提示</h2><p>在偏好设置中打开Python Tooltips，将鼠标停滞在按钮、属性上时，都会提示要如何调用</p><p><img src="/images/blenderPythonTooltips.png" class="lazyload" data-srcset="/images/blenderPythonTooltips.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="blenderPythonTooltips"></p><p><img src="/images/pythonTooltips.png" class="lazyload" data-srcset="/images/pythonTooltips.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="pythonTooltips"></p><h2 id="安装bpy">安装bpy</h2><p>Python调用Blender，甚至不需要打开Blender窗口，使用bpy即可，这是一个无窗口、不依赖OpenGL的库，更适合做深度学习</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install bpy</span><br></pre></td></tr></table></figure><h2 id="参考">参考</h2><p><a href="https://zhuanlan.zhihu.com/p/525475118">Blender Python 简易参考</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> dcc </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Blender </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AI 常用术语</title>
       <link href="/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/"/>
       <url>/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/</url>
@@ -1099,7 +1126,7 @@
       
         <tags>
             
-            <tag> blender </tag>
+            <tag> Blender </tag>
             
         </tags>
       
@@ -1442,6 +1469,12 @@
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> Blender </tag>
+            
+        </tags>
       
     </entry>
     
