@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1715248578508),
+    lastupdate: new Date(1715661467483),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2377,6 +2377,146 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <section class="post-list">
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/内存分配/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/"  itemprop="url">
+        内存分配
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        内存分配
+
+最近看了一些关于内存分配的分享，发现操作系统相关的知识都忘光了，于是打算借助Linux内核的内存分配机制，简单复习一下内存分配相关的理论知识
+
+程序运行时不断进行内存的申请与释放，高效的分配方式不仅能提高内存的利用率，还能提高性能。
+Linux内存分配原理
+地址
+程序需要装入内存才能运行，程序开始的位置相较于内存0地址会有一段偏移，这个偏移被称为物理地址。
+在程序内部，以程序开头...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-09-14T14:36:25+00:00">2023-09-14</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/C++函数调用/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/program/C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/"  itemprop="url">
+        C++函数调用
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        C++函数调用
+C++支持两种函数调用方式，__stdcall和__cdecl，两者对栈帧（stack frame）的处理方式不同，__stdcall是由被调用函数来清理栈帧，__cdecl是由调用函数来清理栈帧。一旦混用，容易引发错误
+
+两者混用可能会导致栈帧没有被释放或者被连续释放两次
+
+stack frame
+栈帧用于维护函数调用的上下文信息，在函数调用时，会在栈上分配一块内存，用于存...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-08-14T10:32:25+00:00">2023-08-14</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/program/">program</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/program/C++%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -2960,141 +3100,6 @@ public class SphereMovement :...
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/银河战士like开发日志/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/"  itemprop="url">
-        银河战士like开发日志
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        银河战士like开发日志
-终于把毕设忙完了，开始填坑了，首先就是这个银河战士like的游戏，说实话我已经很长时间没做过Gameplay开发了，上来就做这种高难度的动作射击，感觉有些蠢。不过多亏了Mix and Jam开源了一个教程，少走不少弯路。为了自我监督，把开发日志记录在案。说实话我GP水平很差，这个日志应该会踩不少坑
-
-Unity 2021.3.22 URP Windows11，使用内...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-05-17T23:01:25+00:00">2023-05-17</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/game/">game</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/game/%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/有意思的代码/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84%E4%BB%A3%E7%A0%81/"  itemprop="url">
-        有意思的代码
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        有意思的代码
-记录一下平时遇到的有意思的代码，不定期更新
-在注释中的立方体
-   001------101   / |     / |  /  |    /  |011------111 | |  000--|--100 |  /    |  / | /     | /010------110
-消除未使用变量
-
-有人会认为C++的警告（Warming）等同于报错，于是会通过一些宏关掉一些警告...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-05-16T22:01:25+00:00">2023-05-16</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/program/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84%E4%BB%A3%E7%A0%81/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3109,7 +3114,7 @@ Unity 2021.3.22 URP Windows11，使用内...
           </a>
         
         <p class="current">
-          5 / 10
+          5 / 11
         </p>
         
           <a class="next" rel="next" href="/page/6/">
@@ -3217,12 +3222,12 @@ Unity 2021.3.22 URP Windows11，使用内...
           <li><a class="flat-box"
             title="/categories/engine/" href="/categories/engine/"
             active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(5)</div></a></li>
+            ><div class='name'>engine</div><div class='badge'>(6)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/game/" href="/categories/game/"
             active-action="action-categoriesgame"
-            ><div class='name'>game</div><div class='badge'>(6)</div></a></li>
+            ><div class='name'>game</div><div class='badge'>(7)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/graphics/" href="/categories/graphics/"
