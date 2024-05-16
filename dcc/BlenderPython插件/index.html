@@ -42,11 +42,11 @@
 <meta property="og:title" content="Blender Python 插件开发">
 <meta property="og:url" content="https://reubensun.com/dcc/BlenderPython%E6%8F%92%E4%BB%B6/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Blender Python 插件开发 打开提示 在偏好设置中打开Python Tooltips，将鼠标停滞在按钮、属性上时，都会提示要如何调用   安装bpy Python调用Blender，甚至不需要打开Blender窗口，使用bpy即可，这是一个无窗口、不依赖OpenGL的库，更适合做深度学习 pip3 install bpy 参考 Blender Python 简易参考">
+<meta property="og:description" content="Blender Python 插件开发 打开提示 在偏好设置中打开Python Tooltips，将鼠标停滞在按钮、属性上时，都会提示要如何调用，在info窗口可以看到几乎每一次操作对应的命令   安装bpy Python调用Blender，甚至不需要打开Blender窗口，使用bpy即可，这是一个无窗口、不依赖OpenGL的库，更适合做深度学习 pip3 install bpy 安装插件 如果不">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-05-09T17:32:25.000Z">
-<meta property="article:modified_time" content="2024-05-16T03:48:12.537Z">
+<meta property="article:modified_time" content="2024-05-16T07:27:53.020Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Blender">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1715831293749),
+    lastupdate: new Date(1715844474550),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2552,12 +2552,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <h1>Blender Python 插件开发</h1>
 <h2 id="打开提示">打开提示</h2>
-<p>在偏好设置中打开Python Tooltips，将鼠标停滞在按钮、属性上时，都会提示要如何调用</p>
+<p>在偏好设置中打开Python Tooltips，将鼠标停滞在按钮、属性上时，都会提示要如何调用，在info窗口可以看到几乎每一次操作对应的命令</p>
 <p><img src="/images/blenderPythonTooltips.png" class="lazyload" data-srcset="/images/blenderPythonTooltips.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="blenderPythonTooltips"></p>
 <p><img src="/images/pythonTooltips.png" class="lazyload" data-srcset="/images/pythonTooltips.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="pythonTooltips"></p>
 <h2 id="安装bpy">安装bpy</h2>
 <p>Python调用Blender，甚至不需要打开Blender窗口，使用bpy即可，这是一个无窗口、不依赖OpenGL的库，更适合做深度学习</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install bpy</span><br></pre></td></tr></table></figure>
+<h2 id="安装插件">安装插件</h2>
+<p>如果不知道插件的名称，可以先UI启动Blender，安装并启动对应插件，在python窗口输入<code>print(bpy.context.preferences.addons.keys())</code>，找到你想要的插件的名称</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bpy.ops.preferences.addon_install(filepath=<span class="string">f&quot;<span class="subst">&#123;os.getcwd()&#125;</span>/xxx.zip&quot;</span>)</span><br><span class="line">bpy.ops.preferences.addon_enable(module=<span class="string">&quot;yyy&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(bpy.context.preferences.addons.keys())</span><br></pre></td></tr></table></figure>
+<h2 id="程序开始">程序开始</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出python脚本所在位置</span></span><br><span class="line"><span class="built_in">print</span>(os.getcwd())</span><br><span class="line"><span class="comment"># 删除初始状态的几个物体</span></span><br><span class="line">bpy.ops.<span class="built_in">object</span>.select_all(action=<span class="string">&#x27;SELECT&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> bpy.data.objects:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Name: &quot;</span>, obj.name)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Delete all objects&quot;</span>)</span><br><span class="line">bpy.ops.<span class="built_in">object</span>.delete(use_global=<span class="literal">False</span>, confirm=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/525475118">Blender Python 简易参考</a></p>
 
@@ -2584,7 +2589,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-05-16T03:48:12+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-05-16T07:27:53+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年5月16日</p>
@@ -2745,7 +2750,7 @@ Ground Truth
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E6%8F%90%E7%A4%BA"><span class="toc-text">打开提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85bpy"><span class="toc-text">安装bpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E6%8F%90%E7%A4%BA"><span class="toc-text">打开提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85bpy"><span class="toc-text">安装bpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">安装插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%A7%8B"><span class="toc-text">程序开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3289,7 +3294,7 @@ Ground Truth
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/BlenderPython插件/","name":"Blender Python 插件开发"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Blender Python 插件开发","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/BlenderPython%E6%8F%92%E4%BB%B6/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/BlenderPython%E6%8F%92%E4%BB%B6/","wordCount":0,"datePublished":"2024-05-09T17:32:25.000Z","dateModified":"2024-05-16T03:48:12.537Z","articleSection":"dcc","keywords":"Python,Blender","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/dcc/","name":"dcc"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/dcc/BlenderPython插件/","name":"Blender Python 插件开发"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Blender Python 插件开发","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/dcc/BlenderPython%E6%8F%92%E4%BB%B6/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/dcc/BlenderPython%E6%8F%92%E4%BB%B6/","wordCount":0,"datePublished":"2024-05-09T17:32:25.000Z","dateModified":"2024-05-16T07:27:53.020Z","articleSection":"dcc","keywords":"Python,Blender","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
