@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Blender 骨骼动画制作</title>
+      <link href="/dcc/Blender%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C/"/>
+      <url>/dcc/Blender%E9%AA%A8%E9%AA%BC%E5%8A%A8%E7%94%BB%E5%88%B6%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<h1>Blender 骨骼动画制作</h1><p>最近在做3D游戏，需要大量骨骼动画，只从mixamo中下载不能满足我的需求，于是打算自己学着制作，软件就选择Blender</p><h2 id="准备">准备</h2><ol><li>去mixamo下一个小红人 X Bot</li><li>Blender安装插件Rigify</li><li>Blender安装插件<a href="https://blendermarket.com/products/mixamo-to-rigify-in-one-click">Mixamo to Rigify</a></li><li>import–mixamo to rigify，导入小红人</li></ol><p><img src="/images/mixamo2rigify.png" class="lazyload" data-srcset="/images/mixamo2rigify.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="mixamo2rigify"></p><p>我们可以看到小红人已经有了一套Rigify</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> dcc </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Blender </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Unity Playable Script 动画播放</title>
       <link href="/engine/UnityPlayable/"/>
       <url>/engine/UnityPlayable/</url>
@@ -2278,9 +2303,9 @@
       
         <tags>
             
-            <tag> 光学 </tag>
-            
             <tag> 高等数学 </tag>
+            
+            <tag> 光学 </tag>
             
         </tags>
       
