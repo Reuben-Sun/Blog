@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Blender 导入 vrm</title>
+      <link href="/dcc/blender%E5%AF%BC%E5%85%A5VRM/"/>
+      <url>/dcc/blender%E5%AF%BC%E5%85%A5VRM/</url>
+      
+        <content type="html"><![CDATA[<h1>Blender 导入 vrm</h1><p>最近在找带有脸部Blendshape的角色模型，尤其是使用了苹果ARKit标准，于是我发现了很多vrm模型</p><p>Blender不原生支持vrm模型，于是需要下一个插件</p><p><a href="https://github.com/saturday06/VRM-Addon-for-Blender">VRM Add on</a></p><p>安装后直接import模型</p><h3 id="导入Unity后没有Blendshape">导入Unity后没有Blendshape</h3><p>确认模型有Shape Key，导出FBX后再导入Unity，却再Skin mesh renderer中看不到Blendshape，那就在Blender中删掉多余的Modify，剩下Armature，再试试</p><p><img src="/images/%E5%88%A0%E9%99%A4modifier.png" class="lazyload" data-srcset="/images/%E5%88%A0%E9%99%A4modifier.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="删除modifier"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> dcc </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Blender </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Python 学习</title>
       <link href="/program/python%E5%AD%A6%E4%B9%A0/"/>
       <url>/program/python%E5%AD%A6%E4%B9%A0/</url>

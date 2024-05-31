@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1716782451159),
+    lastupdate: new Date(1717144403204),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2377,6 +2377,75 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <section class="post-list">
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/吸血鬼幸存者like/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/game/%E5%90%B8%E8%A1%80%E9%AC%BC%E5%B9%B8%E5%AD%98%E8%80%85like/"  itemprop="url">
+        吸血鬼幸存者+战意
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        吸血鬼幸存者+战意
+灵感起源
+最近在玩战意，感觉这游戏玩法设计的有问题
+
+主打将军梦的游戏，一次却只能带十几个兵，而且ACT玩法会给人一种这些小兵是具体的个体，而非抽象的军团，玩家扮演的是一个个十夫长（一个武将能杀几十个小兵，但绝不可能杀一个军团，但游戏中经常出现一个太刀侠杀一堆弓箭手）
+小兵AI非常蠢，缺乏操作性，胜利基本取决于双方兵种的养成强度，而非操作
+特别缺统御值，一场游戏只能带很少...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2024-01-04T10:01:25+00:00">2024-01-04</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/game/">game</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/game/%E5%90%B8%E8%A1%80%E9%AC%BC%E5%B9%B8%E5%AD%98%E8%80%85like/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3007,72 +3076,6 @@ Cluster的思路跟TBS思路很像，也是将view进行切分，但是每一个
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/LogSystem/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/LogSystem/"  itemprop="url">
-        C++20下spdlog使用踩坑
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        C++20下spdlog使用踩坑
-spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo引擎写了一个Log系统，结果由于C++不允许连续进行两次及以上的用户自定义的隐式构造，使得spdlog的log函数无法正确推断匹配Args...，最后在公司C++高手的帮助下成功解决了问题，于是在此记录一下踩坑历程
-最初的版本
-我参考开源项目的实现，使用spdlog写了一个简易的L...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-10-29T23:25:25+00:00">2023-10-29</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/program/LogSystem/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3190,7 +3193,7 @@ spdlog是一个开源的被广泛使用的C++log系统，于是我模仿Piccolo�
           <li><a class="flat-box"
             title="/categories/dcc/" href="/categories/dcc/"
             active-action="action-categoriesdcc"
-            ><div class='name'>dcc</div><div class='badge'>(10)</div></a></li>
+            ><div class='name'>dcc</div><div class='badge'>(11)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/engine/" href="/categories/engine/"
