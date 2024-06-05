@@ -5,8 +5,8 @@
   <meta name="Volantis" content="6.0.0-alpha.1">
   <meta charset="utf-8">
   <!-- SEO相关 -->
-  <meta name="robots" content="noindex,follow">
-  <link rel="canonical" href="https://reubensun.com/tags/shader/"/>
+  
+  <link rel="canonical" href="https://reubensun.com/ai/controlnet/"/>
   <!-- 渲染优化 -->
     <meta http-equiv='x-dns-prefetch-control' content='on' />
       <link rel='dns-prefetch' href='https://unpkg.com'>
@@ -34,19 +34,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>标签：shader - ReubenSun</title>
-  <meta name="keywords" content="reubensun computer graphics engine Technical Artist">
+  <title>ControlNet - ReubenSun</title>
+  <meta name="keywords" content="ControlNet,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
-<meta property="og:type" content="website">
-<meta property="og:title" content="ReubenSun">
-<meta property="og:url" content="https://reubensun.com/tags/shader/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ControlNet">
+<meta property="og:url" content="https://reubensun.com/ai/ControlNet/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Reuben的笔记博客">
+<meta property="og:description" content="ControlNet ControlNet是在Stable Diffusion模型上添加辅助模块，添加额外条件来控制AI绘图过程  ControlNet将SD模型复制两份，一份锁定，一份使用额外数据进行微调，最后将两份合并绘图。于是我们可以使用少量图片实现微调，同时保持SD数十亿张图的训练效果 参数介绍 &quot;controlnet&quot;: &#123;    &quot;args&amp;qu">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+<meta property="article:published_time" content="2024-06-05T10:45:25.000Z">
+<meta property="article:modified_time" content="2024-06-05T04:15:52.434Z">
 <meta property="article:author" content="Reuben Sun">
-<meta property="article:tag" content="reubensun computer graphics engine Technical Artist">
+<meta property="article:tag" content="ControlNet">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2103,7 +2105,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
+  pdata.ispage=true;
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   pdata.commentConfig={};
@@ -2111,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1717556944400),
+    lastupdate: new Date(1717560953645),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2168,7 +2170,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <!-- Custom Files bodyBegin begin-->
     
     <!-- Custom Files bodyBegin end-->
-    <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur show" style='opacity: 0' >
+    <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow floatable blur " style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -2367,30 +2369,104 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div id="l_body">
       <div id="l_cover">
   
+    
+      <div class="cover-wrapper post dock" id='half'>
+        
+  <div class='cover-bg lazyload placeholder' data-bg="/images/bg.jpg"></div>
+
+<div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">Reuben Sun</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              active-action="action-home">
+              <i class='fa-solid fa-house fa-fw'></i><p>主页</p>
+            </a>
+          
+            <a href="/categories/graphics"
+              
+              
+              active-action="action-categoriesgraphics">
+              <i class='fa-solid fa-images fa-fw'></i><p>图形</p>
+            </a>
+          
+            <a href="/categories/engine"
+              
+              
+              active-action="action-categoriesengine">
+              <i class='fa-solid fa-gear fa-fw'></i><p>引擎</p>
+            </a>
+          
+            <a href="/categories/ai"
+              
+              
+              active-action="action-categoriesai">
+              <i class='fa-solid fa-microchip fa-fw'></i><p>AI</p>
+            </a>
+          
+            <a href="/categories/program"
+              
+              
+              active-action="action-categoriesprogram">
+              <i class='fa-solid fa-code fa-fw'></i><p>编程</p>
+            </a>
+          
+            <a href="/categories/math"
+              
+              
+              active-action="action-categoriesmath">
+              <i class='fa-solid fa-plus fa-fw'></i><p>数学</p>
+            </a>
+          
+            <a href="/categories/optics"
+              
+              
+              active-action="action-categoriesoptics">
+              <i class='fa-solid fa-eye fa-fw'></i><p>光学</p>
+            </a>
+          
+            <a href="/categories/dcc"
+              
+              
+              active-action="action-categoriesdcc">
+              <i class='fa-solid fa-paint-brush fa-fw'></i><p>DCC</p>
+            </a>
+          
+            <a href="/categories/game"
+              
+              
+              active-action="action-categoriesgame">
+              <i class='fa-solid fa-gamepad fa-fw'></i><p>游戏</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+    
+  
 </div>
 
       <div id="safearea">
         <div class="body-wrapper">
           
-
 <div id="l_main" class=''>
-  
-    
-      
-  <section class="post-list">
-    
-      
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
+  <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/ai/ControlNet/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2399,71 +2475,268 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <meta itemprop="description" content="Reuben的笔记博客">
   </span>
   
-  
+
+
   
     <span hidden>
       <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
     </span>
   
-  
+  <div class="article-meta" id="top">
     
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
     
-      
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
-      
+    
+      <h1 class="title" itemprop="name headline">
+        ControlNet
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author' itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a itemprop="url" class='author' href="/" rel="nofollow">
+    <img itemprop="image" src="/images/logo.png" class="lazyload" data-srcset="/images/logo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <p itemprop="name">Reuben Sun</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  
+  
+  <div class='new-meta-item category'>
+    <i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i>
+    <a class="category-link" href="/categories/ai/">ai</a>
+    
+      <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/ai/" itemprop="url"><span itemprop="name">ai</span></a>
+      </span>
     
   </div>
   
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
+
+
+
           
         
+          
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-06-05T10:45:25+00:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2024年6月5日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+
+
+          
+        
+        <!-- Custom Files topMeta begin-->
+        
+        <!-- Custom Files topMeta end-->
       </div>
+    
+  </div>
+
+
+  <div id="layoutHelper-page-plugins"></div>
+  <div id="post-body" itemprop="articleBody">
+    <h1>ControlNet</h1>
+<p>ControlNet是在Stable Diffusion模型上添加辅助模块，添加额外条件来控制AI绘图过程</p>
+<p><img src="/images/ControlNet.png" class="lazyload" data-srcset="/images/ControlNet.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ControlNet"></p>
+<p>ControlNet将SD模型复制两份，一份锁定，一份使用额外数据进行微调，最后将两份合并绘图。于是我们可以使用少量图片实现微调，同时保持SD数十亿张图的训练效果</p>
+<h2 id="参数介绍">参数介绍</h2>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;controlnet&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;none&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;controlnet_sd15_depth [0f018aa1]&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;weight&quot;</span><span class="punctuation">:</span> depth_weight<span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;resize_mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Crop and Resize&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;lowvram&quot;</span><span class="punctuation">:</span> False<span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;guidance_start&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;guidance_end&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;pixel_perfect&quot;</span><span class="punctuation">:</span> False<span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;control_mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Balanced&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;hr_option&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Both&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;save_detected_map&quot;</span><span class="punctuation">:</span> True<span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;input_image&quot;</span><span class="punctuation">:</span>encode_file_to_base64(depth_img_dir)</span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="model">model</h3>
+<p>ControlNet模型</p>
+<h3 id="weight">weight</h3>
+<p>使用ControlNet模型辅助控制SD生成图片时的权重</p>
+<h3 id="resize-mode">resize_mode</h3>
+<p>缩放模式（以512x500到1024x1024为例）</p>
+<ul>
+<li>Just Resize：不考虑宽高比，直接将图像拉伸（到1024x1024）</li>
+<li>Crop and Resize：考虑宽高比，先裁剪（到500x500）后缩放（到1024x1024），会丢失裁剪的内容</li>
+<li>Resize and Fill：通过添加噪音先填充（到512x512）后缩放（到1024x1024）</li>
+</ul>
+<h3 id="lowvram">lowvram</h3>
+<p>低显存模式，如果显卡显存小于4GB，可以使用降低图像生成时显存占用</p>
+<h3 id="guidance-start">guidance_start</h3>
+<p>引导介入时机，表示在图片生成过程中的哪一步开始使用ControlNet进行控制。</p>
+<p>如果设置为0，就表示从一开始就使用ControlNet控制图片的生成；如果设置为0.5就表示ControlNet从50%的步数时开始进行控制</p>
+<h3 id="guidance-end">guidance_end</h3>
+<p>引导推出时机，表示在图片生成过程中的哪一步结束ControlNet的控制</p>
+<h3 id="pixel-perfect">pixel_perfect</h3>
+<p>完美像素模式，开启后不需要手动设置分辨率</p>
+<h3 id="control-mode">control_mode</h3>
+<p>控制模式，用于确定ControlNet和自己的Prompt之间谁更重要</p>
+<h2 id="使用">使用</h2>
+<ul>
+<li>深度图，使用一张深度图，精准控制生图的深度结构</li>
+<li>OpenPose，使用骨骼姿势图，可以精准控制姿态，尤其是手、脸</li>
+<li>Segmentation，通过对图片内容语义分割，自动生成一张彩色的mask图，再进行绘制</li>
+<li>Inpaint，对mask部分进行重绘</li>
+<li>Outpainting，扩充重绘，扩图</li>
+</ul>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/660924126">深入浅出完整解析ControlNet核心基础知识</a></p>
+
+  </div>
+  
+  
+    
+    <div class='footer'>
+       <!-- 参考资料、相关资料等 -->
       
-        <div>
-          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
+       <!-- 相关文章 -->
+      
+      <!-- 版权声明组件 -->
+      
+      <!-- 打赏组件 -->
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-05T04:15:52+00:00">
+  <a class='notlink'>
+    <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2024年6月5日</p>
+  </a>
 </div>
 
-          </div>
         
       
-    
-  </section>
+        
+          
   
-    
+  
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/ControlNet/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>ControlNet</p></a></div>
+  <span hidden itemprop="keywords">ControlNet</span>
   
 
 
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/ai/ControlNet/&title=ControlNet - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qq.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qq.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/ai/ControlNet/&title=ControlNet - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qzone.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/qzone.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/ai/ControlNet/&title=ControlNet - ReubenSun&summary="
+          
+          >
+          
+            <img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/weibo.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/weibo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+    <!-- Custom Files bottomMeta begin -->
+    
+    <!-- Custom Files bottomMeta end -->
+  </div>
+
+
   
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/ai/NeRF/'>
+          <p class='title'>NeRF<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>NeRF
+
+《NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis》
+
+NeRF的任务是从一组已知的图片出...</p>
+        </a>
+      
+    </div>
+  
+  <!-- 文章推荐 -->
+  
+  
+  <!-- Custom Files postEnd begin-->
+  
+  <!-- Custom Files postEnd end-->
+</article>
+
+
+  
+
+
+  <article class="post white-box shadow floatable blur" id="comments">
+    <span hidden>
+      <meta itemprop="discussionUrl" content="/ai/ControlNet/index.html#comments">
+    </span>
+    <p ct><i class='fa-solid fa-comments'></i> 评论</p>
+    
+
+    <div id="layoutHelper-comments"></div>
+
+  </article>
+
+
+
+
+
+
 </div>
 <aside id='l_side' itemscope itemtype="http://schema.org/WPSideBar">
   
@@ -2472,154 +2745,31 @@ $$
     
     
       
-<section class="widget blogger desktop mobile ">
-  <div class='content'>
     
-      
-        <a class='avatar flat-box rectangle' href='/%E6%88%91%E6%98%AF%E8%B0%81'>
-          <img no-lazy src='/images/logo.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p>渴望被认同的怪兽</p>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="https://github.com/Reuben-Sun"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:2824016820@qq.com"
-              class="social fa-solid fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://www.zhihu.com/people/reuben-72-27"
-              class="social fa-brands fa-zhihu flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget category desktop">
-    
-  <header>
-    
-      <a href='/blog/categories/'><i class="fa-solid fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/ai/" href="/categories/ai/"
-            active-action="action-categoriesai"
-            ><div class='name'>ai</div><div class='badge'>(4)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/dcc/" href="/categories/dcc/"
-            active-action="action-categoriesdcc"
-            ><div class='name'>dcc</div><div class='badge'>(11)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/engine/" href="/categories/engine/"
-            active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/game/" href="/categories/game/"
-            active-action="action-categoriesgame"
-            ><div class='name'>game</div><div class='badge'>(7)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/graphics/" href="/categories/graphics/"
-            active-action="action-categoriesgraphics"
-            ><div class='name'>graphics</div><div class='badge'>(24)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/math/" href="/categories/math/"
-            active-action="action-categoriesmath"
-            ><div class='name'>math</div><div class='badge'>(8)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/optics/" href="/categories/optics/"
-            active-action="action-categoriesoptics"
-            ><div class='name'>optics</div><div class='badge'>(10)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/program/" href="/categories/program/"
-            active-action="action-categoriesprogram"
-            ><div class='name'>program</div><div class='badge'>(34)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-    
-  
-
-  
-    
-    
-      
-  
-  <section class="widget tagcloud desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fa-solid fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 15.43px; color: #8f8f8f">AIGC</a> <a href="/tags/Blender/" style="font-size: 18.29px; color: #7c7c7c">Blender</a> <a href="/tags/CMake/" style="font-size: 15.43px; color: #8f8f8f">CMake</a> <a href="/tags/CSharp/" style="font-size: 19.71px; color: #727272">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/Culling/" style="font-size: 15.43px; color: #8f8f8f">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.43px; color: #8f8f8f">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 16.86px; color: #868686">Linux</a> <a href="/tags/Metal/" style="font-size: 15.43px; color: #8f8f8f">Metal</a> <a href="/tags/Model/" style="font-size: 16.86px; color: #868686">Model</a> <a href="/tags/NeRF/" style="font-size: 14px; color: #999">NeRF</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 15.43px; color: #8f8f8f">Physics</a> <a href="/tags/Python/" style="font-size: 19.71px; color: #727272">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/Render/" style="font-size: 15.43px; color: #8f8f8f">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 16.86px; color: #868686">TA</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.57px; color: #5f5f5f">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 14px; color: #999">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.43px; color: #8f8f8f">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 22.57px; color: #5f5f5f">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 21.14px; color: #686868">高等数学</a>
-    </div>
-  </section>
-
-
-    
-  
-
   
 
 
 <div class="widget-sticky">
+
+  
+  
+
+
+<section class="widget toc-wrapper desktop mobile" id="toc-div" >
+  
+  <header>
+    
+      <i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+  <div class='content'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="toc-text">参数介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#model"><span class="toc-text">model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weight"><span class="toc-text">weight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resize-mode"><span class="toc-text">resize_mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lowvram"><span class="toc-text">lowvram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#guidance-start"><span class="toc-text">guidance_start</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#guidance-end"><span class="toc-text">guidance_end</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pixel-perfect"><span class="toc-text">pixel_perfect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#control-mode"><span class="toc-text">control_mode</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+  </div>
+</section>
+
+  
 
 </div>
 
@@ -2627,6 +2777,7 @@ $$
   
   <!-- Custom Files side end -->
 </aside>
+
 
 
         </div>
@@ -2970,6 +3121,60 @@ $$
 
 
 
+        <script>
+  // https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/math/mathjax.swig
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js";
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    // 文章章节标题不能为 “MathJax” ，否则会报错。
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typesetPromise();
+  }
+</script>
+
+
+
 
 <script>
   function listenSidebarTOC() {
@@ -3104,7 +3309,7 @@ $$
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/tags/shader/","name":"shader"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"wordCount":0,"image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/ControlNet/","name":"ControlNet"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"ControlNet","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/ControlNet/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/ControlNet/","wordCount":0,"datePublished":"2024-06-05T10:45:25.000Z","dateModified":"2024-06-05T04:15:52.434Z","articleSection":"ai","keywords":"ControlNet","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
