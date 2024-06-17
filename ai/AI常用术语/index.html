@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-05-08T18:30:25.000Z">
-<meta property="article:modified_time" content="2024-06-14T02:53:50.839Z">
+<meta property="article:modified_time" content="2024-06-17T03:55:14.280Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="AIGC">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1718333632697),
+    lastupdate: new Date(1718596515405),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2620,8 +2620,27 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </blockquote>
 <p>模型不是直接预测一个目标值（如在回归问题中）或一个类别标签（如在分类问题中），而是预测一个偏好顺序或者选择。这种偏好可以是全序的（例如，对一组电影进行排名），也可以是部分的（例如，只确定哪部电影比另一部更受欢迎，而不是对所有电影进行排名）。</p>
 <h2 id="有监督微调">有监督微调</h2>
+<blockquote>
 <p>Supervised Fine-Tuning, SFT</p>
+</blockquote>
 <p>对标记数据进行微调，以实现将预训练的大模型调整为特定的任务，可以利用到预训练模型的通用特征，不需要从头开始训练模型，节省大量资源</p>
+<h2 id="扩散模型">扩散模型</h2>
+<blockquote>
+<p>Diffusion Models</p>
+</blockquote>
+<p>一种深度生成模型，包含前向加噪和反向去噪两个步骤</p>
+<p>前向加噪会逐步在原始数据中添加高斯噪声（马尔可夫链），直到数据被破坏，失去可辨别性</p>
+<p>$$<br>
+x_t = x_{t-1} + \sqrt{1-\beta_t} \cdot \epsilon_t<br>
+$$</p>
+<ul>
+<li>$\epsilon$：噪声样本</li>
+<li>$\beta$：噪声强度</li>
+</ul>
+<p>反向去噪是训练一个神经网络，能使用噪声样本来还原原始数据</p>
+<p>$$<br>
+\widetilde{x} = x_T - \sum^{T}_{t=1}\alpha_t \cdot \epsilon_t<br>
+$$</p>
 
   </div>
   
@@ -2646,10 +2665,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-14T02:53:50+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-17T03:55:14+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年6月14日</p>
+    <p>更新于：2024年6月17日</p>
   </a>
 </div>
 
@@ -2808,7 +2827,7 @@ mtllib sphere.mtlo Sphere v 0.5...</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ground-Truth"><span class="toc-text">Ground Truth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MLP"><span class="toc-text">MLP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inpaint"><span class="toc-text">inpaint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#priors"><span class="toc-text">priors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMPL"><span class="toc-text">SMPL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%86%E6%B8%B2%E6%9F%93"><span class="toc-text">逆渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93"><span class="toc-text">可微渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">强化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">策略梯度算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPO"><span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DPO"><span class="toc-text">DPO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%8F%E5%A5%BD%E5%AD%A6%E4%B9%A0"><span class="toc-text">偏好学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83"><span class="toc-text">有监督微调</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ground-Truth"><span class="toc-text">Ground Truth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MLP"><span class="toc-text">MLP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inpaint"><span class="toc-text">inpaint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#priors"><span class="toc-text">priors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMPL"><span class="toc-text">SMPL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%86%E6%B8%B2%E6%9F%93"><span class="toc-text">逆渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93"><span class="toc-text">可微渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">强化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">策略梯度算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPO"><span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DPO"><span class="toc-text">DPO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%8F%E5%A5%BD%E5%AD%A6%E4%B9%A0"><span class="toc-text">偏好学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83"><span class="toc-text">有监督微调</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B"><span class="toc-text">扩散模型</span></a></li></ol>
   </div>
 </section>
 
@@ -3352,7 +3371,7 @@ mtllib sphere.mtlo Sphere v 0.5...</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AI常用术语/","name":"AI 常用术语"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AI 常用术语","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/","wordCount":0,"datePublished":"2024-05-08T18:30:25.000Z","dateModified":"2024-06-14T02:53:50.839Z","articleSection":"ai","keywords":"AIGC","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AI常用术语/","name":"AI 常用术语"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AI 常用术语","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/","wordCount":0,"datePublished":"2024-05-08T18:30:25.000Z","dateModified":"2024-06-17T03:55:14.280Z","articleSection":"ai","keywords":"AIGC","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
