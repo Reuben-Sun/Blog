@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1719214912741),
+    lastupdate: new Date(1719217268353),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2472,7 +2472,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/TA面试题/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/optics/波动光学/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2490,27 +2490,31 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"  itemprop="url">
-        TA面试题
+      <a href="/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/"  itemprop="url">
+        光学：波动光学
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        TA面试题
-这里面不少答案都是我自己凭感觉答的，不保真
-什么是渲染管线
-渲染管线是通过安排CPU发出Draw Call的内容以及顺序，指导GPU进行一系列操作，并协同将开发者期待的图像渲染在屏幕上
+        二：波动光学
+内容概述
 
-剔除
-渲染
-后处理
+简谐波（simple harmonic waves）
+傅里叶变换（Fourier Transform）
+波的物理量
 
-什么是Draw Call
-Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操作，是重量级的
-什么是Batching
-将多个简单、使用同一材质的物体...
+数学基础
+常用函数
+三角函数
+欧拉公式
+$$
+e^{\mathrm{i}x}=\cos x + \mathrm{i}\sin x
+$$
+三角函数的复数表示
+$$
+\sin z=\frac{e^{\mathrm{i}z}-e^{-\mathrm{i}z...
       
     
   </div>
@@ -2521,17 +2525,17 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
+          <a class="category-link" href="/categories/optics/">optics</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/' itemprop="url">
+          <a class='readmore' href='/optics/%E6%B3%A2%E5%8A%A8%E5%85%89%E5%AD%A6/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2547,7 +2551,7 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/optics/电磁波/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2565,20 +2569,27 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
-        ddx与ddy
+      <a href="/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/"  itemprop="url">
+        光学：电磁波
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        ddx与ddy
-在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
-HLSL deriv_rtx
-ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
-$$
-\mathrm{ddx}=\f...
+        三：电磁波
+内容概述
+
+横波的性质（nature），强度（intensity），能量流动（energyflow）
+偏振态（Polarization states），琼斯矩阵（Jones matrix/vector）
+吸收（Absorption），色散（dispersion），折射率（refractive index）
+微小粒子导致的散射（Scattering）
+
+波
+构成波的条件：
+
+波源
+...
       
     
   </div>
@@ -2589,17 +2600,17 @@ $$
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
+          <a class="category-link" href="/categories/optics/">optics</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+              <a href="/categories/optics/" itemprop="url"><span itemprop="name">optics</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
+          <a class='readmore' href='/optics/%E7%94%B5%E7%A3%81%E6%B3%A2/' itemprop="url">
             阅读全文
           </a>
         </div>
