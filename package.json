@@ -34,6 +34,6 @@
     "markdown-it-expandable": "^1.0.2",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-mark": "^4.0.0",
-    "replace-in-file": "^7.1.0"
+    "replace-in-file": "^8.0.1"
   }
 }
