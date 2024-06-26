@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1719387405070),
+    lastupdate: new Date(1719391259773),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2408,6 +2408,71 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityMagicaCloth/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/engine/UnityMagicaCloth/"  itemprop="url">
+        Unity Magica Cloth
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Unity Magica Cloth
+Magica Cloth是Unity一个布料模拟插件，有两个版本，我使用的是基于Jobs的普通版本（2是基于DOTS的）
+
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2024-06-26T16:01:25+00:00">2024-06-26</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/engine/">engine</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/engine/UnityMagicaCloth/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
   <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityRagdoll/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
@@ -2436,7 +2501,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         Unity Ragdoll Animator
 Ragdoll（布娃娃系统）是一种基于物理模拟角色动作的技术，通常是通过在角色关节和躯干上放置碰撞器和约束实现，可以参考动物派队、人类一败涂地的角色控制，该技术还常用于实现角色受击、尸体倒地等
+我使用的是插件Ragdoll Animator 2，使用起来非常简单，而且可以做角色动画和物理的混合
+人物模型初始化
 
+导入一个模型，将其Rig设为Hum...
       
     
   </div>
@@ -3045,83 +3113,6 @@ ECS的本质就是数据驱动的编程，随着守望先锋的爆火进入大�
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/game/Catlike小球移动/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/game/Catlike%E5%B0%8F%E7%90%83%E7%A7%BB%E5%8A%A8/"  itemprop="url">
-        Unity小球移动
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity小球移动
-
-摘自Catlike的Movement Tutorial
-
-小球移动
-创建小球
-
-使用Input System包，在Package Manager中Unity包搜索即可
-
-创建Input Action资产
-
-创建小球，包含拖尾渲染器、Player Input组件、脚本SphereMovement.cs
-
-移动脚本
-public class SphereMovement :...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-07-01T17:01:25+00:00">2023-07-01</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/game/">game</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/game/" itemprop="url"><span itemprop="name">game</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/game/Catlike%E5%B0%8F%E7%90%83%E7%A7%BB%E5%8A%A8/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -3240,7 +3231,7 @@ public class SphereMovement :...
           <li><a class="flat-box"
             title="/categories/engine/" href="/categories/engine/"
             active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(9)</div></a></li>
+            ><div class='name'>engine</div><div class='badge'>(10)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/game/" href="/categories/game/"
@@ -3290,7 +3281,7 @@ public class SphereMovement :...
 
 
     <div class='content'>
-      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 14px; color: #999">AIGC</a> <a href="/tags/Animation/" style="font-size: 15.25px; color: #919191">Animation</a> <a href="/tags/Blender/" style="font-size: 17.75px; color: #808080">Blender</a> <a href="/tags/CMake/" style="font-size: 15.25px; color: #919191">CMake</a> <a href="/tags/CSharp/" style="font-size: 20.25px; color: #6f6f6f">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/ControlNet/" style="font-size: 14px; color: #999">ControlNet</a> <a href="/tags/Culling/" style="font-size: 15.25px; color: #919191">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.25px; color: #919191">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 16.5px; color: #888">Linux</a> <a href="/tags/Metal/" style="font-size: 15.25px; color: #919191">Metal</a> <a href="/tags/Model/" style="font-size: 16.5px; color: #888">Model</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 16.5px; color: #888">Physics</a> <a href="/tags/Python/" style="font-size: 19px; color: #777">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/Render/" style="font-size: 15.25px; color: #919191">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 16.5px; color: #888">TA</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.75px; color: #5e5e5e">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 14px; color: #999">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.25px; color: #919191">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 21.5px; color: #666">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 20.25px; color: #6f6f6f">高等数学</a>
+      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 14px; color: #999">AIGC</a> <a href="/tags/Animation/" style="font-size: 16.22px; color: #8a8a8a">Animation</a> <a href="/tags/Blender/" style="font-size: 18.44px; color: #7b7b7b">Blender</a> <a href="/tags/CMake/" style="font-size: 15.11px; color: #919191">CMake</a> <a href="/tags/CSharp/" style="font-size: 20.67px; color: #6c6c6c">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/ControlNet/" style="font-size: 14px; color: #999">ControlNet</a> <a href="/tags/Culling/" style="font-size: 15.11px; color: #919191">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.11px; color: #919191">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 16.22px; color: #8a8a8a">Linux</a> <a href="/tags/Metal/" style="font-size: 15.11px; color: #919191">Metal</a> <a href="/tags/Model/" style="font-size: 16.22px; color: #8a8a8a">Model</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 17.33px; color: #828282">Physics</a> <a href="/tags/Python/" style="font-size: 19.56px; color: #737373">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/Render/" style="font-size: 15.11px; color: #919191">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 16.22px; color: #8a8a8a">TA</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.89px; color: #5d5d5d">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 14px; color: #999">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.11px; color: #919191">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 21.78px; color: #646464">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 20.67px; color: #6c6c6c">高等数学</a>
     </div>
   </section>
 
