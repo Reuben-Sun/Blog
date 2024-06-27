@@ -42,11 +42,11 @@
 <meta property="og:title" content="Unity Magica Cloth">
 <meta property="og:url" content="https://reubensun.com/engine/UnityMagicaCloth/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Unity Magica Cloth Magica Cloth是Unity一个布料模拟插件，有两个版本，我使用的是基于Jobs的普通版本（2是基于DOTS的）">
+<meta property="og:description" content="Unity Magica Cloth Magica Cloth是Unity一个布料模拟插件，有两个版本，我使用的是基于Jobs的普通版本（2是基于DOTS的） 初始化 1. 添加预制体 在场景中拖入MagicaPhysicsManager.prefab  位置在Assets&#x2F;MagicaCloth&#x2F;Res&#x2F;Prefab  2. 绘制骨架 使用Animation Rigging绘制骨架，方便后续配置">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-06-26T16:01:25.000Z">
-<meta property="article:modified_time" content="2024-06-26T08:40:49.836Z">
+<meta property="article:modified_time" content="2024-06-27T08:52:12.038Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta property="article:tag" content="Physics">
@@ -2115,7 +2115,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1719391259773),
+    lastupdate: new Date(1719478333236),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2553,6 +2553,39 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <h1>Unity Magica Cloth</h1>
 <p><a target="_blank" rel="noopener" href="https://assetstore.unity.com/packages/tools/physics/magica-cloth-160144">Magica Cloth</a>是Unity一个布料模拟插件，有两个版本，我使用的是基于Jobs的普通版本（2是基于DOTS的）</p>
+<h2 id="初始化">初始化</h2>
+<h3 id="1-添加预制体">1. 添加预制体</h3>
+<p>在场景中拖入MagicaPhysicsManager.prefab</p>
+<blockquote>
+<p>位置在Assets/MagicaCloth/Res/Prefab</p>
+</blockquote>
+<h3 id="2-绘制骨架">2. 绘制骨架</h3>
+<p>使用Animation Rigging绘制骨架，方便后续配置布料</p>
+<blockquote>
+<p>Animation Rigging – Bone Renderer Setup</p>
+</blockquote>
+<h3 id="3-添加Magcia-Bone-Cloth">3. 添加Magcia Bone Cloth</h3>
+<blockquote>
+<p>Create Others – Magica Cloth – Magica Bone Cloth</p>
+</blockquote>
+<ol>
+<li>将布料的根节点拖到Root List中，通常会有多个根节点</li>
+<li>店家Start Point Selection开始调整节点
+<ol>
+<li>为节点刷颜色，红色只能旋转，绿色可以运动，根节点们都要为红色（你可以先点Fill将所以节点都设为绿色，然后切换到红色笔刷状态，按住鼠标左键在场景中将根节点都刷为红色）</li>
+<li>完成后按End Point Selection保存</li>
+</ol>
+</li>
+</ol>
+<p><img src="/images/cloth.png" class="lazyload" data-srcset="/images/cloth.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="cloth"></p>
+<ol start="3">
+<li>调整参数（也可以直接选择Preset）</li>
+<li>点击最下方的Create，完成创建</li>
+</ol>
+<h2 id="防穿模">防穿模</h2>
+<p>在模型骨架下创建Magica Collider</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=mh5zgxSjIhE">使用 Unity Magica Cloth插件一站式解决头发、衣服和胸部的物理模拟</a></p>
 
   </div>
   
@@ -2577,10 +2610,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-26T08:40:49+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-27T08:52:12+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年6月26日</p>
+    <p>更新于：2024年6月27日</p>
   </a>
 </div>
 
@@ -2728,7 +2761,7 @@ Ragdoll（布娃娃系统）是一种基于物理模拟角色动作的技术，�
 
 
   <div class='content'>
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B7%BB%E5%8A%A0%E9%A2%84%E5%88%B6%E4%BD%93"><span class="toc-text">1. 添加预制体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BB%98%E5%88%B6%E9%AA%A8%E6%9E%B6"><span class="toc-text">2. 绘制骨架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B7%BB%E5%8A%A0Magcia-Bone-Cloth"><span class="toc-text">3. 添加Magcia Bone Cloth</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E7%A9%BF%E6%A8%A1"><span class="toc-text">防穿模</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3272,7 +3305,7 @@ Ragdoll（布娃娃系统）是一种基于物理模拟角色动作的技术，�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/UnityMagicaCloth/","name":"Unity Magica Cloth"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Unity Magica Cloth","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/UnityMagicaCloth/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/UnityMagicaCloth/","wordCount":0,"datePublished":"2024-06-26T16:01:25.000Z","dateModified":"2024-06-26T08:40:49.836Z","articleSection":"engine","keywords":"Unity,Physics,Animation","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/UnityMagicaCloth/","name":"Unity Magica Cloth"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Unity Magica Cloth","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/UnityMagicaCloth/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/UnityMagicaCloth/","wordCount":0,"datePublished":"2024-06-26T16:01:25.000Z","dateModified":"2024-06-27T08:52:12.038Z","articleSection":"engine","keywords":"Unity,Physics,Animation","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
