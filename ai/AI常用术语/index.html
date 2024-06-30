@@ -42,11 +42,11 @@
 <meta property="og:title" content="AI 常用术语">
 <meta property="og:url" content="https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="AI 常用术语 刚刚加入AI公司，听组会听的头都大了，沟通过程中很多术语都不了解，于是简单学习记录一下（内容不保真，大部分算法我都没看懂，希望有一天能回来删掉这句话） Alignment 对齐，引导AI行为，使其符合设计者的利益和目的，一个已对齐的AI会朝着预期方向发展 Ground Truth 真实值 MLP  Multilayer Perceptron  多层感知器，一种最简单的前馈神经网络">
+<meta property="og:description" content="AI 常用术语 刚刚加入AI公司，听组会听的头都大了，沟通过程中很多术语都不了解，于是简单学习记录一下 机器学习 Ground Truth 真实值 监督学习  Supervised Learning  从一组标记好的输入和期望出发，得到一个 $x\rightarrow y$ 的映射 由于需要提供正确答案，导致标注量和成本很大 强化学习  Reinforcement Learning, RL  通过">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-05-08T18:30:25.000Z">
-<meta property="article:modified_time" content="2024-06-28T03:06:25.390Z">
+<meta property="article:modified_time" content="2024-06-30T13:57:33.389Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="AIGC">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1719543986716),
+    lastupdate: new Date(1719755854623),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2550,48 +2550,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>AI 常用术语</h1>
-<p>刚刚加入AI公司，听组会听的头都大了，沟通过程中很多术语都不了解，于是简单学习记录一下（内容不保真，大部分算法我都没看懂，希望有一天能回来删掉这句话）</p>
-<h2 id="Alignment">Alignment</h2>
-<p>对齐，引导AI行为，使其符合设计者的利益和目的，一个已对齐的AI会朝着预期方向发展</p>
-<h2 id="Ground-Truth">Ground Truth</h2>
+<p>刚刚加入AI公司，听组会听的头都大了，沟通过程中很多术语都不了解，于是简单学习记录一下</p>
+<h2 id="机器学习">机器学习</h2>
+<h3 id="Ground-Truth">Ground Truth</h3>
 <p>真实值</p>
-<h2 id="MLP">MLP</h2>
-<blockquote>
-<p>Multilayer Perceptron</p>
-</blockquote>
-<p>多层感知器，一种最简单的前馈神经网络</p>
-<h2 id="Inpaint">Inpaint</h2>
-<p>使用周围像素对图像进行修复/填充</p>
-<h2 id="Priors">Priors</h2>
-<p>先验知识，比如在模型设计、训练时引入的一些假设或约束</p>
-<h2 id="SMPL">SMPL</h2>
-<blockquote>
-<p>Skinned Multi-Person Linear Model</p>
-</blockquote>
-<p>SMPL是一种用于描述人体形状（shape）和姿态（pose）的模型，shape是类似blendshape的channel，用于描述人的高矮胖瘦，pose是描述了定义好的关节节点（通常为24个）的旋转状态，使用轴角存储</p>
-<p><img src="/images/SMPL.png" class="lazyload" data-srcset="/images/SMPL.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="SMPL"></p>
-<p>SMPL可以转为.bvh，再转为.fbx，以导入游戏引擎中</p>
-<h2 id="逆渲染">逆渲染</h2>
-<p>正向渲染：从三维模型出发，得到二维图像的过程（也就是图形学的渲染）</p>
-<p>逆向渲染：从二维图像出发，重建三维场景的过程</p>
-<h3 id="可微渲染">可微渲染</h3>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://youtu.be/9XyK5rhHrPk?si=4EUOO1RDnnjb4hRO">Reparameterizing Discontinuous Integrands for Differentiable Rendering</a></p>
-</blockquote>
-<p>可微渲染（Differentiable Rendering）是一种实现逆向渲染的方法</p>
-<p>从一个近似的三维场景出发渲染一张二维图片，求与Ground True的损失（loss），对三维场景的参数求偏导（Partial derivatives），即可使用梯度下降（Gradient descent）的方法得到和GT最相似的三维场景参数</p>
-<p>问题：</p>
-<ol>
-<li>传统的渲染器并不能对参数求偏导：搭建一个可微渲染器</li>
-<li>很多参数不连续：对不连续的参数换元，并乘以一个平滑函数</li>
-</ol>
-<h2 id="监督学习">监督学习</h2>
+<h3 id="监督学习">监督学习</h3>
 <blockquote>
 <p>Supervised Learning</p>
 </blockquote>
 <p>从一组标记好的输入和期望出发，得到一个 $x\rightarrow y$ 的映射</p>
 <p>由于需要<strong>提供正确答案</strong>，导致标注量和成本很大</p>
-<h2 id="强化学习">强化学习</h2>
+<h3 id="强化学习">强化学习</h3>
 <blockquote>
 <p>Reinforcement Learning, RL</p>
 </blockquote>
@@ -2599,34 +2568,39 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Bq421A74G?p=128&amp;vd_source=7cf90c391cc9c5398532df5ea93ccded">吴恩达机器学习</a>中有一个火星车例子，火星车可以在六个格子中移动，走到某些格子时会得到奖励，我们可以得到一个移动轨迹 $\tau$ 和轨迹奖励之和 $R(\tau)$ 的函数</p>
 <p>奖励的期望可以近似为N回合奖励的平均值</p>
 <p>$$<br>
-\bar{R}{\theta} = \sum_{\tau} R(\tau) P(\tau \lvert \theta) \approx \frac{1}{N} \sum^{N}_{n=1} R(\tau^{n})</p>
-<p>$$</p>
-<h3 id="策略梯度算法">策略梯度算法</h3>
+\bar{R}{\theta} = \sum_{\tau} R(\tau) P(\tau \lvert \theta) \approx \frac{1}{N} \sum^{N}_{n=1} R(\tau^{n})<br>
+$$</p>
+<h4 id="策略梯度算法">策略梯度算法</h4>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62654423">参考</a></p>
 </blockquote>
 <p>我们希望能够得到最大化的奖励期望，于是对上面的期望$\bar{R}{\theta}$做梯度下降</p>
-<h3 id="PPO">PPO</h3>
+<h4 id="PPO">PPO</h4>
 <blockquote>
 <p>Proximal Policy Optimization, PPO</p>
 </blockquote>
 <p>近端策略优化，是对策略梯度算法的改进（额，完全没看懂，等我看懂了再来补）</p>
-<h3 id="DPO">DPO</h3>
+<h4 id="DPO">DPO</h4>
 <blockquote>
 <p>Distributed Proximal Policy Optimization</p>
 </blockquote>
 <p>对PPO的改进，能并行计算</p>
-<h2 id="偏好学习">偏好学习</h2>
+<h3 id="偏好学习">偏好学习</h3>
 <blockquote>
 <p>Preference Learning</p>
 </blockquote>
 <p>模型不是直接预测一个目标值（如在回归问题中）或一个类别标签（如在分类问题中），而是预测一个偏好顺序或者选择。这种偏好可以是全序的（例如，对一组电影进行排名），也可以是部分的（例如，只确定哪部电影比另一部更受欢迎，而不是对所有电影进行排名）。</p>
-<h2 id="有监督微调">有监督微调</h2>
+<h3 id="对比学习">对比学习</h3>
+<p>一种自监督学习方法，让相似的数据在嵌入空间中更近，不相似的更远，会有数据增强、映射、对比损失等过程，在多模态中很常用</p>
+<h4 id="CLIP">CLIP</h4>
 <blockquote>
-<p>Supervised Fine-Tuning, SFT</p>
+<p>Contrastive Language–Image Pre-Training</p>
 </blockquote>
-<p>对标记数据进行微调，以实现将预训练的大模型调整为特定的任务，可以利用到预训练模型的通用特征，不需要从头开始训练模型，节省大量资源</p>
-<h2 id="扩散模型">扩散模型</h2>
+<p>OpenAI开发的基于对比学习的文本-图像模型，可以进行图像分类、图像搜索、图像生成，无需对特定任务进行专门的训练</p>
+<p><img src="/images/CLIP.png" class="lazyload" data-srcset="/images/CLIP.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="CLIP"></p>
+<h4 id="ImageBind">ImageBind</h4>
+<p>Meta开发的基于对比学习的多模态模型，可以将六个模态映射到同一个嵌入空间中</p>
+<h3 id="扩散模型">扩散模型</h3>
 <blockquote>
 <p>Diffusion Models</p>
 </blockquote>
@@ -2646,22 +2620,70 @@ $$</p>
 <ul>
 <li>$x_T$：前向扩散结束时的完全噪声样本</li>
 </ul>
-<h2 id="对比学习">对比学习</h2>
-<p>一种自监督学习方法，让相似的数据在嵌入空间中更近，不相似的更远，会有数据增强、映射、对比损失等过程，在多模态中很常用</p>
-<h3 id="CLIP">CLIP</h3>
-<blockquote>
-<p>Contrastive Language–Image Pre-Training</p>
-</blockquote>
-<p>OpenAI开发的基于对比学习的文本-图像模型，可以进行图像分类、图像搜索、图像生成，无需对特定任务进行专门的训练</p>
-<p><img src="/images/CLIP.png" class="lazyload" data-srcset="/images/CLIP.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="CLIP"></p>
-<h3 id="ImageBind">ImageBind</h3>
-<p>Meta开发的基于对比学习的多模态模型，可以将六个模态映射到同一个嵌入空间中</p>
-<h2 id="自回归模型">自回归模型</h2>
+<h3 id="自回归模型">自回归模型</h3>
 <blockquote>
 <p>Autoregressive Model, AR</p>
 </blockquote>
 <p>利用时间序列自身的过去值来预测未来值</p>
-<h2 id="NeRF">NeRF</h2>
+<h2 id="神经网络">神经网络</h2>
+<h3 id="MLP">MLP</h3>
+<blockquote>
+<p>Multilayer Perceptron</p>
+</blockquote>
+<p>多层感知器，一种最简单的前馈神经网络</p>
+<h3 id="稀疏激活">稀疏激活</h3>
+<blockquote>
+<p>Sparse Activation</p>
+</blockquote>
+<p>稀疏激活是指在神经网络中，大部分神经元的输出为0（或接近0），只有少量神经元输出非零值</p>
+<p>使用稀疏激活可以提高计算效率，加速收敛，降低损失</p>
+<p>通常通过使用特定的激活函数（activation function）实现，比如ReLU</p>
+<h4 id="ReLU">ReLU</h4>
+<blockquote>
+<p>Rectified Linear Unit</p>
+</blockquote>
+<p>$$<br>
+f(x)=\max(0, x)<br>
+$$</p>
+<h2 id="大模型">大模型</h2>
+<h3 id="Alignment">Alignment</h3>
+<p>对齐，引导AI行为，使其符合设计者的利益和目的，一个已对齐的AI会朝着预期方向发展</p>
+<h3 id="Baseline">Baseline</h3>
+<p>通常指一个基本的、简单的、表现较好的模型，作为参考点来评估其他新模型</p>
+<h3 id="Priors">Priors</h3>
+<p>先验知识，比如在模型设计、训练时引入的一些假设或约束</p>
+<h3 id="有监督微调">有监督微调</h3>
+<blockquote>
+<p>Supervised Fine-Tuning, SFT</p>
+</blockquote>
+<p>对标记数据进行微调，以实现将预训练的大模型调整为特定的任务，可以利用到预训练模型的通用特征，不需要从头开始训练模型，节省大量资源</p>
+<h2 id="计算机视觉">计算机视觉</h2>
+<h3 id="Landmark">Landmark</h3>
+<p>使用关键点、特征点来处理计算机视觉任务，比如人脸识别中使用眼睛、嘴巴、鼻子为关键点来检测追踪</p>
+<h3 id="SMPL">SMPL</h3>
+<blockquote>
+<p>Skinned Multi-Person Linear Model</p>
+</blockquote>
+<p>SMPL是一种用于描述人体形状（shape）和姿态（pose）的模型，shape是类似blendshape的channel，用于描述人的高矮胖瘦，pose是描述了定义好的关节节点（通常为24个）的旋转状态，使用轴角存储</p>
+<p><img src="/images/SMPL.png" class="lazyload" data-srcset="/images/SMPL.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="SMPL"></p>
+<p>SMPL可以转为.bvh，再转为.fbx，以导入游戏引擎中</p>
+<h3 id="Inpaint">Inpaint</h3>
+<p>使用周围像素对图像进行修复/填充</p>
+<h3 id="逆渲染">逆渲染</h3>
+<p>正向渲染：从三维模型出发，得到二维图像的过程（也就是图形学的渲染）</p>
+<p>逆向渲染：从二维图像出发，重建三维场景的过程</p>
+<h4 id="可微渲染">可微渲染</h4>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/9XyK5rhHrPk?si=4EUOO1RDnnjb4hRO">Reparameterizing Discontinuous Integrands for Differentiable Rendering</a></p>
+</blockquote>
+<p>可微渲染（Differentiable Rendering）是一种实现逆向渲染的方法</p>
+<p>从一个近似的三维场景出发渲染一张二维图片，求与Ground True的损失（loss），对三维场景的参数求偏导（Partial derivatives），即可使用梯度下降（Gradient descent）的方法得到和GT最相似的三维场景参数</p>
+<p>问题：</p>
+<ol>
+<li>传统的渲染器并不能对参数求偏导：搭建一个可微渲染器</li>
+<li>很多参数不连续：对不连续的参数换元，并乘以一个平滑函数</li>
+</ol>
+<h3 id="NeRF">NeRF</h3>
 <blockquote>
 <p>《NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis》</p>
 </blockquote>
@@ -2671,23 +2693,9 @@ $$</p>
 <li>使用光线步进的方式进行体渲染</li>
 </ol>
 <p><img src="/images/nerf.png" class="lazyload" data-srcset="/images/nerf.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="nerf"></p>
-<h2 id="Gaussian-Splatting">Gaussian Splatting</h2>
+<h3 id="Gaussian-Splatting">Gaussian Splatting</h3>
 <p>与NeRF类似，Gaussian Splatting也是从多个视角的图片出发，构建场景描述，通过高斯点染的方式，生成新视图</p>
 <p><a target="_blank" rel="noopener" href="https://huggingface.co/blog/zh/gaussian-splatting">高斯点染</a>的概念和光栅化很像，使用一个个椭球状的2D高斯函数为图元，将3D场景映射到2D图像上</p>
-<h2 id="稀疏激活">稀疏激活</h2>
-<blockquote>
-<p>Sparse Activation</p>
-</blockquote>
-<p>稀疏激活是指在神经网络中，大部分神经元的输出为0（或接近0），只有少量神经元输出非零值</p>
-<p>使用稀疏激活可以提高计算效率，加速收敛，降低损失</p>
-<p>通常通过使用特定的激活函数（activation function）实现，比如ReLU</p>
-<h3 id="ReLU">ReLU</h3>
-<blockquote>
-<p>Rectified Linear Unit</p>
-</blockquote>
-<p>$$<br>
-f(x)=\max(0, x)<br>
-$$</p>
 
   </div>
   
@@ -2712,10 +2720,10 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-28T03:06:25+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-06-30T13:57:33+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年6月28日</p>
+    <p>更新于：2024年6月30日</p>
   </a>
 </div>
 
@@ -2874,7 +2882,7 @@ mtllib sphere.mtlo Sphere v 0.5...</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Alignment"><span class="toc-text">Alignment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ground-Truth"><span class="toc-text">Ground Truth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MLP"><span class="toc-text">MLP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inpaint"><span class="toc-text">Inpaint</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Priors"><span class="toc-text">Priors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMPL"><span class="toc-text">SMPL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%86%E6%B8%B2%E6%9F%93"><span class="toc-text">逆渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93"><span class="toc-text">可微渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">强化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">策略梯度算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPO"><span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DPO"><span class="toc-text">DPO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%8F%E5%A5%BD%E5%AD%A6%E4%B9%A0"><span class="toc-text">偏好学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83"><span class="toc-text">有监督微调</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B"><span class="toc-text">扩散模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0"><span class="toc-text">对比学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CLIP"><span class="toc-text">CLIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ImageBind"><span class="toc-text">ImageBind</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="toc-text">自回归模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NeRF"><span class="toc-text">NeRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gaussian-Splatting"><span class="toc-text">Gaussian Splatting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E6%BF%80%E6%B4%BB"><span class="toc-text">稀疏激活</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ReLU"><span class="toc-text">ReLU</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-text">机器学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ground-Truth"><span class="toc-text">Ground Truth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="toc-text">监督学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">强化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">策略梯度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PPO"><span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DPO"><span class="toc-text">DPO</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%A5%BD%E5%AD%A6%E4%B9%A0"><span class="toc-text">偏好学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0"><span class="toc-text">对比学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CLIP"><span class="toc-text">CLIP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ImageBind"><span class="toc-text">ImageBind</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B"><span class="toc-text">扩散模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="toc-text">自回归模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-text">神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MLP"><span class="toc-text">MLP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E6%BF%80%E6%B4%BB"><span class="toc-text">稀疏激活</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ReLU"><span class="toc-text">ReLU</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text">大模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Alignment"><span class="toc-text">Alignment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Baseline"><span class="toc-text">Baseline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Priors"><span class="toc-text">Priors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83"><span class="toc-text">有监督微调</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89"><span class="toc-text">计算机视觉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Landmark"><span class="toc-text">Landmark</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMPL"><span class="toc-text">SMPL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Inpaint"><span class="toc-text">Inpaint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E6%B8%B2%E6%9F%93"><span class="toc-text">逆渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE%E6%B8%B2%E6%9F%93"><span class="toc-text">可微渲染</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NeRF"><span class="toc-text">NeRF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gaussian-Splatting"><span class="toc-text">Gaussian Splatting</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3418,7 +3426,7 @@ mtllib sphere.mtlo Sphere v 0.5...</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AI常用术语/","name":"AI 常用术语"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AI 常用术语","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/","wordCount":0,"datePublished":"2024-05-08T18:30:25.000Z","dateModified":"2024-06-28T03:06:25.390Z","articleSection":"ai","keywords":"AIGC","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AI常用术语/","name":"AI 常用术语"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AI 常用术语","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/","wordCount":0,"datePublished":"2024-05-08T18:30:25.000Z","dateModified":"2024-06-30T13:57:33.389Z","articleSection":"ai","keywords":"AIGC","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
