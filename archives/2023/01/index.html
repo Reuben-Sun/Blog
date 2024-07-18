@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1721288598927),
+    lastupdate: new Date(1721289170451),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2943,7 +2943,7 @@ $$
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/Effective C++/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/Nabla算子/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2961,27 +2961,30 @@ $$
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/Effective%20C++/"  itemprop="url">
-        Effective C++
+      <a href="/math/Nabla%E7%AE%97%E5%AD%90/"  itemprop="url">
+        Nabla算子
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        Effective C++
-一：C++基础
-C++很成熟，很NB
-C++支持面向过程（procedural）、面向对象（object-orientend）、函数形式（functional）、泛型形式（generic）、元编程形式（metaprogramming）
-其核心是四个部分
+        Nabla算子
+参考
+$\nabla$：Nabla算子，将数量场变成向量场
 
-C
 
-区块block
-语句statements
-预处理器preprocessor
-内置数据类型
-数组array...
+当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
+
+
+当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
+
+
+当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
+
+
+函数可视化
+对于函数$f(x,y)=x^2+y^2$，我们有两种可视化...
       
     
   </div>
@@ -2992,17 +2995,17 @@ C
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/program/Effective%20C++/' itemprop="url">
+          <a class='readmore' href='/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3018,7 +3021,7 @@ C
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/program/Ubuntu入门/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/复变函数/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3036,65 +3039,38 @@ C
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/program/Ubuntu%E5%85%A5%E9%97%A8/"  itemprop="url">
-        Ubuntu入门
+      <a href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
+        复变函数
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        Ubuntu入门
-虽说是Ubuntu，实际上是WSL2
-你可以使用neofetch查看系统信息
+        复变函数
+复变函数
+复数
+复数可以表示为实数和纯虚数的和
+代数式：
+$$
+z=x+\mathrm{i}y
+$$
 
-常用快捷键
+x：实部，记为Re z
+y：虚部，记为Im z
 
+复平面：
 
-
-快捷键
-意义
-
-
-
-
-ctrl+C
-关掉当前运行的程序
-
-
-ctrl+R
-搜索过去运行过的命令
-
-
-
-常用命令
-
-
-
-命令
-意义
-
-
-
-
-
-ls -a
-查看当前目录内容
-
-
-
-cd 路径名
-路径跳转
-
-
-
-clear
-清空窗口
-
-
-
-find 文件名
-找出当前文件夹内符合条件的...
+极坐标下
+$$
+\begin{cases}
+\rho=\sqrt{x^2+y^2} \
+\varphi=\arctan (y/x)
+\end{cases}
+$$
+$$
+\begin{cases}
+x=\rho \cos...
       
     
   </div>
@@ -3105,17 +3081,17 @@ find 文件名
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/program/">program</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/program/" itemprop="url"><span itemprop="name">program</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/program/Ubuntu%E5%85%A5%E9%97%A8/' itemprop="url">
+          <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3208,7 +3184,7 @@ $$
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/复变函数/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/概率论/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3226,38 +3202,47 @@ $$
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
-        复变函数
+      <a href="/math/%E6%A6%82%E7%8E%87%E8%AE%BA/"  itemprop="url">
+        概率论
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        复变函数
-复变函数
-复数
-复数可以表示为实数和纯虚数的和
-代数式：
-$$
-z=x+\mathrm{i}y
-$$
+        概率论
+一：随机事件与概率
+事件
+事件的概念
 
-x：实部，记为Re z
-y：虚部，记为Im z
+样本空间$\Omega$
 
-复平面：
+其单元素子集：基本事件
+其最大子集：必然事件
+最小子集：即空集$\empty$，不可能事件
 
-极坐标下
-$$
-\begin{cases}
-\rho=\sqrt{x^2+y^2} \
-\varphi=\arctan (y/x)
-\end{cases}
-$$
-$$
-\begin{cases}
-x=\rho \cos...
+
+事件域$F$
+
+事件的关系
+
+包含
+
+$A\subset B$：A被包含在B、B包含A、A发生时B一定发生
+
+
+相等
+
+$A=B$：A等于B，两事件是同一个集合、描述的是同一件事
+
+
+互不相容
+
+A和B不能同时发生
+
+
+
+...
       
     
   </div>
@@ -3278,7 +3263,7 @@ x=\rho \cos...
       </div>
       
         <div>
-          <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
+          <a class='readmore' href='/math/%E6%A6%82%E7%8E%87%E8%AE%BA/' itemprop="url">
             阅读全文
           </a>
         </div>
