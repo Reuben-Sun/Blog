@@ -34,13 +34,13 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>标签：Shader - ReubenSun</title>
+  <title>标签：shader - ReubenSun</title>
   <meta name="keywords" content="reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="website">
 <meta property="og:title" content="ReubenSun">
-<meta property="og:url" content="https://reubensun.com/tags/Shader/index.html">
+<meta property="og:url" content="https://reubensun.com/tags/shader/index.html">
 <meta property="og:site_name" content="ReubenSun">
 <meta property="og:description" content="Reuben的笔记博客">
 <meta property="og:locale" content="zh_CN">
@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1722321572225),
+    lastupdate: new Date(1722322602460),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2390,7 +2390,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/插值/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2408,34 +2408,20 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/%E6%8F%92%E5%80%BC/"  itemprop="url">
-        插值
+      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
+        ddx与ddy
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        插值
-线性插值
+        ddx与ddy
+在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
+HLSL deriv_rtx
+ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
 $$
-\mathrm{lerp}(p_0,p_1;t)=(1-t)p_0+tp_1
-$$
-Smoothstep
-
-Hermite
-
-将一个数平滑映射到[0, 1]
-float v = smoothstep(0.0, 1.0, time);// 等同于 time * time * (3 - 2 * time)
-球面插值
-
-Slerp
-
-在球面上线性插值
-
-
-$$
-\mathrm...
+\mathrm{ddx}=\f...
       
     
   </div>
@@ -2443,20 +2429,20 @@ $$
     <div class='meta-v3' line_style='solid'>
       <div>
         
-        <time itemprop="dateCreated datePublished" datetime="2024-04-07T11:46:25+00:00">2024-04-07</time>
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
+          <a class="category-link" href="/categories/graphics/">graphics</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
+              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/math/%E6%8F%92%E5%80%BC/' itemprop="url">
+          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2562,7 +2548,7 @@ $$
           <li><a class="flat-box"
             title="/categories/ai/" href="/categories/ai/"
             active-action="action-categoriesai"
-            ><div class='name'>ai</div><div class='badge'>(4)</div></a></li>
+            ><div class='name'>ai</div><div class='badge'>(5)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/dcc/" href="/categories/dcc/"
@@ -2622,7 +2608,7 @@ $$
 
 
     <div class='content'>
-      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 14px; color: #999">AIGC</a> <a href="/tags/Animation/" style="font-size: 16.22px; color: #8a8a8a">Animation</a> <a href="/tags/Blender/" style="font-size: 18.44px; color: #7b7b7b">Blender</a> <a href="/tags/CMake/" style="font-size: 15.11px; color: #919191">CMake</a> <a href="/tags/CSharp/" style="font-size: 20.67px; color: #6c6c6c">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/ControlNet/" style="font-size: 14px; color: #999">ControlNet</a> <a href="/tags/Culling/" style="font-size: 15.11px; color: #919191">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.11px; color: #919191">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 17.33px; color: #828282">Linux</a> <a href="/tags/Metal/" style="font-size: 15.11px; color: #919191">Metal</a> <a href="/tags/Model/" style="font-size: 16.22px; color: #8a8a8a">Model</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/PS/" style="font-size: 14px; color: #999">PS</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 17.33px; color: #828282">Physics</a> <a href="/tags/Python/" style="font-size: 19.56px; color: #737373">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/Render/" style="font-size: 15.11px; color: #919191">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 16.22px; color: #8a8a8a">TA</a> <a href="/tags/Tensorboard/" style="font-size: 14px; color: #999">Tensorboard</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/URP/" style="font-size: 14px; color: #999">URP</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.89px; color: #5d5d5d">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 14px; color: #999">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.11px; color: #919191">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 21.78px; color: #646464">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 20.67px; color: #6c6c6c">高等数学</a>
+      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 14px; color: #999">AIGC</a> <a href="/tags/Animation/" style="font-size: 16.22px; color: #8a8a8a">Animation</a> <a href="/tags/Blender/" style="font-size: 18.44px; color: #7b7b7b">Blender</a> <a href="/tags/CMake/" style="font-size: 15.11px; color: #919191">CMake</a> <a href="/tags/CSharp/" style="font-size: 20.67px; color: #6c6c6c">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/ControlNet/" style="font-size: 14px; color: #999">ControlNet</a> <a href="/tags/Culling/" style="font-size: 15.11px; color: #919191">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.11px; color: #919191">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 17.33px; color: #828282">Linux</a> <a href="/tags/Metal/" style="font-size: 15.11px; color: #919191">Metal</a> <a href="/tags/Model/" style="font-size: 16.22px; color: #8a8a8a">Model</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/PS/" style="font-size: 14px; color: #999">PS</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 17.33px; color: #828282">Physics</a> <a href="/tags/Python/" style="font-size: 19.56px; color: #737373">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/Render/" style="font-size: 15.11px; color: #919191">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH-2012/" style="font-size: 14px; color: #999">SIGGRAPH 2012</a> <a href="/tags/SIGGRAPH-2015/" style="font-size: 14px; color: #999">SIGGRAPH 2015</a> <a href="/tags/SIGGRAPH-2022/" style="font-size: 14px; color: #999">SIGGRAPH 2022</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SVG/" style="font-size: 14px; color: #999">SVG</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 16.22px; color: #8a8a8a">TA</a> <a href="/tags/Tensorboard/" style="font-size: 14px; color: #999">Tensorboard</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/URP/" style="font-size: 14px; color: #999">URP</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.89px; color: #5d5d5d">Unity</a> <a href="/tags/Unreal/" style="font-size: 14px; color: #999">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 14px; color: #999">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.11px; color: #919191">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 21.78px; color: #646464">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 20.67px; color: #6c6c6c">高等数学</a>
     </div>
   </section>
 
@@ -3118,7 +3104,7 @@ $$
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/tags/Shader/","name":"Shader"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"wordCount":0,"image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/tags/shader/","name":"shader"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"wordCount":0,"image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
