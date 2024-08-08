@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>Unity UI 使用中文字体</title>
-      <link href="/engine/Unity%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93/"/>
-      <url>/engine/Unity%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93/</url>
+      <title>Unity UI 开发</title>
+      <link href="/engine/UnityUI%E5%BC%80%E5%8F%91/"/>
+      <url>/engine/UnityUI%E5%BC%80%E5%8F%91/</url>
       
-        <content type="html"><![CDATA[<h1>Unity UI 使用中文字体</h1><p>在使用Unity制作游戏时，想要UI（TMP）使用中文字体</p><ol><li>下载一个字体文件<code>.ttf</code></li><li>下载一个中文字符集<code>.txt</code></li></ol><blockquote><p>分享一个字符集项目<a href="https://github.com/wy-luke/Unity-TextMeshPro-Chinese-Characters-Set.git">https://github.com/wy-luke/Unity-TextMeshPro-Chinese-Characters-Set.git</a></p></blockquote><ol start="3"><li>Window–TextMeshPro–Font Asset Creator</li></ol><p><img src="/images/%E5%88%9B%E5%BB%BA%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93.png" class="lazyload" data-srcset="/images/%E5%88%9B%E5%BB%BA%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="创建中文字体"></p>]]></content>
+        <content type="html"><![CDATA[<h1>Unity UI 开发</h1><h2 id="使用中文字体">使用中文字体</h2><p>在使用Unity制作游戏时，想要UI（TMP）使用中文字体</p><ol><li>下载一个字体文件<code>.ttf</code></li><li>下载一个中文字符集<code>.txt</code></li></ol><blockquote><p>分享一个字符集项目<a href="https://github.com/wy-luke/Unity-TextMeshPro-Chinese-Characters-Set.git">https://github.com/wy-luke/Unity-TextMeshPro-Chinese-Characters-Set.git</a></p></blockquote><ol start="3"><li>Window–TextMeshPro–Font Asset Creator</li></ol><p><img src="/images/%E5%88%9B%E5%BB%BA%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93.png" class="lazyload" data-srcset="/images/%E5%88%9B%E5%BB%BA%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="创建中文字体"></p>]]></content>
       
       
       <categories>
