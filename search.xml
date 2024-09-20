@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>PyBind11实现Python调用C++</title>
+      <link href="/program/pybind11/"/>
+      <url>/program/pybind11/</url>
+      
+        <content type="html"><![CDATA[<h1>PyBind11实现Python调用C++</h1><p>我曾经写过一篇SWIG实现Python调用C++的文章，SWIG是一个非常好用的通用工具，可以实现很多语言间的互通，不过最近我发现一个专门为Python和C++设计的库，PyBind11，AI领域貌似更喜欢这个库</p><p>PyBind11是一个非常轻量的纯头文件库，可以看作对Boost.Python的简化模仿，这个库要求至少使用C++11、Python 3.6，使用条件相对苛刻，但说实话，对于新项目这个版本要求并不过分</p><p>PyBind11有很多优点，我个人比较喜欢将项目嵌入到CMake项目，并使用<code>pip install</code>进行安装</p><h2 id="嵌入到CMake项目">嵌入到CMake项目</h2><h3 id="1-submodule">1. submodule</h3><p>首先将PyBind11库作为Submodule添加到项目根目录（你也可以放在其他地方）下的pybind11文件夹</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">git submodule add https:<span class="comment">//github.com/pybind/pybind11.git pybind11</span></span><br></pre></td></tr></table></figure><h3 id="2-setup-py">2. <a href="http://setup.py">setup.py</a></h3><p>在项目根目录添加一个setup.py文件，便于pip安装</p><p>可以基于<a href="https://github.com/pybind/cmake_example/blob/master/setup.py">官方示例</a>修改</p><h3 id="3-CMakeList-txt">3. CMakeList.txt</h3><figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.21</span>)</span><br><span class="line"><span class="keyword">project</span>(pycppstudy LANGUAGES CXX)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_subdirectory</span>(pybind11)</span><br><span class="line"></span><br><span class="line"><span class="keyword">file</span>(GLOB_RECURSE HEADERS src/*.h)</span><br><span class="line"><span class="keyword">file</span>(GLOB_RECURSE SOURCES src/*.cpp)</span><br><span class="line">pybind11_add_module(<span class="variable">$&#123;PROJECT_NAME&#125;</span> <span class="variable">$&#123;HEADERS&#125;</span> <span class="variable">$&#123;SOURCES&#125;</span>)</span><br></pre></td></tr></table></figure><p>核心是通过<code>pybind11_add_module</code>创建库</p><h3 id="4-编写代码">4. 编写代码</h3><p>引入pybind11头文件，并编写约定</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pybind11/pybind11.h&gt;</span></span></span><br><span class="line"><span class="keyword">namespace</span> py = pybind11;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i + j;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 约定</span></span><br><span class="line"><span class="built_in">PYBIND11_MODULE</span>(pycppstudy, m) &#123;</span><br><span class="line">    m.<span class="built_in">doc</span>() = <span class="string">&quot;pybind11 pycppstudy plugin&quot;</span>; </span><br><span class="line"></span><br><span class="line">    m.<span class="built_in">def</span>(<span class="string">&quot;add&quot;</span>, &amp;add, <span class="string">&quot;A function that adds two numbers&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="5-安装包">5. 安装包</h3><p>在这个项目的外层，输入命令</p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install ./&lt;项目文件夹名&gt;</span><br></pre></td></tr></table></figure><p>就会按照自定义的包</p><blockquote><p>卸载包的方式是 pip uninstall &lt;包名&gt;</p></blockquote><h3 id="6-使用">6. 使用</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pycppstudy</span><br><span class="line">pycppstudy.add(<span class="number">1</span>, <span class="number">2</span>)<span class="comment"># 3</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> program </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> CXX </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>OpenAI API</title>
       <link href="/ai/OpenAI/"/>
       <url>/ai/OpenAI/</url>
