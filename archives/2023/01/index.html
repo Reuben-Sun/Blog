@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1728300219681),
+    lastupdate: new Date(1728301934009),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2729,7 +2729,7 @@ UE禁用了C++的dynamic_cast，你可以使用Ca...
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/Nabla算子/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/DX12笔记/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -2747,30 +2747,23 @@ UE禁用了C++的dynamic_cast，你可以使用Ca...
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/Nabla%E7%AE%97%E5%AD%90/"  itemprop="url">
-        Nabla算子
+      <a href="/graphics/DX12%E7%AC%94%E8%AE%B0/"  itemprop="url">
+        DX12龙书
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        Nabla算子
-参考
-$\nabla$：Nabla算子，将数量场变成向量场
-
-
-当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
-
-
-当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
-
-
-当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
-
-
-函数可视化
-对于函数$f(x,y)=x^2+y^2$，我们有两种可视化...
+        DX12
+环境搭建
+Windows 10/11系统
+安装PIX
+安装Visual Studio 2019
+Windows应用程序
+Windows应用程序使用事件驱动（详情可以去看WPF）
+Windows应用程序的入口点是WinMain函数
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;...
       
     
   </div>
@@ -2781,17 +2774,160 @@ $\nabla$：Nabla算子，将数量场变成向量场
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
+          <a class="category-link" href="/categories/graphics/">graphics</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
+              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
+          <a class='readmore' href='/graphics/DX12%E7%AC%94%E8%AE%B0/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/TA面试题/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"  itemprop="url">
+        TA面试题
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        TA面试题
+这里面不少答案都是我自己凭感觉答的，不保真
+什么是渲染管线
+渲染管线是通过安排CPU发出Draw Call的内容以及顺序，指导GPU进行一系列操作，并协同将开发者期待的图像渲染在屏幕上
+
+剔除
+渲染
+后处理
+
+什么是Draw Call
+Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操作，是重量级的
+什么是Batching
+将多个简单、使用同一材质的物体...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/graphics/">graphics</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/ddx与ddy/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/graphics/ddx%E4%B8%8Eddy/"  itemprop="url">
+        ddx与ddy
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        ddx与ddy
+在OpenGL中叫dFdx和dFdy，在HLSL中叫ddx和ddy
+HLSL deriv_rtx
+ddx和ddy是一个求偏导的过程，依赖于硬件光栅化，只能用于fragment着色器，意思为计算blocks内相邻片元间value的变化（value可以是任意参数，比如uv、color、position、normal），注意不要在分支中使用偏导
+$$
+\mathrm{ddx}=\f...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/graphics/">graphics</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/graphics/ddx%E4%B8%8Eddy/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -2878,6 +3014,84 @@ x=\rho \cos...
       
         <div>
           <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/Nabla算子/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/math/Nabla%E7%AE%97%E5%AD%90/"  itemprop="url">
+        Nabla算子
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Nabla算子
+参考
+$\nabla$：Nabla算子，将数量场变成向量场
+
+
+当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
+
+
+当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
+
+
+当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
+
+
+函数可视化
+对于函数$f(x,y)=x^2+y^2$，我们有两种可视化...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/math/">math</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3050,237 +3264,6 @@ A和B不能同时发生
       
         <div>
           <a class='readmore' href='/math/%E6%A6%82%E7%8E%87%E8%AE%BA/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/球函数/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/%E7%90%83%E5%87%BD%E6%95%B0/"  itemprop="url">
-        球函数
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        球函数
-三大偏微分方程
-
-拉普拉斯方程（椭圆）
-热方程（抛物线）
-波方程（双曲线）
-
-常微分方程
-含有未知函数的导数（含高阶导数）或微分的等式，称为微分方程
-若未知函数是一元函数，则该函数为常微分方程
-若导数的阶数为1，那么称为一阶微分方程
-球坐标系
-讨论常微分方程时，边界是记为重要的，而当边界是球形时，球坐标系会更好用
-
-直角坐标系上点$P(x,y,z)$，也可以用三个有次序的数$(r,\...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/math/%E7%90%83%E5%87%BD%E6%95%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/线性代数/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/math/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"  itemprop="url">
-        线性代数
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        线性代数
-一：线性方程组
-概念
-
-线性方程
-线性方程组
-系数
-解：一组能让方程左右相等的数
-解集：方程组的所有解的集合
-等价：若两个线性方程组拥有相同解集，则两者等价
-相容：方程组有一个或无穷多个解
-不相容：方程组无解
-
-矩阵
-方程组
-$$
-\begin{gathered}
-x_1-2x_2+x_3=0 \\
-2x_2-8x_3=8 \\
-5x_1-5x_3=10
-\end{gathered...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/math/">math</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/math/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/DX12笔记/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/DX12%E7%AC%94%E8%AE%B0/"  itemprop="url">
-        DX12龙书
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        DX12
-环境搭建
-Windows 10/11系统
-安装PIX
-安装Visual Studio 2019
-Windows应用程序
-Windows应用程序使用事件驱动（详情可以去看WPF）
-Windows应用程序的入口点是WinMain函数
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/graphics/DX12%E7%AC%94%E8%AE%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
