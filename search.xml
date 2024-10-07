@@ -1486,31 +1486,6 @@
     
     
     <entry>
-      <title>我不小心取了一个右值的地址</title>
-      <link href="/program/%E6%88%91%E4%B8%8D%E5%B0%8F%E5%BF%83%E5%8F%96%E4%BA%86%E4%B8%80%E4%B8%AA%E5%8F%B3%E5%80%BC%E7%9A%84%E5%9C%B0%E5%9D%80/"/>
-      <url>/program/%E6%88%91%E4%B8%8D%E5%B0%8F%E5%BF%83%E5%8F%96%E4%BA%86%E4%B8%80%E4%B8%AA%E5%8F%B3%E5%80%BC%E7%9A%84%E5%9C%B0%E5%9D%80/</url>
-      
-        <content type="html"><![CDATA[<h1>我不小心取了一个右值的地址</h1><p>感觉每次背八股的时候都会看到左右值，但一直都是纸上谈兵（原谅我项目能力太差），结果今天真遇到了（我取了一个右值的地址</p><ul><li>左值：占用一定内存，有明确的可辨认地址的对象，在表达式结束后仍然存在</li><li>右值：左值以外的对象（类似于临时对象，在表达式结束后就会销毁）</li></ul><p>右值是一个临时的没有明确地址的对象，可能表达式结束这个对象就被销毁了，自然取它的地址是不确定行为，C++11后我们要改用移动或转发操作</p><p>然而很有意思的是，我怎么发现这个问题的呢？是我把项目升级到C++20，C++20明确禁止了取右值的引用（在过去只是不推荐，但没有明确为Error），然后编译报错了</p><p>然后我跟同事分享这个问题，他告诉我MSVC貌似对右值有优化，我过去代码能跑只是比较幸运</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> program </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> CXX </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>glTF入门</title>
       <link href="/graphics/gltf%E5%85%A5%E9%97%A8/"/>
       <url>/graphics/gltf%E5%85%A5%E9%97%A8/</url>
