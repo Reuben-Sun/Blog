@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Unity 性能优化</title>
+      <link href="/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+      <url>/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[<h1>Unity 性能优化</h1><blockquote><p>Unity版本为2022.3.34，本文所有的测试均在Editor下进行</p></blockquote><p>尽管我认为，性能远远没有实现重要，提前优化、过度优化、虚空优化，之会影响开发效率，不过还是记录一下我最近学到的一些关于Unity性能优化的小技巧</p><h2 id="脚本优化">脚本优化</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> engine </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Unity </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>强化学习</title>
       <link href="/ai/RL/"/>
       <url>/ai/RL/</url>
