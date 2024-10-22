@@ -42,11 +42,11 @@
 <meta property="og:title" content="Unity URP卡通渲染">
 <meta property="og:url" content="https://reubensun.com/graphics/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="Unity URP卡通渲染 最近工作之余抄了一个卡渲，结果越做感觉越没意思，主要是缺少一些美术资源，于是先pending，在此先记录一下 当前进度 代码已开源，仓库地址  功能实现">
+<meta property="og:description" content="Unity URP卡通渲染 最近工作之余抄了一个卡渲，结果越做感觉越没意思，主要是缺少一些美术资源，于是先pending，在此先记录一下 当前进度 代码已开源，仓库地址  设计理念  高复用，易拓展，低侵入  我遇到了什么问题 每次我要写Unity shader时，我都要不厌其烦地写  Shader GUI、Properties 定义贴图和采样器，定义全局变量 维护CBuffer，尤其是SRP b">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-10-22T10:30:25.000Z">
-<meta property="article:modified_time" content="2024-10-22T12:51:44.621Z">
+<meta property="article:modified_time" content="2024-10-22T15:30:34.066Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta property="article:tag" content="URP">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1729601506102),
+    lastupdate: new Date(1729611036709),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2555,8 +2555,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h2 id="当前进度">当前进度</h2>
 <p>代码已开源，<a target="_blank" rel="noopener" href="https://github.com/Reuben-Sun/ToonURP">仓库地址</a></p>
 <p><img src="/images/patuo.png" class="lazyload" data-srcset="/images/patuo.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="patuo"></p>
+<h2 id="设计理念">设计理念</h2>
+<blockquote>
+<p>高复用，易拓展，低侵入</p>
+</blockquote>
+<h3 id="我遇到了什么问题">我遇到了什么问题</h3>
+<p>每次我要写Unity shader时，我都要不厌其烦地写</p>
+<ol>
+<li>Shader GUI、Properties</li>
+<li>定义贴图和采样器，定义全局变量</li>
+<li>维护CBuffer，尤其是SRP batcher</li>
+<li>几乎一模一样的Vertex函数</li>
+<li>大量贴图采样，参数初始化</li>
+<li>照抄的渲染方程和灯光Loop</li>
+</ol>
+<p>我一直认为，大部分情况，都不应该写Shading Function，这些BRDF是渲染的基石，是必须要用有科学依据、有论文支撑、经过行业验证的方案，而每次都自行写渲染方程，很容易产生错误</p>
+<p>此外为了实现材质的多光源，渲染方程中会有大量的灯光着色Loop，他们代码十分重复，如果直接展开在片源函数中，很容易漏维护（比如只更新了主方向光的代码，其他的都没管）</p>
+<p>因此我认为，应当将渲染方程视为黑盒，用户在定义材质shader时只需要收集数据，传入方程</p>
+<h3 id="高可复用">高可复用</h3>
 <h2 id="功能实现">功能实现</h2>
-<h3 id=""></h3>
+<h2 id="为什么不想做了">为什么不想做了</h2>
 
   </div>
   
@@ -2581,7 +2599,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-22T12:51:44+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-22T15:30:34+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2024年10月22日</p>
@@ -2735,7 +2753,7 @@ Unity版本为2022.3.34，本文所有的测试均在Editor下进行
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E8%BF%9B%E5%BA%A6"><span class="toc-text">当前进度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-text">功能实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E8%BF%9B%E5%BA%A6"><span class="toc-text">当前进度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="toc-text">设计理念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E9%81%87%E5%88%B0%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-text">我遇到了什么问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%8F%AF%E5%A4%8D%E7%94%A8"><span class="toc-text">高可复用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-text">功能实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%83%B3%E5%81%9A%E4%BA%86"><span class="toc-text">为什么不想做了</span></a></li></ol>
   </div>
 </section>
 
@@ -3279,7 +3297,7 @@ Unity版本为2022.3.34，本文所有的测试均在Editor下进行
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/卡通渲染/","name":"Unity URP卡通渲染"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Unity URP卡通渲染","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93/","wordCount":0,"datePublished":"2024-10-22T10:30:25.000Z","dateModified":"2024-10-22T12:51:44.621Z","articleSection":"graphics","keywords":"Unity,URP","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/卡通渲染/","name":"Unity URP卡通渲染"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Unity URP卡通渲染","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93/","wordCount":0,"datePublished":"2024-10-22T10:30:25.000Z","dateModified":"2024-10-22T15:30:34.066Z","articleSection":"graphics","keywords":"Unity,URP","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
