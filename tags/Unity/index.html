@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1729692940554),
+    lastupdate: new Date(1729701894443),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2404,6 +2404,89 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/Unity动画/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/engine/Unity%E5%8A%A8%E7%94%BB/"  itemprop="url">
+        Unity Playable Script 动画播放
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Unity 动画
+
+整理一下先前做动画的收获
+
+骨骼动画
+
+序列帧动画：记录动作的每一帧
+
+非矢量动画：每一帧是固定不可复用的，新的一帧本质上是完全重画一次物体，没有发生形态上的改变
+
+
+关键帧动画：记录动作的始末和轨迹曲线，运行时根据曲线进行插值（很显然，这是一种矢量动画）
+
+每个关键帧被称为姿势
+
+
+
+顶点动画
+骨骼动画的本质是顶点动画
+
+刚体动画：在渲染中网格不发生改变，刚体的变化矩阵...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2024-10-24T11:01:25+00:00">2024-10-24</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/engine/">engine</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/engine/Unity%E5%8A%A8%E7%94%BB/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -2770,146 +2853,6 @@ package.json
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityMagicaCloth/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/engine/UnityMagicaCloth/"  itemprop="url">
-        Unity Magica Cloth
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity Magica Cloth
-Magica Cloth是Unity一个布料模拟插件，有两个版本，我使用的是基于Jobs的普通版本（2是基于DOTS的）
-初始化
-1. 添加预制体
-在场景中拖入MagicaPhysicsManager.prefab
-
-位置在Assets/MagicaCloth/Res/Prefab
-
-2. 绘制骨架
-使用Animation Rigging绘制骨架，方便后...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2024-06-26T16:01:25+00:00">2024-06-26</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/engine/">engine</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/engine/UnityMagicaCloth/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityRagdoll/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/engine/UnityRagdoll/"  itemprop="url">
-        Unity Ragdoll Animator
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity Ragdoll Animator
-Ragdoll（布娃娃系统）是一种基于物理模拟角色动作的技术，通常是通过在角色关节和躯干上放置碰撞器和约束实现，可以参考动物派队、人类一败涂地的角色控制，该技术还常用于实现角色受击、尸体倒地等
-我使用的是插件Ragdoll Animator 2，使用起来非常简单，而且可以做角色动画和物理的混合
-人物模型初始化
-
-导入一个模型，将其Rig设为Hum...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2024-06-13T17:01:25+00:00">2024-06-13</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/engine/">engine</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/engine/UnityRagdoll/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
   <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityOdin/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
@@ -2965,72 +2908,6 @@ Odin使用起来非常简单，使用一些Attribute就可以暴露参数、按�
       
         <div>
           <a class='readmore' href='/engine/UnityOdin/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityPlayable/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/engine/UnityPlayable/"  itemprop="url">
-        Unity Playable Script 动画播放
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        Unity Playable Script 动画播放
-当我们在使用Unity Animator时，会发现我们必须要先将所需的动画片段放入Animation Controller中才能播放。如果我们想要一个Resources目录下的某个Clip，是做不到的
-当游戏动画逻辑非常复杂时，状态机会非常复杂，几乎不可维护，于是很多公司会自己用Playable Script重写一份动画播放系统
-Play...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2024-05-16T11:01:25+00:00">2024-05-16</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/engine/">engine</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/engine/UnityPlayable/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3130,6 +3007,140 @@ Play...
       
         <div>
           <a class='readmore' href='/game/%E5%B4%A9%E9%93%81%E9%93%B6%E6%B2%B3%E6%88%98%E5%A3%ABlike%E5%90%8C%E4%BA%BA%E6%B8%B8%E6%88%8F/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/Unity加载文件/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/engine/Unity%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6/"  itemprop="url">
+        Unity 加载文件
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Unity 加载文件
+当我们在使用Unity制作一些程序时，往往需要从磁盘中运行时加载一些资产，而非提前放进Assets中，打进包体里
+加载贴图
+string rootPath = Path.GetDirectoryName(Path.GetDirectoryName(Application.dataPath));string uvPath = Path.Combine(rootPath, ...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2024-05-11T16:01:25+00:00">2024-05-11</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/engine/">engine</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/engine/Unity%E5%8A%A0%E8%BD%BD%E6%96%87%E4%BB%B6/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/engine/UnityNovaUI/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/engine/UnityNovaUI/"  itemprop="url">
+        Unity Nova UI
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        Unity Nova UI
+今天发现了一个特别好的Unity Game UI框架：Nova，挖个坑，打算学习一下
+
+
+
+
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2024-04-16T17:58:25+00:00">2024-04-16</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/engine/">engine</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/engine/" itemprop="url"><span itemprop="name">engine</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/engine/UnityNovaUI/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3260,7 +3271,7 @@ Play...
           <li><a class="flat-box"
             title="/categories/engine/" href="/categories/engine/"
             active-action="action-categoriesengine"
-            ><div class='name'>engine</div><div class='badge'>(15)</div></a></li>
+            ><div class='name'>engine</div><div class='badge'>(13)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/game/" href="/categories/game/"
@@ -3270,7 +3281,7 @@ Play...
           <li><a class="flat-box"
             title="/categories/graphics/" href="/categories/graphics/"
             active-action="action-categoriesgraphics"
-            ><div class='name'>graphics</div><div class='badge'>(25)</div></a></li>
+            ><div class='name'>graphics</div><div class='badge'>(24)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/math/" href="/categories/math/"
@@ -3310,7 +3321,7 @@ Play...
 
 
     <div class='content'>
-      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 14px; color: #999">AIGC</a> <a href="/tags/Animation/" style="font-size: 16.22px; color: #8a8a8a">Animation</a> <a href="/tags/Blender/" style="font-size: 18.44px; color: #7b7b7b">Blender</a> <a href="/tags/CMake/" style="font-size: 15.11px; color: #919191">CMake</a> <a href="/tags/CSharp/" style="font-size: 19.56px; color: #737373">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/ControlNet/" style="font-size: 14px; color: #999">ControlNet</a> <a href="/tags/Csharp/" style="font-size: 14px; color: #999">Csharp</a> <a href="/tags/Culling/" style="font-size: 15.11px; color: #919191">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Diffusion/" style="font-size: 14px; color: #999">Diffusion</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GAS/" style="font-size: 14px; color: #999">GAS</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.11px; color: #919191">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 17.33px; color: #828282">Linux</a> <a href="/tags/Metal/" style="font-size: 15.11px; color: #919191">Metal</a> <a href="/tags/Model/" style="font-size: 16.22px; color: #8a8a8a">Model</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/OpenAI/" style="font-size: 14px; color: #999">OpenAI</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/PS/" style="font-size: 14px; color: #999">PS</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 17.33px; color: #828282">Physics</a> <a href="/tags/Python/" style="font-size: 20.67px; color: #6c6c6c">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/RL/" style="font-size: 14px; color: #999">RL</a> <a href="/tags/Render/" style="font-size: 15.11px; color: #919191">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH/" style="font-size: 16.22px; color: #8a8a8a">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 16.22px; color: #8a8a8a">TA</a> <a href="/tags/Tensorboard/" style="font-size: 14px; color: #999">Tensorboard</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/URP/" style="font-size: 14px; color: #999">URP</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.89px; color: #5d5d5d">Unity</a> <a href="/tags/Unreal/" style="font-size: 15.11px; color: #919191">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 15.11px; color: #919191">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.11px; color: #919191">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 21.78px; color: #646464">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 19.56px; color: #737373">高等数学</a>
+      <a href="/tags/3dmax/" style="font-size: 14px; color: #999">3dmax</a> <a href="/tags/AIGC/" style="font-size: 14px; color: #999">AIGC</a> <a href="/tags/Animation/" style="font-size: 14px; color: #999">Animation</a> <a href="/tags/Blender/" style="font-size: 18.44px; color: #7b7b7b">Blender</a> <a href="/tags/CMake/" style="font-size: 15.11px; color: #919191">CMake</a> <a href="/tags/CSharp/" style="font-size: 19.56px; color: #737373">CSharp</a> <a href="/tags/CXX/" style="font-size: 24px; color: #555">CXX</a> <a href="/tags/ControlNet/" style="font-size: 14px; color: #999">ControlNet</a> <a href="/tags/Csharp/" style="font-size: 14px; color: #999">Csharp</a> <a href="/tags/Culling/" style="font-size: 15.11px; color: #919191">Culling</a> <a href="/tags/DX12/" style="font-size: 14px; color: #999">DX12</a> <a href="/tags/Diffusion/" style="font-size: 14px; color: #999">Diffusion</a> <a href="/tags/ECS/" style="font-size: 14px; color: #999">ECS</a> <a href="/tags/Effect/" style="font-size: 14px; color: #999">Effect</a> <a href="/tags/FBX/" style="font-size: 14px; color: #999">FBX</a> <a href="/tags/GAS/" style="font-size: 14px; color: #999">GAS</a> <a href="/tags/GC/" style="font-size: 14px; color: #999">GC</a> <a href="/tags/GI/" style="font-size: 15.11px; color: #919191">GI</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Hair/" style="font-size: 14px; color: #999">Hair</a> <a href="/tags/JS/" style="font-size: 14px; color: #999">JS</a> <a href="/tags/Jolt-Physics/" style="font-size: 14px; color: #999">Jolt Physics</a> <a href="/tags/Linux/" style="font-size: 17.33px; color: #828282">Linux</a> <a href="/tags/Metal/" style="font-size: 15.11px; color: #919191">Metal</a> <a href="/tags/Model/" style="font-size: 16.22px; color: #8a8a8a">Model</a> <a href="/tags/OBJ/" style="font-size: 14px; color: #999">OBJ</a> <a href="/tags/OpenAI/" style="font-size: 14px; color: #999">OpenAI</a> <a href="/tags/PBR/" style="font-size: 14px; color: #999">PBR</a> <a href="/tags/PM/" style="font-size: 14px; color: #999">PM</a> <a href="/tags/PS/" style="font-size: 14px; color: #999">PS</a> <a href="/tags/Perforce/" style="font-size: 14px; color: #999">Perforce</a> <a href="/tags/Physics/" style="font-size: 15.11px; color: #919191">Physics</a> <a href="/tags/Python/" style="font-size: 20.67px; color: #6c6c6c">Python</a> <a href="/tags/Pytorch/" style="font-size: 14px; color: #999">Pytorch</a> <a href="/tags/RL/" style="font-size: 14px; color: #999">RL</a> <a href="/tags/Render/" style="font-size: 15.11px; color: #919191">Render</a> <a href="/tags/Rust/" style="font-size: 14px; color: #999">Rust</a> <a href="/tags/SIGGRAPH/" style="font-size: 16.22px; color: #8a8a8a">SIGGRAPH</a> <a href="/tags/SPH/" style="font-size: 14px; color: #999">SPH</a> <a href="/tags/SWIG/" style="font-size: 14px; color: #999">SWIG</a> <a href="/tags/Shader/" style="font-size: 14px; color: #999">Shader</a> <a href="/tags/TA/" style="font-size: 15.11px; color: #919191">TA</a> <a href="/tags/Tensorboard/" style="font-size: 14px; color: #999">Tensorboard</a> <a href="/tags/Texture/" style="font-size: 14px; color: #999">Texture</a> <a href="/tags/URP/" style="font-size: 14px; color: #999">URP</a> <a href="/tags/UV/" style="font-size: 14px; color: #999">UV</a> <a href="/tags/Unity/" style="font-size: 22.89px; color: #5d5d5d">Unity</a> <a href="/tags/Unreal/" style="font-size: 15.11px; color: #919191">Unreal</a> <a href="/tags/Vulkan/" style="font-size: 14px; color: #999">Vulkan</a> <a href="/tags/Web/" style="font-size: 15.11px; color: #919191">Web</a> <a href="/tags/WebAssembly/" style="font-size: 14px; color: #999">WebAssembly</a> <a href="/tags/Windows/" style="font-size: 14px; color: #999">Windows</a> <a href="/tags/glTF/" style="font-size: 14px; color: #999">glTF</a> <a href="/tags/leetcode/" style="font-size: 15.11px; color: #919191">leetcode</a> <a href="/tags/shader/" style="font-size: 14px; color: #999">shader</a> <a href="/tags/%E5%85%89%E5%AD%A6/" style="font-size: 21.78px; color: #646464">光学</a> <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/" style="font-size: 14px; color: #999">并行计算</a> <a href="/tags/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" style="font-size: 19.56px; color: #737373">高等数学</a>
     </div>
   </section>
 
