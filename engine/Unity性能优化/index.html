@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-10-09T16:24:25.000Z">
-<meta property="article:modified_time" content="2024-10-27T11:36:44.887Z">
+<meta property="article:modified_time" content="2024-10-28T08:31:17.760Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1730029011601),
+    lastupdate: new Date(1730104285594),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2570,6 +2570,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span> ans = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">using</span> (<span class="keyword">new</span> CustomTimer(<span class="string">&quot;string tag&quot;</span>, testCount))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; testCount; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (go.tag == <span class="string">&quot;Player&quot;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Debug.Log(ans);</span><br><span class="line">ans = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">using</span> (<span class="keyword">new</span> CustomTimer(<span class="string">&quot;CompareTag&quot;</span>, testCount))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; testCount; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (go.CompareTag(<span class="string">&quot;Player&quot;</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            ans++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Debug.Log(ans);</span><br></pre></td></tr></table></figure>
 <p>直接比较tag字符串更慢</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> tag took <span class="number">162</span>ms <span class="keyword">for</span> <span class="number">1</span>,<span class="number">000</span>,<span class="number">000</span> iterations, average time: <span class="number">0</span>ms</span><br><span class="line">CompareTag took <span class="number">70</span>ms <span class="keyword">for</span> <span class="number">1</span>,<span class="number">000</span>,<span class="number">000</span> iterations, average time: <span class="number">0</span>ms</span><br></pre></td></tr></table></figure>
+<h3 id="Update">Update</h3>
+<ul>
+<li>
+<p>停止远处GO的脚本<code>update</code></p>
+</li>
+<li>
+<p>分层<code>update</code></p>
+</li>
+</ul>
+<h3 id="序列化">序列化</h3>
+<p>重写序列化，只保留一些必须的参数，尽量存储简单的数据结构，反序列化时自行从<code>Resources.LoadAsync()</code>中加载出来</p>
+<h2 id="图形优化">图形优化</h2>
+<h3 id="SRP-Bather">SRP Bather</h3>
 
   </div>
   
@@ -2594,10 +2607,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-27T11:36:44+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-10-28T08:31:17+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年10月27日</p>
+    <p>更新于：2024年10月28日</p>
   </a>
 </div>
 
@@ -2760,7 +2773,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E4%BC%98%E5%8C%96"><span class="toc-text">脚本优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-text">测试工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetComponent%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-text">GetComponent的方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83go%E6%98%AF%E5%90%A6%E4%B8%BAnull"><span class="toc-text">比较go是否为null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2Tag"><span class="toc-text">检索Tag</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E4%BC%98%E5%8C%96"><span class="toc-text">脚本优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-text">测试工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetComponent%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-text">GetComponent的方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83go%E6%98%AF%E5%90%A6%E4%B8%BAnull"><span class="toc-text">比较go是否为null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2Tag"><span class="toc-text">检索Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Update"><span class="toc-text">Update</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-text">序列化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E4%BC%98%E5%8C%96"><span class="toc-text">图形优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SRP-Bather"><span class="toc-text">SRP Bather</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3304,7 +3317,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/Unity性能优化/","name":"Unity 性能优化"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Unity 性能优化","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/","wordCount":0,"datePublished":"2024-10-09T16:24:25.000Z","dateModified":"2024-10-27T11:36:44.887Z","articleSection":"engine","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/Unity性能优化/","name":"Unity 性能优化"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Unity 性能优化","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/","wordCount":0,"datePublished":"2024-10-09T16:24:25.000Z","dateModified":"2024-10-28T08:31:17.760Z","articleSection":"engine","keywords":"Unity","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
