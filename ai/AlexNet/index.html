@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-11-13T14:20:25.000Z">
-<meta property="article:modified_time" content="2024-11-13T09:56:12.290Z">
+<meta property="article:modified_time" content="2024-11-14T14:28:30.647Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="LLM">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1731491773813),
+    lastupdate: new Date(1731594512145),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2558,6 +2558,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>使用高清图片训练CNNs是非常昂贵的，但更幸运的是，在算力上现在GPU可以加速CNNs的训练，在数据上最近有了大量标签过的训练数据</p>
 <h2 id="结构">结构</h2>
 <p>一共八层</p>
+<p><img src="/images/Alex.png" class="lazyload" data-srcset="/images/Alex.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Alex"></p>
 <h3 id="非线性ReLU">非线性ReLU</h3>
 <blockquote>
 <p>Rectified Linear Units</p>
@@ -2565,7 +2566,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>作者发现使用ReLU会大幅提高训练速度</p>
 <h3 id="多GPU训练">多GPU训练</h3>
 <p>单个GPU的显存太小，无法放下训练数据，由于当时显卡具有交火功能，可以直接从另一张卡中读写数据，于是作者将模型平分放在两张卡上</p>
-<p>为了减少GPU间通信，模型被设计为好几层，只有在最外层两张卡才会进行数据通信，其他层的输入只使用当前GPU中上一层的输出，大幅减少了通信次数</p>
+<p>为了减少GPU间通信，模型被设计为好几层，只有在某些层（C3）两张卡才会进行数据通信，其他层的输入只使用当前GPU中上一层的输出，大幅减少了通信次数</p>
 <h3 id="LRN">LRN</h3>
 <blockquote>
 <p>Local Response Normalization</p>
@@ -2577,19 +2578,26 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </blockquote>
 <p>重叠池化的池化窗口在特征图上滑动时存在重叠部分。通过增加特征冗余性、减少空间信息损失、增强特征不变性、提高尺度不变性和降低特征维度等方式，有助于防止模型在训练过程中发生过拟合现象</p>
 <h3 id="第一层">第一层</h3>
-<p>输入224x224 RGB图片，输出55x55x96的特征图</p>
+<p>输入224x224 （227x227）RGB图片，输出55x55x96的特征图</p>
 <p>第一层是使用一个11x11x3的卷积核，（卷积核中心）每次移动4像素</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">55 = floor((224-11)/4) + 1</span><br></pre></td></tr></table></figure>
-<p>为什么是96呢，因为每个位置会使用96种不同的卷积核各卷积一次，用于收集不同类型的信息</p>
-<img src="/images/AlexNet1.png" class="lazyload" data-srcset="/images/AlexNet1.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="AlexNet1" style="zoom:50%;" />
 <h3 id="第二层">第二层</h3>
 <p>输入55x55x96，先池化为27 × 27 × 96，再卷积为27x27x256</p>
 <p>第二层使用一个3x3的池化窗口，每次移动2像素</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">27 = floor((55-3)/2) + 1</span><br></pre></td></tr></table></figure>
 <p>再使用256种个5x5x48的卷积核卷积，每次移动1像素</p>
-<h3 id="第三四五卷积层">第三四五卷积层</h3>
+<h3 id="第三层">第三层</h3>
+<p>由于两个GPU间有通信，于是输入翻倍了</p>
+<h3 id="第四五卷积层">第四五卷积层</h3>
 <h3 id="第六七全连接层">第六七全连接层</h3>
+<h4 id="全连接层和卷积层的区别">全连接层和卷积层的区别</h4>
 <h3 id="第八输出层">第八输出层</h3>
+<h2 id="总结">总结</h2>
+<ol>
+<li>第一个使用CNNs做高清图像分类任务</li>
+<li>使用多卡GPU加速</li>
+<li>使用ReLU激活函数</li>
+</ol>
 
   </div>
   
@@ -2614,10 +2622,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-11-13T09:56:12+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-11-14T14:28:30+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年11月13日</p>
+    <p>更新于：2024年11月14日</p>
   </a>
 </div>
 
@@ -2765,7 +2773,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84"><span class="toc-text">结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7ReLU"><span class="toc-text">非线性ReLU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9AGPU%E8%AE%AD%E7%BB%83"><span class="toc-text">多GPU训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRN"><span class="toc-text">LRN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%8F%A0%E6%B1%A0%E5%8C%96"><span class="toc-text">重叠池化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82"><span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82"><span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%9B%9B%E4%BA%94%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">第三四五卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E4%B8%83%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="toc-text">第六七全连接层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E8%BE%93%E5%87%BA%E5%B1%82"><span class="toc-text">第八输出层</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84"><span class="toc-text">结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7ReLU"><span class="toc-text">非线性ReLU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9AGPU%E8%AE%AD%E7%BB%83"><span class="toc-text">多GPU训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LRN"><span class="toc-text">LRN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%8F%A0%E6%B1%A0%E5%8C%96"><span class="toc-text">重叠池化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82"><span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82"><span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82"><span class="toc-text">第三层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E4%BA%94%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">第四五卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E4%B8%83%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="toc-text">第六七全连接层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%E5%92%8C%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">全连接层和卷积层的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E8%BE%93%E5%87%BA%E5%B1%82"><span class="toc-text">第八输出层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
   </div>
 </section>
 
@@ -3309,7 +3317,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AlexNet/","name":"AlexNet"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AlexNet","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AlexNet/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AlexNet/","wordCount":0,"datePublished":"2024-11-13T14:20:25.000Z","dateModified":"2024-11-13T09:56:12.290Z","articleSection":"ai","keywords":"LLM","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AlexNet/","name":"AlexNet"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AlexNet","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AlexNet/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AlexNet/","wordCount":0,"datePublished":"2024-11-13T14:20:25.000Z","dateModified":"2024-11-14T14:28:30.647Z","articleSection":"ai","keywords":"LLM","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
