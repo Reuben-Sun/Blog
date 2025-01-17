@@ -8,7 +8,7 @@
       <link href="/ai/diffusion/"/>
       <url>/ai/diffusion/</url>
       
-        <content type="html"><![CDATA[<h1>Diffusion</h1>]]></content>
+        <content type="html"><![CDATA[<h1>Diffusion</h1><h2 id="扩散原理">扩散原理</h2><p>生成模型的目标是：给定一组数据，构建一个分布，生成新的数据</p><p>一种思想是，从一个简单的分布开始（如果高斯分布），将其转化到目标分布</p><p>扩散模型正是这样的框架，将一个复杂抽样，转化为一系列简单抽样。其核心就是学习反转很多中间步骤会更简单</p><h3 id="高斯扩散">高斯扩散</h3><blockquote><p>Gaussian Diffusion</p></blockquote><p>对于一个满足目标分布（尽管这个分布当下还是未知的）的随机变量$x_0$，我们为他添加一系列独立的高斯噪声。这个过程被称为前向扩散（forward process）<br>$$<br>x_{t+1}=x_t + \eta_t ,\quad \eta_t \sim N(0, \sigma^2)<br>$$<br>经过观察可知，在极高的步数下，$x_t$的边缘分布$p_t$极其接近高斯分布，我们将其近似为高斯分布，可以直接采样</p><p>我们将任务分解为一个个：给定边缘分布 $p_t$，生成分布 $p_{t-1}$。这被称为反向采样器（reverse sampler），如果我们有了反向采样器，我们就能从一个高斯噪声不断扩散出原始分布 $p_0$</p><h4 id="DDPM">DDPM</h4><p>一个常用的构建反向采样器的方法是DDPM：在步数 $t$，输入一个满足 $p_t$的值 $z$，输出一个值，满足条件分布<br>$$<br>p(x_{t-1}|x_t=z)<br>$$<br>为每一个$x_t$都学习一个条件分布，这过于复杂了</p><p>我们假定，当每一步的噪声 $\sigma$非常小时，每一步的条件分布都满足高斯分布，即<br>$$<br>p(x_{t-1}|x_t=z) \approx N(x_{t-1};\mu, \sigma^2)<br>$$<br>将条件分布转化为高斯分布，我们相当于得到了分布的形状。只需要再获得分布的均值，就能得到整个分布</p><p>而我们可以使用神经网络和回归求这个均值</p>]]></content>
       
       
       <categories>
@@ -45,9 +45,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Pytorch </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -459,9 +459,9 @@
       
         <tags>
             
-            <tag> CXX </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> CXX </tag>
             
         </tags>
       
@@ -715,9 +715,9 @@
       
         <tags>
             
-            <tag> Blender </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Blender </tag>
             
         </tags>
       
@@ -921,9 +921,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Pytorch </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -1398,9 +1398,9 @@
       
         <tags>
             
-            <tag> CXX </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> CXX </tag>
             
         </tags>
       

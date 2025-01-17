@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1737096417976),
+    lastupdate: new Date(1737101232863),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2417,7 +2417,15 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
       
         Diffusion
+扩散原理
+生成模型的目标是：给定一组数据，构建一个分布，生成新的数据
+一种思想是，从一个简单的分布开始（如果高斯分布），将其转化到目标分布
+扩散模型正是这样的框架，将一个复杂抽样，转化为一系列简单抽样。其核心就是学习反转很多中间步骤会更简单
+高斯扩散
 
+Gaussian Diffusion
+
+对于一个满足目标分布（尽管这个分布当下还是未知的）的随机变量$x_0$，我们为他...
       
     
   </div>
