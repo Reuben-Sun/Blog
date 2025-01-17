@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Diffusion</title>
+      <link href="/ai/diffusion/"/>
+      <url>/ai/diffusion/</url>
+      
+        <content type="html"><![CDATA[<h1>Diffusion</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> ai </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Diffusion </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>模型训练笔记</title>
       <link href="/ai/%E8%AE%AD%E7%BB%83%E7%AC%94%E8%AE%B0/"/>
       <url>/ai/%E8%AE%AD%E7%BB%83%E7%AC%94%E8%AE%B0/</url>
@@ -20,9 +45,9 @@
       
         <tags>
             
-            <tag> Pytorch </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Pytorch </tag>
             
         </tags>
       
@@ -434,9 +459,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> CXX </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -690,9 +715,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Blender </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -896,9 +921,9 @@
       
         <tags>
             
-            <tag> Pytorch </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Pytorch </tag>
             
         </tags>
       
@@ -1373,9 +1398,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> CXX </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
