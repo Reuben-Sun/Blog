@@ -42,11 +42,11 @@
 <meta property="og:title" content="三维模型的表示方法">
 <meta property="og:url" content="https://reubensun.com/graphics/%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%A4%BA/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="三维模型的表示方法 常见的模型表示法有：多边形网格、点云、体素、参数模型、隐式表面 Polygon mesh  一般特指三角形网格  三角形网格由两部分组成：  一个个离散的顶点 顶点间的拓扑关系  图形渲染中最常见的方法是光栅化和光追，都适用于三角形 方便进行深度测试、UV映射 方便进行模型细分和简化、布尔建模 美术行业长期使用该格式，存在很强的惯性 Voxel 与2D的像素类似，我们使用体素填">
+<meta property="og:description" content="三维模型的表示方法 常见的模型表示法有：多边形网格、点云、体素、参数模型、隐式表面 表示方式 Polygon mesh  一般特指三角形网格  三角形网格由两部分组成：  一个个离散的顶点 顶点间的拓扑关系  图形渲染中最常见的方法是光栅化和光追，都适用于三角形 方便进行深度测试、UV映射 方便进行模型细分和简化、布尔建模 美术行业长期使用该格式，存在很强的惯性 三角面与四角面 三角面  三角面具">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-03-29T21:56:25.000Z">
-<meta property="article:modified_time" content="2025-02-03T12:28:04.136Z">
+<meta property="article:modified_time" content="2025-02-04T08:36:09.345Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Model">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1738585685599),
+    lastupdate: new Date(1738658171138),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2551,7 +2551,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <h1>三维模型的表示方法</h1>
 <p>常见的模型表示法有：多边形网格、点云、体素、参数模型、隐式表面</p>
-<h2 id="Polygon-mesh">Polygon mesh</h2>
+<h2 id="表示方式">表示方式</h2>
+<h3 id="Polygon-mesh">Polygon mesh</h3>
 <blockquote>
 <p>一般特指三角形网格</p>
 </blockquote>
@@ -2564,7 +2565,21 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>方便进行深度测试、UV映射</p>
 <p>方便进行模型细分和简化、布尔建模</p>
 <p>美术行业长期使用该格式，存在很强的惯性</p>
-<h2 id="Voxel">Voxel</h2>
+<h4 id="三角面与四角面">三角面与四角面</h4>
+<p>三角面</p>
+<ol>
+<li>三角面具有稳定性，不容易发生形变和自交</li>
+<li>比较适合光栅化和光追，渲染效率高，常用于游戏等实时渲染场景</li>
+<li>任何多边形都可以被三角面表示</li>
+<li>三角面便于计算法线</li>
+</ol>
+<p>四角面</p>
+<ol>
+<li>纹理映射效果更好，能够提供更均匀的纹理坐标分布</li>
+<li>与建模软件适配更好，很容易实现稳定的细化、拖拽、简化</li>
+<li>法线可能会有歧义（四点可能不共面，四点的顺序有两种可能）</li>
+</ol>
+<h3 id="Voxel">Voxel</h3>
 <p>与2D的像素类似，我们使用体素填充3D空间，就能表示一个三维模型</p>
 <p>体素对空间的描述是均匀的，想要达到和三角网格相近的精度，需要占用更大的存储空间，这也意味着相同存储空间下体素的精度更差</p>
 <p>下图左为2MB的三角网格，图右为13MB的SDF体素</p>
@@ -2573,7 +2588,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>体素可以进行离散化，就像Clipmap那样，大片连续的体素会被合成为一个大体素，以降低存储空间（但还是比三角网格空间大）</p>
 <p>不过为了保持边缘柔顺，我们需要在边缘处保留大量细小的体素，这种边缘处理会影响光追性能，一个好的模型数据结构应该能够表示软硬边，而非专门浪费性能来实现光滑</p>
 <p>我们仍需要使用贴图映射，体素颜色不能替代UV，体素UV可能会出现接缝问题</p>
-<h2 id="Point-cloud">Point cloud</h2>
+<h3 id="Point-cloud">Point cloud</h3>
 <blockquote>
 <p>多边形网格某种程度上就是有拓扑关系的点云</p>
 </blockquote>
@@ -2581,7 +2596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>点云渲染会带来巨大的overdraw，为此我们需要进行填洞、做深度剔除，而填洞的难度很大</p>
 <p>点云的一大优点是更适合通过扫描获得（三角形网格扫描容易出现破面）</p>
 <p>点云的另一大优点是数据的顺序无关，我们可以任意调整顶点存储的顺序，但这其实也是一种缺点，我们不好比较两个点云的差异</p>
-<h2 id="Implicit-field">Implicit field</h2>
+<h3 id="Implicit-field">Implicit field</h3>
 <p>使用一组连续函数的零水平集来表示3D模型</p>
 <blockquote>
 <p>连续函数的零水平集：使函数值=0的输入取值的集合</p>
@@ -2590,6 +2605,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>可以快速进行碰撞检测、UV生成</p>
 <p>但制作难度过高，难以表达所有的模型，对于复杂模型，计算复杂度过高</p>
 <p>难以进行编辑、布尔操作、细分</p>
+<h2 id="评价指标">评价指标</h2>
+<h3 id="水密">水密</h3>
+<blockquote>
+<p>Watertight</p>
+</blockquote>
+<p>指一个三维模型的表面是<strong>无缝且封闭的</strong>，没有任何孔洞或缺口</p>
+<h3 id="流形">流形</h3>
+<blockquote>
+<p>Manifold</p>
+</blockquote>
+<p>每个顶点都恰好属于两个三角形（在边界上）或多个三角形（在内部）</p>
 
   </div>
   
@@ -2614,10 +2640,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-03T12:28:04+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-04T08:36:09+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年2月3日</p>
+    <p>更新于：2025年2月4日</p>
   </a>
 </div>
 
@@ -2780,7 +2806,7 @@ Tensors很像矩阵、向量，在PyTorch中使用Tensors编码输入和输出
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Polygon-mesh"><span class="toc-text">Polygon mesh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Voxel"><span class="toc-text">Voxel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Point-cloud"><span class="toc-text">Point cloud</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implicit-field"><span class="toc-text">Implicit field</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F"><span class="toc-text">表示方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Polygon-mesh"><span class="toc-text">Polygon mesh</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E9%9D%A2%E4%B8%8E%E5%9B%9B%E8%A7%92%E9%9D%A2"><span class="toc-text">三角面与四角面</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Voxel"><span class="toc-text">Voxel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Point-cloud"><span class="toc-text">Point cloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implicit-field"><span class="toc-text">Implicit field</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="toc-text">评价指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E5%AF%86"><span class="toc-text">水密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%BD%A2"><span class="toc-text">流形</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3324,7 +3350,7 @@ Tensors很像矩阵、向量，在PyTorch中使用Tensors编码输入和输出
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/模型表示/","name":"三维模型的表示方法"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"三维模型的表示方法","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%A4%BA/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%A4%BA/","wordCount":0,"datePublished":"2024-03-29T21:56:25.000Z","dateModified":"2025-02-03T12:28:04.136Z","articleSection":"graphics","keywords":"Model","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/graphics/","name":"graphics"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/graphics/模型表示/","name":"三维模型的表示方法"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"三维模型的表示方法","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/graphics/%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%A4%BA/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/graphics/%E6%A8%A1%E5%9E%8B%E8%A1%A8%E7%A4%BA/","wordCount":0,"datePublished":"2024-03-29T21:56:25.000Z","dateModified":"2025-02-04T08:36:09.345Z","articleSection":"graphics","keywords":"Model","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
