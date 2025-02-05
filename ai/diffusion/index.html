@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-01-17T14:45:25.000Z">
-<meta property="article:modified_time" content="2025-02-04T10:16:27.383Z">
+<meta property="article:modified_time" content="2025-02-05T16:39:20.042Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Diffusion">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1738664194678),
+    lastupdate: new Date(1738773561669),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2580,6 +2580,79 @@ $$<br>
 <blockquote>
 <p>Stochastic Sampling</p>
 </blockquote>
+<h2 id="生成模型">生成模型</h2>
+<ul>
+<li>
+<p>无条件生成（Unconditional Generation）：模型在没有特定输入条件或限制的情况下，自主生成内容的能力</p>
+</li>
+<li>
+<p>条件生成（Conditional Generation）</p>
+</li>
+</ul>
+<h4 id="自编码器">自编码器</h4>
+<blockquote>
+<p>Autoencoder</p>
+</blockquote>
+<p>传统的自编码器（下图）由一个Encoder和一个Decoder组成，类似于一个非线性的主成分分析（PCA），作用是将数据降维。降维后我们可以用中间参数$z$来表示原数据$X$，也能用$z$还原出$\tilde{X}$，其中$X$和$\tilde{X}$非常接近</p>
+<img src="/images/Autoencoder.png" class="lazyload" data-srcset="/images/Autoencoder.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Autoencoder" style="zoom: 50%;" />
+$$
+z = g(X)
+$$
+<p>$$<br>
+\tilde{X} = f(z)<br>
+$$</p>
+<p>如果我们从$z$的值域中随机采样一些$z$，再过一遍Decoder，理论上是可以得到数据的，但实际上大部分情况都是噪声，因为我们没有针对$z$的分布进行训练，在整个值域中有效的$z$非常少，随机采样到的基本都是无意义的$z$</p>
+<h4 id="变分自编码器">变分自编码器</h4>
+<blockquote>
+<p>VAE（Variational Autoencoder）</p>
+</blockquote>
+<p>变分自编码器，在自编码器的基础上显性对$z$的分布$p(z)$进行建模，使得潜在空间（latent space）符合高斯分布</p>
+<p>VAE同样由Encoder和Decoder组成，Encoder将输入数据映射到潜在空间，Decoder将潜在空间的数据映射回数据</p>
+<h4 id="Conditional-VAE">Conditional VAE</h4>
+<p>我们在VAE的值域中采样，总是能得到有用的$z$，但是我们不知道到底是哪一种$z$</p>
+<p>做法是引入标注$Y$，原本对$p_0(X)、p(z)$建模，现在改为对$p_0(X|Y)、p(z|y_i)$建模</p>
+<h4 id="GAN">GAN</h4>
+<blockquote>
+<p>Generative Adversarial Network，生成对抗网络</p>
+</blockquote>
+<p>由生成器（Generator）和判别器（Discriminator）组成</p>
+<p>生成器负责从噪声中生成与真实数据尽可能相似的数据，判别器负责区分真实数据还是生成的数据</p>
+<h4 id="自回归模型">自回归模型</h4>
+<blockquote>
+<p>Autoregressive Model, AR</p>
+</blockquote>
+<p>利用时间序列自身的过去值来预测未来值，可以通过逐步生成数据的每一部分来构建整个数据样本</p>
+<h4 id="扩散模型">扩散模型</h4>
+<blockquote>
+<p>Diffusion Models</p>
+</blockquote>
+<p>一种深度生成模型，能基于一个噪声和一组参数，生成数据，包含前向加噪和反向去噪两个步骤</p>
+<p>前向加噪会逐步在原始数据中添加高斯噪声（马尔可夫链），直到数据被破坏，失去可辨别性</p>
+<p>$$<br>
+x_t = x_{t-1} + \sqrt{1-\beta_t} \cdot \epsilon_t<br>
+$$</p>
+<ul>
+<li>$\epsilon$：噪声样本</li>
+<li>$\beta$：噪声强度</li>
+</ul>
+<p>反向去噪是训练一个神经网络，能使用噪声样本来还原原始数据，去噪声过程也是逐层进行的</p>
+<p>$$<br>
+\widetilde{x} = x_T - \sum^{T}_{t=1}\alpha_t \cdot \epsilon_t<br>
+$$</p>
+<ul>
+<li>$x_T$：前向扩散结束时的完全噪声样本</li>
+</ul>
+<p>VAE（变分自编码器）：将图像、音频等数据编码到潜在空间，也能将潜在空间内容解码为图像、音频</p>
+<p>scheduler（调度器）：负责管理噪声的添加和去除</p>
+<p>UNet：预测噪声残差</p>
+<p>CLIP：用于分类任务</p>
+<p>tokenizer：将prompt文本进行切分</p>
+<p>text_encoder：从切分好的prompt提取embeddings</p>
+<h4 id="LDM">LDM</h4>
+<blockquote>
+<p>latent diffusion model</p>
+</blockquote>
+<p>在潜在空间进行扩散过程，大幅降低计算成本</p>
 
   </div>
   
@@ -2604,10 +2677,10 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-04T10:16:27+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-05T16:39:20+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年2月4日</p>
+    <p>更新于：2025年2月5日</p>
   </a>
 </div>
 
@@ -2690,6 +2763,20 @@ $$<br>
   
     <div class="prev-next">
       
+        <a class='prev' href='/ai/AI%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>AI 常用术语</p>
+          <p class='content'>AI 常用术语
+记录一些AI常用术语
+机器学习
+任务
+
+
+回归（Regression）：预测连续型变量的值，如股票预测
+
+
+分类（Classification）：预测离散型变量的类别，如图像分类...</p>
+        </a>
+      
       
         <a class='next' href='/ai/%E8%AE%AD%E7%BB%83%E7%AC%94%E8%AE%B0/'>
           <p class='title'>模型训练笔记<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
@@ -2763,7 +2850,7 @@ pip install tensorboard
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E5%8E%9F%E7%90%86"><span class="toc-text">扩散原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%89%A9%E6%95%A3"><span class="toc-text">高斯扩散</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DDPM"><span class="toc-text">DDPM</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7"><span class="toc-text">随机采样</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E5%8E%9F%E7%90%86"><span class="toc-text">扩散原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%89%A9%E6%95%A3"><span class="toc-text">高斯扩散</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DDPM"><span class="toc-text">DDPM</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7"><span class="toc-text">随机采样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">生成模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-text">自编码器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E5%88%86%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-text">变分自编码器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Conditional-VAE"><span class="toc-text">Conditional VAE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GAN"><span class="toc-text">GAN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="toc-text">自回归模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B"><span class="toc-text">扩散模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LDM"><span class="toc-text">LDM</span></a></li></ol></li></ol></li></ol>
   </div>
 </section>
 
@@ -3307,7 +3394,7 @@ pip install tensorboard
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-02-04T10:16:27.383Z","articleSection":"ai","keywords":"Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-02-05T16:39:20.042Z","articleSection":"ai","keywords":"Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
