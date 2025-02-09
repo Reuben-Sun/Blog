@@ -34,22 +34,24 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>Fine-tune Llama3 - ReubenSun</title>
-  <meta name="keywords" content="Python,LLM,reubensun computer graphics engine Technical Artist">
+  <title>微调大模型 - ReubenSun</title>
+  <meta name="keywords" content="Python,LLM,Llama,Qwen,reubensun computer graphics engine Technical Artist">
   <meta desc name="description" content="Reuben的笔记博客 - Reuben Sun - ReubenSun">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="Fine-tune Llama3">
+<meta property="og:title" content="微调大模型">
 <meta property="og:url" content="https://reubensun.com/ai/llama/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="微调大模型 使用Llama  注意，这个模型会自动在huggingface中下载，超过16G  import transformersimport torchmodel_id &#x3D; &quot;meta-llama&#x2F;Meta-Llama-3.1-8B-Instruct&quot;pipeline &#x3D; transformers.pipeline(    &quot;text-generation&amp;qu">
+<meta property="og:description" content="微调大模型 Llama3 import transformersimport torchmodel_id &#x3D; &quot;meta-llama&#x2F;Meta-Llama-3.1-8B-Instruct&quot;pipeline &#x3D; transformers.pipeline(    &quot;text-generation&quot;,    model&#x3D;model_id,    model_kw">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-10-30T15:40:25.000Z">
-<meta property="article:modified_time" content="2025-02-08T17:37:21.536Z">
+<meta property="article:modified_time" content="2025-02-09T09:38:00.502Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Llama">
+<meta property="article:tag" content="Qwen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2114,7 +2116,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1739036252347),
+    lastupdate: new Date(1739093890099),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2488,7 +2490,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        Fine-tune Llama3
+        微调大模型
       </h1>
       <div class='new-meta-box'>
         
@@ -2551,14 +2553,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>微调大模型</h1>
-<h2 id="使用Llama">使用Llama</h2>
-<blockquote>
-<p>注意，这个模型会自动在huggingface中下载，超过16G</p>
-</blockquote>
+<h2 id="Llama3">Llama3</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> transformers</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line">model_id = <span class="string">&quot;meta-llama/Meta-Llama-3.1-8B-Instruct&quot;</span></span><br><span class="line"></span><br><span class="line">pipeline = transformers.pipeline(</span><br><span class="line">    <span class="string">&quot;text-generation&quot;</span>,</span><br><span class="line">    model=model_id,</span><br><span class="line">    model_kwargs=&#123;<span class="string">&quot;torch_dtype&quot;</span>: torch.bfloat16&#125;,</span><br><span class="line">    device_map=<span class="string">&quot;auto&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">messages = [</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are a pirate chatbot who always responds in pirate speak!&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Do you know Genshin Impact?&quot;</span>&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">outputs = pipeline(</span><br><span class="line">    messages,</span><br><span class="line">    max_new_tokens=<span class="number">256</span>,</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(outputs[<span class="number">0</span>][<span class="string">&quot;generated_text&quot;</span>][-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="uncloth">uncloth</h2>
-<p>这是一个模型sft框架，据说又快又省显存，不过确实用起来很方便</p>
-<h3 id="安装uncloth">安装uncloth</h3>
+<h2 id="Qwen2-5">Qwen2.5</h2>
+<h3 id="推理">推理</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoModelForCausalLM, AutoTokenizer</span><br><span class="line"></span><br><span class="line">model_name = <span class="string">&quot;Qwen/Qwen2.5-7B-Instruct&quot;</span></span><br><span class="line"></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)</span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(model_name)</span><br><span class="line"></span><br><span class="line">prompt = <span class="string">&quot;给我简单介绍一下大语言模型&quot;</span></span><br><span class="line">messages = [</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are Qwen, created by Alibaba Cloud. You are a helpful assistant.&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: prompt&#125;</span><br><span class="line">]</span><br><span class="line">text = tokenizer.apply_chat_template(</span><br><span class="line">    messages,</span><br><span class="line">    tokenize=<span class="literal">False</span>,</span><br><span class="line">    add_generation_prompt=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line">model_inputs = tokenizer([text], return_tensors=<span class="string">&quot;pt&quot;</span>).to(model.device)</span><br><span class="line"></span><br><span class="line">generated_ids = model.generate(</span><br><span class="line">    **model_inputs,</span><br><span class="line">    max_new_tokens=<span class="number">512</span></span><br><span class="line">)</span><br><span class="line">generated_ids = [</span><br><span class="line">    output_ids[<span class="built_in">len</span>(input_ids):] <span class="keyword">for</span> input_ids, output_ids <span class="keyword">in</span> <span class="built_in">zip</span>(model_inputs.input_ids, generated_ids)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">response = tokenizer.batch_decode(generated_ids, skip_special_tokens=<span class="literal">True</span>)[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(response)</span><br></pre></td></tr></table></figure>
+<h3 id="vllm部署">vllm部署</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">vllm serve Qwen/Qwen2<span class="number">.5</span>-7B-Instruct --host <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> --port <span class="number">7861</span></span><br></pre></td></tr></table></figure>
+<h4 id="openai-api">openai api</h4>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">openai_api_key = <span class="string">&quot;EMPTY&quot;</span></span><br><span class="line">openai_api_base = <span class="string">&quot;xxx/v1&quot;</span></span><br><span class="line"></span><br><span class="line">client = OpenAI(</span><br><span class="line">    api_key=openai_api_key,</span><br><span class="line">    base_url=openai_api_base,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">chat_response = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;Qwen/Qwen2.5-7B-Instruct&quot;</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;You are Qwen, created by Alibaba Cloud. You are a helpful assistant.&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Tell me something about large language models.&quot;</span>&#125;,</span><br><span class="line">    ],</span><br><span class="line">    temperature=<span class="number">0.7</span>,</span><br><span class="line">    top_p=<span class="number">0.8</span>,</span><br><span class="line">    max_tokens=<span class="number">512</span>,</span><br><span class="line">    extra_body=&#123;</span><br><span class="line">        <span class="string">&quot;repetition_penalty&quot;</span>: <span class="number">1.05</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    extra_headers=headers</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Chat response:&quot;</span>, chat_response)</span><br></pre></td></tr></table></figure>
+<h2 id="unsloth">unsloth</h2>
+<p>这是一个模型sft框架，用起来很方便，但免费版只能单机单卡</p>
+<h3 id="安装unsloth">安装unsloth</h3>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install unsloth &quot;xformers==0.0.28.post2&quot;</span><br><span class="line">pip uninstall unsloth -y &amp;&amp; pip install --upgrade --no-cache-dir &quot;unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git&quot;</span><br></pre></td></tr></table></figure>
 <h3 id="fine-tune">fine-tune</h3>
 <p>训练结束后会在outputs文件夹中会保存一个checkpoint</p>
@@ -2567,7 +2573,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用本地模型</span></span><br><span class="line">model_id = <span class="string">&quot;outputs/checkpoint-60&quot;</span></span><br><span class="line"></span><br><span class="line">pipeline = transformers.pipeline(</span><br><span class="line">    <span class="string">&quot;text-generation&quot;</span>,</span><br><span class="line">    model=model_id,</span><br><span class="line">    model_kwargs=&#123;<span class="string">&quot;torch_dtype&quot;</span>: torch.bfloat16&#125;,</span><br><span class="line">    device_map=<span class="string">&quot;auto&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">messages = [</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Give three tips for staying healthy&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Do you know Genshin Impact?&quot;</span>&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">outputs = pipeline(</span><br><span class="line">    messages,</span><br><span class="line">    max_new_tokens=<span class="number">256</span>,</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(outputs[<span class="number">0</span>][<span class="string">&quot;generated_text&quot;</span>][-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
 <p>输出结果中很显然多了很多医学知识</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;assistant&#x27;</span>, <span class="string">&#x27;content&#x27;</span>: <span class="string">&quot;Genshin Impact is a popular open-world action role-playing game developed and published by miHoYo (now known as HoYoverse). The game was released in 2020 for PC, iOS, Android, and later for PlayStation 4 and PlayStation 5.\n\nIf you&#x27;re a Genshin Impact player, I&#x27;d be happy to chat with you about the game. However, I can also provide general tips on staying healthy, if you&#x27;d like.\n\nHere are three tips for staying healthy:\n\n1. **Stay Hydrated**: Drinking plenty of water is essential for maintaining physical and mental health. Aim to drink at least eight glasses of water per day, and adjust your intake based on your activity level and climate.\n\n2. **Eat a Balanced Diet**: Focus on consuming a variety of whole foods, including fruits, vegetables, whole grains, lean proteins, and healthy fats. A balanced diet provides your body with the necessary nutrients for optimal health.\n\n3. **Get Regular Exercise**: Engage in physical activities that you enjoy, such as walking, running, swimming, or dancing. Aim for at least 150 minutes of moderate-intensity exercise or 75 minutes of vigorous-intensity exercise per week.\n\nIf you&#x27;d like, I can also provide tips on maintaining&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="参考">参考</h2>
+<h3 id="参考">参考</h3>
 <p><a target="_blank" rel="noopener" href="https://medium.com/@anchen.li/fine-tune-llama3-with-function-calling-via-mlx-lm-5ebbee41558f">Fine-tune Llama3 with function calling via MLX-LM</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/unslothai/unsloth">unsloth</a></p>
 <p><a target="_blank" rel="noopener" href="https://colab.research.google.com/drive/1Ys44kVvmeZtnICzWz0xgpRnrIOjZAuxp?usp=sharing#scrollTo=2eSvM9zX_2d3">Uncloth llama3</a></p>
@@ -2595,10 +2601,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-08T17:37:21+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-09T09:38:00+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年2月8日</p>
+    <p>更新于：2025年2月9日</p>
   </a>
 </div>
 
@@ -2609,8 +2615,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/LLM/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>LLM</p></a></div>
-  <span hidden itemprop="keywords">Python LLM</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/LLM/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>LLM</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Llama/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Llama</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Qwen/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>Qwen</p></a></div>
+  <span hidden itemprop="keywords">Python LLM Llama Qwen</span>
   
 
 
@@ -2624,7 +2630,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/ai/llama/&title=Fine-tune Llama3 - ReubenSun&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://reubensun.com/ai/llama/&title=微调大模型 - ReubenSun&summary="
           
           >
           
@@ -2636,7 +2642,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/ai/llama/&title=Fine-tune Llama3 - ReubenSun&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://reubensun.com/ai/llama/&title=微调大模型 - ReubenSun&summary="
           
           >
           
@@ -2648,7 +2654,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/ai/llama/&title=Fine-tune Llama3 - ReubenSun&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://reubensun.com/ai/llama/&title=微调大模型 - ReubenSun&summary="
           
           >
           
@@ -2760,7 +2766,7 @@ Win11，N卡
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Llama"><span class="toc-text">使用Llama</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#uncloth"><span class="toc-text">uncloth</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85uncloth"><span class="toc-text">安装uncloth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fine-tune"><span class="toc-text">fine-tune</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Llama3"><span class="toc-text">Llama3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qwen2-5"><span class="toc-text">Qwen2.5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E7%90%86"><span class="toc-text">推理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vllm%E9%83%A8%E7%BD%B2"><span class="toc-text">vllm部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#openai-api"><span class="toc-text">openai api</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unsloth"><span class="toc-text">unsloth</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85unsloth"><span class="toc-text">安装unsloth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fine-tune"><span class="toc-text">fine-tune</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-text">测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3304,7 +3310,7 @@ Win11，N卡
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/llama/","name":"Fine-tune Llama3"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Fine-tune Llama3","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/llama/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/llama/","wordCount":0,"datePublished":"2024-10-30T15:40:25.000Z","dateModified":"2025-02-08T17:37:21.536Z","articleSection":"ai","keywords":"Python,LLM","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/llama/","name":"微调大模型"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"微调大模型","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/llama/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/llama/","wordCount":0,"datePublished":"2024-10-30T15:40:25.000Z","dateModified":"2025-02-09T09:38:00.502Z","articleSection":"ai","keywords":"Python,LLM,Llama,Qwen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
