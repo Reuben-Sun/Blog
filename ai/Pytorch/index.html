@@ -42,11 +42,11 @@
 <meta property="og:title" content="PyTorch学习记录">
 <meta property="og:url" content="https://reubensun.com/ai/Pytorch/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="PyTorch学习记录 PyTorch是一个Python机器学习框架 基础语法 张量  Tensors  Tensors很像矩阵、向量，在PyTorch中使用Tensors编码输入和输出 构造 import torchimport numpy as np# 直接构造data &#x3D; [[1, 2],[3, 4]]x_data &#x3D; torch.tensor(data)# 使用numpy array转换n">
+<meta property="og:description" content="PyTorch学习记录 PyTorch是一个Python机器学习框架 张量  Tensors  Tensors很像矩阵、向量，在PyTorch中使用Tensors编码输入和输出 构造 import torchimport numpy as np# 直接构造data &#x3D; [[1, 2],[3, 4]]x_data &#x3D; torch.tensor(data)# 使用numpy array转换np_arr">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-03-30T09:47:25.000Z">
-<meta property="article:modified_time" content="2025-02-27T08:14:16.732Z">
+<meta property="article:modified_time" content="2025-02-28T09:19:52.987Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Pytorch">
 <meta property="article:tag" content="Python">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1740644066559),
+    lastupdate: new Date(1740734400333),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2552,96 +2552,39 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="post-body" itemprop="articleBody">
     <h1>PyTorch学习记录</h1>
 <p>PyTorch是一个Python机器学习框架</p>
-<h2 id="基础语法">基础语法</h2>
-<h3 id="张量">张量</h3>
+<h2 id="张量">张量</h2>
 <blockquote>
 <p>Tensors</p>
 </blockquote>
 <p>Tensors很像矩阵、向量，在PyTorch中使用Tensors编码输入和输出</p>
-<h4 id="构造">构造</h4>
+<h3 id="构造">构造</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接构造</span></span><br><span class="line">data = [[<span class="number">1</span>, <span class="number">2</span>],[<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line">x_data = torch.tensor(data)</span><br><span class="line"><span class="comment"># 使用numpy array转换</span></span><br><span class="line">np_array = np.array(data)</span><br><span class="line">x_np = torch.from_numpy(np_array)</span><br><span class="line"><span class="comment"># 构造一个指定大小的Tensors</span></span><br><span class="line">shape = (<span class="number">2</span>,<span class="number">3</span>,)</span><br><span class="line">rand_tensor = torch.rand(shape)		<span class="comment"># 生成一个2x3的Tensors，内容是随机</span></span><br><span class="line">ones_tensor = torch.ones(shape)		<span class="comment"># 生成一个2x3的Tensors，内容全为1</span></span><br><span class="line">zeros_tensor = torch.zeros(shape)	<span class="comment"># 生成一个2x3的Tensors，内容全为0</span></span><br></pre></td></tr></table></figure>
-<h3 id="nn">nn</h3>
-<ul>
-<li>
-<p>nn.Conv2d，二维卷积</p>
-</li>
-<li>
-<p>nn.Sequential，容器，按顺序拼接网络层</p>
-</li>
-<li>
-<p>nn.ConvTranspose2d，逆卷积，用于放大特征图</p>
-</li>
-</ul>
-<h2 id="训练一个NN">训练一个NN</h2>
-<h3 id="数据集">数据集</h3>
-<blockquote>
-<p>Datasets</p>
-</blockquote>
-<p>PyTorch提供了一些预加载的数据集</p>
-<h4 id="加载数据集">加载数据集</h4>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> torchvision.transforms <span class="keyword">import</span> ToTensor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载FashionMNIST数据集</span></span><br><span class="line">training_data = datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;data&quot;</span>,	<span class="comment"># 数据集存放在data文件夹(相对于当前.py的位置)</span></span><br><span class="line">    train=<span class="literal">True</span>,		<span class="comment"># 标记是训练数据还是测试数据</span></span><br><span class="line">    download=<span class="literal">True</span>,	<span class="comment"># 如果本地文件夹中找不到数据，就去网络上下载</span></span><br><span class="line">    transform=ToTensor()</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">train_dataloader = DataLoader(training_data, batch_size=<span class="number">64</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="规范数据集">规范数据集</h3>
-<blockquote>
-<p>Tramsforms</p>
-</blockquote>
-<p>数据格式可能不符合算法输入需要，于是需要用Transforms做处理</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">training_data = datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;data&quot;</span>,</span><br><span class="line">    train=<span class="literal">True</span>,</span><br><span class="line">    download=<span class="literal">True</span>,</span><br><span class="line">    transform=ToTensor(),</span><br><span class="line">    target_transform=Lambda(<span class="keyword">lambda</span> y: torch.zeros(<span class="number">10</span>, dtype=torch.<span class="built_in">float</span>).scatter_(<span class="number">0</span>, torch.tensor(y), value=<span class="number">1</span>))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><code>ToTensor()</code>的作用是将图片、数组转化为<code>FloatTensor</code>，将图片像素的值缩放到<code>[0, 1]</code></p>
-<p><code>torch.zeros(10, dtype=torch.float)</code>创建了一个10x1的的张量，其内容全为<code>0.0f</code></p>
-<p><code>scatter_(0, torch.tensor(y), value=1)</code>的作用是将10x1张量的第<code>y</code>位设为<code>1</code></p>
-<h3 id="生成NN">生成NN</h3>
-<blockquote>
-<p>Neural Network</p>
-</blockquote>
-<h4 id="获取设备">获取设备</h4>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">device = (</span><br><span class="line">    <span class="string">&quot;cuda&quot;</span></span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available()</span><br><span class="line">    <span class="keyword">else</span> <span class="string">&quot;mps&quot;</span></span><br><span class="line">    <span class="keyword">if</span> torch.backends.mps.is_available()</span><br><span class="line">    <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h4 id="NN类">NN类</h4>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NeuralNetwork</span>(nn.Module):		<span class="comment"># 继承自nn.Module</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.flatten = nn.Flatten()		<span class="comment"># Flatten的作用是将二维图片转化为像素数组</span></span><br><span class="line">        self.linear_relu_stack = nn.Sequential(		<span class="comment"># 按顺序执行模块</span></span><br><span class="line">            nn.Linear(<span class="number">28</span>*<span class="number">28</span>, <span class="number">512</span>),		<span class="comment"># 创建一个线性层，有28*28个输入特征，512个输出特征</span></span><br><span class="line">            nn.ReLU(),	<span class="comment"># 将线性层转化为非线性</span></span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">10</span>),</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = self.flatten(x)		</span><br><span class="line">        logits = self.linear_relu_stack(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br></pre></td></tr></table></figure>
-<h3 id="自动差异化">自动差异化</h3>
-<p>训练NN最常用的算法是反向传播（back propagation），这是一种根据损失函数（loss function）的梯度（gradient）调整参数的方法</p>
-<p>梯度下降法：目标是搜索出一个函数值尽可能小的位置，函数的极小值很有可能是函数的最小值，每次迭代时都将自变量减去 “学习率 x 偏导数”，最后偏导趋近平缓，自变量趋于稳定，且位于极值点处</p>
-<h4 id="损失函数">损失函数</h4>
-<p>损失函数是用于计算模型输出与目标间的差异，常见的损失函数有：</p>
-<table>
-<thead>
-<tr>
-<th>Loss Function</th>
-<th>用途</th>
-<th>意义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>nn.MSELoss</td>
-<td>回归任务</td>
-<td>Mean Square Error</td>
-</tr>
-<tr>
-<td>nn.NLLLoss</td>
-<td>分类</td>
-<td>Negative Log Likelihood</td>
-</tr>
-<tr>
-<td>nn.CrossEntropyLoss</td>
-<td>分类</td>
-<td>nn.LogSoftmax + nn.NLLLoss</td>
-</tr>
-</tbody>
-</table>
-<h3 id="优化循环">优化循环</h3>
-<p>我们需要循环迭代，来调整模型的参数</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">learning_rate = <span class="number">1e-3</span></span><br><span class="line">epochs = <span class="number">5</span></span><br><span class="line">loss_fn = nn.CrossEntropyLoss()</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)	<span class="comment"># 使用随机梯度下降来优化参数</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Epoch <span class="subst">&#123;t+<span class="number">1</span>&#125;</span>\n-------------------------------&quot;</span>)</span><br><span class="line">    train_loop(train_dataloader, model, loss_fn, optimizer)</span><br><span class="line">    test_loop(test_dataloader, model, loss_fn)</span><br></pre></td></tr></table></figure>
-<p>每一个循环被称为一个<strong>epoch</strong>，每一个epoch包含两个部分：</p>
-<ul>
-<li>训练循环：训练迭代测试集，试图收敛到最佳参数</li>
-<li>测试循环：测试模型性能是否有提升</li>
-</ul>
-<h4 id="训练循环">训练循环</h4>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">batch_size = <span class="number">64</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train_loop</span>(<span class="params">dataloader, model, loss_fn, optimizer</span>):</span><br><span class="line">    size = <span class="built_in">len</span>(dataloader.dataset)</span><br><span class="line">    model.train()</span><br><span class="line">    <span class="keyword">for</span> batch, (X, y) <span class="keyword">in</span> <span class="built_in">enumerate</span>(dataloader):</span><br><span class="line">        <span class="comment"># 计算预测值和loss</span></span><br><span class="line">        pred = model(X)</span><br><span class="line">        loss = loss_fn(pred, y)</span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        loss.backward()			<span class="comment"># 计算loss的梯度</span></span><br><span class="line">        optimizer.step()		<span class="comment"># 根据梯度更新参数</span></span><br><span class="line">        optimizer.zero_grad()	<span class="comment"># 清空之前计算的梯度</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> batch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            loss, current = loss.item(), batch * batch_size + <span class="built_in">len</span>(X)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;loss: <span class="subst">&#123;loss:&gt;7f&#125;</span>  [<span class="subst">&#123;current:&gt;5d&#125;</span>/<span class="subst">&#123;size:&gt;5d&#125;</span>]&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="测试循环">测试循环</h4>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_loop</span>(<span class="params">dataloader, model, loss_fn</span>):</span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    size = <span class="built_in">len</span>(dataloader.dataset)</span><br><span class="line">    num_batches = <span class="built_in">len</span>(dataloader)</span><br><span class="line">    test_loss, correct = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> dataloader:</span><br><span class="line">            pred = model(X)</span><br><span class="line">            test_loss += loss_fn(pred, y).item()</span><br><span class="line">            correct += (pred.argmax(<span class="number">1</span>) == y).<span class="built_in">type</span>(torch.<span class="built_in">float</span>).<span class="built_in">sum</span>().item()</span><br><span class="line"></span><br><span class="line">    test_loss /= num_batches</span><br><span class="line">    correct /= size</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Test Error: \n Accuracy: <span class="subst">&#123;(<span class="number">100</span>*correct):&gt;<span class="number">0.1</span>f&#125;</span>%, Avg loss: <span class="subst">&#123;test_loss:&gt;8f&#125;</span> \n&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="保存和加载模型">保存和加载模型</h3>
+<h3 id="矩阵运算">矩阵运算</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 矩阵乘法</span></span><br><span class="line">C = torch.matmul(A, B)	</span><br></pre></td></tr></table></figure>
+<h3 id="保存和加载权重">保存和加载权重</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.save(model, <span class="string">&#x27;model.pth&#x27;</span>)</span><br><span class="line">model = torch.load(<span class="string">&#x27;model.pth&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="nn">nn</h2>
+<h3 id="堆叠">堆叠</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将多层网络按顺序级联</span></span><br><span class="line">model = nn.Sequential(</span><br><span class="line">    nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>),</span><br><span class="line">    nn.ReLU(),</span><br><span class="line">    nn.Conv2d(<span class="number">20</span>, <span class="number">64</span>, <span class="number">5</span>),</span><br><span class="line">    nn.ReLU()</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">model2 = nn.Sequential()</span><br><span class="line">model2.add_module(<span class="string">&quot;conv1&quot;</span>, nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>))</span><br><span class="line">model2.add_module(<span class="string">&#x27;relu1&#x27;</span>, nn.ReLU())</span><br><span class="line">model2.add_module(<span class="string">&#x27;conv2&#x27;</span>, nn.Conv2d(<span class="number">20</span>, <span class="number">64</span>, <span class="number">5</span>))</span><br><span class="line">model2.add_module(<span class="string">&#x27;relu2&#x27;</span>, nn.ReLU())</span><br></pre></td></tr></table></figure>
+<h3 id="全连接层">全连接层</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个全连接层（线性层），将输入纬度映射到输出纬度</span></span><br><span class="line">query = nn.Linear(in_features, out_features)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>in_features输入纬度</li>
+<li>out_features：输出纬度</li>
+</ul>
+<h3 id="卷积层">卷积层</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个二维卷积层</span></span><br><span class="line">conv = nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">64</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>in_channels：输入信号的通道数，比如RGB就是3，灰度就是1</li>
+<li>out_channels：输出的深度</li>
+<li>kernel_size：卷积核大小</li>
+<li>stride：卷积核移动的步长</li>
+<li>padding_mode：边界填充规则，默认为zeros</li>
+</ul>
+<h3 id="逆卷积层">逆卷积层</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个逆卷积层，用于放大特征图，实现上采样</span></span><br><span class="line">conv_transpose = nn.ConvTranspose2d(in_channels=<span class="number">1</span>, out_channels=<span class="number">1</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="nn-Module">nn.Module</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Attention</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, embed_dim</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.embed_dim = embed_dim</span><br><span class="line">        self.query = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        self.key = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        self.value = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, query, key, value</span>):</span><br><span class="line">        <span class="comment"># Implement attention mechanism</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
 <h2 id="transforms">transforms</h2>
 <ul>
 <li>transforms.Compose：将多个数据变化操作串联</li>
@@ -2649,8 +2592,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>transforms.Resize：调整大小</li>
 <li>transforms.ToTensor：图片数据转为tensor</li>
 </ul>
-<h2 id="参考">参考</h2>
-<p><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/intro.html">Learn the Basics</a></p>
 
   </div>
   
@@ -2675,10 +2616,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-27T08:14:16+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-28T09:19:52+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年2月27日</p>
+    <p>更新于：2025年2月28日</p>
   </a>
 </div>
 
@@ -2843,7 +2784,7 @@ Polygon mesh
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-text">基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%A0%E9%87%8F"><span class="toc-text">张量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0"><span class="toc-text">构造</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nn"><span class="toc-text">nn</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AANN"><span class="toc-text">训练一个NN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">加载数据集</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E8%8C%83%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">规范数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90NN"><span class="toc-text">生成NN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87"><span class="toc-text">获取设备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NN%E7%B1%BB"><span class="toc-text">NN类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%B7%AE%E5%BC%82%E5%8C%96"><span class="toc-text">自动差异化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-text">损失函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%BE%AA%E7%8E%AF"><span class="toc-text">优化循环</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF"><span class="toc-text">训练循环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%BE%AA%E7%8E%AF"><span class="toc-text">测试循环</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9E%8B"><span class="toc-text">保存和加载模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transforms"><span class="toc-text">transforms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%A0%E9%87%8F"><span class="toc-text">张量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0"><span class="toc-text">构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97"><span class="toc-text">矩阵运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD%E6%9D%83%E9%87%8D"><span class="toc-text">保存和加载权重</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nn"><span class="toc-text">nn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0"><span class="toc-text">堆叠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="toc-text">全连接层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">逆卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nn-Module"><span class="toc-text">nn.Module</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transforms"><span class="toc-text">transforms</span></a></li></ol>
   </div>
 </section>
 
@@ -3387,7 +3328,7 @@ Polygon mesh
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/Pytorch/","name":"PyTorch学习记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"PyTorch学习记录","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/Pytorch/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/Pytorch/","wordCount":0,"datePublished":"2024-03-30T09:47:25.000Z","dateModified":"2025-02-27T08:14:16.732Z","articleSection":"ai","keywords":"Pytorch,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/Pytorch/","name":"PyTorch学习记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"PyTorch学习记录","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/Pytorch/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/Pytorch/","wordCount":0,"datePublished":"2024-03-30T09:47:25.000Z","dateModified":"2025-02-28T09:19:52.987Z","articleSection":"ai","keywords":"Pytorch,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
