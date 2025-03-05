@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-03-30T09:47:25.000Z">
-<meta property="article:modified_time" content="2025-02-28T09:19:52.987Z">
+<meta property="article:modified_time" content="2025-03-05T07:37:34.122Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Pytorch">
 <meta property="article:tag" content="Python">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1740734400333),
+    lastupdate: new Date(1741160260885),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2564,14 +2564,23 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <h3 id="保存和加载权重">保存和加载权重</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.save(model, <span class="string">&#x27;model.pth&#x27;</span>)</span><br><span class="line">model = torch.load(<span class="string">&#x27;model.pth&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="nn">nn</h2>
-<h3 id="堆叠">堆叠</h3>
+<h3 id="Module">Module</h3>
+<p>所有模型层的基类</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 继承 nn.Module，实现一个Attention</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Attention</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, embed_dim</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.embed_dim = embed_dim</span><br><span class="line">        self.query = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        self.key = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        self.value = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, query, key, value</span>):</span><br><span class="line">        <span class="comment"># Implement attention mechanism</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h3 id="Sequential">Sequential</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将多层网络按顺序级联</span></span><br><span class="line">model = nn.Sequential(</span><br><span class="line">    nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>),</span><br><span class="line">    nn.ReLU(),</span><br><span class="line">    nn.Conv2d(<span class="number">20</span>, <span class="number">64</span>, <span class="number">5</span>),</span><br><span class="line">    nn.ReLU()</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line">model2 = nn.Sequential()</span><br><span class="line">model2.add_module(<span class="string">&quot;conv1&quot;</span>, nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>))</span><br><span class="line">model2.add_module(<span class="string">&#x27;relu1&#x27;</span>, nn.ReLU())</span><br><span class="line">model2.add_module(<span class="string">&#x27;conv2&#x27;</span>, nn.Conv2d(<span class="number">20</span>, <span class="number">64</span>, <span class="number">5</span>))</span><br><span class="line">model2.add_module(<span class="string">&#x27;relu2&#x27;</span>, nn.ReLU())</span><br></pre></td></tr></table></figure>
+<p>Sequential有自动前向传播，模型层只要串在一起，就能自动处理forward，而ModuleList需要手动处理</p>
+<h3 id="ModuleList">ModuleList</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Encoder</span>(nn.Module):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    self.down_blocks = nn.ModuleList([])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xxx:</span><br><span class="line">      down_block = ResnetDownsampleBlock2D(...)</span><br><span class="line">      self.down_blocks.append(down_block)</span><br><span class="line">  <span class="comment"># nn.ModuleList需要自定处理前向传播，这里循环处理了sample，自由度更高，更适合复杂的库作者</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, sample: torch.Tensor</span>) -&gt; torch.Tensor:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create_custom_forward</span>(<span class="params">module</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">custom_forward</span>(<span class="params">*inputs</span>):</span><br><span class="line">            <span class="keyword">return</span> module(*inputs)</span><br><span class="line">        <span class="keyword">return</span> custom_forward</span><br><span class="line">    <span class="keyword">for</span> down_block <span class="keyword">in</span> self.down_blocks:</span><br><span class="line">        sample = torch.utils.checkpoint.checkpoint(</span><br><span class="line">            create_custom_forward(down_block), sample, use_reentrant=<span class="literal">False</span></span><br><span class="line">        ) </span><br><span class="line">    <span class="keyword">return</span> sample</span><br></pre></td></tr></table></figure>
 <h3 id="全连接层">全连接层</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个全连接层（线性层），将输入纬度映射到输出纬度</span></span><br><span class="line">query = nn.Linear(in_features, out_features)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>in_features输入纬度</li>
 <li>out_features：输出纬度</li>
 </ul>
+<h3 id="Embedding">Embedding</h3>
+<p>是一个查找表，将离散输入转为连续向量，常用于将单词转为向量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">position_encoding = nn.Embedding(targets_length, d_model)</span><br></pre></td></tr></table></figure>
 <h3 id="卷积层">卷积层</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个二维卷积层</span></span><br><span class="line">conv = nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">64</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 <ul>
@@ -2583,8 +2592,36 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </ul>
 <h3 id="逆卷积层">逆卷积层</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个逆卷积层，用于放大特征图，实现上采样</span></span><br><span class="line">conv_transpose = nn.ConvTranspose2d(in_channels=<span class="number">1</span>, out_channels=<span class="number">1</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="nn-Module">nn.Module</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Attention</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, embed_dim</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.embed_dim = embed_dim</span><br><span class="line">        self.query = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        self.key = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        self.value = nn.Linear(embed_dim, embed_dim)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, query, key, value</span>):</span><br><span class="line">        <span class="comment"># Implement attention mechanism</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h3 id="激活函数">激活函数</h3>
+<p>激活函数主要是为模型引入非线性，好的激活函数能加速训练、缓解梯度爆炸</p>
+<table>
+<thead>
+<tr>
+<th>激活函数</th>
+<th>nn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td>nn.Sigmoid()</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td>nn.ReLU()</td>
+</tr>
+<tr>
+<td>Sigmoid Linear Unit</td>
+<td>nn.SiLU()</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>nn.Softmax(dim=None)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Dropout">Dropout</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">dropout = nn.Dropout(p=dropout_rate)</span><br></pre></td></tr></table></figure>
 <h2 id="transforms">transforms</h2>
 <ul>
 <li>transforms.Compose：将多个数据变化操作串联</li>
@@ -2616,10 +2653,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-02-28T09:19:52+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-03-05T07:37:34+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年2月28日</p>
+    <p>更新于：2025年3月5日</p>
   </a>
 </div>
 
@@ -2784,7 +2821,7 @@ Polygon mesh
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%A0%E9%87%8F"><span class="toc-text">张量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0"><span class="toc-text">构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97"><span class="toc-text">矩阵运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD%E6%9D%83%E9%87%8D"><span class="toc-text">保存和加载权重</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nn"><span class="toc-text">nn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0"><span class="toc-text">堆叠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="toc-text">全连接层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">逆卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nn-Module"><span class="toc-text">nn.Module</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transforms"><span class="toc-text">transforms</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%A0%E9%87%8F"><span class="toc-text">张量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0"><span class="toc-text">构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97"><span class="toc-text">矩阵运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD%E6%9D%83%E9%87%8D"><span class="toc-text">保存和加载权重</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nn"><span class="toc-text">nn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Module"><span class="toc-text">Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sequential"><span class="toc-text">Sequential</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ModuleList"><span class="toc-text">ModuleList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="toc-text">全连接层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding"><span class="toc-text">Embedding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-text">逆卷积层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">激活函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#transforms"><span class="toc-text">transforms</span></a></li></ol>
   </div>
 </section>
 
@@ -3328,7 +3365,7 @@ Polygon mesh
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/Pytorch/","name":"PyTorch学习记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"PyTorch学习记录","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/Pytorch/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/Pytorch/","wordCount":0,"datePublished":"2024-03-30T09:47:25.000Z","dateModified":"2025-02-28T09:19:52.987Z","articleSection":"ai","keywords":"Pytorch,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/Pytorch/","name":"PyTorch学习记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"PyTorch学习记录","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/Pytorch/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/Pytorch/","wordCount":0,"datePublished":"2024-03-30T09:47:25.000Z","dateModified":"2025-03-05T07:37:34.122Z","articleSection":"ai","keywords":"Pytorch,Python","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
