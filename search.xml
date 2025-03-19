@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>UE5 Editor学习笔记</title>
+      <link href="/engine/UE5Editor/"/>
+      <url>/engine/UE5Editor/</url>
+      
+        <content type="html"><![CDATA[<h1>UE5 Editor学习笔记</h1><h2 id="Creating-Editor-Custom-Menus-for-Unreal-Engine">Creating Editor Custom Menus for Unreal Engine</h2><p><a href="https://www.youtube.com/watch?v=teL4APVRg7k">参考</a></p><h3 id="创建Editor-Module">创建Editor Module</h3><p>打开C++项目，创建一个Editor类型的UE Module</p><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FEdgeEditorModule</span> : <span class="keyword">public</span> IModuleInterface</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">StartupModule</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">ShutdownModule</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">AddMenu</span><span class="params">(FMenuBarBuilder&amp; MenuBarBuilder)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">FileMenu</span><span class="params">(FMenuBuilder&amp; MenuBuilder)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FEdgeEditorModule::StartupModule</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 在LevelEditor注册扩展</span></span><br><span class="line">    FLevelEditorModule&amp; LevelEditorModule = FModuleManager::<span class="built_in">LoadModuleChecked</span>&lt;FLevelEditorModule&gt;(<span class="string">&quot;LevelEditor&quot;</span>);</span><br><span class="line">    <span class="type">const</span> TSharedPtr&lt;FExtender&gt; MenuExtender = <span class="built_in">MakeShareable</span>(<span class="keyword">new</span> <span class="built_in">FExtender</span>());</span><br><span class="line">    MenuExtender-&gt;<span class="built_in">AddMenuBarExtension</span>(<span class="string">&quot;Help&quot;</span>, EExtensionHook::After, <span class="literal">nullptr</span>, FMenuBarExtensionDelegate::<span class="built_in">CreateRaw</span>(<span class="keyword">this</span>, &amp;FEdgeEditorModule::AddMenu));</span><br><span class="line">    LevelEditorModule.<span class="built_in">GetMenuExtensibilityManager</span>()-&gt;<span class="built_in">AddExtender</span>(MenuExtender);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FEdgeEditorModule::AddMenu</span><span class="params">(FMenuBarBuilder&amp; MenuBarBuilder)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 创建一个下拉菜单</span></span><br><span class="line">    MenuBarBuilder.<span class="built_in">AddPullDownMenu</span>(FText::<span class="built_in">FromString</span>(<span class="string">&quot;Hard Edge&quot;</span>), FText::<span class="built_in">FromString</span>(<span class="string">&quot;Hard Edge Tools&quot;</span>), FNewMenuDelegate::<span class="built_in">CreateRaw</span>(<span class="keyword">this</span>, &amp;FEdgeEditorModule::FileMenu));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FEdgeEditorModule::FileMenu</span><span class="params">(FMenuBuilder&amp; MenuBuilder)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 下拉菜单中添加一个选项，点击后会输出Log</span></span><br><span class="line">    MenuBuilder.<span class="built_in">AddMenuEntry</span>(FText::<span class="built_in">FromString</span>(<span class="string">&quot;A Tool&quot;</span>), FText::<span class="built_in">FromString</span>(<span class="string">&quot;A Tool Tooltip&quot;</span>), <span class="built_in">FSlateIcon</span>(), <span class="built_in">FUIAction</span>(FExecuteAction::<span class="built_in">CreateLambda</span>([]()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">UE_LOG</span>(LogEdgeEditor, Log, <span class="built_in">TEXT</span>(<span class="string">&quot;A Tool Clicked&quot;</span>));</span><br><span class="line">    &#125;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="自定义Log">自定义Log</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在.h文件中定义</span></span><br><span class="line"><span class="built_in">DECLARE_LOG_CATEGORY_EXTERN</span>(LogEdgeEditor, All, All);</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在 .cpp文件中实现，注意不能重复实现</span></span><br><span class="line"><span class="built_in">DEFINE_LOG_CATEGORY</span>(LogEdgeEditor);</span><br></pre></td></tr></table></figure><h3 id="编辑菜单">编辑菜单</h3><p>输入控制台命令</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ToolMenus.Edit</span><br></pre></td></tr></table></figure><p>即可编辑菜单栏</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> engine </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Unreal </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>微软为什么使用GO重写TypeScript</title>
       <link href="/program/AndersTalk/"/>
       <url>/program/AndersTalk/</url>
