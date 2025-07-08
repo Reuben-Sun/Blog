@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-07-07T10:30:25.000Z">
-<meta property="article:modified_time" content="2025-07-07T04:27:31.946Z">
+<meta property="article:modified_time" content="2025-07-08T08:41:11.042Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1751862460474),
+    lastupdate: new Date(1751964078696),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2594,9 +2594,54 @@ KL散度是非对称的，$D_{\text{KL}}(P || Q) \neq D_{\text{KL}}(Q || P)$</p>
 <li>同一性（当且仅当两点重合，两点间距离为0）</li>
 <li>非负性（两点间距离不能为负数）</li>
 </ul>
-<h3 id="Adam近似">Adam近似</h3>
+<h3 id="对角近似">对角近似</h3>
 <p>如果一个模型参数为N，那么完整的FIM是一个NxN矩阵，对其求逆的复杂度为$O(N^3)$，对于参数量巨大的神经网络，这是不可接受的</p>
-<p>Adam使用的是一个对角化的FIM矩阵</p>
+<p>Adam使用的是一个对角化的FIM矩阵，最终的计算复杂度是$O(N)$</p>
+<h2 id="稀疏自编码器-SAE">稀疏自编码器 SAE</h2>
+<p>和人脑一样，对于任何特定输入，神经网络中只有一小部分神经元会活跃，这种“稀疏激活”的特性，是生物智能高效和鲁棒的关键</p>
+<p>一个普通的自编码器，会学到整体的压缩方式。而一个稀疏自编码器，会被迫去发现一些更基础、更独立的视觉“字母表”，倾向于用少量专业神经元来解释输入，是一种更加高效的编码方式</p>
+<p>SAE的Loss由重建损失和稀疏性惩罚构成</p>
+<p>重建损失往往使用MSE</p>
+<p>稀疏性惩罚的实现方法有：</p>
+<ul>
+<li>L1正则化</li>
+<li>KL散度</li>
+</ul>
+<h3 id="MSE">MSE</h3>
+<p>均方误差，一种常见Loss函数，用于衡量预测值和真实值之间的差异<br>
+$$<br>
+\text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2<br>
+$$</p>
+<h3 id="L1正则化">L1正则化</h3>
+<p>通过限制模型参数（权重）的绝对值之和，促使部分参数趋向于零，从而实现模型的稀疏性（sparse model），即减少不重要的特征对模型的贡献</p>
+<p>想要参数的绝对值之和尽可能小，那么参数就会尽可能为0<br>
+$$<br>
+\text{Loss} = L(\theta) + \lambda \sum_{i} |\theta_i|<br>
+$$</p>
+<ul>
+<li>
+<p>$\theta $：模型参数（权重）。</p>
+</li>
+<li>
+<p>$\sum_{i} |\theta_i|$：所有参数绝对值的和，称为L1范数。</p>
+</li>
+<li>
+<p>$\lambda$：正则化强度的超参数，控制正则化的影响程度。较大的$\lambda$会更强烈地惩罚大的权重值。</p>
+</li>
+</ul>
+<h3 id="KL散度-2">KL散度</h3>
+<p>SAE使用KL散度，目的是增加隐藏层激活的稀疏性，不要求每次输入的激活都稀疏，而是要求在整个训练数据集上，每个隐藏神经元的<strong>平均激活度</strong>维持在一个很低的水平</p>
+<blockquote>
+<p>VAE也是用了KL散度，但是作用是衡量潜在变量的分布和先验分布（标准正态分布）间的差异，使得潜在空间分布更加规则、连续，更接近标准正态分布</p>
+</blockquote>
+<h3 id="专家混合模型">专家混合模型</h3>
+<blockquote>
+<p>Mixture of Experts, MoE</p>
+</blockquote>
+<p>MoE模型中有很多并行的专家（前馈神经网络）和一个路由器（gating network），对于每个输入，路由器会决定这个输入使用哪些专家来处理</p>
+<p>MoE的思想和SAE有很多相似之处，都是条件计算和稀疏激活，一个是网络级别的稀疏激活，一个是神经元级别的稀疏激活</p>
+<h4 id="Top-K-稀疏">Top-K 稀疏</h4>
+<p>在每次前向传播中，我们只保留激活度最高的K个神经元，其他的强制设为0</p>
 
   </div>
   
@@ -2621,10 +2666,10 @@ KL散度是非对称的，$D_{\text{KL}}(P || Q) \neq D_{\text{KL}}(Q || P)$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-07-07T04:27:31+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-07-08T08:41:11+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年7月7日</p>
+    <p>更新于：2025年7月8日</p>
   </a>
 </div>
 
@@ -2780,7 +2825,7 @@ https:/...</p>
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%94%B1%E8%83%BD%E7%90%86%E8%AE%BA"><span class="toc-text">自由能理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adam%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-text">Adam优化器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%84%B6%E6%A2%AF%E5%BA%A6"><span class="toc-text">自然梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#KL%E6%95%A3%E5%BA%A6"><span class="toc-text">KL散度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%A6%E9%87%8F"><span class="toc-text">度量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adam%E8%BF%91%E4%BC%BC"><span class="toc-text">Adam近似</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%94%B1%E8%83%BD%E7%90%86%E8%AE%BA"><span class="toc-text">自由能理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adam%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-text">Adam优化器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%84%B6%E6%A2%AF%E5%BA%A6"><span class="toc-text">自然梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#KL%E6%95%A3%E5%BA%A6"><span class="toc-text">KL散度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%A6%E9%87%8F"><span class="toc-text">度量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E8%BF%91%E4%BC%BC"><span class="toc-text">对角近似</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8-SAE"><span class="toc-text">稀疏自编码器 SAE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MSE"><span class="toc-text">MSE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#L1%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-text">L1正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KL%E6%95%A3%E5%BA%A6-2"><span class="toc-text">KL散度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%93%E5%AE%B6%E6%B7%B7%E5%90%88%E6%A8%A1%E5%9E%8B"><span class="toc-text">专家混合模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Top-K-%E7%A8%80%E7%96%8F"><span class="toc-text">Top-K 稀疏</span></a></li></ol></li></ol></li></ol>
   </div>
 </section>
 
@@ -3324,7 +3369,7 @@ https:/...</p>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AI文章阅读/","name":"AI 文章阅读"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AI 文章阅读","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AI%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AI%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/","wordCount":0,"datePublished":"2025-07-07T10:30:25.000Z","dateModified":"2025-07-07T04:27:31.946Z","articleSection":"ai","keywords":"AI","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/AI文章阅读/","name":"AI 文章阅读"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"AI 文章阅读","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/AI%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/AI%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/","wordCount":0,"datePublished":"2025-07-07T10:30:25.000Z","dateModified":"2025-07-08T08:41:11.042Z","articleSection":"ai","keywords":"AI","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 

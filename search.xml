@@ -8,7 +8,7 @@
       <link href="/ai/AI%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/"/>
       <url>/ai/AI%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</url>
       
-        <content type="html"><![CDATA[<h1>AI 文章阅读</h1><blockquote><p>follow <a href="https://www.zhihu.com/people/zhou-shu-chang-45/posts">周舒畅</a>的知乎文章，包含AI辅助创作</p></blockquote><h2 id="自由能理论">自由能理论</h2><blockquote><p>Free Energy Principle, FEP</p></blockquote><p>任何自组织系统为了维持其存在，都必须通过行动和感知来最小化其<strong>变分自由能</strong>，从而间接最小化与环境之间的“惊奇”（Surprise）</p><p>变分自由能=复杂度-准确度</p><p>最小化自由能的过程，就是在<strong>保持自身简洁</strong>的和<strong>精确解释数据</strong>间寻找最佳平衡</p><h2 id="Adam优化器">Adam优化器</h2><blockquote><p>Adaptive Moment Estimation，自适应矩估计</p></blockquote><p>Adam的核心思想是动量法和自适应学习率，通过计算梯度的均值和方差，自适应调整学习率</p><h3 id="自然梯度">自然梯度</h3><p>梯度下降是指在参数空间中寻找梯度下降最快的方向。但对于神经网络，参数的微小变化可能会导致模型输出分布的巨大变化，参数空间的距离不等同于<strong>模型表达的概率分布空间</strong>中的距离</p><p>自然梯度的核心思想，就是在模型表达的概率分布空间中做最速下降。我们使用<strong>KL散度</strong>来描述概率分布空间间的距离</p><p>由参数$\theta$定义的概率分布 $p(x|\theta)$，找到一个参数更新方向 $d$，使得在新参数 $\theta+d$ 下，新概率分布和原概率分布的KL散度最小化</p><p>经过推导，自然梯度的方向与费雪信息矩阵（Fisher Information Matrix, FIM）有关</p><h4 id="KL散度">KL散度</h4><p>KL散度是用于衡量两个概率分布之间差异的度量，含义为用一个概率分布$Q$来近似另一个概率分布$P$时的信息损失，实现了量化两个分布之间的差异</p><p>对于离散概率部分<br>$$<br>D_{\text{KL}}(P || Q) = \sum_{x} P(x) \log \left( \frac{P(x)}{Q(x)} \right)<br>$$<br>对于连续概率分布<br>$$<br>D_{\text{KL}}(P || Q) = \int P(x) \log \left( \frac{P(x)}{Q(x)} \right) dx<br>$$<br>KL散度是非对称的，$D_{\text{KL}}(P || Q) \neq D_{\text{KL}}(Q || P)$</p><p>KL散度是非负的</p><p>从信息论的角度，KL散度是指用$Q$的编码方式来编码$P$时，需要的额外编码长度</p><p>KL散度不满足三角不等式，不是一个严格的距离</p><h4 id="度量">度量</h4><p>度量：距离</p><p>度量空间：描述集合内元素间距离的结构</p><p>性质：</p><ul><li>对称性（点A到点B到距离和点B到点A刀距离相同）</li><li>三角不等式（两边之和大于第三边）</li><li>同一性（当且仅当两点重合，两点间距离为0）</li><li>非负性（两点间距离不能为负数）</li></ul><h3 id="Adam近似">Adam近似</h3><p>如果一个模型参数为N，那么完整的FIM是一个NxN矩阵，对其求逆的复杂度为$O(N^3)$，对于参数量巨大的神经网络，这是不可接受的</p><p>Adam使用的是一个对角化的FIM矩阵</p>]]></content>
+        <content type="html"><![CDATA[<h1>AI 文章阅读</h1><blockquote><p>follow <a href="https://www.zhihu.com/people/zhou-shu-chang-45/posts">周舒畅</a>的知乎文章，包含AI辅助创作</p></blockquote><h2 id="自由能理论">自由能理论</h2><blockquote><p>Free Energy Principle, FEP</p></blockquote><p>任何自组织系统为了维持其存在，都必须通过行动和感知来最小化其<strong>变分自由能</strong>，从而间接最小化与环境之间的“惊奇”（Surprise）</p><p>变分自由能=复杂度-准确度</p><p>最小化自由能的过程，就是在<strong>保持自身简洁</strong>的和<strong>精确解释数据</strong>间寻找最佳平衡</p><h2 id="Adam优化器">Adam优化器</h2><blockquote><p>Adaptive Moment Estimation，自适应矩估计</p></blockquote><p>Adam的核心思想是动量法和自适应学习率，通过计算梯度的均值和方差，自适应调整学习率</p><h3 id="自然梯度">自然梯度</h3><p>梯度下降是指在参数空间中寻找梯度下降最快的方向。但对于神经网络，参数的微小变化可能会导致模型输出分布的巨大变化，参数空间的距离不等同于<strong>模型表达的概率分布空间</strong>中的距离</p><p>自然梯度的核心思想，就是在模型表达的概率分布空间中做最速下降。我们使用<strong>KL散度</strong>来描述概率分布空间间的距离</p><p>由参数$\theta$定义的概率分布 $p(x|\theta)$，找到一个参数更新方向 $d$，使得在新参数 $\theta+d$ 下，新概率分布和原概率分布的KL散度最小化</p><p>经过推导，自然梯度的方向与费雪信息矩阵（Fisher Information Matrix, FIM）有关</p><h4 id="KL散度">KL散度</h4><p>KL散度是用于衡量两个概率分布之间差异的度量，含义为用一个概率分布$Q$来近似另一个概率分布$P$时的信息损失，实现了量化两个分布之间的差异</p><p>对于离散概率部分<br>$$<br>D_{\text{KL}}(P || Q) = \sum_{x} P(x) \log \left( \frac{P(x)}{Q(x)} \right)<br>$$<br>对于连续概率分布<br>$$<br>D_{\text{KL}}(P || Q) = \int P(x) \log \left( \frac{P(x)}{Q(x)} \right) dx<br>$$<br>KL散度是非对称的，$D_{\text{KL}}(P || Q) \neq D_{\text{KL}}(Q || P)$</p><p>KL散度是非负的</p><p>从信息论的角度，KL散度是指用$Q$的编码方式来编码$P$时，需要的额外编码长度</p><p>KL散度不满足三角不等式，不是一个严格的距离</p><h4 id="度量">度量</h4><p>度量：距离</p><p>度量空间：描述集合内元素间距离的结构</p><p>性质：</p><ul><li>对称性（点A到点B到距离和点B到点A刀距离相同）</li><li>三角不等式（两边之和大于第三边）</li><li>同一性（当且仅当两点重合，两点间距离为0）</li><li>非负性（两点间距离不能为负数）</li></ul><h3 id="对角近似">对角近似</h3><p>如果一个模型参数为N，那么完整的FIM是一个NxN矩阵，对其求逆的复杂度为$O(N^3)$，对于参数量巨大的神经网络，这是不可接受的</p><p>Adam使用的是一个对角化的FIM矩阵，最终的计算复杂度是$O(N)$</p><h2 id="稀疏自编码器-SAE">稀疏自编码器 SAE</h2><p>和人脑一样，对于任何特定输入，神经网络中只有一小部分神经元会活跃，这种“稀疏激活”的特性，是生物智能高效和鲁棒的关键</p><p>一个普通的自编码器，会学到整体的压缩方式。而一个稀疏自编码器，会被迫去发现一些更基础、更独立的视觉“字母表”，倾向于用少量专业神经元来解释输入，是一种更加高效的编码方式</p><p>SAE的Loss由重建损失和稀疏性惩罚构成</p><p>重建损失往往使用MSE</p><p>稀疏性惩罚的实现方法有：</p><ul><li>L1正则化</li><li>KL散度</li></ul><h3 id="MSE">MSE</h3><p>均方误差，一种常见Loss函数，用于衡量预测值和真实值之间的差异<br>$$<br>\text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2<br>$$</p><h3 id="L1正则化">L1正则化</h3><p>通过限制模型参数（权重）的绝对值之和，促使部分参数趋向于零，从而实现模型的稀疏性（sparse model），即减少不重要的特征对模型的贡献</p><p>想要参数的绝对值之和尽可能小，那么参数就会尽可能为0<br>$$<br>\text{Loss} = L(\theta) + \lambda \sum_{i} |\theta_i|<br>$$</p><ul><li><p>$\theta $：模型参数（权重）。</p></li><li><p>$\sum_{i} |\theta_i|$：所有参数绝对值的和，称为L1范数。</p></li><li><p>$\lambda$：正则化强度的超参数，控制正则化的影响程度。较大的$\lambda$会更强烈地惩罚大的权重值。</p></li></ul><h3 id="KL散度-2">KL散度</h3><p>SAE使用KL散度，目的是增加隐藏层激活的稀疏性，不要求每次输入的激活都稀疏，而是要求在整个训练数据集上，每个隐藏神经元的<strong>平均激活度</strong>维持在一个很低的水平</p><blockquote><p>VAE也是用了KL散度，但是作用是衡量潜在变量的分布和先验分布（标准正态分布）间的差异，使得潜在空间分布更加规则、连续，更接近标准正态分布</p></blockquote><h3 id="专家混合模型">专家混合模型</h3><blockquote><p>Mixture of Experts, MoE</p></blockquote><p>MoE模型中有很多并行的专家（前馈神经网络）和一个路由器（gating network），对于每个输入，路由器会决定这个输入使用哪些专家来处理</p><p>MoE的思想和SAE有很多相似之处，都是条件计算和稀疏激活，一个是网络级别的稀疏激活，一个是神经元级别的稀疏激活</p><h4 id="Top-K-稀疏">Top-K 稀疏</h4><p>在每次前向传播中，我们只保留激活度最高的K个神经元，其他的强制设为0</p>]]></content>
       
       
       <categories>
@@ -617,9 +617,9 @@
       
         <tags>
             
-            <tag> CXX </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> CXX </tag>
             
         </tags>
       
@@ -952,9 +952,9 @@
       
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Pytorch </tag>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -1429,9 +1429,9 @@
       
         <tags>
             
-            <tag> CXX </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> CXX </tag>
             
         </tags>
       
