@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1753804858572),
+    lastupdate: new Date(1753964021337),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -3332,13 +3332,10 @@ torchsparse
         Diffusion
 扩散原理
 生成模型的目标是：给定一组数据，构建一个分布，生成新的数据
-一种思想是，从一个简单的分布开始（如果高斯分布），将其转化到目标分布
-扩散模型正是这样的框架，将一个复杂抽样，转化为一系列简单抽样。其核心就是学习反转很多中间步骤会更简单
-高斯扩散
+在物理学中很多微观过程都是时间可逆的，如果能知道当前系统的状态，理论上可以求出上一时间的状态。受此启发，如果我们知道从一幅画上如何一步步加噪声，也许能学会如何从噪声出发一步步去噪声得到一幅画。
+扩散模型是一类概率生成模型，定义了两个马尔可夫过程：
 
-Gaussian Diffusion
-
-对于一个满足目标分布（尽管这个分布当下还是未知的）的随机变量$x_0$，我们为他...
+前向过程：一个固定的马尔可夫链，将数据分布逐步添加高斯...
       
     
   </div>
