@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1755326580107),
+    lastupdate: new Date(1756370093889),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2994,7 +2994,7 @@ UE禁用了C++的dynamic_cast，你可以使用Ca...
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/DX12笔记/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/Nabla算子/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3012,23 +3012,30 @@ UE禁用了C++的dynamic_cast，你可以使用Ca...
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/DX12%E7%AC%94%E8%AE%B0/"  itemprop="url">
-        DX12龙书
+      <a href="/math/Nabla%E7%AE%97%E5%AD%90/"  itemprop="url">
+        Nabla算子
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        DX12
-环境搭建
-Windows 10/11系统
-安装PIX
-安装Visual Studio 2019
-Windows应用程序
-Windows应用程序使用事件驱动（详情可以去看WPF）
-Windows应用程序的入口点是WinMain函数
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;...
+        Nabla算子
+参考
+$\nabla$：Nabla算子，将数量场变成向量场
+
+
+当其作用于函数，如$\nabla F(x)$，意思为求该函数梯度
+
+
+当其点乘函数，如$\nabla \cdot F(x)$，意思为求该函数的散度
+
+
+当其叉乘（三维）函数，如$\nabla \times F(x)$，意思为求该函数的旋度
+
+
+函数可视化
+对于函数$f(x,y)=x^2+y^2$，我们有两种可视化...
       
     
   </div>
@@ -3039,17 +3046,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;...
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/graphics/DX12%E7%AC%94%E8%AE%B0/' itemprop="url">
+          <a class='readmore' href='/math/Nabla%E7%AE%97%E5%AD%90/' itemprop="url">
             阅读全文
           </a>
         </div>
@@ -3065,7 +3072,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;...
         
           <div class='post-wrapper'>
             <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/graphics/TA面试题/">
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/math/复变函数/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="ReubenSun">
   </span>
@@ -3083,27 +3090,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)&#123;...
   
     
     <h2 class="article-title"  itemprop="name headline">
-      <a href="/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/"  itemprop="url">
-        TA面试题
+      <a href="/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"  itemprop="url">
+        复变函数
       </a>
     </h2>
   
   <div class='md article-desc' itemprop="articleBody">
     
       
-        TA面试题
-这里面不少答案都是我自己凭感觉答的，不保真
-什么是渲染管线
-渲染管线是通过安排CPU发出Draw Call的内容以及顺序，指导GPU进行一系列操作，并协同将开发者期待的图像渲染在屏幕上
+        复变函数
+复变函数
+复数
+复数可以表示为实数和纯虚数的和
+代数式：
+$$
+z=x+\mathrm{i}y
+$$
 
-剔除
-渲染
-后处理
+x：实部，记为Re z
+y：虚部，记为Im z
 
-什么是Draw Call
-Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操作，是重量级的
-什么是Batching
-将多个简单、使用同一材质的物体...
+复平面：
+
+极坐标下
+$$
+\begin{cases}
+\rho=\sqrt{x^2+y^2} \
+\varphi=\arctan (y/x)
+\end{cases}
+$$
+$$
+\begin{cases}
+x=\rho \cos...
       
     
   </div>
@@ -3114,17 +3132,17 @@ Draw Call是CPU为GPU准备渲染数据，并指令GPU进行一次渲染的操�
         <time itemprop="dateCreated datePublished" datetime="2023-01-31T10:01:25+00:00">2023-01-31</time>
         
           <span class="dot"></span>
-          <a class="category-link" href="/categories/graphics/">graphics</a>
+          <a class="category-link" href="/categories/math/">math</a>
           
             <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/graphics/" itemprop="url"><span itemprop="name">graphics</span></a>
+              <a href="/categories/math/" itemprop="url"><span itemprop="name">math</span></a>
             </span>
           
         
       </div>
       
         <div>
-          <a class='readmore' href='/graphics/TA%E9%9D%A2%E8%AF%95%E9%A2%98/' itemprop="url">
+          <a class='readmore' href='/math/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/' itemprop="url">
             阅读全文
           </a>
         </div>
