@@ -42,11 +42,11 @@
 <meta property="og:title" content="强化学习">
 <meta property="og:url" content="https://reubensun.com/ai/RL/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="强化学习  跟同事聊了一会强化学习做AI游戏，感觉难度很大很麻烦，遂断更  游戏的奖励频率过低，电子游戏很难像围棋那样计算每一步的收益，就像训狗一样，你让狗坐下给一次奖励，训练效果会很好，但让狗做非常多复杂的组合动作再给一次奖励，就很难训练 数据难以收集，AI玩游戏通常是现有一个游戏，再去做AI，这些AI公司一般都没有与游戏公司合作，于是难以拿到原始的状态同步信息，只能抓取屏幕提取参数，难以获得海">
+<meta property="og:description" content="强化学习 在不远的过去，强化学习被各种唱衰，环境难以模拟、算法难以泛化、激励难以设计、应用场景有限等等，很多人认为强化学习很酷，但就是“没用”。但随着LLM的兴起，RL可以帮助LLM实现对齐人类偏好、、提升生成质量、低成本Post Train，RL瞬间成为了一种杀手级应用。于是最近一段时间，无论是LLM、Diffusion、具身智能，都开始搞RL了。 我最近打算使用RL训练Diffusion，以提">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-<meta property="article:published_time" content="2024-10-07T20:20:25.000Z">
-<meta property="article:modified_time" content="2025-08-28T08:34:51.962Z">
+<meta property="article:published_time" content="2025-09-04T18:10:25.000Z">
+<meta property="article:modified_time" content="2025-09-05T04:08:15.871Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="RL">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1756370093889),
+    lastupdate: new Date(1757045298261),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2523,10 +2523,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
         
           
-            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2024-10-07T20:20:25+00:00">
+            <div class="new-meta-item date" itemprop="dateCreated datePublished" datetime="2025-09-04T18:10:25+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：2024年10月7日</p>
+    <p>发布于：2025年9月4日</p>
   </a>
 </div>
 
@@ -2550,53 +2550,62 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>强化学习</h1>
-<blockquote>
-<p>跟同事聊了一会强化学习做AI游戏，感觉难度很大很麻烦，遂断更</p>
-<ol>
-<li>游戏的奖励频率过低，电子游戏很难像围棋那样计算每一步的收益，就像训狗一样，你让狗坐下给一次奖励，训练效果会很好，但让狗做非常多复杂的组合动作再给一次奖励，就很难训练</li>
-<li>数据难以收集，AI玩游戏通常是现有一个游戏，再去做AI，这些AI公司一般都没有与游戏公司合作，于是难以拿到原始的状态同步信息，只能抓取屏幕提取参数，难以获得海量数据（比如你难以让几万台机器去玩CSGO来收集数据）</li>
-<li>状态空间过于复杂，游戏中需要同步的数据非常大，随着状态空间的复杂化，训练所需的数据骤增，训练速度也减慢，而因为第二条，我们已经很难获得数据了，于是雪上加霜</li>
-<li>没有优秀先例，研究员研究RL很久了，但是至今没有一个极具影响力的RL玩游戏，甚至一些RL大佬都唱衰强化学习，认为这没有用，因此这是一个风险巨大，前路坎坷的方向（当然如果成功了，收益也很高）</li>
-</ol>
-</blockquote>
-<p>强化学习系统由四个部分组成：</p>
-<ul>
-<li>策略，根据环境和状态决定动作，是一组概率，内容为当智能体状态为s时，采取特定动作a的概率</li>
-<li>奖励，智能体试图实现的目标，往往配合折扣因子（Discount Factor）设计</li>
-<li>价值函数</li>
-<li>环境模型</li>
-</ul>
+<p>在不远的过去，强化学习被各种唱衰，环境难以模拟、算法难以泛化、激励难以设计、应用场景有限等等，很多人认为强化学习很酷，但就是“没用”。但随着LLM的兴起，RL可以帮助LLM实现对齐人类偏好、、提升生成质量、低成本Post Train，RL瞬间成为了一种杀手级应用。于是最近一段时间，无论是LLM、Diffusion、具身智能，都开始搞RL了。</p>
+<p>我最近打算使用RL训练Diffusion，以提升美学质量和图文对齐程度，于是从头开始学习RL</p>
+<h2 id="概述">概述</h2>
+<p>强化学习（reinforcement learning，RL）讨论的是智能体（agent）如何在环境中最大化奖励。智能体一直在与环境交互，智能体会评估当前状态，输出动作，获得奖励。</p>
 <img src="/images/AE_loop.png" class="lazyload" data-srcset="/images/AE_loop.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="AE_loop" style="zoom: 25%;" />
-<p>不断进行着状态Obs—动作A—新状态和奖励的循环</p>
-<h2 id="马尔可夫决策">马尔可夫决策</h2>
-<blockquote>
-<p>图形学的光追部分，也大量使用了概率论和马尔可夫决策</p>
-</blockquote>
-<p>强化学习涉及序列决策，使用马尔可夫决策过程（Markov Decision Process，MDP）对问题进行建模</p>
-<h3 id="马尔可夫条件">马尔可夫条件</h3>
-<blockquote>
-<p>未来与过去无关</p>
-</blockquote>
-<p>给定当前状态和所有过去状态，其未来状态（的条件概率）仅与当前状态有关</p>
-<p>满足马尔可夫独立性，意味着强化学习模型，不需要记住如何到达当前的状态，只需要根据当前状态就能决定需要做什么</p>
-<p>蒙特卡洛：对大量模拟的结果取平均值，用来逼近期望</p>
-<h3 id="马尔可夫决策过程">马尔可夫决策过程</h3>
-<p>通过引入额外的（可选的）动作，扩展马尔可夫决策链，是否使用这个动作会影响最终的累积回报G，通过比较这两个G，我们可以得到这个动作该不该做</p>
-<h3 id="回溯图">回溯图</h3>
-<blockquote>
-<p>其实是一个树</p>
-</blockquote>
-<p>表示从初始状态开始，深度优先搜索每一个可能性，将这个过程化成树</p>
-<p>树的每一个叶子结点表示无法得到解返回（或提前返回）的状态，当遇到这种情况，将回溯到父节点，继续遍历</p>
-<h3 id="贝尔曼方程">贝尔曼方程</h3>
-<h4 id="贝尔曼最优方程">贝尔曼最优方程</h4>
-<h2 id="Gym">Gym</h2>
-<p>Gym是一个被广泛使用的强化学习框架</p>
-<h3 id="CartPole">CartPole</h3>
-<p>CartPole是一个在小车上放置了一根竖直向上的细杆，控制小车在X轴上移动，使得细杆尽可能长时间维持竖直向上的任务</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gym</span><br><span class="line"><span class="keyword">import</span> imageio</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于我是在无头环境执行，所以将渲染结果保存为视频</span></span><br><span class="line">env = gym.make(<span class="string">&#x27;CartPole-v1&#x27;</span>, render_mode=<span class="string">&quot;rgb_array&quot;</span>)</span><br><span class="line">writer = imageio.get_writer(<span class="string">&#x27;gym_video.mp4&#x27;</span>, fps=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">obs, info = env.reset()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Observation: &quot;</span>, obs)		<span class="comment"># Observation:  [-0.03702318  0.0486786   0.04819322  0.00019955]</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Action Space: &quot;</span>, env.action_space.n)		<span class="comment"># Action Space:  2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">policy</span>(<span class="params">obs</span>):</span><br><span class="line">    <span class="keyword">return</span> env.action_space.sample()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    action = policy(obs)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Action: &quot;</span>, action)   </span><br><span class="line">    obs, reward, terminated, truncated, info = env.step(action)</span><br><span class="line"></span><br><span class="line">    frame = env.render()</span><br><span class="line">    writer.append_data(frame)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> terminated <span class="keyword">or</span> truncated:</span><br><span class="line">        observation, info = env.reset()</span><br><span class="line"></span><br><span class="line">writer.close()</span><br><span class="line">env.close()   </span><br></pre></td></tr></table></figure>
+<h3 id="环境">环境</h3>
+<p>强化学习的环境由四部分组成：</p>
+<ul>
+<li>状态空间</li>
+<li>动作空间</li>
+<li>状态转移概率</li>
+<li>奖励函数</li>
+</ul>
+<p>对于一些情况，我们并没有显式的状态转移概率和奖励函数，智能体依赖交互数据对去学习策略。这种环境是一种黑箱的情况，我们称之为<strong>model free</strong>。而那种有显式的可学习的状态转移函数+奖励模型的情况，称之为<strong>model base</strong></p>
+<h2 id="马尔可夫决策过程">马尔可夫决策过程</h2>
+<h3 id="过程">过程</h3>
+<p>过程（Process）：一个随着时间变化的随机变量序列。如每天的股票价格、每天的天气情况</p>
+<h3 id="马尔可夫性">马尔可夫性</h3>
+<p>马尔可夫性：未来仅依赖于当前，而不依赖过去<br>
+$$<br>
+P(s_{t+1},|,s_t, s_{t-1}, \dots, s_0) = P(s_{t+1},|,s_t)<br>
+$$</p>
+<h3 id="马尔可夫链">马尔可夫链</h3>
+<p>马尔可夫链（Markov Chain）：一种满足马尔可夫性的随机过程</p>
+<h3 id="马尔可夫过程">马尔可夫过程</h3>
+<p>马尔可夫过程（Markov Process）：马尔可夫链的形式化定义<br>
+$$<br>
+\langle S, P \rangle<br>
+$$</p>
+<ul>
+<li>
+<p>$S$：状态空间</p>
+</li>
+<li>
+<p>$P$：状态转移概率矩阵</p>
+</li>
+</ul>
+<h3 id="马尔可夫奖励过程">马尔可夫奖励过程</h3>
+<p>马尔可夫奖励过程（Markov Reward Process, MRP）：在MP上加入奖励信号<br>
+$$<br>
+\langle S, P, R, \gamma \rangle<br>
+$$</p>
+<ul>
+<li>$R(s)$：在状态 $s$ 下得到的期望奖励</li>
+<li>$\gamma \in [0,1]$：折扣因子，控制未来奖励的重要性</li>
+</ul>
+<h3 id="马尔可夫决策过程-2">马尔可夫决策过程</h3>
+<p>马尔可夫决策过程 (Markov Decision Process, MDP)，在MRP中引入动作，智能体可以通过策略来影响环境演化<br>
+$$<br>
+\langle S, A, P, R, \gamma \rangle<br>
+$$</p>
+<ul>
+<li>$A$：动作空间</li>
+</ul>
 <h2 id="参考">参考</h2>
-<p><a target="_blank" rel="noopener" href="https://www.gymlibrary.dev/content/basic_usage/#basic-usage">gym doc</a></p>
+<p><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/">easy-rl</a></p>
 
   </div>
   
@@ -2621,10 +2630,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-08-28T08:34:51+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-09-05T04:08:15+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年8月28日</p>
+    <p>更新于：2025年9月5日</p>
   </a>
 </div>
 
@@ -2707,22 +2716,19 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/engine/Unity%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/'>
-          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>Unity 性能优化</p>
-          <p class='content'>Unity 性能优化
-
-Unity版本为2022.3.34，本文所有的测试均在Editor下进行
-
-尽管我认为，性能远远没有实现重要，提前优化、过度优化、虚空优化，之会影响开发效率，不过还是记录...</p>
-        </a>
       
-      
-        <a class='next' href='/program/numpy/'>
-          <p class='title'>Python numpy<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
-          <p class='content'>Python numpy
-我发现Python numpy的性能真的是特别强，甚至可以用来写ShaderToy
-Numpy画圆的性能对比
-对一张512x512的图片，使用ShaderToy的方式画...</p>
+        <a class='next' href='/math/ODE/'>
+          <p class='title'>常微分方程<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>常微分方程
+微分方程
+观察下面两个方程
+$$
+x^2=1
+$$
+$$
+\frac{\mathrm{d}y}{\mathrm{d}x}=2x
+$$
+发现下面的方程包含导数，我们称这类包含未知变量（...</p>
         </a>
       
     </div>
@@ -2783,7 +2789,7 @@ Numpy画圆的性能对比
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96"><span class="toc-text">马尔可夫决策</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%9D%A1%E4%BB%B6"><span class="toc-text">马尔可夫条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫决策过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%BA%AF%E5%9B%BE"><span class="toc-text">回溯图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%96%B9%E7%A8%8B"><span class="toc-text">贝尔曼方程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%9C%80%E4%BC%98%E6%96%B9%E7%A8%8B"><span class="toc-text">贝尔曼最优方程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gym"><span class="toc-text">Gym</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CartPole"><span class="toc-text">CartPole</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-text">环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫决策过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-text">过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%80%A7"><span class="toc-text">马尔可夫性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE"><span class="toc-text">马尔可夫链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%A5%96%E5%8A%B1%E8%BF%87%E7%A8%8B"><span class="toc-text">马尔可夫奖励过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B-2"><span class="toc-text">马尔可夫决策过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3327,7 +3333,7 @@ Numpy画圆的性能对比
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/RL/","name":"强化学习"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"强化学习","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/RL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/RL/","wordCount":0,"datePublished":"2024-10-07T20:20:25.000Z","dateModified":"2025-08-28T08:34:51.962Z","articleSection":"ai","keywords":"RL","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/RL/","name":"强化学习"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"强化学习","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/RL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/RL/","wordCount":0,"datePublished":"2025-09-04T18:10:25.000Z","dateModified":"2025-09-05T04:08:15.871Z","articleSection":"ai","keywords":"RL","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
