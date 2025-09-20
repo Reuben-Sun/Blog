@@ -42,11 +42,11 @@
 <meta property="og:title" content="UE5 学习笔记">
 <meta property="og:url" content="https://reubensun.com/engine/Note-of-UE/index.html">
 <meta property="og:site_name" content="ReubenSun">
-<meta property="og:description" content="UE5 学习笔记 记录一下UE5 Gameplay开发中的一些小知识，不做过多的工程向记录 生命周期函数 PossessedBy PossessedBy函数是一个生命周期函数，当一个Pawn被一个新的Controller控制（接管）时触发，常用于多人游戏同步和初始化属性 网络同步 OnRep_PlayerState OnRep_PlayerState是一个回调函数，当服务器中PlayState发生">
+<meta property="og:description" content="UE5 学习笔记 渲染图片 使用UE5 Movie Remder Queue来渲染场景，出一些demo视频和图片 Editor开发 扩展MenuBar 参考 创建Editor Module 打开C++项目，创建一个Editor类型的UE Module class FEdgeEditorModule : public IModuleInterface&#123;public:    virtual">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-10-30T21:01:25.000Z">
-<meta property="article:modified_time" content="2025-09-16T08:45:58.173Z">
+<meta property="article:modified_time" content="2025-09-20T09:26:18.167Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Unreal">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1758012369439),
+    lastupdate: new Date(1758360390501),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2550,23 +2550,23 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
     <h1>UE5 学习笔记</h1>
-<p>记录一下UE5 Gameplay开发中的一些小知识，不做过多的工程向记录</p>
-<h2 id="生命周期函数">生命周期函数</h2>
-<h3 id="PossessedBy">PossessedBy</h3>
-<p><code>PossessedBy</code>函数是一个生命周期函数，当一个Pawn被一个新的Controller控制（接管）时触发，常用于多人游戏同步和初始化属性</p>
+<h2 id="渲染图片">渲染图片</h2>
+<p>使用UE5 Movie Remder Queue来渲染场景，出一些demo视频和图片</p>
+<h2 id="Editor开发">Editor开发</h2>
+<h3 id="扩展MenuBar">扩展MenuBar</h3>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=teL4APVRg7k">参考</a></p>
+<h4 id="创建Editor-Module">创建Editor Module</h4>
+<p>打开C++项目，创建一个Editor类型的UE Module</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FEdgeEditorModule</span> : <span class="keyword">public</span> IModuleInterface</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">StartupModule</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">ShutdownModule</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">AddMenu</span><span class="params">(FMenuBarBuilder&amp; MenuBarBuilder)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">FileMenu</span><span class="params">(FMenuBuilder&amp; MenuBuilder)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FEdgeEditorModule::StartupModule</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  	<span class="comment">// 在LevelEditor注册扩展</span></span><br><span class="line">    FLevelEditorModule&amp; LevelEditorModule = FModuleManager::<span class="built_in">LoadModuleChecked</span>&lt;FLevelEditorModule&gt;(<span class="string">&quot;LevelEditor&quot;</span>);</span><br><span class="line">    <span class="type">const</span> TSharedPtr&lt;FExtender&gt; MenuExtender = <span class="built_in">MakeShareable</span>(<span class="keyword">new</span> <span class="built_in">FExtender</span>());</span><br><span class="line">    MenuExtender-&gt;<span class="built_in">AddMenuBarExtension</span>(<span class="string">&quot;Help&quot;</span>, EExtensionHook::After, <span class="literal">nullptr</span>, FMenuBarExtensionDelegate::<span class="built_in">CreateRaw</span>(<span class="keyword">this</span>, &amp;FEdgeEditorModule::AddMenu));</span><br><span class="line">    LevelEditorModule.<span class="built_in">GetMenuExtensibilityManager</span>()-&gt;<span class="built_in">AddExtender</span>(MenuExtender);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FEdgeEditorModule::AddMenu</span><span class="params">(FMenuBarBuilder&amp; MenuBarBuilder)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  	<span class="comment">// 创建一个下拉菜单</span></span><br><span class="line">    MenuBarBuilder.<span class="built_in">AddPullDownMenu</span>(FText::<span class="built_in">FromString</span>(<span class="string">&quot;Hard Edge&quot;</span>), FText::<span class="built_in">FromString</span>(<span class="string">&quot;Hard Edge Tools&quot;</span>), FNewMenuDelegate::<span class="built_in">CreateRaw</span>(<span class="keyword">this</span>, &amp;FEdgeEditorModule::FileMenu));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FEdgeEditorModule::FileMenu</span><span class="params">(FMenuBuilder&amp; MenuBuilder)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  	<span class="comment">// 下拉菜单中添加一个选项，点击后会输出Log</span></span><br><span class="line">    MenuBuilder.<span class="built_in">AddMenuEntry</span>(FText::<span class="built_in">FromString</span>(<span class="string">&quot;A Tool&quot;</span>), FText::<span class="built_in">FromString</span>(<span class="string">&quot;A Tool Tooltip&quot;</span>), <span class="built_in">FSlateIcon</span>(), <span class="built_in">FUIAction</span>(FExecuteAction::<span class="built_in">CreateLambda</span>([]()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">UE_LOG</span>(LogEdgeEditor, Log, <span class="built_in">TEXT</span>(<span class="string">&quot;A Tool Clicked&quot;</span>));</span><br><span class="line">    &#125;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="自定义Log">自定义Log</h4>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在.h文件中定义</span></span><br><span class="line"><span class="built_in">DECLARE_LOG_CATEGORY_EXTERN</span>(LogEdgeEditor, All, All);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在 .cpp文件中实现，注意不能重复实现</span></span><br><span class="line"><span class="built_in">DEFINE_LOG_CATEGORY</span>(LogEdgeEditor);</span><br></pre></td></tr></table></figure>
+<h4 id="编辑菜单">编辑菜单</h4>
+<p>输入控制台命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ToolMenus.Edit</span><br></pre></td></tr></table></figure>
+<p>即可编辑菜单栏</p>
 <h2 id="网络同步">网络同步</h2>
-<h3 id="OnRep-PlayerState">OnRep_PlayerState</h3>
-<p><code>OnRep_PlayerState</code>是一个回调函数，当服务器中<code>PlayState</code>发生修改时，会自动触发客户端中的该函数。用于从服务器向客户端同步信息</p>
-<h4 id="属性复制">属性复制</h4>
-<p>服务器中维护了一个Actor列表，并定期更新客户端，以保证每个Actor的某些参数同步</p>
-<p>Actor中用<code>Replicated</code>标注的参数，是需要同步的</p>
-<p>同步的方式有两种：</p>
-<ul>
-<li>Property updates</li>
-<li>RPCs</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Actor的参数配置</span></span><br><span class="line">bReplicates = <span class="literal">true</span>;		<span class="comment">// 启用网络同步</span></span><br><span class="line">NetUpdateFrequency = <span class="number">10.0f</span>;		<span class="comment">// 每秒更新10次</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 标注需要同步的参数，这是 Property updates 法</span></span><br><span class="line"><span class="built_in">UPROPERTY</span>(Replicated)  <span class="comment">// 每次复制时触发</span></span><br><span class="line">int32 Health;</span><br></pre></td></tr></table></figure>
 
   </div>
   
@@ -2591,10 +2591,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-09-16T08:45:58+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-09-20T09:26:18+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年9月16日</p>
+    <p>更新于：2025年9月20日</p>
   </a>
 </div>
 
@@ -2750,7 +2750,7 @@ import transformersimport torchmodel_id = &quot;meta-llama/Meta-Llama-3.1-8B-In.
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-text">生命周期函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PossessedBy"><span class="toc-text">PossessedBy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%90%8C%E6%AD%A5"><span class="toc-text">网络同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OnRep-PlayerState"><span class="toc-text">OnRep_PlayerState</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E5%A4%8D%E5%88%B6"><span class="toc-text">属性复制</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E5%9B%BE%E7%89%87"><span class="toc-text">渲染图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Editor%E5%BC%80%E5%8F%91"><span class="toc-text">Editor开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95MenuBar"><span class="toc-text">扩展MenuBar</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAEditor-Module"><span class="toc-text">创建Editor Module</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Log"><span class="toc-text">自定义Log</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E8%8F%9C%E5%8D%95"><span class="toc-text">编辑菜单</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%90%8C%E6%AD%A5"><span class="toc-text">网络同步</span></a></li></ol>
   </div>
 </section>
 
@@ -3294,7 +3294,7 @@ import transformersimport torchmodel_id = &quot;meta-llama/Meta-Llama-3.1-8B-In.
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/Note-of-UE/","name":"UE5 学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"UE5 学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/Note-of-UE/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/Note-of-UE/","wordCount":0,"datePublished":"2024-10-30T21:01:25.000Z","dateModified":"2025-09-16T08:45:58.173Z","articleSection":"engine","keywords":"Unreal","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/engine/","name":"engine"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/engine/Note-of-UE/","name":"UE5 学习笔记"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"UE5 学习笔记","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/engine/Note-of-UE/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/engine/Note-of-UE/","wordCount":0,"datePublished":"2024-10-30T21:01:25.000Z","dateModified":"2025-09-20T09:26:18.167Z","articleSection":"engine","keywords":"Unreal","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
