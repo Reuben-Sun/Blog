@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-01-17T14:45:25.000Z">
-<meta property="article:modified_time" content="2025-11-05T09:42:57.834Z">
+<meta property="article:modified_time" content="2025-11-05T11:30:43.342Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Diffusion">
 <meta property="article:tag" content="Python">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1762335778910),
+    lastupdate: new Date(1762342245128),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2560,6 +2560,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <li>反向过程：一个参数化的马尔可夫链，从先验分布开始逐步降噪，最终生成数据分布的样本</li>
 </ol>
 <p>扩散模型将一个复杂的抽样转为一系列的简单抽样，简化了学习</p>
+<blockquote>
+<p>扩散：物质或能量在空间中自发地从高浓度区域向低浓度区域的随机运动过程，是热力学第二定律的宏观表现</p>
+<p>扩散模型中的扩散：在噪声的不断扰动下（在原数据不断加噪声的过程），数据逐渐接近标准高斯分布的过程</p>
+</blockquote>
 <h3 id="高斯扩散">高斯扩散</h3>
 <p>$$<br>
 x_{t+1}=x_t + \eta_t ,\quad \eta_t \sim N(0, \sigma^2)<br>
@@ -2677,28 +2681,62 @@ $$</p>
 </li>
 </ol>
 <p>于是采样过程变成了一个与参数 $\theta$ 有关的确定性函数</p>
-<h2 id="ViT">ViT</h2>
-<blockquote>
-<p>《An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale》2021.6</p>
-</blockquote>
-<p>ViT将Transformer架构引入到CV领域，核心思想是将输入图片切分为一个个小patch，为这些patch标注类别token，将这些pathc和类别一同送入Transformer中，生成分类</p>
-<p>DiT的输入是一个个带噪声的图像patch和条件token（如位置和时间步数），送入Transformer后得到输出token，解码得到每个patch对应的噪声</p>
 <h2 id="基于分数的生成模型">基于分数的生成模型</h2>
 <blockquote>
 <p>《Score-Based Generative Modeling through Stochastic Differential Equations》2021.2</p>
 </blockquote>
 <p>从数学（Energy-Based）的角度，扩散模型本质上上学习数据的分数函数（score function）</p>
-<h3 id="分数函数">分数函数</h3>
+<h3 id="动机-2">动机</h3>
+<ol>
+<li>DDPM受限于离散马尔可夫过程，不能无缝拓展到连续过程</li>
+<li>希望通过SDE提供一个连续视角，将数据分布平滑转化为先验分布，并逆转此过程</li>
+</ol>
+<h3 id="创新点-2">创新点</h3>
+<ol>
+<li>统一的SDE框架，用SDE模拟噪声演化过程，将数据平滑扩散为噪声，再逆转生成</li>
+<li>预测-矫正采样器</li>
+<li>概率流ODE与神经ODE连接</li>
+<li>无条件生成模型可以通过条件SDE实现条件生成，而无需重新训练</li>
+</ol>
+<h3 id="关键技术-2">关键技术</h3>
+<h4 id="分数函数">分数函数</h4>
 <p>给定概率密度函数$p(x)$，分数函数为<br>
 $$<br>
 s(x) = \nabla_{x} \log p(x)<br>
 $$<br>
-对数 概率密度 关于x的梯度</p>
+含义为对数概率密度关于x的梯度</p>
 <p>分数函数表示任意一点概率密度增长最快的方向，定义了数据流形上的向量场，这个局部信息可以指导我们如何在概率空间中“导航”</p>
+<h4 id="概率流ODE">概率流ODE</h4>
+<blockquote>
+<p>Probability Flow ODE</p>
+</blockquote>
+<p>前向过程SDE：<br>
+$$<br>
+dx = f(x,t) dt + g(t) dw_t<br>
+$$</p>
+<ul>
+<li>$x$ : 数据</li>
+<li>$f(x,t)$：漂移项</li>
+<li>$g(t)$: 扩散系数</li>
+<li>$dw_t$: 标准高斯噪声</li>
+</ul>
+<p>尽管原始扩散是SDE，但是我们可以构造一个确定性 ODE，使其在统计意义上产生相同的边缘分布 $p_t(x)$</p>
+<p>概率流ODE：<br>
+$$<br>
+\frac{dx}{dt} = f(x,t) - \frac{1}{2} g(t)^2 \nabla_x \log p_t(x)<br>
+$$</p>
 <h2 id="LDM">LDM</h2>
 <blockquote>
 <p>《High-Resolution Image Synthesis with Latent Diffusion Models》2022.4</p>
 </blockquote>
+<h3 id="动机-3">动机</h3>
+<p>过去的Diffusion直接在像素空间操作，带来了巨大的计算成本，训练门槛高、效率低下、且过度建模数据中难以察觉的细节</p>
+<h3 id="创新点-3">创新点</h3>
+<ol>
+<li>使用VAE将数据编码为latent，在latent空间中训练diffusion</li>
+<li>可以轻松画大图</li>
+<li>VAE是单独的，可分离</li>
+</ol>
 <h2 id="DDIM">DDIM</h2>
 <blockquote>
 <p>《Denoising Diffusion Implicit Models》2022.10</p>
@@ -2752,7 +2790,7 @@ $$<br>
 </ol>
 <h2 id="Flow-Matching">Flow Matching</h2>
 <blockquote>
-<p>《Flow Matching for Generative Modeling》2022.10</p>
+<p>《Flow Matching for Generative Modeling》2023.2</p>
 </blockquote>
 <p>扩散模型将一个复杂的抽样转为一系列的简单抽样，传统的UNet通过预测噪声得到最终样本，这个过程是不确定的。但流模型将简单分布转为负责分布的过程是一个确定的可逆过程，给定初始值和参数，流模型的输出结果是确定的</p>
 <p>而这个可逆过程，一般是由一个ODE定义的<br>
@@ -2765,6 +2803,10 @@ x_{t-\Delta t}=x_t - v_t \Delta_{t}<br>
 $$<br>
 相较于DDPM和DDIM，Flow Matching更简洁、直观、可逆</p>
 <p><img src="/images/flowmatching.jpg" class="lazyload" data-srcset="/images/flowmatching.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="flowmatching"></p>
+<h2 id="DiT">DiT</h2>
+<blockquote>
+<p>《Scalable Diffusion Models with Transformers》2023.2</p>
+</blockquote>
 <h2 id="DreamBooth">DreamBooth</h2>
 <blockquote>
 <p>《DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation》2023.3</p>
@@ -2825,7 +2867,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-05T09:42:57+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-05T11:30:43+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2025年11月5日</p>
@@ -2986,7 +3028,7 @@ ASI（超级人工智能）：在几乎所有领域都远超人类智能的系�
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E5%8E%9F%E7%90%86"><span class="toc-text">扩散原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%89%A9%E6%95%A3"><span class="toc-text">高斯扩散</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5%E4%B8%8E%E5%85%B7%E4%BD%93%E6%A0%B7%E6%9C%AC"><span class="toc-text">生成策略与具体样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-text">U-Net</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDPM"><span class="toc-text">DDPM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-text">动机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%BC%E7%84%B6"><span class="toc-text">似然</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%92%E7%BA%B3%E5%81%8F%E5%B7%AE"><span class="toc-text">归纳偏差</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="toc-text">关键技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E5%99%AA%E5%A3%B0"><span class="toc-text">预测噪声</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96"><span class="toc-text">重参数化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViT"><span class="toc-text">ViT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">基于分数的生成模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">分数函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDM"><span class="toc-text">LDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDIM"><span class="toc-text">DDIM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">相关概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CFG"><span class="toc-text">CFG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DPM-Solver"><span class="toc-text">DPM-Solver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EDM"><span class="toc-text">EDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flow-Matching"><span class="toc-text">Flow Matching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DreamBooth"><span class="toc-text">DreamBooth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87-prompt"><span class="toc-text">如何组织 prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I"><span class="toc-text">T2I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I-LoRA"><span class="toc-text">T2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA"><span class="toc-text">I2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA-Controlnet"><span class="toc-text">I2I LoRA Controlnet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E9%95%BF%E7%9A%84prompt"><span class="toc-text">更长的prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5VAE"><span class="toc-text">检查VAE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E5%8E%9F%E7%90%86"><span class="toc-text">扩散原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%89%A9%E6%95%A3"><span class="toc-text">高斯扩散</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5%E4%B8%8E%E5%85%B7%E4%BD%93%E6%A0%B7%E6%9C%AC"><span class="toc-text">生成策略与具体样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-text">U-Net</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDPM"><span class="toc-text">DDPM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-text">动机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%BC%E7%84%B6"><span class="toc-text">似然</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%92%E7%BA%B3%E5%81%8F%E5%B7%AE"><span class="toc-text">归纳偏差</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="toc-text">关键技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E5%99%AA%E5%A3%B0"><span class="toc-text">预测噪声</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96"><span class="toc-text">重参数化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">基于分数的生成模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-2"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9-2"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF-2"><span class="toc-text">关键技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">分数函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E7%8E%87%E6%B5%81ODE"><span class="toc-text">概率流ODE</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDM"><span class="toc-text">LDM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-3"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9-3"><span class="toc-text">创新点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDIM"><span class="toc-text">DDIM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">相关概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CFG"><span class="toc-text">CFG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DPM-Solver"><span class="toc-text">DPM-Solver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EDM"><span class="toc-text">EDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flow-Matching"><span class="toc-text">Flow Matching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DiT"><span class="toc-text">DiT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DreamBooth"><span class="toc-text">DreamBooth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87-prompt"><span class="toc-text">如何组织 prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I"><span class="toc-text">T2I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I-LoRA"><span class="toc-text">T2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA"><span class="toc-text">I2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA-Controlnet"><span class="toc-text">I2I LoRA Controlnet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E9%95%BF%E7%9A%84prompt"><span class="toc-text">更长的prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5VAE"><span class="toc-text">检查VAE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3530,7 +3572,7 @@ ASI（超级人工智能）：在几乎所有领域都远超人类智能的系�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-11-05T09:42:57.834Z","articleSection":"ai","keywords":"Python,Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-11-05T11:30:43.342Z","articleSection":"ai","keywords":"Python,Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
