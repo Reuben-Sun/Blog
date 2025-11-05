@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-01-17T14:45:25.000Z">
-<meta property="article:modified_time" content="2025-10-28T08:57:23.595Z">
+<meta property="article:modified_time" content="2025-11-05T08:51:22.042Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Diffusion">
 <meta property="article:tag" content="Python">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1761641845951),
+    lastupdate: new Date(1762332685232),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2566,11 +2566,32 @@ x_{t+1}=x_t + \eta_t ,\quad \eta_t \sim N(0, \sigma^2)<br>
 $$</p>
 <p>一个假设：反向过程中，每一次去噪声的结果，仍是高斯分布。</p>
 <p>于是这个分布可以用一组均值和方差表示，神经网络只需要预测这组参数，就能还原出$x_0$</p>
-<h3 id="DDPM">DDPM</h3>
+<h3 id="生成策略与具体样本">生成策略与具体样本</h3>
+<p>为什么扩散模型不是“记住具体样本（instance）”，而是学会一种“生成策略（policy）”？</p>
+<ol>
+<li>从训练目标来看：扩散模型优化的是分布，而非样本，不是学习某个具体的图像A，而是学习如果生成类似A的图像</li>
+<li>从采样方式来看：扩散是一个多步决策序列</li>
+<li>从泛化性角度，如果模型是instance base，那么采样时只会复现训练数据，对那些未训练的数据“不公平”（分布外泛化不公平）</li>
+</ol>
+<h2 id="U-Net">U-Net</h2>
 <blockquote>
-<p>去噪扩散概率模型（Denoising Diffusion Probabilistic Model）</p>
+<p>《U-Net: Convolutional Networks for Biomedical Image Segmentation》2015.5</p>
 </blockquote>
-<p>DDPM，一个常用的构建反向采样器的方法，将复杂的变分推断问题简化为一个简单的去噪任务</p>
+<p>U-Net最初是一个医学图像分割模型，当时的需求是神经网络既要理解全局语义信息（这是什么器官），又要精确定位像素。传统的Encoder-Decoder架构当特征图被压缩到最小时，大量空间信息被丢失了，而U-Net通过引入跳跃连接（下图灰色箭头），让高分辨率的信息直接拷贝到后续部分。</p>
+<p>U型的网络传递全局语义信息，跳跃连接传递局部高分辨像素信息</p>
+<p><img src="/images/UNet.png" class="lazyload" data-srcset="/images/UNet.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="UNet"></p>
+<p>U-Net的优点：</p>
+<ol>
+<li>对称性的架构，能保证输出和输入在空间上严格对齐</li>
+<li>多尺度的处理能力，在扩散过程中，前期高噪声时主要进行全局结构和语义重建，后期需要进行精修细节和清晰度，U-Net可以兼顾全局和局部</li>
+<li>高效，大部分复杂计算（如自注意力）在低分辨率的特征图中，在高分辨率下只做简单操作</li>
+</ol>
+<h2 id="DDPM">DDPM</h2>
+<blockquote>
+<p>《Denoising Diffusion Probabilistic Model》2020.12</p>
+</blockquote>
+<p>用 L2 噪声回归训练，极大提升生成质量，让扩散模型重新成为主流，和GAN质量持平</p>
+<p>DDPM（去噪扩散概率模型），一个常用的构建反向采样器的方法，将复杂的变分推断问题简化为一个简单的去噪任务</p>
 <p>DDPM的简化：</p>
 <ol>
 <li>固定前向过程，前向加噪时使用一个预先设定的固定方差的高斯噪声，无需学习，只需要专注学习反向过程</li>
@@ -2607,7 +2628,7 @@ $$</p>
 </li>
 </ol>
 <p><img src="/images/ddpm.jpg" class="lazyload" data-srcset="/images/ddpm.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="ddpm"></p>
-<h4 id="重参数化">重参数化</h4>
+<h3 id="重参数化">重参数化</h3>
 <blockquote>
 <p>Reparameterization</p>
 </blockquote>
@@ -2621,7 +2642,19 @@ $$</p>
 </li>
 </ol>
 <p>于是采样过程变成了一个与参数 $\theta$ 有关的确定性函数</p>
-<h3 id="DDIM">DDIM</h3>
+<h2 id="基于分数的生成模型">基于分数的生成模型</h2>
+<p>从数学（Energy-Based）的角度，扩散模型本质上上学习数据的分数函数（score function）</p>
+<h3 id="分数函数">分数函数</h3>
+<p>给定概率密度函数$p(x)$，分数函数为<br>
+$$<br>
+s(x) = \nabla_{x} \log p(x)<br>
+$$<br>
+对数 概率密度 关于x的梯度</p>
+<p>分数函数表示任意一点概率密度增长最快的方向，定义了数据流形上的向量场，这个局部信息可以指导我们如何在概率空间中“导航”</p>
+<h2 id="DDIM">DDIM</h2>
+<blockquote>
+<p>《Denoising Diffusion Implicit Models》2020.10</p>
+</blockquote>
 <blockquote>
 <p>想象一下这样的场景：你站在山顶（数据分布），想要到达山谷（噪声分布）。DDPM告诉你必须沿着一条特定的蜿蜒小路走下去，每一步都要随机摇摆。而DDIM发现，实际上存在无数条路径可以到达同一个山谷，其中一些路径是完全笔直的！</p>
 </blockquote>
@@ -2638,43 +2671,51 @@ $$</p>
 <p>最优传输理论：一种研究如何以最小成本将一个概率分布转移为另一种概率分布</p>
 <p>对数似然下界（ELBO）：用于求一个复杂概率分布的后验分布，由于直接计算后验分布十分困难，所以引入变分推断来近似</p>
 <p>信噪比（SNR）：信息/噪声</p>
-<h3 id="生成策略与具体样本">生成策略与具体样本</h3>
-<p>为什么扩散模型不是“记住具体样本（instance）”，而是学会一种“生成策略（policy）”？</p>
-<ol>
-<li>从训练目标来看：扩散模型优化的是分布，而非样本，不是学习某个具体的图像A，而是学习如果生成类似A的图像</li>
-<li>从采样方式来看：扩散是一个多步决策序列</li>
-<li>从泛化性角度，如果模型是instance base，那么采样时只会复现训练数据，对那些未训练的数据“不公平”（分布外泛化不公平）</li>
-</ol>
-<h2 id="U-Net">U-Net</h2>
-<p>U-Net最初是一个医学图像分割模型，当时的需求是神经网络既要理解全局语义信息（这是什么器官），又要精确定位像素。传统的Encoder-Decoder架构当特征图被压缩到最小时，大量空间信息被丢失了，而U-Net通过引入跳跃连接（下图灰色箭头），让高分辨率的信息直接拷贝到后续部分。</p>
-<p>U型的网络传递全局语义信息，跳跃连接传递局部高分辨像素信息</p>
-<p><img src="/images/UNet.png" class="lazyload" data-srcset="/images/UNet.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="UNet"></p>
-<p>U-Net的优点：</p>
-<ol>
-<li>对称性的架构，能保证输出和输入在空间上严格对齐</li>
-<li>多尺度的处理能力，在扩散过程中，前期高噪声时主要进行全局结构和语义重建，后期需要进行精修细节和清晰度，U-Net可以兼顾全局和局部</li>
-<li>高效，大部分复杂计算（如自注意力）在低分辨率的特征图中，在高分辨率下只做简单操作</li>
-</ol>
-<h2 id="基于分数的生成模型">基于分数的生成模型</h2>
-<p>从数学（Energy-Based）的角度，扩散模型本质上上学习数据的分数函数（score function）</p>
-<h3 id="分数函数">分数函数</h3>
-<p>给定概率密度函数$p(x)$，分数函数为<br>
-$$<br>
-s(x) = \nabla_{x} \log p(x)<br>
-$$<br>
-对数 概率密度 关于x的梯度</p>
-<p>分数函数表示任意一点概率密度增长最快的方向，定义了数据流形上的向量场，这个局部信息可以指导我们如何在概率空间中“导航”</p>
+<h2 id="ViT">ViT</h2>
+<blockquote>
+<p>《An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale》2021.6</p>
+</blockquote>
+<p>ViT将Transformer架构引入到CV领域，核心思想是将输入图片切分为一个个小patch，为这些patch标注类别token，将这些pathc和类别一同送入Transformer中，生成分类</p>
+<p>DiT的输入是一个个带噪声的图像patch和条件token（如位置和时间步数），送入Transformer后得到输出token，解码得到每个patch对应的噪声</p>
+<h2 id="LDM">LDM</h2>
+<blockquote>
+<p>《High-Resolution Image Synthesis with Latent Diffusion Models》2022.4</p>
+</blockquote>
 <h2 id="CFG">CFG</h2>
 <blockquote>
-<p>Classifier-Free Guidance</p>
+<p>《Classifier-Free Diffsuion  Guidance》2022.7</p>
 </blockquote>
+<p>CFG（Classifier-Free  Guidance）</p>
 <p>早期Diffusion在无条件生成领域取得非常好的成果，然而条件生成却很一般（没能超越GAN），通过直接在噪声预测网络中加条件，可以保证多样性，但生成的内容模糊、保真度低。朴素的条件生成无法实现低温度采样（不牺牲太多多样性，提高样本的锐度和符合条件的精确性）的原因，是噪声的随机性导致采样路径偏离条件生成的高密度区</p>
 <p><strong>分类器指导</strong>是一种采样时干预技术，先训练一个条件生成的Diffusion，然后基于加入噪声的图片，训练一个噪声分类器。在推理时，分类器会在采样中注入梯度，使得采样朝着高条件似然方向倾斜，提升了样本的保真度，改善了条件遵守。</p>
 <p>但是，额外训练一个分类器指导是十分麻烦的。CFG的作者认为分类器指导的本质，是通过隐式分类器实现的，而score的线性组合是可以等价于分类器的。使用一个单一的神经网络，同时训练条件生成和无条件生成。实现方式是在训练时随机丢弃一些条件信息（0.1～0.2的概率），模型会同时掌握条件和无条件生成。</p>
-<h2 id="ViT">ViT</h2>
-<p>ViT将Transformer架构引入到CV领域，核心思想是将输入图片切分为一个个小patch，为这些patch标注类别token，将这些pathc和类别一同送入Transformer中，生成分类</p>
-<p>DiT的输入是一个个带噪声的图像patch和条件token（如位置和时间步数），送入Transformer后得到输出token，解码得到每个patch对应的噪声</p>
+<h2 id="DPM-Solver">DPM-Solver</h2>
+<blockquote>
+<p>《DPM-Solver: A Fast ODE Solver for Diffusion Probabilistic Model Sampling in Around 10 Steps》2022.10</p>
+</blockquote>
+<h2 id="EDM">EDM</h2>
+<blockquote>
+<p>《Elucidating the Design Space of Diffusion-Based Generative Models》2022.10</p>
+</blockquote>
+<p>EDM（Elucidated Diffusion Model）= 对扩散模型“从第一性原理重新推导 + 给出更优训练和采样策略”</p>
+<blockquote>
+<p>第一性原理：从零开始从基础的不可再推导的基本原理出发，通过逻辑推演构建完整结论的方式，比如《几何原本》</p>
+</blockquote>
+<p>动机：</p>
+<ol>
+<li>当时的扩散模型工作理论十分复杂，噪声设计随意、loss权重不平衡、采样器多且乱</li>
+<li>希望从实际训练的角度，聚焦训练和采样中的“有形”对象</li>
+</ol>
+<p>创新点：</p>
+<ol>
+<li>使用对数正态分布为噪声</li>
+<li>统一采样器理论，均基于ODE/SDE一致理论</li>
+<li>改进损害函数</li>
+</ol>
 <h2 id="Flow-Matching">Flow Matching</h2>
+<blockquote>
+<p>《Flow Matching for Generative Modeling》2022.10</p>
+</blockquote>
 <p>扩散模型将一个复杂的抽样转为一系列的简单抽样，传统的UNet通过预测噪声得到最终样本，这个过程是不确定的。但流模型将简单分布转为负责分布的过程是一个确定的可逆过程，给定初始值和参数，流模型的输出结果是确定的</p>
 <p>而这个可逆过程，一般是由一个ODE定义的<br>
 $$<br>
@@ -2687,6 +2728,9 @@ $$<br>
 相较于DDPM和DDIM，Flow Matching更简洁、直观、可逆</p>
 <p><img src="/images/flowmatching.jpg" class="lazyload" data-srcset="/images/flowmatching.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="flowmatching"></p>
 <h2 id="DreamBooth">DreamBooth</h2>
+<blockquote>
+<p>《DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation》2023.3</p>
+</blockquote>
 <p>目前huggingface diffusers库提供的Flux训练均基于DreamBooth，其核心机制是：</p>
 <ul>
 <li>稀有标识符：在instance prompt中插入一些token，如 <code>a dog</code> 变成 <code>a [V]dog</code>，使得这个词会变得很稀有，训练效果会更好</li>
@@ -2715,12 +2759,6 @@ $$<br>
 <h3 id="检查VAE">检查VAE</h3>
 <p>只加载vae，将图片编码为latent，再解码回图像，这里使用Flux的VAE</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> diffusers <span class="keyword">import</span> AutoencoderKL</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">vae = AutoencoderKL.from_pretrained(<span class="string">&quot;black-forest-labs/FLUX.1-dev&quot;</span>, subfolder=<span class="string">&quot;vae&quot;</span>, torch_dtype=torch.bfloat16)</span><br><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line">vae = vae.to(device)</span><br><span class="line"></span><br><span class="line">image_path = <span class="string">&quot;0.png&quot;</span></span><br><span class="line">image = Image.<span class="built_in">open</span>(image_path).convert(<span class="string">&quot;RGB&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Resize to a size divisible by 16 (e.g., 1024x1024 for Flux)</span></span><br><span class="line">image = image.resize((<span class="number">1024</span>, <span class="number">1024</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Preprocess image to tensor in [-1, 1]</span></span><br><span class="line">img_array = np.array(image).astype(np.float32) / <span class="number">255.0</span></span><br><span class="line">img_array = img_array * <span class="number">2.0</span> - <span class="number">1.0</span></span><br><span class="line">img_tensor = torch.from_numpy(img_array).permute(<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>).unsqueeze(<span class="number">0</span>)  <span class="comment"># Shape: (1, 3, H, W)</span></span><br><span class="line">img_tensor = img_tensor.to(device, dtype=vae.dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Encode the image to latents</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    latent_dist = vae.encode(img_tensor)</span><br><span class="line">    <span class="comment"># Use mode (mean) for better reconstruction</span></span><br><span class="line">    latents = latent_dist.latent_dist.mode()</span><br><span class="line">    <span class="comment"># Apply scale and shift (specific to Flux VAE)</span></span><br><span class="line">    latents = latents * vae.config.scaling_factor + vae.config.shift_factor</span><br><span class="line"></span><br><span class="line"><span class="comment"># Decode the latents back to image</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    <span class="comment"># Reverse shift and scale</span></span><br><span class="line">    latents_for_decode = latents / vae.config.scaling_factor + vae.config.shift_factor</span><br><span class="line">    decoded = vae.decode(latents_for_decode).sample</span><br><span class="line"></span><br><span class="line"><span class="comment"># Postprocess decoded tensor to [0, 1] and convert to PIL image</span></span><br><span class="line">decoded = (decoded + <span class="number">1.0</span>) / <span class="number">2.0</span></span><br><span class="line">decoded = torch.clamp(decoded, <span class="number">0.0</span>, <span class="number">1.0</span>)</span><br><span class="line">decoded_img = (decoded[<span class="number">0</span>].<span class="built_in">float</span>().permute(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>).cpu().numpy() * <span class="number">255</span>).astype(np.uint8)</span><br><span class="line">output_image = Image.fromarray(decoded_img)</span><br><span class="line"></span><br><span class="line">output_image.save(<span class="string">&quot;0-re.png&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="训练">训练</h2>
-<h3 id="Flux-DreamBooth-LoRA">Flux DreamBooth LoRA</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/huggingface/diffusers/blob/main/examples/advanced_diffusion_training/README_flux.md">advanced_diffusion_training</a></p>
-<p>基于代码<a target="_blank" rel="noopener" href="https://github.com/huggingface/diffusers/blob/main/examples/advanced_diffusion_training/train_dreambooth_lora_flux_advanced.py">train_dreambooth_lora_flux_advanced.py</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># train.sh</span></span><br><span class="line"><span class="built_in">export</span> MODEL_NAME=<span class="string">&quot;black-forest-labs/FLUX.1-dev&quot;</span></span><br><span class="line"><span class="built_in">export</span> DATASET_NAME=<span class="string">&quot;Reuben-Sun/ATDAN-pictures&quot;</span></span><br><span class="line"><span class="built_in">export</span> DATASET_PATH=<span class="string">&quot;ATDAN-pictures&quot;</span></span><br><span class="line"><span class="built_in">export</span> OUTPUT_DIR=<span class="string">&quot;Flux-LoRA-ATDAN&quot;</span></span><br><span class="line"><span class="built_in">export</span> CUDA_VISIBLE_DEVICES=<span class="string">&#x27;0,1,2,3&#x27;</span></span><br><span class="line"></span><br><span class="line">accelerate launch \</span><br><span class="line">    --num_processes=4 \</span><br><span class="line">    --num_machines=1 \</span><br><span class="line">    --multi_gpu \</span><br><span class="line">    train_dreambooth_lora_flux_advanced.py \</span><br><span class="line">    --pretrained_model_name_or_path=<span class="variable">$MODEL_NAME</span> \</span><br><span class="line">    --instance_data_dir=<span class="variable">$DATASET_PATH</span> \</span><br><span class="line">    --instance_prompt=<span class="string">&quot;ATDAN&quot;</span> \</span><br><span class="line">    --validation_prompt=<span class="string">&quot;ATDAN, a vibrant blue and white anime girl with long white hair and a crown on her head. Her eyes are glowing with a yellow hue, adding a pop of color to the scene. Her hands are clasped in front of her face, while her hands are held together in a praying position. The background is dark, creating a stark contrast to the girl&#x27;s outfit&quot;</span> \</span><br><span class="line">    --validation_epochs=20 \</span><br><span class="line">    --output_dir=<span class="variable">$OUTPUT_DIR</span> \</span><br><span class="line">    --mixed_precision=<span class="string">&quot;bf16&quot;</span> \</span><br><span class="line">    --resolution=1024 \</span><br><span class="line">    --train_batch_size=2 \</span><br><span class="line">    --repeats=1 \</span><br><span class="line">    --report_to=<span class="string">&quot;tensorboard&quot;</span>\</span><br><span class="line">    --gradient_accumulation_steps=1 \</span><br><span class="line">    --gradient_checkpointing \</span><br><span class="line">    --learning_rate=1e-4 \</span><br><span class="line">    --optimizer=<span class="string">&quot;adamW&quot;</span> \</span><br><span class="line">    --lr_scheduler=<span class="string">&quot;constant&quot;</span> \</span><br><span class="line">    --lr_warmup_steps=0 \</span><br><span class="line">    --rank=32 \</span><br><span class="line">    --lora_alpha=16 \</span><br><span class="line">    --max_train_steps=4000 \</span><br><span class="line">    --checkpointing_steps=200 \</span><br><span class="line">    --checkpoints_total_limit=10 \</span><br><span class="line">    --seed=42 \</span><br><span class="line">    --guidance_scale=1.0 </span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># inference.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> diffusers <span class="keyword">import</span> AutoPipelineForText2Image</span><br><span class="line"><span class="keyword">from</span> safetensors.torch <span class="keyword">import</span> load_file</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">&quot;Inference script for Flux LoRA model&quot;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--model_id&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, default=<span class="string">&#x27;black-forest-labs/FLUX.1-dev&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--lora_name&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, required=<span class="literal">True</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&#x27;--lora_scale&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">1.0</span>, <span class="built_in">help</span>=<span class="string">&#x27;Scale for LoRA weights&#x27;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--prompt&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, required=<span class="literal">True</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--steps&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">25</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--seed&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, default=<span class="number">0</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--guidance_scale&quot;</span>, <span class="built_in">type</span>=<span class="built_in">float</span>, default=<span class="number">7.5</span>)</span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Load the model</span></span><br><span class="line">    model = AutoPipelineForText2Image.from_pretrained(args.model_id, torch_dtype=torch.bfloat16).to(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">    <span class="comment"># Load LoRA weights</span></span><br><span class="line">    model.load_lora_weights(args.lora_name, weight_name=<span class="string">&quot;pytorch_lora_weights.safetensors&quot;</span>)</span><br><span class="line">    model.set_adapters(<span class="string">&quot;default_0&quot;</span>, args.lora_scale) </span><br><span class="line"></span><br><span class="line">    <span class="comment"># Inference</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        generator = torch.Generator(device=model.device).manual_seed(args.seed)</span><br><span class="line">        output_image = model(prompt=args.prompt, num_inference_steps=args.steps, guidance_scale=args.guidance_scale, generator=generator).images[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    output_image.save(<span class="string">&#x27;output.png&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/zsc/diffusion_tutorial/tree/main">diffusion_tutorial</a></p>
 <p>《Step-by-Step Diffusion: An Elementary Tutorial》</p>
@@ -2749,10 +2787,10 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-10-28T08:57:23+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-05T08:51:22+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年10月28日</p>
+    <p>更新于：2025年11月5日</p>
   </a>
 </div>
 
@@ -2910,7 +2948,7 @@ ASI（超级人工智能）：在几乎所有领域都远超人类智能的系�
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E5%8E%9F%E7%90%86"><span class="toc-text">扩散原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%89%A9%E6%95%A3"><span class="toc-text">高斯扩散</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DDPM"><span class="toc-text">DDPM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96"><span class="toc-text">重参数化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DDIM"><span class="toc-text">DDIM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5%E4%B8%8E%E5%85%B7%E4%BD%93%E6%A0%B7%E6%9C%AC"><span class="toc-text">生成策略与具体样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-text">U-Net</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">基于分数的生成模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">分数函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CFG"><span class="toc-text">CFG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViT"><span class="toc-text">ViT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flow-Matching"><span class="toc-text">Flow Matching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DreamBooth"><span class="toc-text">DreamBooth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87-prompt"><span class="toc-text">如何组织 prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I"><span class="toc-text">T2I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I-LoRA"><span class="toc-text">T2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA"><span class="toc-text">I2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA-Controlnet"><span class="toc-text">I2I LoRA Controlnet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E9%95%BF%E7%9A%84prompt"><span class="toc-text">更长的prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5VAE"><span class="toc-text">检查VAE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83"><span class="toc-text">训练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flux-DreamBooth-LoRA"><span class="toc-text">Flux DreamBooth LoRA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E5%8E%9F%E7%90%86"><span class="toc-text">扩散原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%89%A9%E6%95%A3"><span class="toc-text">高斯扩散</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E7%AD%96%E7%95%A5%E4%B8%8E%E5%85%B7%E4%BD%93%E6%A0%B7%E6%9C%AC"><span class="toc-text">生成策略与具体样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-text">U-Net</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDPM"><span class="toc-text">DDPM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96"><span class="toc-text">重参数化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">基于分数的生成模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">分数函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDIM"><span class="toc-text">DDIM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">相关概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViT"><span class="toc-text">ViT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDM"><span class="toc-text">LDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CFG"><span class="toc-text">CFG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DPM-Solver"><span class="toc-text">DPM-Solver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EDM"><span class="toc-text">EDM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flow-Matching"><span class="toc-text">Flow Matching</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DreamBooth"><span class="toc-text">DreamBooth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87-prompt"><span class="toc-text">如何组织 prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I"><span class="toc-text">T2I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T2I-LoRA"><span class="toc-text">T2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA"><span class="toc-text">I2I LoRA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I2I-LoRA-Controlnet"><span class="toc-text">I2I LoRA Controlnet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E9%95%BF%E7%9A%84prompt"><span class="toc-text">更长的prompt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5VAE"><span class="toc-text">检查VAE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3454,7 +3492,7 @@ ASI（超级人工智能）：在几乎所有领域都远超人类智能的系�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-10-28T08:57:23.595Z","articleSection":"ai","keywords":"Python,Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-11-05T08:51:22.042Z","articleSection":"ai","keywords":"Python,Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
