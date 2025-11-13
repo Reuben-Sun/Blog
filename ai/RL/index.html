@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-11-12T18:10:25.000Z">
-<meta property="article:modified_time" content="2025-11-13T08:20:26.738Z">
+<meta property="article:modified_time" content="2025-11-13T09:05:56.995Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="RL">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1763022028384),
+    lastupdate: new Date(1763024758544),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2611,16 +2611,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <p>Deep Q-Network</p>
 </blockquote>
 <p>Q-Learning的深度学习版本，用神经网络去模拟Q表格</p>
-<h4 id="PPO">PPO</h4>
-<p>近端策略优化（proximal policy optimization，PPO）</p>
-<ul>
-<li>同策略（on-policy）：学习的策略和与环境交互的策略是同一个，如PPO</li>
-<li>异策略（off-policy）：学习的策略和与环境交互的策略可以不同，如Q-Learning、DQN</li>
-</ul>
-<blockquote>
-<p>以学下棋为例，如果一个人每下一步棋，就有老师给他打分，这个棋局是自己下出来的，就是同策略。而如果是观察他人下棋，老师告诉你哪一步是好棋/坏棋，这就是异策略</p>
-</blockquote>
 <h4 id="策略梯度">策略梯度</h4>
+<blockquote>
+<p>Policy Gradient</p>
+</blockquote>
 <p>策略（policy）是智能体的决策规则，是智能体在状态 $s$ 下采取行动 $a$ 的概率，由参数 $\theta$ 控制<br>
 $$<br>
 \pi_\theta(a|s)<br>
@@ -2631,6 +2625,44 @@ $$<br>
 <li>如果一个动作回报高，则增加这个动作的概率</li>
 <li>如果一个动作回报低，则降低这个动作的概率</li>
 </ol>
+<p>根据学习策略和环境策略，可以分为</p>
+<ul>
+<li>同策略（on-policy）：学习的策略和与环境交互的策略是同一个，如PPO</li>
+<li>异策略（off-policy）：学习的策略和与环境交互的策略可以不同，如Q-Learning、DQN</li>
+</ul>
+<blockquote>
+<p>以学下棋为例，如果一个人每下一步棋，就有老师给他打分，这个棋局是自己下出来的，就是同策略。而如果是观察他人下棋，老师告诉你哪一步是好棋/坏棋，这就是异策略</p>
+</blockquote>
+<h4 id="PPO">PPO</h4>
+<p>近端策略优化（proximal policy optimization，PPO），目标是做保守的策略更新，用替换目标（surrogate objective）衡量新策略相对旧策略的改进，并用clipping或KL惩罚来防止更新幅度过大，兼顾学习速度和稳定性</p>
+<blockquote>
+<p>以学下棋为例：</p>
+<p>采样：下棋</p>
+<p>打分：老师评价下的好不好</p>
+<p>比较新旧策略：学生修改下法，并评估新旧策略变化 $r = \frac{\pi_{new}}{\pi_{old}}$</p>
+<p>clipping：从“当头炮”改为“马先跳”，概率改动太大，舍弃这次</p>
+<p>优势函数：老师不仅告诉学生这一步走的好/坏，还要告诉这步棋比平均水准高多少</p>
+<p>更新策略：根据优势函数和概率比 $r$ ，微调自己的策略</p>
+</blockquote>
+<h4 id="GRPO">GRPO</h4>
+<p>组相对策略优化（Group Relative Policy Optimization，GRPO），最早源自DeepSeek，用组内相对分数来构造优势，省去价值网络</p>
+<blockquote>
+<p>以学下棋为例：</p>
+<ol>
+<li>
+<p>对于一个局面，列举了多种下法，如走炮、跳马、拱卒</p>
+</li>
+<li>
+<p>老师评价相对分数，如走炮最好，然后是跳马，最差是拱卒</p>
+</li>
+<li>
+<p>构建相对优势（走炮不需要知道自己具体多少分，只需要知道比平均值高，是正的，而拱卒的优势是负的）</p>
+</li>
+<li>
+<p>用概率比 $r = \frac{\pi_{new}}{\pi_{old}}$ 更新策略</p>
+</li>
+</ol>
+</blockquote>
 <h2 id="Reward-Model">Reward Model</h2>
 <p>Reward Model根据输入输出类别，可以分为</p>
 <ul>
@@ -2873,7 +2905,7 @@ $$</p>
 $$</p>
 <h3 id="Flow-GRPO">Flow-GRPO</h3>
 <blockquote>
-<p>《Flow-GRPO: Training Flow Matching Models via Online RL》</p>
+<p>《Flow-GRPO: Training Flow Matching Models via Online RL》2025.7</p>
 </blockquote>
 <p><strong>动机</strong></p>
 <ol>
@@ -2893,7 +2925,7 @@ $$</p>
 </ul>
 <h3 id="Pref-GRPO">Pref-GRPO</h3>
 <blockquote>
-<p>《Pref-GRPO: Pairwise Preference Reward-Based GRPO for Stable Text-to-Image Reinforcement Learning》</p>
+<p>《Pref-GRPO: Pairwise Preference Reward-Based GRPO for Stable Text-to-Image Reinforcement Learning》2025.8</p>
 </blockquote>
 <h3 id="DiffusionNFT">DiffusionNFT</h3>
 <blockquote>
@@ -2919,6 +2951,8 @@ $$<br>
 \epsilon_\text{CFG} = \epsilon_\text{uncond} + w \cdot (\epsilon_\text{cond} - \epsilon_\text{uncond})<br>
 $$<br>
 目前的GRPO RL依赖于CFG，为了提升效率需要移除这部分</p>
+<h4 id="动机-4">动机</h4>
+<p>提出一种新的RL范式，不在反向过程，而是直接在前向扩散过程上执行策略优化，以克服GRPO的种种问题</p>
 <h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/">easy-rl</a></p>
 
@@ -2945,7 +2979,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-13T08:20:26+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-13T09:05:56+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2025年11月13日</p>
@@ -3104,7 +3138,7 @@ $$
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">强化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9FRL%E7%AE%97%E6%B3%95"><span class="toc-text">传统RL算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Q-Learning"><span class="toc-text">Q-Learning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DQN"><span class="toc-text">DQN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PPO"><span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6"><span class="toc-text">策略梯度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward-Model"><span class="toc-text">Reward Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%91%E6%88%98"><span class="toc-text">挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HPSv2"><span class="toc-text">HPSv2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PickScore"><span class="toc-text">PickScore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ImageReward"><span class="toc-text">ImageReward</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-2"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-text">数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reward%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="toc-text">Reward模型架构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HPSv3"><span class="toc-text">HPSv3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reward%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84-2"><span class="toc-text">Reward模型架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Loss%E8%AE%BE%E8%AE%A1"><span class="toc-text">Loss设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#KL-divergence"><span class="toc-text">KL-divergence</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Bradley%E2%80%93Terry"><span class="toc-text">Bradley–Terry</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnifiedReward"><span class="toc-text">UnifiedReward</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-3"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9-2"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Prompt"><span class="toc-text">Prompt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OneReward"><span class="toc-text">OneReward</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnifiedReward-Think"><span class="toc-text">UnifiedReward Think</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Prompt-2"><span class="toc-text">Prompt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reward-Dance"><span class="toc-text">Reward Dance</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RM%E6%9E%84%E5%BB%BA"><span class="toc-text">RM构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RM%E6%B5%8B%E8%AF%84"><span class="toc-text">RM测评</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RLFT%E6%B5%8B%E8%AF%84"><span class="toc-text">RLFT测评</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RL%E6%96%B9%E6%B3%95"><span class="toc-text">RL方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ImageReward-2"><span class="toc-text">ImageReward</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ReFL"><span class="toc-text">ReFL</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flow-GRPO"><span class="toc-text">Flow-GRPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pref-GRPO"><span class="toc-text">Pref-GRPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DiffusionNFT"><span class="toc-text">DiffusionNFT</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GRPO-RL%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">GRPO RL的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E5%90%91%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text">前向不一致</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E5%99%A8%E9%99%90%E5%88%B6"><span class="toc-text">求解器限制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CFG"><span class="toc-text">CFG</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-text">强化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9FRL%E7%AE%97%E6%B3%95"><span class="toc-text">传统RL算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Q-Learning"><span class="toc-text">Q-Learning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DQN"><span class="toc-text">DQN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6"><span class="toc-text">策略梯度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PPO"><span class="toc-text">PPO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRPO"><span class="toc-text">GRPO</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward-Model"><span class="toc-text">Reward Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%91%E6%88%98"><span class="toc-text">挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HPSv2"><span class="toc-text">HPSv2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PickScore"><span class="toc-text">PickScore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ImageReward"><span class="toc-text">ImageReward</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-2"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-text">数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reward%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="toc-text">Reward模型架构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HPSv3"><span class="toc-text">HPSv3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reward%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84-2"><span class="toc-text">Reward模型架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Loss%E8%AE%BE%E8%AE%A1"><span class="toc-text">Loss设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#KL-divergence"><span class="toc-text">KL-divergence</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Bradley%E2%80%93Terry"><span class="toc-text">Bradley–Terry</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnifiedReward"><span class="toc-text">UnifiedReward</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-3"><span class="toc-text">动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9-2"><span class="toc-text">创新点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Prompt"><span class="toc-text">Prompt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OneReward"><span class="toc-text">OneReward</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnifiedReward-Think"><span class="toc-text">UnifiedReward Think</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Prompt-2"><span class="toc-text">Prompt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reward-Dance"><span class="toc-text">Reward Dance</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RM%E6%9E%84%E5%BB%BA"><span class="toc-text">RM构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RM%E6%B5%8B%E8%AF%84"><span class="toc-text">RM测评</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RLFT%E6%B5%8B%E8%AF%84"><span class="toc-text">RLFT测评</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RL%E6%96%B9%E6%B3%95"><span class="toc-text">RL方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ImageReward-2"><span class="toc-text">ImageReward</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ReFL"><span class="toc-text">ReFL</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flow-GRPO"><span class="toc-text">Flow-GRPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pref-GRPO"><span class="toc-text">Pref-GRPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DiffusionNFT"><span class="toc-text">DiffusionNFT</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GRPO-RL%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">GRPO RL的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E5%90%91%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text">前向不一致</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B1%82%E8%A7%A3%E5%99%A8%E9%99%90%E5%88%B6"><span class="toc-text">求解器限制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CFG"><span class="toc-text">CFG</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA-4"><span class="toc-text">动机</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 </section>
 
@@ -3648,7 +3682,7 @@ $$
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/RL/","name":"强化学习与扩散模型"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"强化学习与扩散模型","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/RL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/RL/","wordCount":0,"datePublished":"2025-11-12T18:10:25.000Z","dateModified":"2025-11-13T08:20:26.738Z","articleSection":"ai","keywords":"RL","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/RL/","name":"强化学习与扩散模型"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"强化学习与扩散模型","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/RL/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/RL/","wordCount":0,"datePublished":"2025-11-12T18:10:25.000Z","dateModified":"2025-11-13T09:05:56.995Z","articleSection":"ai","keywords":"RL","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
