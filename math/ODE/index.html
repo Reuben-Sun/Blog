@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-08-03T14:07:25.000Z">
-<meta property="article:modified_time" content="2025-11-13T04:06:04.270Z">
+<meta property="article:modified_time" content="2025-11-13T07:31:51.916Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="高等数学">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1763006770690),
+    lastupdate: new Date(1763019122847),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2565,7 +2565,7 @@ $$</p>
 <li>常微分方程（ODE），只涉及一个自变量的导数</li>
 <li>偏微分方程（PDE），涉及多个自变量的偏导数</li>
 </ul>
-<h2 id="解法">解法</h2>
+<h2 id="解析解法">解析解法</h2>
 <h3 id="分离变量法">分离变量法</h3>
 <p>适用于形如 $\frac{dy}{dx} = f(x)g(y)$ 的方程</p>
 <p>例：求解 $\frac{dy}{dx} = xy$ ，初始条件 $y(0)=1$</p>
@@ -2666,7 +2666,16 @@ $$<br>
 \frac{dy}{dx}=P(x)y + Q(x)y^n , (n \neq 0, 1)<br>
 $$</p>
 <h2 id="欧拉方法">欧拉方法</h2>
+<p>大部分情况下无法解出解析解，而是用数值解模拟出 key-value 对</p>
+<h3 id="一阶欧拉方法">一阶欧拉方法</h3>
 <p>欧拉方法是一种简单的数值方法，用于求解ODE的初值问题</p>
+<p>假设时间步长为 $\Delta t$ ，则：<br>
+$$<br>
+x_{t+\Delta t}=x_t + v(x_t, t)\Delta t<br>
+$$<br>
+其物理意义是，每一小段时间都朝着当前方向匀速走一小段时间。</p>
+<p>误差量级为 $O(\Delta t^2)$ ，步长要非常小才能控制误差，但是胜在使用便捷，只需要计算一次速度</p>
+<h4 id="例子">例子</h4>
 <p>例：用欧拉方法求下列式子在$[0, 1]$的解，步长为0.2<br>
 $$<br>
 \frac{dy}{dx} = -2x y, \quad y(0) = 1<br>
@@ -2735,6 +2744,48 @@ $$</p>
 </tr>
 </tbody>
 </table>
+<h3 id="二阶欧拉方法">二阶欧拉方法</h3>
+<blockquote>
+<p>Heun’s method（改进欧拉方法），核心思想是不仅看当前速度，还要预测未来速度的变化趋势</p>
+</blockquote>
+<ol>
+<li>先用欧拉法预测一个临时点</li>
+</ol>
+<p>$$<br>
+\tilde{x}_{t+\Delta t} = x_t + v(x_t, t) \Delta t<br>
+$$</p>
+<ol start="2">
+<li>再估计未来的速度</li>
+</ol>
+<p>$$<br>
+v_2 = v(\tilde{x}_{t+\Delta t}, t+\Delta t)<br>
+$$</p>
+<ol start="3">
+<li>最终结果取平均</li>
+</ol>
+<p>$$<br>
+x_{t+\Delta t} = x_t + \frac{1}{2}(v(x_t, t) + v_2) \Delta t<br>
+$$</p>
+<p>局部误差降低到 $O(\Delta t^3)$，全局误差  $O(\Delta t^2)$</p>
+<blockquote>
+<p>注意，$\Delta t$ 通常是小于1的数，所以 $\Delta t^3 &lt; \Delta t^2$</p>
+</blockquote>
+<h3 id="四阶">四阶</h3>
+<blockquote>
+<p>Runge-Kutta 4 ，更高阶的欧拉方法是沿着曲线移动的，用计算次数来换误差，由于大步幅误差也很低，所以可以减少采样次数</p>
+</blockquote>
+<p>$$<br>
+\begin{aligned}<br>
+k_1 &amp;= v(x_t, t) \<br>
+k_2 &amp;= v(x_t + \frac{\Delta t}{2} k_1, t + \frac{\Delta t}{2}) \<br>
+k_3 &amp;= v(x_t + \frac{\Delta t}{2} k_2, t + \frac{\Delta t}{2}) \<br>
+k_4 &amp;= v(x_t + \Delta t k_3, t + \Delta t)<br>
+\end{aligned}<br>
+$$</p>
+<p>$$<br>
+x_{t+\Delta t} = x_t + \frac{\Delta t}{6}(k_1 + 2k_2 + 2k_3 + k_4)<br>
+$$</p>
+<p>误差降低至 $O(\Delta t^5)$</p>
 
   </div>
   
@@ -2759,7 +2810,7 @@ $$</p>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-13T04:06:04+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-13T07:31:51+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2025年11月13日</p>
@@ -2924,7 +2975,7 @@ follow 周舒畅的知乎文章，包含AI辅助创作
 
 
   <div class='content'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-text">微分方程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95"><span class="toc-text">解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%A6%BB%E5%8F%98%E9%87%8F%E6%B3%95"><span class="toc-text">分离变量法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2%E6%B3%95"><span class="toc-text">变量替换法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AF%E5%8A%AA%E5%88%A9%E6%96%B9%E7%A8%8B"><span class="toc-text">伯努利方程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A7%E6%8B%89%E6%96%B9%E6%B3%95"><span class="toc-text">欧拉方法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-text">微分方程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E8%A7%A3%E6%B3%95"><span class="toc-text">解析解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%A6%BB%E5%8F%98%E9%87%8F%E6%B3%95"><span class="toc-text">分离变量法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E6%9B%BF%E6%8D%A2%E6%B3%95"><span class="toc-text">变量替换法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AF%E5%8A%AA%E5%88%A9%E6%96%B9%E7%A8%8B"><span class="toc-text">伯努利方程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A7%E6%8B%89%E6%96%B9%E6%B3%95"><span class="toc-text">欧拉方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%98%B6%E6%AC%A7%E6%8B%89%E6%96%B9%E6%B3%95"><span class="toc-text">一阶欧拉方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E9%98%B6%E6%AC%A7%E6%8B%89%E6%96%B9%E6%B3%95"><span class="toc-text">二阶欧拉方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E9%98%B6"><span class="toc-text">四阶</span></a></li></ol></li></ol>
   </div>
 </section>
 
@@ -3468,7 +3519,7 @@ follow 周舒畅的知乎文章，包含AI辅助创作
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/math/","name":"math"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/math/ODE/","name":"常微分方程"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"常微分方程","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/math/ODE/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/math/ODE/","wordCount":0,"datePublished":"2025-08-03T14:07:25.000Z","dateModified":"2025-11-13T04:06:04.270Z","articleSection":"math","keywords":"高等数学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/math/","name":"math"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/math/ODE/","name":"常微分方程"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"常微分方程","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/math/ODE/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/math/ODE/","wordCount":0,"datePublished":"2025-08-03T14:07:25.000Z","dateModified":"2025-11-13T07:31:51.916Z","articleSection":"math","keywords":"高等数学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
