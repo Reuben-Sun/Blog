@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-01-17T14:45:25.000Z">
-<meta property="article:modified_time" content="2025-11-13T07:32:00.639Z">
+<meta property="article:modified_time" content="2025-11-13T08:20:26.735Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="Diffusion">
 <meta property="article:tag" content="Python">
@@ -2114,7 +2114,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1763019122847),
+    lastupdate: new Date(1763022028384),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2815,6 +2815,7 @@ $$<br>
 <p>《Classifier-Free Diffsuion  Guidance》2022.7</p>
 </blockquote>
 <h4 id="动机-5">动机</h4>
+<p>CFG希望扩散模型既可以生成高质量图像，又可以遵循prompt条件</p>
 <p>早期Diffusion在无条件生成领域取得非常好的成果，然而条件生成却很一般（没能超越GAN），通过直接在噪声预测网络中加条件，可以保证多样性，但生成的内容模糊、保真度低。朴素的条件生成无法实现低温度采样（不牺牲太多多样性，提高样本的锐度和符合条件的精确性）的原因，是噪声的随机性导致采样路径偏离条件生成的高密度区</p>
 <h4 id="创新点-5">创新点</h4>
 <ol>
@@ -2823,12 +2824,13 @@ $$<br>
 </ol>
 <h4 id="关键技术-4">关键技术</h4>
 <h5 id="CFG-2">CFG</h5>
-<p><strong>分类器指导</strong>是一种采样时干预技术，先训练一个条件生成的Diffusion，然后基于加入噪声的图片，训练一个噪声分类器。在推理时，分类器会在采样中注入梯度，使得采样朝着高条件似然方向倾斜，提升了样本的保真度，改善了条件遵守。</p>
-<p>条件生成：<br>
+<p>CFG让模型同时学习有条件和无条件生成，并用一个引导系数连接两者<br>
 $$<br>
-p_\theta(x_{t-1}|x_t,c)<br>
+\epsilon_\text{CFG} = \epsilon_\text{uncond} + w \cdot (\epsilon_\text{cond} - \epsilon_\text{uncond})<br>
 $$<br>
-CFG鼓励模型去生成 $\log p(c|x)$ 高的 $x$</p>
+当 $w &gt; 1$ ，模型会更强烈地遵循文本条件</p>
+<p>当 $w =0$，模型只会无条件生成</p>
+<p>有条件和无条件生成是同一个模型共享网络参数，但是在训练和推理上，每次都需要进行两次前向计算（无条件和有条件），再将两者合并</p>
 <h5 id="丢弃训练">丢弃训练</h5>
 <p>额外训练一个分类器指导是十分麻烦的。CFG的作者认为分类器指导的本质，是通过隐式分类器实现的，而score的线性组合是可以等价于分类器的。使用一个单一的神经网络，同时训练条件生成和无条件生成。实现方式是在训练时随机丢弃一些条件信息（0.1～0.2的概率），模型会同时掌握条件和无条件生成。</p>
 <h4 id="条件生成">条件生成</h4>
@@ -3110,7 +3112,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-13T07:32:00+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-11-13T08:20:26+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2025年11月13日</p>
@@ -3815,7 +3817,7 @@ ASI（超级人工智能）：在几乎所有领域都远超人类智能的系�
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-11-13T07:32:00.639Z","articleSection":"ai","keywords":"Python,Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/ai/","name":"ai"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/ai/diffusion/","name":"Diffusion"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"Diffusion","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/ai/diffusion/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/ai/diffusion/","wordCount":0,"datePublished":"2025-01-17T14:45:25.000Z","dateModified":"2025-11-13T08:20:26.735Z","articleSection":"ai","keywords":"Python,Diffusion","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
