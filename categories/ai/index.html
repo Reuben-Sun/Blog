@@ -2111,7 +2111,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1777280933330),
+    lastupdate: new Date(1788238284192),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2404,6 +2404,75 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
     
     
+      
+        
+          <div class='post-wrapper'>
+            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
+  <link itemprop="mainEntityOfPage" href="https://reubensun.com/ai/AI工作经验/">
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ReubenSun">
+  </span>
+  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
+    <meta itemprop="name" content="ReubenSun">
+    <meta itemprop="description" content="Reuben的笔记博客">
+  </span>
+  
+  
+  
+    <span hidden>
+      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
+    </span>
+  
+  
+    
+    <h2 class="article-title"  itemprop="name headline">
+      <a href="/ai/AI%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C/"  itemprop="url">
+        AI 常用术语
+      </a>
+    </h2>
+  
+  <div class='md article-desc' itemprop="articleBody">
+    
+      
+        AI 工作经验
+记录一些AI常用术语
+思考我现在做的事情和其他人比好处是什么
+用好回流数据
+有人调侃过现在AI行业，模型是数据，数据是Infra，Infra是算法。在搭建好回流数据流程后，我们要真的用回流数据进行模型测评和训练，而且一定要有一个量化指标（消融实验），来统计回流数据对模型效果的影响
+关注主观指标
+模型训练时不能只关注客观指标，很多客观指标可能已经有非常严重的hacking，单纯...
+      
+    
+  </div>
+  
+    <div class='meta-v3' line_style='solid'>
+      <div>
+        
+        <time itemprop="dateCreated datePublished" datetime="2026-09-01T12:30:25+00:00">2026-09-01</time>
+        
+          <span class="dot"></span>
+          <a class="category-link" href="/categories/ai/">ai</a>
+          
+            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/ai/" itemprop="url"><span itemprop="name">ai</span></a>
+            </span>
+          
+        
+      </div>
+      
+        <div>
+          <a class='readmore' href='/ai/AI%E5%B7%A5%E4%BD%9C%E7%BB%8F%E9%AA%8C/' itemprop="url">
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+  
+
+</div>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -3046,78 +3115,24 @@ from openai import OpenAI client = OpenAI(api_key=&quot;xxxxx&quot;, base_url=&q
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow floatable blur"  itemscope itemtype="http://schema.org/Article" >
-  <link itemprop="mainEntityOfPage" href="https://reubensun.com/ai/Pytorch/">
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="ReubenSun">
-  </span>
-  <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="ReubenSun">
-    <meta itemprop="description" content="Reuben的笔记博客">
-  </span>
-  
-  
-  
-    <span hidden>
-      <meta itemprop="image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
-    </span>
-  
-  
-    
-    <h2 class="article-title"  itemprop="name headline">
-      <a href="/ai/Pytorch/"  itemprop="url">
-        PyTorch学习记录
-      </a>
-    </h2>
-  
-  <div class='md article-desc' itemprop="articleBody">
-    
-      
-        PyTorch学习记录
-PyTorch是一个Python机器学习框架
-张量
-创建一个张量
-torch.tensor([1,2,3])		# tensor([1, 2, 3])
-torch.zeros(2,3)  # tensor([[0., 0., 0.],                  #         [0., 0., 0.]])
-torch.ones(2,2)   # tenso...
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time itemprop="dateCreated datePublished" datetime="2024-03-30T09:47:25+00:00">2024-03-30</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/ai/">ai</a>
-          
-            <span hidden itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/ai/" itemprop="url"><span itemprop="name">ai</span></a>
-            </span>
-          
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/ai/Pytorch/' itemprop="url">
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
+    
+      <br>
+      <div class="prev-next">
+        
+        <p class="current">
+          1 / 2
+        </p>
+        
+          <a class="next" rel="next" href="/categories/ai/page/2/">
+            <section class="post next white-box shadow floatable blur">
+              &nbsp;下一页&nbsp;<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            </section>
+          </a>
+        
+      </div>
     
   
 
@@ -3208,7 +3223,7 @@ torch.ones(2,2)   # tenso...
           <li><a class="flat-box"
             title="/categories/ai/" href="/categories/ai/"
             active-action="action-categoriesai"
-            ><div class='name'>ai</div><div class='badge'>(10)</div></a></li>
+            ><div class='name'>ai</div><div class='badge'>(11)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/dcc/" href="/categories/dcc/"
