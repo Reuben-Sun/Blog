@@ -6,5 +6,9 @@
     min-width: 0 !important
   mjx-container[jax="CHTML"][display="true"], .has-jax
     overflow: auto hidden
+  // overflow 会裁掉 outside 列表标记，把标记空间挪到 padding 内
+  ul.has-jax, ol.has-jax
+    padding-left: 8px + $gap
+    margin-left: 0
   mjx-container + br
     display: none
