@@ -4,19 +4,27 @@ on:
   push:
     branches:
       - main # default branch
+  pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 部署按顺序排队，不取消正在进行的部署；PR 各自独立
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  pages:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v7
         with:
-          # Default: ${{ github.token }} ,传参给它更高权限的 token
+          # blog-note 是私有子模块，需要 PAT；Dependabot 的 PR 读取的是 Dependabot secrets
           token: ${{ secrets.PERSONAL_TOKEN }}
-          # 把子模块打开
           submodules: true
       - name: Use Node.js 24.x
         uses: actions/setup-node@v7
@@ -27,9 +35,22 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Verify Build Output
+        run: npm run verify
+      - name: Upload Pages Artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
+          path: ./public
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
