@@ -31,8 +31,6 @@ jobs:
             ${{ runner.OS }}-npm-cache
       - name: Install Dependencies
         run: npm install
-      - name: Move Note Content
-        run: npm run movefile
       - name: Build
         run: npm run build
       - name: Deploy

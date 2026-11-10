@@ -17,22 +17,15 @@ cd ..
 npm install
 ```
 
-4. 拷贝/移动文件，替换图片URL
-   通过文件管理器将 /blog-node 下的文件复制到 sources 文件夹，并将 articles 重命名为 _posts
-
-   或者使用下面的指令自动移动
-```bash
-npm run movefile
-# or node bin/movefile.js
-```
-
-5. 修改后编译
+4. 修改后编译
+   `source/_posts`、`source/images` 是指向 `blog-note/articles`、`blog-note/images` 的符号链接，
+   图片路径 `../../images/` 会在渲染时由 `scripts/blog-note-images.js` 改写为 `/images/`，无需拷贝文件
 
 ```bash
 hexo g
 ```
 
-6. 本地服务器（用于调试）
+5. 本地服务器（用于调试）
 
 ```bash
 hexo s

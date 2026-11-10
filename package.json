@@ -6,8 +6,7 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
-    "server": "hexo server",
-    "movefile": "node ./bin/movefile.js"
+    "server": "hexo server"
   },
   "hexo": {
     "version": "5.4.2"
@@ -33,7 +32,6 @@
     "markdown-it-emoji": "^3.1.0",
     "markdown-it-expandable": "^1.0.2",
     "markdown-it-imsize": "^2.0.1",
-    "markdown-it-mark": "^4.0.0",
-    "replace-in-file": "^8.4.0"
+    "markdown-it-mark": "^4.0.0"
   }
 }
