@@ -2,41 +2,43 @@ name: Sync
 
 on:
   workflow_dispatch:
-      inputs:
-        name:
-          description: 'Git Message'
-          required: false
-          default: 'Self Commit'
+    inputs:
+      name:
+        description: 'Git Message'
+        required: false
+        default: 'Self Commit'
 
+# 连续触发时依次执行，后一次会拿到前一次推送后的 main
+concurrency:
+  group: submodule-sync
+  cancel-in-progress: false
 
 jobs:
   sync:
     name: 'Submodules Sync'
     runs-on: ubuntu-latest
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-
     steps:
-      # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          # Default: ${{ github.token }} ,传参给它更高权限的 token
+          # 用 PAT 检出并推送：GITHUB_TOKEN 推送的提交不会触发 Pages workflow
           token: ${{ secrets.PERSONAL_TOKEN }}
           submodules: true
 
-      # Update references
       - name: Pull & update submodules recursively
-        run: |
-          git submodule update --init --recursive
-          git submodule update --recursive --remote  
+        run: git submodule update --init --recursive --remote
 
       - name: Commit update
+        env:
+          # 提交信息经环境变量传入，避免其中的引号、反引号被 shell 解释
+          MESSAGE: ${{ github.event.inputs.name }}
         run: |
-          git config --global user.name 'Git bot'
-          git config --global user.email 'bot@noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "Submodule: ${{github.event.inputs.name}}" && git push || echo "No changes to commit"   
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name 'Git bot'
+          git config user.email 'bot@noreply.github.com'
+          git commit -am "Submodule: ${MESSAGE:-Self Commit}"
+          git push
