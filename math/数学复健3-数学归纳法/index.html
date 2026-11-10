@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2026-11-09T21:38:25.000Z">
-<meta property="article:modified_time" content="2026-11-10T08:09:28.143Z">
+<meta property="article:modified_time" content="2026-11-10T09:42:28.928Z">
 <meta property="article:author" content="Reuben Sun">
 <meta property="article:tag" content="高等数学">
 <meta name="twitter:card" content="summary">
@@ -2113,7 +2113,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1794298281113),
+    lastupdate: new Date(1794303757499),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2592,11 +2592,8 @@ $$</p>
 \binom nk.<br>
 $$</p>
 <p>这些选择数满足：</p>
-<h1>$$<br>
-\binom n k</h1>
-<p>\binom{n-1}{k-1}<br>
-+<br>
-\binom{n-1}{k}.<br>
+<p>$$<br>
+\binom n k = \binom{n-1}{k-1} + \binom{n-1}{k}.<br>
 $$</p>
 <p>这个公式把第 $n$ 层的数连接到第 $n-1$ 层的数。换句话说，较早的一层规定了较晚的一层。</p>
 <p>这种“用较早项规定较晚项”的规则，下一章会正式命名为<strong>递推关系</strong>。在这里，我们只观察它为什么适合归纳证明：若上一层已经具有某个性质，公式便提供了一条把性质送到下一层的道路。</p>
@@ -2719,10 +2716,8 @@ $$</p>
 </blockquote>
 <p><strong>证明</strong>：</p>
 <p>定义：</p>
-<h1>$$<br>
-P(n):\quad<br>
-\sum_{j=0}^{n}j</h1>
-<p>\frac{n(n+1)}2.<br>
+<p>$$<br>
+P(n):\quad \sum_{j=0}^{n}j = \frac{n(n+1)}2.<br>
 $$</p>
 <p><strong>基础步骤</strong>：</p>
 <p>当 $n=0$ 时：</p>
@@ -2736,36 +2731,29 @@ $$</p>
 <p>所以 $P(0)$ 成立。</p>
 <p><strong>归纳步骤</strong>：</p>
 <p>假设：</p>
-<h1>$$<br>
-\sum_{j=0}^{k}j</h1>
-<p>\frac{k(k+1)}2.<br>
+<p>$$<br>
+\sum_{j=0}^{k}j = \frac{k(k+1)}2.<br>
 $$</p>
 <p>那么：</p>
-<h1>$$<br>
-\sum_{j=0}^{k+1}j</h1>
-<p>\left(\sum_{j=0}^{k}j\right)+(k+1).<br>
+<p>$$<br>
+\sum_{j=0}^{k+1}j = \left(\sum_{j=0}^{k}j\right)+(k+1).<br>
 $$</p>
 <p>使用归纳假设：</p>
-<h1>$$<br>
-\sum_{j=0}^{k+1}j</h1>
-<p>\frac{k(k+1)}2+(k+1).<br>
+<p>$$<br>
+\sum_{j=0}^{k+1}j = \frac{k(k+1)}2+(k+1).<br>
 $$</p>
 <p>提取 $k+1$：</p>
-<h1>$$<br>
-\frac{k(k+1)}2+(k+1)</h1>
-<p>\frac{k(k+1)+2(k+1)}2.<br>
+<p>$$<br>
+\frac{k(k+1)}2+(k+1) = \frac{k(k+1)+2(k+1)}2.<br>
 $$</p>
 <p>因此：</p>
-<h1>$$<br>
-\sum_{j=0}^{k+1}j</h1>
-<p>\frac{(k+1)(k+2)}2.<br>
+<p>$$<br>
+\sum_{j=0}^{k+1}j = \frac{(k+1)(k+2)}2.<br>
 $$</p>
 <p>这正是 $P(k+1)$。</p>
 <p>所以：</p>
-<h1>$$<br>
-\forall n\in\mathbb N,\quad<br>
-\sum_{j=0}^{n}j</h1>
-<p>\frac{n(n+1)}2.<br>
+<p>$$<br>
+\forall n\in\mathbb N,\quad \sum_{j=0}^{n}j = \frac{n(n+1)}2.<br>
 $$</p>
 <h3 id="例子：等比和">例子：等比和</h3>
 <blockquote>
@@ -2786,29 +2774,22 @@ $$</p>
 $$</p>
 <p>归纳步骤：</p>
 <p>假设：</p>
-<h1>$$<br>
-\sum_{j=0}^{k}r^j</h1>
-<p>\frac{r^{k+1}-1}{r-1}.<br>
+<p>$$<br>
+\sum_{j=0}^{k}r^j = \frac{r^{k+1}-1}{r-1}.<br>
 $$</p>
 <p>则：</p>
-<h1>$$<br>
-\sum_{j=0}^{k+1}r^j</h1>
-<p>\frac{r^{k+1}-1}{r-1}+r^{k+1}.<br>
+<p>$$<br>
+\sum_{j=0}^{k+1}r^j = \frac{r^{k+1}-1}{r-1}+r^{k+1}.<br>
 $$</p>
 <p>通分：</p>
-<h1>$$<br>
-\frac{r^{k+1}-1}{r-1}<br>
-+<br>
-\frac{r^{k+1}(r-1)}{r-1}</h1>
-<p>\frac{r^{k+2}-1}{r-1}.<br>
+<p>$$<br>
+\frac{r^{k+1}-1}{r-1} + \frac{r^{k+1}(r-1)}{r-1} = \frac{r^{k+2}-1}{r-1}.<br>
 $$</p>
 <h3 id="例子：指数增长超过线性增长">例子：指数增长超过线性增长</h3>
 <blockquote>
 <p><strong>命题</strong>：</p>
 <p>$$<br>
-2^n\geq n+1,<br>
-\qquad<br>
-\forall n\in\mathbb N.<br>
+2^n\geq n+1,\qquad \forall n\in\mathbb N.<br>
 $$</p>
 </blockquote>
 <p><strong>证明</strong>：</p>
@@ -3131,7 +3112,7 @@ $$<br>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2026-11-10T08:09:28+00:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2026-11-10T09:42:28+00:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：2026年11月10日</p>
@@ -3830,7 +3811,7 @@ $$<br>
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/math/","name":"math"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/math/数学复健3-数学归纳法/","name":"数学复健3-数学归纳法"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"数学复健3-数学归纳法","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/math/%E6%95%B0%E5%AD%A6%E5%A4%8D%E5%81%A53-%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/math/%E6%95%B0%E5%AD%A6%E5%A4%8D%E5%81%A53-%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95/","wordCount":0,"datePublished":"2026-11-09T21:38:25.000Z","dateModified":"2026-11-10T08:09:28.143Z","articleSection":"math","keywords":"高等数学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","sameAs":["https://github.com/volantis-x"],"description":"Reuben的笔记博客"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://reubensun.com/","name":"ReubenSun"}},{"@type":"ListItem","position":2,"item":{"@id":"https://reubensun.com/categories/math/","name":"math"}},{"@type":"ListItem","position":3,"item":{"@id":"https://reubensun.com/math/数学复健3-数学归纳法/","name":"数学复健3-数学归纳法"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"ReubenSun","url":"https://reubensun.com/","keywords":"reubensun computer graphics engine Technical Artist","description":"Reuben的笔记博客","author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/","description":"Reuben的笔记博客"},"publisher":{"@type":"Organization","name":"ReubenSun","url":"https://reubensun.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://reubensun.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"数学复健3-数学归纳法","description":"Reuben的笔记博客","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://reubensun.com/math/%E6%95%B0%E5%AD%A6%E5%A4%8D%E5%81%A53-%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95/"},"author":{"@type":"Person","name":"Reuben Sun","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://reubensun.com/"},"publisher":{"@type":"Organization","name":"ReubenSun","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://reubensun.com/math/%E6%95%B0%E5%AD%A6%E5%A4%8D%E5%81%A53-%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95/","wordCount":0,"datePublished":"2026-11-09T21:38:25.000Z","dateModified":"2026-11-10T09:42:28.928Z","articleSection":"math","keywords":"高等数学","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
