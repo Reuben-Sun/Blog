@@ -6047,6 +6047,11 @@ div.timenode:hover .meta:after {
 .article .has-jax {
   overflow: auto hidden;
 }
+.article ul.has-jax,
+.article ol.has-jax {
+  padding-left: 24px;
+  margin-left: 0;
+}
 .article mjx-container + br {
   display: -webkit-box /* OLD - iOS 6-, Safari 3.1-6 */;
   display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
