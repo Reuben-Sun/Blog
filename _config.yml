@@ -44,18 +44,14 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+# Hexo 7+ 用 syntax_highlighter 选择高亮器，旧的 highlight.enable / prismjs.enable 已不再生效
+syntax_highlighter: highlight.js
 highlight:
-  enable: false
   line_number: false
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
-prismjs:
-  enable: true
-  preprocess: true
-  line_number: false
-  tab_replace: ''
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
