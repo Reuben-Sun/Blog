@@ -8,33 +8,27 @@ on:
 
 jobs:
   pages:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
         with:
           # Default: ${{ github.token }} ,传参给它更高权限的 token
           token: ${{ secrets.PERSONAL_TOKEN }}
           # 把子模块打开
           submodules: true
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v2
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v7
         with:
-          node-version: "20"
-      - name: Cache NPM dependencies
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-npm-cache
-          restore-keys: |
-            ${{ runner.OS }}-npm-cache
+          node-version: "24"
+          cache: npm
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
       - name: Build
         run: npm run build
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
