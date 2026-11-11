@@ -96,6 +96,19 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: volantis
 
+# 订阅源：只放摘要（见 scripts/feed-summary.js）；<link rel="alternate"> 由主题 head 输出
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  content: false
+  autodiscovery: false
+  icon: /images/logo.png
+
+sitemap:
+  path: sitemap.xml
+  rel: false
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 # deploy:
