@@ -35,6 +35,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          TZ: Asia/Shanghai
       - name: Verify Build Output
         run: npm run verify
       - name: Upload Pages Artifact

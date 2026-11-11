@@ -49,7 +49,7 @@
   <%- generate_title(config, theme, page) %>
   <%- generate_keywords(config, theme, page) %>
   <%- generate_description(config, theme, page) %>
-  <%- open_graph(theme.open_graph) %>
+  <%- open_graph(Object.assign({}, theme.open_graph, page.thumbnail ? { image: page.thumbnail } : {})) %>
   <style>
     /* 首屏样式 */
     <%- FirstCSS() %>
