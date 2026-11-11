@@ -60,7 +60,8 @@ highlight:
 index_generator:
   path: ''
   per_page: 10
-  order_by: -date
+  # 按「更新于」排序（取自 blog-note 提交时间，见 scripts/git-updated.js）；同时间再按发布时间、标题，保证顺序稳定
+  order_by: -updated -date title
 
 # Category & Tag
 default_category: uncategorized
