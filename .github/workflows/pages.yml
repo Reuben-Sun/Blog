@@ -26,6 +26,10 @@ jobs:
           # blog-note 是私有子模块，需要 PAT；Dependabot 的 PR 读取的是 Dependabot secrets
           token: ${{ secrets.PERSONAL_TOKEN }}
           submodules: true
+      - name: Fetch blog-note history
+        # 「更新于」取文章最后一次提交时间（scripts/git-updated.js），需要完整提交历史；
+        # blob:none 只拉提交和目录树，不下载历史文件内容（旧图片约 270MB）
+        run: git -C blog-note fetch --unshallow --filter=blob:none origin
       - name: Use Node.js 24.x
         uses: actions/setup-node@v7
         with:

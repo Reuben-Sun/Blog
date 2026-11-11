@@ -1,0 +1,9 @@
+# 计算文章「更新于」时忽略的 blog-note 提交（批量、机械性的修改，不代表内容更新）
+# 格式同 .git-blame-ignore-revs：每行一个完整 SHA，# 后为注释
+1d27dd8342549a21d8c31b16771fe7319d5c334e # 2023-03-02 image url（图片路径改为相对路径）
+4a94cf1517d3ba3867ac27269126c7ffb5c6ad07 # 2024-01-26 rename tag（C++→CXX、C#→CSharp）
+6e3f0e55ffee88647cd87d6d11089d5c7f2293dd # 2026-11-10 修复被 Markdown 误解析的公式排版
+7c16328398fdd2dd977eb0e4a5cab6f226266b60 # 2026-11-10 公式中的 \\\\ 改回 \\
+790b4ca731bccb33f0621bf05fe1ea43d24b7eae # 2026-11-10 统一标签大小写
+94830713d8fa932d2cda9522b71dc3675cb3c207 # 2026-11-10 图片转为 webp（改写引用）
+b69c1f505634cdbcb621d6ed90aa2f70c9399540 # 2026-11-11 修复图片路径与误粘贴的标题
