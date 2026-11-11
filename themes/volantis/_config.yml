@@ -139,7 +139,7 @@ navbar:
     title:
   menu:
     - name: 主页
-      icon: fa-solid fa-rss
+      icon: fa-solid fa-house
       url: /
     - name: 分类
       icon: fa-solid fa-folder-open
@@ -706,24 +706,20 @@ tag_plugins:
 ############################### Site Footer ############################### > start
 site_footer:
   # layout of footer: [aplayer, social, license, info, copyright]
-  layout: [aplayer, social, license, info, copyright]
+  layout: [aplayer, social, license, copyright]
   social:
-    - icon: #fa-solid fa-rss
-      url:
-    # or
-    - img:
-      url:
-    # or
-    - avatar:
-      url:
+    - icon: fa-solid fa-rss
+      url: /atom.xml
+    - icon: fa-brands fa-github
+      url: https://github.com/Reuben-Sun
   # site source
   source: https://github.com/volantis-x/volantis-docs/
   # analytics using busuanzi
   analytics: >
     <span>本站总访问量为 <span id='busuanzi_value_site_pv'><i class="fa-solid fa-loader fa-spin fa-fw" aria-hidden="true"></i></span> 次</span>
     <span>访客数为 <span id='busuanzi_value_site_uv'><i class="fa-solid fa-loader fa-spin fa-fw" aria-hidden="true"></i></span> 人</span>
-  # site copyright
-  copyright: '[Copyright © since 2023](/)'
+  # site copyright（结束年份由 scripts/footer-copyright.js 在构建时填入）
+  copyright: '© 2023–{year} Zheng Sun'
   # You can add your own property here. (Support markdown, for example: br: '<br>')
   br: '<br>'
 ############################### Site Footer ############################### > end
